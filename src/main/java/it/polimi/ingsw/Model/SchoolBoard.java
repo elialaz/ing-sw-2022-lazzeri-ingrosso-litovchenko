@@ -26,7 +26,7 @@ public class SchoolBoard {
     }
 
     public void addTower(){
-        this.NumTower ++;
+        this.NumTower++;
     }
 
     public void removeTower(){
