@@ -36,4 +36,7 @@ public class Corridor{
     public boolean isColor(Color color){
         return color == this.color;
     }
+
+    public int removestudents(int num){ return this.studentNumber - num;}
+    public void removeallstudents(){ this.studentNumber = 0;}
 }

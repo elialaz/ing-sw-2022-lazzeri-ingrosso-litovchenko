@@ -18,4 +18,6 @@ public class Player {
     public void addNumCoin(int num) {
         this.NumCoin += num;
     }
+
+    public SchoolBoard getBoard() { return this.board; }
 }

@@ -69,4 +69,11 @@ public class SchoolBoard {
         EntranceStudent.remove(num);
         return  islandStudent;
     }
+
+    public Corridor getCorridor(Color color){
+        for (Corridor x:DiningRoom) {
+            if (x.getColor() == color);
+            return x;
+        }
+    }
 }
