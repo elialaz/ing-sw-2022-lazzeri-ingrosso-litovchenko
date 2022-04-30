@@ -6,17 +6,27 @@ import java.util.List;
 public class IslandTile {
     private final int idTile;
     private TowerColor Tower;
-    private List<Student> studentOnIsland;
+    private ArrayList<Student> studentOnIsland;
     private boolean union;
     private ArrayList<Integer> unionIsland;
     private boolean MotherNature;
 
     public IslandTile(int id, Student start, boolean first){
+        studentOnIsland = new ArrayList<Student>();
         if (first){
             MotherNature = true;
         }
         idTile = id;
         studentOnIsland.add(start);
+        union = false;
+    }
+
+    public IslandTile(int id, boolean first){
+        studentOnIsland = new ArrayList<Student>();
+        if (first){
+            MotherNature = true;
+        }
+        idTile = id;
         union = false;
     }
 
@@ -62,5 +72,9 @@ public class IslandTile {
 
     public void addUnionIsland(int id) {
         unionIsland.add(id);
+    }
+
+    public boolean hasTower() {
+        return Tower != null;
     }
 }

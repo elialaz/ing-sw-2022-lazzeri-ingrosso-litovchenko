@@ -14,9 +14,6 @@ public class Corridor{
         this.studentNumber++;
         return this.studentNumber == 3 || this.studentNumber == 6 || this.studentNumber == 9;
     }
-    public void addStudent(int num) {
-        this.studentNumber += num;
-    }
 
     public void setProfessor(boolean professor) {
         this.professor = professor;
@@ -30,9 +27,6 @@ public class Corridor{
         return professor;
     }
 
-    public Color getColor() {
-        return color;
-    }
     public boolean isColor(Color color){
         return color == this.color;
     }

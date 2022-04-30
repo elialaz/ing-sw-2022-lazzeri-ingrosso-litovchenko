@@ -1,9 +1,4 @@
-/**
- * A seguire codice per la creazione di 1 singolo deck
- * Alla creazione della partita, creazione di 4 deck ognugno con la propria immagine (private Image graphicAssistant)
- *                                                                          -> assegnazione immagine gestito dalla GUI
- *
- */
+
 
 package it.polimi.ingsw.Model;
 import java.util.ArrayList;
