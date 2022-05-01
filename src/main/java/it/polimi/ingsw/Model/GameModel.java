@@ -89,7 +89,12 @@ public final class GameModel {
 
     public void motherNatureMove(int islandNum){
         table.moveMotherNature(islandNum);
-        this.verifyInfluence(islandNum);
+        if(!table.getIslandTile(islandNum).isNoentrytile()){
+            this.verifyInfluence(islandNum);
+        }
+        else{
+            table.getIslandTile(islandNum).removeEntryTile();
+        }
     }
 
     public void moveToIslandStudent(String playerName, ArrayList<Student> students, int islandnum){
@@ -131,7 +136,7 @@ public final class GameModel {
         return table.getIslandTiles();
     }
 
-    //TODO
+
     public void verifyInfluence(int islandid){
         Player mostinfluecer = players.get(0);
         for (Player p: players) {
@@ -139,12 +144,37 @@ public final class GameModel {
                 mostinfluecer = p;
             }
         }
-
+        if(!(table.getIslandTile(islandid).getTower() == mostinfluecer.getTowerColor())){
+            for (Player p: players) {
+                if(p.getTowerColor() == table.getIslandTile(islandid).getTower()){
+                    p.bringTower();
+                }
+            }
+            table.getIslandTile(islandid).setTower(mostinfluecer.getTowerColor());
+            mostinfluecer.getTower();
+        }
         this.checkSourrindIsland(islandid);
     }
 
     //TODO
     private void checkSourrindIsland(int idTile) {
+        IslandTile now = table.getIslandTile(idTile);
+        IslandTile prec;
+        IslandTile succ;
+        if(idTile == 0){
+            prec = table.getIslandTile(11);
+            succ = table.getIslandTile(1);
+        }
+        else if(idTile == 11){
+            prec = table.getIslandTile(10);
+            succ = table.getIslandTile(0);
+        }
+        else{
+            prec = table.getIslandTile(idTile-1);
+            succ = table.getIslandTile(idTile+1);
+        }
+        if(prec.getTower()==now.getTower()){
 
+        }
     }
 }

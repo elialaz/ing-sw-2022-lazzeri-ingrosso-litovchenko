@@ -58,7 +58,12 @@ public class Player {
         return nikname;
     }
 
+    public TowerColor getTowerColor() {
+        return tower;
+    }
+
     public TowerColor getTower() {
+        board.removeTower();
         return tower;
     }
 

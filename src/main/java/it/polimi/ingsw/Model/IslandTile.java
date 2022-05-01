@@ -11,7 +11,7 @@ public class IslandTile {
     private ArrayList<Integer> unionIsland;
     private boolean MotherNature;
 
-    private boolean noentrytile;
+    private int noentrytile;
 
     public IslandTile(int id, Student start, boolean first){
         studentOnIsland = new ArrayList<Student>();
@@ -21,7 +21,7 @@ public class IslandTile {
         idTile = id;
         studentOnIsland.add(start);
         union = false;
-        noentrytile = false;
+        noentrytile = 0;
     }
 
     public IslandTile(int id, boolean first){
@@ -34,11 +34,15 @@ public class IslandTile {
     }
 
     public boolean isNoentrytile() {
-        return noentrytile;
+        return noentrytile>0;
     }
 
-    public void setNoentrytile(boolean noentrytile) {
-        this.noentrytile = noentrytile;
+    public void removeEntryTile(){
+        noentrytile--;
+    }
+
+    public void setNoentrytile() {
+        noentrytile++;
     }
 
     public void setTower(TowerColor tower) {
@@ -89,6 +93,7 @@ public class IslandTile {
         return Tower != null;
     }
 
+    //TODO sistemare unione e calcolo in caso isole unite
     public int Influence (Player player){
         int influence = 0;
         if (this.isMotherNature()){
@@ -133,7 +138,7 @@ public class IslandTile {
                 }
             }
         }
-        if (this.getTower() == player.getTower()) {
+        if (this.getTower() == player.getTowerColor()) {
             influence++;
         }
         return influence;
