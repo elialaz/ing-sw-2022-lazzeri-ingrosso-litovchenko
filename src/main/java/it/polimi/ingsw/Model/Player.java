@@ -14,6 +14,8 @@ public class Player {
     private final String teammate;
     private final SchoolBoard board;
 
+    private boolean bonusInfluenceEffect;
+
     public Player(String playerName, Integer integer, TowerColor towerColor, Bag bag, int i, int i1){
         assistantCards = new AssistantDeck();
         nikname = playerName;
@@ -23,6 +25,7 @@ public class Player {
         teammate = null;
         tower = towerColor;
         board = new SchoolBoard(bag, this, i, i1);
+        bonusInfluenceEffect = false;
     }
 
     public Player(String playerName, Integer integer, TowerColor towerColor, String name, Bag bag){
@@ -34,6 +37,7 @@ public class Player {
         teammate = name;
         tower = towerColor;
         board = new SchoolBoard(bag, this, 8, 7);
+        bonusInfluenceEffect = false;
     }
 
     public Player(String playerName, Integer integer, String name, Bag bag){
@@ -44,6 +48,7 @@ public class Player {
         playInTeam = true;
         teammate = name;
         board = new SchoolBoard(bag, this, 0, 7);
+        bonusInfluenceEffect = false;
     }
 
     public AssistantDeck getAssistantCards() {
@@ -69,6 +74,10 @@ public class Player {
 
     public int getNumCoin() {
         return NumCoin;
+    }
+
+    public void removeCoint(int num){
+        NumCoin = NumCoin- num;
     }
 
     public void addNumCoin(int num) {
@@ -121,5 +130,17 @@ public class Player {
 
     public SchoolBoard getBoard() {
         return board;
+    }
+
+    public boolean hasbonus() {
+        return this.bonusInfluenceEffect;
+    }
+
+    public void removeBonus() {
+        bonusInfluenceEffect = false;
+    }
+
+    public void setBonusInfluenceEffect() {
+        this.bonusInfluenceEffect = true;
     }
 }

@@ -183,4 +183,8 @@ public final class GameModel {
 
         }
     }
+
+    public ArrayList<Effect> getCharacterCard(){
+        return table.getExpertCard();
+    }
 }

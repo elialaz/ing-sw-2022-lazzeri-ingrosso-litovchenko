@@ -4,6 +4,9 @@ import java.util.List;
 
 public class ReplaceStudentsInBag extends Effect{
 
+    public ReplaceStudentsInBag(){
+        setup(3);
+    }
     public void GetEffect(List<Player> Players, Color ChosenColor, Bag bag) {
         for (Player P: Players) {
             int num = P.getBoard().getCorridor( ChosenColor ).getStudentNumber();

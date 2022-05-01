@@ -1,12 +1,14 @@
 package it.polimi.ingsw.Model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FromCartToEntrance extends Effect{
-    private List<Student> students;
+    private ArrayList<Student> students;
 
     public FromCartToEntrance(Bag bag){
         students = bag.getStudent(6);
+        setup(1);
     }
 
     public void GetEffect(Player p, List<Student> StudentsChangedFCTE, List<Student> StudentsChangedFETC) {

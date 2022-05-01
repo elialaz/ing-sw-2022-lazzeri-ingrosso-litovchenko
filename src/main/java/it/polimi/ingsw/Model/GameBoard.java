@@ -121,4 +121,8 @@ public class GameBoard {
     public void removeCoin(int num) {
         coinPile = coinPile-num;
     }
+
+    public void addCoinPile(int num) {
+        coinPile = coinPile + num;
+    }
 }

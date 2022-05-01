@@ -13,7 +13,14 @@ public class IslandTile {
 
     private int noentrytile;
 
+    private boolean nocolorcount;
+
+    private Color colortonotcount;
+    private boolean notowercount;
+
     public IslandTile(int id, Student start, boolean first){
+        nocolorcount = false;
+        notowercount = false;
         studentOnIsland = new ArrayList<Student>();
         if (first){
             MotherNature = true;
@@ -31,6 +38,30 @@ public class IslandTile {
         }
         idTile = id;
         union = false;
+    }
+
+    public Color getColortonotcount() {
+        return colortonotcount;
+    }
+
+    public void setColortonotcount(Color colortonotcount) {
+        this.colortonotcount = colortonotcount;
+    }
+
+    public boolean isNocolorcount() {
+        return nocolorcount;
+    }
+
+    public boolean isNotowercount() {
+        return notowercount;
+    }
+
+    public void setNocolorcount(boolean nocolorcount) {
+        this.nocolorcount = nocolorcount;
+    }
+
+    public void setNotowercount(boolean notowercount) {
+        this.notowercount = notowercount;
     }
 
     public boolean isNoentrytile() {
@@ -93,9 +124,13 @@ public class IslandTile {
         return Tower != null;
     }
 
-    //TODO sistemare unione e calcolo in caso isole unite
+    //TODO sistemare unione e calcolo in caso isole unite, nocount tower e no count colorstudent, influenza in squadra da sistemare
     public int Influence (Player player){
         int influence = 0;
+        if(player.hasbonus()){
+            influence = influence + 2;
+            player.removeBonus();
+        }
         if (this.isMotherNature()){
             Corridor C = player.getBoard().getCorridor(Color.BLUE);
             if (C.isProfessor()) {

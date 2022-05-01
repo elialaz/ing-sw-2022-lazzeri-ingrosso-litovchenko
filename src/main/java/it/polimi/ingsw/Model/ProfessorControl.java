@@ -4,6 +4,9 @@ import java.util.List;
 
 public class ProfessorControl extends Effect{
 
+    public ProfessorControl(){
+        setup(2);
+    }
     public void GetEffect(Player player, List<Player> Others, List<Color> Colors) {
         for (Player p: Others) {
             for (Color c: Colors) {
