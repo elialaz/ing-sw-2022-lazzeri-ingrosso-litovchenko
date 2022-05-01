@@ -89,7 +89,7 @@ public final class GameModel {
 
     public void motherNatureMove(int islandNum){
         table.moveMotherNature(islandNum);
-        this.verifyInfluence();
+        this.verifyInfluence(islandNum);
     }
 
     public void moveToIslandStudent(String playerName, ArrayList<Student> students, int islandnum){
@@ -132,9 +132,15 @@ public final class GameModel {
     }
 
     //TODO
-    private void verifyInfluence(){
+    public void verifyInfluence(int islandid){
+        Player mostinfluecer = players.get(0);
+        for (Player p: players) {
+            if(table.getIslandTile(islandid).Influence(p)>table.getIslandTile(islandid).Influence(mostinfluecer)){
+                mostinfluecer = p;
+            }
+        }
 
-        this.checkSourrindIsland(1);
+        this.checkSourrindIsland(islandid);
     }
 
     //TODO

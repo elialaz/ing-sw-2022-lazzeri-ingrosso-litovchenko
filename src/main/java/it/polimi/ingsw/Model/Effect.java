@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Model;
 
-public interface Effect {
-    public void GetEffect();
+public abstract class Effect {
+    public void GetEffect() {
+
+    }
 }

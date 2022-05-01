@@ -2,12 +2,13 @@ package it.polimi.ingsw.Model;
 
 import java.util.ArrayList;
 
-public class NoEntryTilesEffect{
+//TODO EFFECT
+public class NoEntryTilesEffect extends Effect{
+
+    int numEntryTile;
 
     public NoEntryTilesEffect(){
-        ArrayList<Component> EntryTiles = new ArrayList<>();
-        for (int i = 0; i < 4; i++);
-            EntryTiles.add(Component.NOENTRYTILES);
+        numEntryTile = 4;
     }
 
     public void GetEffect(IslandTile ChosenIsland) {

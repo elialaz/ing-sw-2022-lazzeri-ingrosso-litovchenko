@@ -11,6 +11,8 @@ public class IslandTile {
     private ArrayList<Integer> unionIsland;
     private boolean MotherNature;
 
+    private boolean noentrytile;
+
     public IslandTile(int id, Student start, boolean first){
         studentOnIsland = new ArrayList<Student>();
         if (first){
@@ -19,6 +21,7 @@ public class IslandTile {
         idTile = id;
         studentOnIsland.add(start);
         union = false;
+        noentrytile = false;
     }
 
     public IslandTile(int id, boolean first){
@@ -28,6 +31,14 @@ public class IslandTile {
         }
         idTile = id;
         union = false;
+    }
+
+    public boolean isNoentrytile() {
+        return noentrytile;
+    }
+
+    public void setNoentrytile(boolean noentrytile) {
+        this.noentrytile = noentrytile;
     }
 
     public void setTower(TowerColor tower) {
@@ -79,42 +90,52 @@ public class IslandTile {
     }
 
     public int Influence (Player player){
-        List<Student> StudentsOnIsland;
         int influence = 0;
-        if (this.isMotherNature());
-            StudentsOnIsland = this.getStudentOnIsland();
+        if (this.isMotherNature()){
             Corridor C = player.getBoard().getCorridor(Color.BLUE);
-            if (C.isProfessor());
-                for (Student s: StudentsOnIsland) {
-                    if(s.color == Color.BLUE);
-                        influence ++;
+            if (C.isProfessor()) {
+                for (Student s : studentOnIsland) {
+                    if (s.color == Color.BLUE) {
+                        influence++;
+                    }
                 }
+            }
             C = player.getBoard().getCorridor(Color.PINK);
-            if (C.isProfessor());
-                for (Student s: StudentsOnIsland) {
-                    if (s.color == Color.PINK) ;
-                    influence++;
+            if (C.isProfessor()) {
+                for (Student s : studentOnIsland) {
+                    if (s.color == Color.PINK) {
+                        influence++;
+                    }
                 }
+            }
             C = player.getBoard().getCorridor(Color.YELLOW);
-            if (C.isProfessor());
-                for (Student s: StudentsOnIsland) {
-                    if(s.color == Color.YELLOW);
-                    influence ++;
+            if (C.isProfessor()) {
+                for (Student s : studentOnIsland) {
+                    if (s.color == Color.YELLOW) {
+                        influence++;
+                    }
                 }
+            }
             C = player.getBoard().getCorridor(Color.GREEN);
-            if (C.isProfessor());
-                for (Student s: StudentsOnIsland) {
-                    if(s.color == Color.GREEN);
-                    influence ++;
+            if (C.isProfessor()) {
+                for (Student s : studentOnIsland) {
+                    if (s.color == Color.GREEN) {
+                        influence++;
+                    }
                 }
+            }
             C = player.getBoard().getCorridor(Color.RED);
-            if (C.isProfessor());
-                for (Student s: StudentsOnIsland) {
-                    if(s.color == Color.RED);
-                    influence ++;
+            if (C.isProfessor()) {
+                for (Student s : studentOnIsland) {
+                    if (s.color == Color.RED) {
+                        influence++;
+                    }
                 }
-        if (this.getTower() == player.getTower());
-            influence ++;
+            }
+        }
+        if (this.getTower() == player.getTower()) {
+            influence++;
+        }
         return influence;
     }
 }

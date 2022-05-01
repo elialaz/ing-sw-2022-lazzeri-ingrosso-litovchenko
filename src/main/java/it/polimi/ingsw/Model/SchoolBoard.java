@@ -84,9 +84,11 @@ public class SchoolBoard {
     }
 
     public Corridor getCorridor(Color color){
-        for (Corridor x:DiningRoom) {
-            if (x.getColor() == color);
-            return x;
+        for (Corridor x : DiningRoom) {
+            if (x.isColor(color)) {
+                return x;
+            }
         }
+        return null;
     }
 }

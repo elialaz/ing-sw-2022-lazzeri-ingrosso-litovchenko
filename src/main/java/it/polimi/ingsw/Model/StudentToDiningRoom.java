@@ -3,14 +3,11 @@ package it.polimi.ingsw.Model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudentToDiningRoom{
+public class StudentToDiningRoom extends Effect{
     private List<Student> CardStudents;
 
-    public StudentToDiningRoom() {
-        CardStudents = new ArrayList<>();
-        int i;
-        for ( i=0;i<4;i++)
-            CardStudents.add(i,new Student(Color.randomLetter()));
+    public StudentToDiningRoom(Bag bag) {
+        CardStudents = bag.getStudent(4);
     }
 
     public void GetEffect(Player p, Student ChosenStudent) {

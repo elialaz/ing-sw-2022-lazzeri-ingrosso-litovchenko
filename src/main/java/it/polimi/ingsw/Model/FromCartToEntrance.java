@@ -2,13 +2,11 @@ package it.polimi.ingsw.Model;
 
 import java.util.List;
 
-public class FromCartToEntrance{
+public class FromCartToEntrance extends Effect{
     private List<Student> students;
 
-    public FromCartToEntrance(){
-        for (int i=0; i<6; i++){
-            students.add(i, new Student(Color.randomLetter()));
-        }
+    public FromCartToEntrance(Bag bag){
+        students = bag.getStudent(6);
     }
 
     public void GetEffect(Player p, List<Student> StudentsChangedFCTE, List<Student> StudentsChangedFETC) {

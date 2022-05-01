@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Model;
 
-public class NoCountTower implements Effect{
+public class NoCountTower extends Effect{
     @Override
     public void GetEffect() {
 
