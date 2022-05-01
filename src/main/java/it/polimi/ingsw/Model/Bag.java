@@ -2,8 +2,6 @@ package it.polimi.ingsw.Model;
 
 import java.util.ArrayList;
 
-//tenere traccia numero studenti nel sacchetto perchè la partita puo concludersi al termine di essi.
-
 public class Bag {
     private int yellow_extracted;
     private int green_extracted;
@@ -62,5 +60,25 @@ public class Bag {
 
     public int getSumExtracted() {
         return yellow_extracted+green_extracted+pink_extracted+blue_extracted+red_extracted;
+    }
+
+    public void addStudents(Color color, int numStudents){
+        switch (color){
+            case PINK:
+                pink_extracted = pink_extracted - numStudents;
+                break;
+            case GREEN:
+                green_extracted = green_extracted - numStudents;
+                break;
+            case YELLOW:
+                yellow_extracted = yellow_extracted - numStudents;
+                break;
+            case BLUE:
+                blue_extracted = blue_extracted - numStudents;
+                break;
+            case RED:
+                red_extracted = red_extracted - numStudents;
+                break;
+        }
     }
 }

@@ -6,7 +6,10 @@ public final class GameModel {
     private final ArrayList<Player> players;
     private final GameBoard table;
 
+    private boolean lastTurn;
+
     public GameModel(int nPlayers, String[] playersName) {
+        lastTurn = false;
         this.players = new ArrayList<Player>();
         ArrayList<Integer> estr = new ArrayList<Integer>();
         estr.add(1);
@@ -76,6 +79,9 @@ public final class GameModel {
         Bag bag = table.getBag();
         for (CloudTile cloud: i) {
             cloud.setStudents(bag);
+        }
+        if(table.getBag().getSumExtracted()==130){
+            lastTurn = true;
         }
     }
 
@@ -156,7 +162,7 @@ public final class GameModel {
         this.checkSourrindIsland(islandid);
     }
 
-    //TODO
+    //TODO unione
     private void checkSourrindIsland(int idTile) {
         IslandTile now = table.getIslandTile(idTile);
         IslandTile prec;
