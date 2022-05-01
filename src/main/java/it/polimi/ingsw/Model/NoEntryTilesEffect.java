@@ -1,8 +1,5 @@
 package it.polimi.ingsw.Model;
 
-import java.util.ArrayList;
-
-//TODO EFFECT
 public class NoEntryTilesEffect extends Effect{
 
     int numEntryTile;
@@ -12,6 +9,6 @@ public class NoEntryTilesEffect extends Effect{
     }
 
     public void GetEffect(IslandTile ChosenIsland) {
-
+        ChosenIsland.setNoentrytile();
     }
 }

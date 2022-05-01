@@ -31,6 +31,7 @@ public class Corridor{
         return color == this.color;
     }
 
-    public int RemoveStudents(int num){ return this.studentNumber - num;}
+    public void RemoveStudents(int num){ this.studentNumber = this.studentNumber - num;}
+
     public void RemoveAllStudents(){ this.studentNumber = 0;}
 }

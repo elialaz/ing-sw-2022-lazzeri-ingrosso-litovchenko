@@ -8,6 +8,7 @@ public class Bag {
     private int pink_extracted;
     private int blue_extracted;
     private int red_extracted;
+
     public Bag(){
         yellow_extracted = 0;
         green_extracted = 0;
