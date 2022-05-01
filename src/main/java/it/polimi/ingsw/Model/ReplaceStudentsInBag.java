@@ -1,27 +1,16 @@
 package it.polimi.ingsw.Model;
 
-import java.util.Arrays;
 import java.util.List;
 
-public class ReplaceStudentsInBag implements Effect{
+public class ReplaceStudentsInBag{
 
-    private List<Player> Players;
-
-    @Override
-    public void GetEffect() {
-        List<Color> ValidColor = getValidColor();
-        Color scelto = ValidColor.get();               //non so come far scegliere il colore all'utente
+    public void GetEffect(List<Player> Players, Color ChosenColor) {
         for (Player P: Players) {
-            int num = P.getBoard().getCorridor(scelto).getStudentNumber();
+            int num = P.getBoard().getCorridor(ChosenColor).getStudentNumber();
             if (num >= 3);
-                P.getBoard().getCorridor(scelto).removestudents(3);
+                P.getBoard().getCorridor(ChosenColor).RemoveStudents(3);
             if (num < 3);
-                P.getBoard().getCorridor(scelto).removeallstudents();
+                P.getBoard().getCorridor(ChosenColor).RemoveAllStudents();
         }
-
-    }
-
-    public static List<Color> getValidColor(){
-        return Arrays.asList(Color.BLUE,Color.RED,Color.GREEN,Color.PINK,Color.YELLOW);
     }
 }

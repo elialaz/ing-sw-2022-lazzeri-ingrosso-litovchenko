@@ -2,9 +2,8 @@ package it.polimi.ingsw.Model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
-public class StudentToIsland implements Effect{
+public class StudentToIsland{
     private List<Student> students;
 
     public StudentToIsland() {
@@ -14,11 +13,10 @@ public class StudentToIsland implements Effect{
             students.add(i,new Student(Color.randomLetter()));
     }
 
-    public void GetEffect() {
-        Scanner inputreader = new Scanner(System.in);
-        System.out.println("insert the position of the student you choose:");
-        int scelto= inputreader.nextInt();
-        students.get(scelto).MoveToIsland(Id_island);
+    public void GetEffect(Student ChosenStudent, IslandTile ChosenIsland) {
+        ChosenIsland.addStudentOnIsland(ChosenStudent);
+        students.remove(ChosenStudent);
         students.add(new Student(Color.randomLetter()));
     }
+
 }

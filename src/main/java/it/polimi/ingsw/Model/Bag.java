@@ -2,6 +2,8 @@ package it.polimi.ingsw.Model;
 
 import java.util.ArrayList;
 
+//tenere traccia numero studenti nel sacchetto perchè la partita puo concludersi al termine di essi.
+
 public class Bag {
     private int yellow_extracted;
     private int green_extracted;

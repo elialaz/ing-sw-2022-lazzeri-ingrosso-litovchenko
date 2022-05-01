@@ -25,7 +25,7 @@ public class GameBoard {
         start.add(new Student(Color.RED));
         start.add(new Student(Color.RED));
         ArrayList<Effect> effectsStart = new ArrayList<Effect>();
-        effectsStart.add(new StudentToIsland());
+        effectsStart.add((Effect) new StudentToIsland());
         effectsStart.add(new ProfessorControl());
         effectsStart.add(new ChosenIsland());
         effectsStart.add(new MoveAgainMotherNature());

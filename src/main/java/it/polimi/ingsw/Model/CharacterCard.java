@@ -12,7 +12,7 @@ public class CharacterCard implements Effect {
     private int effect_id;
 
     @Override
-    public void GetEffect() {
+    public void GetEffect(){}/*{
         switch(effect_id) {
             case 1:
                 StudentToIsland FirstEffect = new StudentToIsland();
@@ -51,5 +51,5 @@ public class CharacterCard implements Effect {
                 ReplaceStudentsInBag TwelfthEffect = new ReplaceStudentsInBag();
                 TwelfthEffect.GetEffect();
         }
-    }
+    }*/
 }
