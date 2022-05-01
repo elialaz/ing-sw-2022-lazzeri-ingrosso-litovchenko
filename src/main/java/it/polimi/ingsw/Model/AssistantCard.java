@@ -43,9 +43,7 @@ public class AssistantCard{
             throw new IllegalArgumentException("Passed a non-valid Mother Nature movement value in Assistant Card");
     }
 
-    public static List<Integer> getValidValue(){
-        return Arrays.asList(1,2,3,4,5,6,7,8,9,10);
-    }
+    public static List<Integer> getValidValue(){ return Arrays.asList(1,2,3,4,5,6,7,8,9,10); }
 
     public static List<Integer> getValidMaxMoveMotherNature(){
         return Arrays.asList(1,2,3,4,5);

@@ -5,7 +5,6 @@ public abstract class Effect {
     private int price;
     private boolean neverUse;
     public void GetEffect() {
-
     }
 
     public void payCard(Player player, GameBoard board){
