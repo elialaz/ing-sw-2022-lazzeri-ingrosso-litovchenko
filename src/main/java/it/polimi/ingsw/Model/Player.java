@@ -1,146 +1,67 @@
 package it.polimi.ingsw.Model;
 
-import java.util.ArrayList;
-import java.util.List;
 
+/**
+ * Player Class, one for each player
+ * @author elia_laz
+ **/
 public class Player {
+    private final int playerId;
+    private String name;
+    private int coin;
 
-    private final String nikname;
-    private final AssistantDeck assistantCards;
-    private TowerColor tower;
-    private int NumCoin;
-    private Boolean playInTeam;
-    private final int whizard;
-    private final String teammate;
-    private final SchoolBoard board;
-
-    private boolean bonusInfluenceEffect;
-
-    public Player(String playerName, Integer integer, TowerColor towerColor, Bag bag, int i, int i1){
-        assistantCards = new AssistantDeck();
-        nikname = playerName;
-        NumCoin = 1;
-        whizard = integer;
-        playInTeam = false;
-        teammate = null;
-        tower = towerColor;
-        board = new SchoolBoard(bag, this, i, i1);
-        bonusInfluenceEffect = false;
+    /**
+     * Constructor of Player
+     * @author elia_laz
+     * @param player player name
+     * @param id id of the player
+     **/
+    public Player(String player, int id, int coin) {
+        name = player;
+        playerId = id;
+        this.coin = coin;
     }
 
-    public Player(String playerName, Integer integer, TowerColor towerColor, String name, Bag bag){
-        assistantCards = new AssistantDeck();
-        nikname = playerName;
-        NumCoin = 1;
-        whizard = integer;
-        playInTeam = true;
-        teammate = name;
-        tower = towerColor;
-        board = new SchoolBoard(bag, this, 8, 7);
-        bonusInfluenceEffect = false;
+    /**
+     * Getter of the id of the player
+     * @author elia_laz
+     * @return of the playerId
+     **/
+    public int getId(){
+        return playerId;
     }
 
-    public Player(String playerName, Integer integer, String name, Bag bag){
-        assistantCards = new AssistantDeck();
-        nikname = playerName;
-        NumCoin = 1;
-        whizard = integer;
-        playInTeam = true;
-        teammate = name;
-        board = new SchoolBoard(bag, this, 0, 7);
-        bonusInfluenceEffect = false;
+    /**
+     * Add one coin to the player reserve
+     * @author elia_laz
+     **/
+    public void addCoin(){
+        coin++;
     }
 
-    public AssistantDeck getAssistantCards() {
-        return assistantCards;
+    /**
+     * Remove one coin to the player reserve
+     * @author elia_laz
+     **/
+    public void removeCoin(){
+        coin--;
     }
 
-    public String getPlayInTeam() {
-        return teammate;
+    /**
+     * Getter of the coin player reserve
+     * @author elia_laz
+     * @return coin number
+     **/
+    public int getCoin(){
+        return coin;
     }
 
-    public String getNikname() {
-        return nikname;
-    }
-
-    public TowerColor getTowerColor() {
-        return tower;
-    }
-
-    public TowerColor getTower() {
-        board.removeTower();
-        return tower;
-    }
-
-    public int getNumCoin() {
-        return NumCoin;
-    }
-
-    public void removeCoint(int num){
-        NumCoin = NumCoin- num;
-    }
-
-    public void addNumCoin(int num) {
-        this.NumCoin += num;
-    }
-
-    public void bringStudents(CloudTile tile) {
-        List<Student> b = board.getEntranceStudent();
-        b.addAll(tile.getStudents());
-    }
-
-    public void removeStudents(ArrayList<Student> students) {
-        List<Student> b = board.getEntranceStudent();
-        b.removeAll(students);
-    }
-
-    public void addStudentOnCorridor(Student s, GameBoard b) {
-        for (Student s1: board.getEntranceStudent()) {
-            if (s1.color == s.color){
-                board.moveToCorridor(board.getEntranceStudent().indexOf(s1), b);
-                break;
-            }
-        }
-    }
-
-    public boolean hasProfessor(Color c) {
-        return board.hasProf(c);
-    }
-
-    public void moveTower(IslandTile i) {
-        board.removeTower();
-        i.setTower(tower);
-    }
-
-    public void bringTower() {
-        board.addTower();
-    }
-
-    public int getCorridorStudent(Color color) {
-        return board.getCorridorStudent(color);
-    }
-
-    public void setProfessor(Color color) {
-        board.addProfessor(color);
-    }
-
-    public void removeProfessor(Color color) {
-        board.removeProfessor(color);
-    }
-
-    public SchoolBoard getBoard() {
-        return board;
-    }
-
-    public boolean hasbonus() {
-        return this.bonusInfluenceEffect;
-    }
-
-    public void removeBonus() {
-        bonusInfluenceEffect = false;
-    }
-
-    public void setBonusInfluenceEffect() {
-        this.bonusInfluenceEffect = true;
+    /**
+     * Getter of the player name
+     * @author elia_laz
+     * @return of the player name
+     **/
+    public String getName(){
+        return name;
     }
 }

@@ -1,94 +1,161 @@
 package it.polimi.ingsw.Model;
 
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * SchoolBoard Class for every Player
+ * @author elia_laz
+ **/
 public class SchoolBoard {
-    private List<Student> EntranceStudent;
-    private final ArrayList<Corridor> DiningRoom;
-    private int NumTower;
-    private final Player ownedby;
+    private int[] corridor;
+    private int tower;
+    private TowerColor color;
+    private int[] entrance;
+    private boolean[] professor;
+    private Player player;
 
-    public SchoolBoard(Bag bag, Player player, int townum, int studentnum){
-        this.DiningRoom = new ArrayList<Corridor>();
-        this.DiningRoom.add(new Corridor(Color.GREEN));
-        this.DiningRoom.add(new Corridor(Color.RED));
-        this.DiningRoom.add(new Corridor(Color.YELLOW));
-        this.DiningRoom.add(new Corridor(Color.PINK));
-        this.DiningRoom.add(new Corridor(Color.BLUE));
-        this.NumTower = townum;
-        this.ownedby = player;
-        this.EntranceStudent = bag.getStudent(studentnum);
+    /**
+     * Constructor one of the SchoolBoard
+     * @author elia_laz
+     * @param color color of the tower in the schoolboard
+     * @param numTower number of the tower in the schoolboard
+     * @param entrance students in the entrance
+     **/
+    public SchoolBoard(TowerColor color, int numTower, int[] entrance){
+        this.color = color;
+        tower = numTower;
+        corridor = new int[]{0,0,0,0,0};
+        this.entrance = entrance;
+        professor = new boolean[]{false, false, false, false, false};
     }
 
-    public int getNumTower() {
-        return NumTower;
+    /**
+     * Constructor two of the SchoolBoard
+     * @author elia_laz
+     **/
+    public SchoolBoard(int[] entrance){
+        corridor = new int[]{0,0,0,0,0};
+        this.entrance = entrance;
     }
 
-    public void addTower(){
-        this.NumTower++;
-    }
-
-    public void removeTower(){
-        this.NumTower--;
-    }
-
-    public void addProfessor(Color color){
-        for (Corridor corridor: this.DiningRoom) {
-            if(corridor.isColor(color)){
-                corridor.setProfessor(true);
-            }
-        }
-    }
-
-    public void removeProfessor(Color color){
-        for (Corridor corridor: this.DiningRoom) {
-            if(corridor.isColor(color)){
-                corridor.setProfessor(false);
-            }
-        }
-    }
-
-    public List<Student> getEntranceStudent(){
-        return EntranceStudent;
-    }
-
-    public void moveToCorridor(int studentNum, GameBoard board){
-        for (Corridor corridor: this.DiningRoom) {
-            if(corridor.isColor(EntranceStudent.get(studentNum).color)){
-                if(corridor.addStudent()){
-                    this.ownedby.addNumCoin(1);
-                    board.removeCoin(1);
+    /**
+     * Service method that move the students to the corrispettive corridor
+     * @author elia_laz
+     * @param toSchoolBoard students moved from entrance to corridor
+     **/
+    public void moveCorridor(int[] toSchoolBoard) {
+        for(int i=0; i<5; i++){
+            for(int j=0; j<toSchoolBoard[i]; j++){
+                corridor[i]+=1;
+                entrance[i]-=1;
+                if(corridor[i]==3 || corridor[i]==6 || corridor[i]==9) {
+                    player.addCoin();
                 }
             }
         }
-        EntranceStudent.remove(studentNum);
     }
 
-    public boolean hasProf(Color c) {
-        for (Corridor c1: DiningRoom) {
-            if(c1.isColor(c)){
-                return c1.isProfessor();
-            }
-        }
-        return false;
+    /**
+     * Service method that set the player that own this schoolboard
+     * @author elia_laz
+     * @param player player that own this schoolboard
+     **/
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
-    public int getCorridorStudent(Color color) {
-        for (Corridor c: DiningRoom) {
-            if (c.isColor(color)){
-                return c.getStudentNumber();
-            }
+    /**
+     * Service method that move the students to the entrance
+     * @author elia_laz
+     * @param students moved from entrance to corridor
+     **/
+    public void moveToEntrance(int[] students) {
+        for(int i=0; i<5; i++){
+            entrance[i]+=students[i];
         }
-        return 0;
     }
 
-    public Corridor getCorridor(Color color){
-        for (Corridor x : DiningRoom) {
-            if (x.isColor(color)) {
-                return x;
+    /**
+     * Service method that remove the students from the entrance
+     * @author elia_laz
+     * @param students moved from entrance to corridor
+     **/
+    public void removeEntrance(int[] students) {
+        for(int i=0; i<5; i++){
+            entrance[i]-=students[i];
+        }
+    }
+
+    /**
+     * Service method that return the Corridor
+     * @author elia_laz
+     * @param index moved from entrance to corridor
+     **/
+    public int getCorridor(int index) {
+        return corridor[index];
+    }
+
+    /**
+     * Service method that return true if the Schoolboard has the Professor
+     * @author elia_laz
+     * @param index moved from entrance to corridor
+     **/
+    public boolean isProfessor(int index) {
+        return professor[index];
+    }
+
+    /**
+     * Service method that set the Professor
+     * @author elia_laz
+     * @param index moved from entrance to corridor
+     * @param value value of the index professor
+     **/
+    public void setProfessor(int index, boolean value) {
+        professor[index] = value;
+    }
+
+    /**
+     * Service method that remove tower
+     * @author elia_laz
+     * @param number number of the toweer to be removed
+     **/
+    public void removeTower(int number) {
+        tower -= number;
+    }
+
+    /**
+     * Service method that add tower
+     * @author elia_laz
+     * @param number number of the tower to be added
+     **/
+    public void addTower(int number) {
+        tower += number;
+    }
+
+    /**
+     * Service method that get the color of the tower
+     * @author elia_laz
+     * @return color of the tower
+     **/
+    public TowerColor getColor() {
+        return color;
+    }
+
+    /**
+     * Service method that remove students from corridor
+     * @author elia_laz
+     * @param students students need to be removed
+     **/
+    public int removeFromCorridor(int[] students) {
+        for(int i=0; i<5; i++){
+            if(this.corridor[i] < students[i]){
+                int j = corridor[i];
+                this.corridor[i]=0;
+                return j;
+            }
+            else{
+                this.corridor[i]-=students[i];
+                return -1;
             }
         }
-        return null;
+        return -1;
     }
 }

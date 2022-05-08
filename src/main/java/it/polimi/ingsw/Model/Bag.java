@@ -1,85 +1,90 @@
 package it.polimi.ingsw.Model;
 
-import java.util.ArrayList;
 
+import java.util.Random;
+
+/**
+ * Bag class for students geenration
+ * @author elia_laz
+ **/
 public class Bag {
-    private int yellow_extracted;
-    private int green_extracted;
-    private int pink_extracted;
-    private int blue_extracted;
-    private int red_extracted;
 
-    public Bag(){
-        yellow_extracted = 0;
-        green_extracted = 0;
-        pink_extracted = 0;
-        blue_extracted = 0;
-        red_extracted = 0;
+    private int[] studentsGenerated;
+    private Random random;
+    private int maxNum;
+
+    /**
+     * Constructor
+     * @author elia_laz
+     * @param maxNum max number of the students generated
+     **/
+    public Bag(int maxNum){
+        studentsGenerated = new int[]{0, 0, 0, 0, 0};
+        random = new Random();
+        this.maxNum = maxNum;
     }
 
-    public ArrayList<Student> getStudent(int num){
-        ArrayList<Student> generated = new ArrayList<Student>();
-        int i = 0;
-        Student student;
-        while(i < num){
-            student = new Student(Color.randomLetter());
-            switch (student.color){
-                case RED:
-                    if(red_extracted < 24){
-                        generated.add(student);
-                        red_extracted++;
+    /**
+     * Students Generation/Random extraction
+     * @author elia_laz
+     * @param num Number of Students that need to be generated
+     * @return integer array represent the students extracted
+     **/
+    public int[] getStudents(int num){
+        int[] arr = {0,0,0,0,0};
+        int i=0;
+        while (i<num){
+            switch (random.nextInt(5)){
+                case 0:
+                    if(studentsGenerated[0]<maxNum){
+                        arr[0]++;
+                        studentsGenerated[0]++;
                         i++;
                     }
-                case BLUE:
-                    if(blue_extracted < 24){
-                        generated.add(student);
-                        blue_extracted++;
+                    break;
+                case 1:
+                    if(studentsGenerated[1]<maxNum){
+                        arr[1]++;
+                        studentsGenerated[1]++;
                         i++;
                     }
-                case PINK:
-                    if(pink_extracted < 24){
-                        generated.add(student);
-                        pink_extracted++;
+                    break;
+                case 2:
+                    if(studentsGenerated[2]<maxNum){
+                        arr[2]++;
+                        studentsGenerated[2]++;
                         i++;
                     }
-                case GREEN:
-                    if(green_extracted < 24){
-                        generated.add(student);
-                        green_extracted++;
+                    break;
+                case 3:
+                    if(studentsGenerated[3]<maxNum){
+                        arr[3]++;
+                        studentsGenerated[3]++;
                         i++;
                     }
-                case YELLOW:
-                    if(yellow_extracted < 24){
-                        generated.add(student);
-                        yellow_extracted++;
+                    break;
+                case 4:
+                    if(studentsGenerated[4]<maxNum){
+                        arr[4]++;
+                        studentsGenerated[4]++;
                         i++;
                     }
+                    break;
             }
         }
-        return generated;
+        return arr;
     }
 
-    public int getSumExtracted() {
-        return yellow_extracted+green_extracted+pink_extracted+blue_extracted+red_extracted;
-    }
-
-    public void addStudents(Color color, int numStudents){
-        switch (color){
-            case PINK:
-                pink_extracted = pink_extracted - numStudents;
-                break;
-            case GREEN:
-                green_extracted = green_extracted - numStudents;
-                break;
-            case YELLOW:
-                yellow_extracted = yellow_extracted - numStudents;
-                break;
-            case BLUE:
-                blue_extracted = blue_extracted - numStudents;
-                break;
-            case RED:
-                red_extracted = red_extracted - numStudents;
-                break;
+    /**
+     * Students inserction
+     * @author elia_laz
+     * @param students Students that need to be reinserted inside the Bag
+     **/
+    public void addStudents(int[] students){
+        for(int i=0; i<5; i++){
+            if(students[i]!=0){
+                studentsGenerated[i] -= students[i];
+            }
         }
     }
 }
