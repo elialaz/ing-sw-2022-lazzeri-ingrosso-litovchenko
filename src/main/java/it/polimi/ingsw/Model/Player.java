@@ -5,12 +5,12 @@ import java.util.List;
 
 public class Player {
 
-    private final String nikname;
+    private final String nickname;
     private final AssistantDeck assistantCards;
     private TowerColor tower;
     private int NumCoin;
     private Boolean playInTeam;
-    private final int whizard;
+    private final int wizard;
     private final String teammate;
     private final SchoolBoard board;
 
@@ -18,9 +18,9 @@ public class Player {
 
     public Player(String playerName, Integer integer, TowerColor towerColor, Bag bag, int i, int i1){
         assistantCards = new AssistantDeck();
-        nikname = playerName;
+        nickname = playerName;
         NumCoin = 1;
-        whizard = integer;
+        wizard = integer;
         playInTeam = false;
         teammate = null;
         tower = towerColor;
@@ -30,9 +30,9 @@ public class Player {
 
     public Player(String playerName, Integer integer, TowerColor towerColor, String name, Bag bag){
         assistantCards = new AssistantDeck();
-        nikname = playerName;
+        nickname = playerName;
         NumCoin = 1;
-        whizard = integer;
+        wizard = integer;
         playInTeam = true;
         teammate = name;
         tower = towerColor;
@@ -42,9 +42,9 @@ public class Player {
 
     public Player(String playerName, Integer integer, String name, Bag bag){
         assistantCards = new AssistantDeck();
-        nikname = playerName;
+        nickname = playerName;
         NumCoin = 1;
-        whizard = integer;
+        wizard = integer;
         playInTeam = true;
         teammate = name;
         board = new SchoolBoard(bag, this, 0, 7);
@@ -59,8 +59,8 @@ public class Player {
         return teammate;
     }
 
-    public String getNikname() {
-        return nikname;
+    public String getNickname() {
+        return nickname;
     }
 
     public TowerColor getTowerColor() {
@@ -76,7 +76,7 @@ public class Player {
         return NumCoin;
     }
 
-    public void removeCoint(int num){
+    public void removeCoin(int num){
         NumCoin = NumCoin- num;
     }
 

@@ -9,11 +9,11 @@ public abstract class Effect {
 
     public void payCard(Player player, GameBoard board){
         if (neverUse){
-            player.removeCoint(price);
+            player.removeCoin(price);
             neverUse = false;
         }
         else {
-            player.removeCoint(price);
+            player.removeCoin(price);
             board.addCoinPile(price);
         }
     }

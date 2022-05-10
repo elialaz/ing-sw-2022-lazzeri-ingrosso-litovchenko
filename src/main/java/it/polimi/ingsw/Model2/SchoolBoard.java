@@ -69,7 +69,7 @@ public class SchoolBoard {
     }
 
     /**
-     * Service method that return the Corridor
+     * Service method that return the number of students on each Corridor
      * @author elia_laz
      * @param index moved from entrance to corridor
      **/

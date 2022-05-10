@@ -21,7 +21,7 @@ public class Island {
     }
 
     /**
-     * Pubblic Constructor of all the Island
+     * Public Constructor of all the Island
      * @author elia_laz
      * @param position position of motherNature
      * @return an ArrayList<Island> of all the island correctly initialized based on motherNature position

@@ -63,7 +63,7 @@ public final class GameModel {
 
     public AssistantDeck getPlayerCard(String playerName){
         for (Player player: players) {
-            if(player.getNikname().equals(playerName)){
+            if(player.getNickname().equals(playerName)){
                 return player.getAssistantCards();
             }
         }
@@ -87,7 +87,7 @@ public final class GameModel {
 
     public void moveStudentsFromCloudToSchoolboard(String playerName, CloudTile tile){
         for (Player player: players) {
-            if(player.getNikname().equals(playerName)){
+            if(player.getNickname().equals(playerName)){
                 player.bringStudents(tile);
             }
         }
@@ -105,7 +105,7 @@ public final class GameModel {
 
     public void moveToIslandStudent(String playerName, ArrayList<Student> students, int islandnum){
         for (Player player: players) {
-            if(player.getNikname().equals(playerName)){
+            if(player.getNickname().equals(playerName)){
                 player.removeStudents(students);
                 IslandTile i = table.getIslandTile(islandnum);
                 for (Student s: students) {
@@ -117,7 +117,7 @@ public final class GameModel {
 
     public void moveToSchoolboardStudent(String playerName, ArrayList<Student> students){
         for (Player player: players) {
-            if(player.getNikname().equals(playerName)){
+            if(player.getNickname().equals(playerName)){
                 player.removeStudents(students);
                 for (Student s: students) {
                     player.addStudentOnCorridor(s, table);
@@ -187,4 +187,6 @@ public final class GameModel {
     public ArrayList<Effect> getCharacterCard(){
         return table.getExpertCard();
     }
+
+    public ArrayList<Player> getPlayers() { return players; }
 }
