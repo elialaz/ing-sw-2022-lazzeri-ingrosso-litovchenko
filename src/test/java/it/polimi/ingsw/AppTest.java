@@ -1,6 +1,6 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.Model.GameModel;
+import it.polimi.ingsw.Model_old.GameModel;
 
 /**
  * Unit test for simple App.

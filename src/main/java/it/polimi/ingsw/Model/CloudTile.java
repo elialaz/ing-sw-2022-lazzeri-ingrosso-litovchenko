@@ -1,22 +1,52 @@
 package it.polimi.ingsw.Model;
 
-import java.util.ArrayList;
-
+/**
+ * Main Class of the model, all the interraction from the controller is made with method here
+ * @author elia_laz
+ **/
 public class CloudTile {
-    private final int studentsNum;
-    private ArrayList<Student> students;
+    private int[] students;
+    private final int numStudents;
+    private boolean whitoutPhase;
 
-    public CloudTile(int studentsNum){
-        this.studentsNum = studentsNum;
-
+    /**
+     * Constructor of the CloudTile
+     * @author elia_laz
+     * @param numStudents students number on the CloudTile island
+     **/
+    public CloudTile(int numStudents){
+        whitoutPhase = false;
+        this.numStudents = numStudents;
     }
-    public ArrayList<Student> getStudents() {
-        ArrayList<Student> copia = (ArrayList<Student>) students.clone();
-        students.clear();
-        return copia;
+
+    /**
+     * Getter of the students on the CloudTile
+     * @author elia_laz
+     * @return array of students
+     **/
+    public int[] getStudents() {
+        int[] arr = students;
+        students = new int[]{0, 0, 0, 0, 0};
+        whitoutPhase = true;
+        return arr;
     }
 
-    public void setStudents(Bag generator) {
-        this.students = generator.getStudent(studentsNum);
+    /**
+     * Setter of the students on the CloudTile
+     * @author elia_laz
+     * @param bag bag that generate the students on the CloudTile
+     **/
+    public void setStudents(Bag bag) {
+        whitoutPhase = false;
+        students = bag.getStudents(numStudents);
+    }
+
+    /**
+     * Check if the CloudTile is empty
+     * @author elia_laz
+     * @return if CloudTile is whitout students
+     **/
+    public boolean isWhitoutPhase() {
+        return whitoutPhase;
     }
 }
