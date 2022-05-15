@@ -169,7 +169,7 @@ public class Game {
      **/
     public void updateCloudTile(){
         for (CloudTile c: cloudTiles) {
-            if(c.isWhitoutPhase()){
+            if(c.isWithoutPhase()){
                 c.setStudents(bag);
             }
         }

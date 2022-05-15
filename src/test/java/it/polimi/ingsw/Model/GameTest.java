@@ -1,12 +1,13 @@
 package it.polimi.ingsw.Model;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class GameTest {
     private Game gameTest;
 
-    @BeforeAll
+    @BeforeEach
     void setGameTest(){
         gameTest = new Game(3, "Filiberto", 47396, true);
 
@@ -19,7 +20,6 @@ class GameTest {
 
     @Test
     void updateCloudTile() {
-        setGameTest();
 
     }
 

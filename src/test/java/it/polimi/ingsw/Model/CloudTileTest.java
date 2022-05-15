@@ -17,7 +17,7 @@ class CloudTileTest {
         cloudTile = new CloudTile(3);
         int [] StartStudentOnIt = cloudTile.getStudents();
         assertEquals(3, StartStudentOnIt.length);
-        assertTrue(cloudTile.isWhitoutPhase());
+        assertTrue(cloudTile.isWithoutPhase());
     }
 
     /**
@@ -28,7 +28,7 @@ class CloudTileTest {
         bag = new Bag(10);
         cloudTile = new CloudTile(3);
         cloudTile.setStudents(bag);
-        assertFalse(cloudTile.isWhitoutPhase());
+        assertFalse(cloudTile.isWithoutPhase());
         assertEquals(3, cloudTile.getStudents().length);
     }
 
@@ -39,6 +39,6 @@ class CloudTileTest {
     void isWhitoutPhase() {
         cloudTile = new CloudTile(3);
         cloudTile.getStudents();
-        assertTrue(cloudTile.isWhitoutPhase());
+        assertTrue(cloudTile.isWithoutPhase());
     }
 }
