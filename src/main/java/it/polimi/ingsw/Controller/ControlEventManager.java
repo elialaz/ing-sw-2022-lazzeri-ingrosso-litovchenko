@@ -1,5 +1,4 @@
 package it.polimi.ingsw.Controller;
-import it.polimi.ingsw.Client.ClientEventManager;
 import it.polimi.ingsw.Event.EventManager;
 import it.polimi.ingsw.Event.EventReciver;
 

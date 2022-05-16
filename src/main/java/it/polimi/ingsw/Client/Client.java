@@ -102,7 +102,7 @@ public class Client {
 
     public static void main(String[] args) throws InterruptedException {
 
-        int serverPort = 8080;
+        int serverPort = 21000;
         String serverIP = "localhost";
         int cont = 0;
 
