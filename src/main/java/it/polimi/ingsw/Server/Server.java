@@ -1,38 +1,74 @@
 package it.polimi.ingsw.Server;
 
+import it.polimi.ingsw.Controller.ControlEventManager;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
+/**
+ * Main Class of the server, all the interaction from the controller is made with method here
+ * @author filibertoingrosso, elia_laz
+ **/
 public class Server {
+    private ServerSocket serverSocket;
+    private int port;
 
-    public static void main(String args[]) throws IOException {
+    /**
+     * Constructor of the Server
+     * @author filibertoingrosso, elia_laz
+     * @param port Number of the port for the server
+     **/
+    public Server(int port){
+        try{
+            this.port = port;
+            serverSocket = new ServerSocket(port);
+            System.out.println("Server avviato sulla porta " + port);
+        }
+        catch(IOException e){
+            System.out.println("Errore");
+            System.exit(-1);
+        }
+    }
+
+    /**
+     * Listener of the server for new connection
+     * @author filibertoingrosso, elia_laz
+     * @param EventManager EventManager for the controller
+     **/
+    public ConnectionHandler listen(ControlEventManager EventManager){
+        ConnectionHandler manager = new ConnectionHandler(EventManager);
+        try{
+            Socket listener = serverSocket.accept();
+            Thread t = new Thread(() -> manager.managerClient(listener));
+            t.start();
+        }
+        catch(IOException e){
+            System.out.println("Errore nella connessione con il client: "+ e);
+        }
+        return manager;
+    }
+
+    /**
+     * Main for testing the Server
+     * @author filibertoingrosso, elia_laz
+     **/
+    public static void main(String[] args){
         int serverPort;
-        ServerSocket serverSocket = null;
-        Server server = new Server();
-
+        ConnectionHandler prova;
         do {
             Scanner in = new Scanner(System.in);
             System.out.print("Choose the number of server port (it must be between 1024 and 65535):");
             serverPort = Integer.parseInt(in.nextLine());
         } while( serverPort < 1024  ||  serverPort > 65535 );
 
-        try {
-            serverSocket = new ServerSocket( serverPort );
-            System.out.print( "server created with success on port" + serverPort );
-        }catch( IOException e ){
-            System.out.print( "error" );
-            System.exit(-1);
-        }
+        Server server = new Server(serverPort);
 
-        try {
-            Socket ClientConnection = serverSocket.accept();
-            ConnectionHandler connectionHandler = new ConnectionHandler(server, ClientConnection);
-            Thread t = new Thread(connectionHandler);
-            t.start();
-        }catch (IOException e){
-            System.out.print( "connection error" );
+        System.out.println("Premere Ctrl + C per fermare il server");
+
+        while(true){
+            prova = server.listen(ControlEventManager.createControlEventManager());
         }
     }
 }

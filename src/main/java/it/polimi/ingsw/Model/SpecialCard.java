@@ -82,7 +82,7 @@ public abstract class SpecialCard {
         ArrayList<SpecialCard> character = new ArrayList<SpecialCard>();
         Random extractor = new Random();
         for(int i=0; i<3; i++){
-            int s = extractor.nextInt(0, selector.size());
+            int s = extractor.nextInt(selector.size());
             character.add(selector.get(s));
             selector.remove(s);
         }

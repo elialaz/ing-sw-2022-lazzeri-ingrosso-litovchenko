@@ -1,21 +1,24 @@
-package it.polimi.ingsw.Controller;
-import it.polimi.ingsw.Client.ClientEventManager;
+package it.polimi.ingsw.Client;
+
 import it.polimi.ingsw.Event.EventManager;
 import it.polimi.ingsw.Event.EventReciver;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-public class ControlEventManager implements EventManager {
+
+/**
+ * Event Manager for the Client
+ * @author elia_laz
+ **/
+public class ClientEventManager implements EventManager {
+
     private Map<String, List<EventReciver>> listeners = new HashMap<>();
 
     /**
      * Constructor
      * @author elia_laz
      **/
-    private ControlEventManager(String... operations) {
+    private ClientEventManager(String... operations) {
         for (String operation : operations) {
             this.listeners.put(operation, new ArrayList<>());
         }
@@ -26,8 +29,8 @@ public class ControlEventManager implements EventManager {
      * @author elia_laz
      * @return new ClientEventManager instance
      **/
-    static public ControlEventManager createControlEventManager(){
-        return new ControlEventManager("playerJoin", "setupStart", "cloudTileUpdate", "islandUpdate", "deckUpdate", "coinUpdate", "schoolBoardUpdate", "islandControlUpdate", "unionUpdate", "professorUpdate", "motherNatureUpdate", "characterCardUpdate");
+    static public ClientEventManager createClientEventManager(){
+        return new ClientEventManager("playerJoin", "setupStart", "cloudTileUpdate", "islandUpdate", "deckUpdate", "coinUpdate", "schoolBoardUpdate", "islandControlUpdate", "unionUpdate", "professorUpdate", "motherNatureUpdate", "characterCardUpdate");
     }
 
     /**
