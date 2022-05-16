@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Network.message;
+package it.polimi.ingsw.Network;
 
 import java.io.Serializable;
 
@@ -6,8 +6,7 @@ public class Message implements Serializable {
     private String PlayerNickname;
     private TypeofMessage typeofMessage;
 
-    public Message(String PlayerNickname, TypeofMessage typeofMessage){
-        this.PlayerNickname = PlayerNickname;
+    public Message(TypeofMessage typeofMessage){
         this.typeofMessage = typeofMessage;
     }
 

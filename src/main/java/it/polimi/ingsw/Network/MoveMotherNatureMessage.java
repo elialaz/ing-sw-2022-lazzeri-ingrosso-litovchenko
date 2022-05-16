@@ -1,10 +1,10 @@
-package it.polimi.ingsw.Network.message;
+package it.polimi.ingsw.Network;
 
 public class MoveMotherNatureMessage extends Message{
     private int islandId;
 
     public MoveMotherNatureMessage(String PlayerNickname, int islandId) {
-        super(PlayerNickname, TypeofMessage.MOVEMOTHERNATURE);
+        super(TypeofMessage.MOVEMOTHERNATURE);
         this.islandId  = islandId;
     }
 

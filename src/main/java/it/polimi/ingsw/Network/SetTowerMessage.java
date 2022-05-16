@@ -1,14 +1,13 @@
-package it.polimi.ingsw.Network.message;
+package it.polimi.ingsw.Network;
 
 import it.polimi.ingsw.Model.TowerColor;
-import it.polimi.ingsw.Network.server.Server;
 
 public class SetTowerMessage extends Message{
     private final TowerColor towerColor;
     private final int IdIsland;
 
     public SetTowerMessage( TowerColor towerColor, int IdIsland) {
-        super(, TypeofMessage.SETTOWER);
+        super(TypeofMessage.SETTOWER);
         this.towerColor = towerColor;
         this.IdIsland = IdIsland;
     }

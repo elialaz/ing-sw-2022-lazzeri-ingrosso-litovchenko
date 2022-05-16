@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Network.message;
+package it.polimi.ingsw.Network;
 
 public class NewGameRequest extends Message{
     private int numPlayer;
@@ -7,7 +7,7 @@ public class NewGameRequest extends Message{
     private boolean chat;
 
     public NewGameRequest(String PlayerNickname, int numPlayer, int gameId, boolean expertGameMode, boolean chat) {
-        super(PlayerNickname, TypeofMessage.NEWGAME);
+        super(TypeofMessage.NEWGAME);
         this.numPlayer = numPlayer;
         this.gameId = gameId;
         this.expertGameMode = expertGameMode;

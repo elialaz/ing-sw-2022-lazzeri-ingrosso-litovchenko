@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Network.message;
+package it.polimi.ingsw.Network;
 
 import java.util.Arrays;
 
@@ -6,7 +6,7 @@ public class ChooseCardMessage extends Message{
     private final int [][] cardChosen;
 
     public ChooseCardMessage(String PlayerNickname, int [][] cardChosen) {
-        super(PlayerNickname, TypeofMessage.CHOOSECARD);
+        super(TypeofMessage.CHOOSECARD);
         this.cardChosen = cardChosen;
     }
 

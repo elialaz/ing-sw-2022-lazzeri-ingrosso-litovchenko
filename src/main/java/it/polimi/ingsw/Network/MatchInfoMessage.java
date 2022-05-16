@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Network.message;
+package it.polimi.ingsw.Network;
 
 import it.polimi.ingsw.Model.Player;
 import it.polimi.ingsw.Model.SpecialCard;
@@ -12,7 +12,7 @@ public class MatchInfoMessage extends Message{
 
 
     public MatchInfoMessage(String PlayerNickname, List<SpecialCard> SpecialCards, List<Player> Gamers, int IslandLeft, Player ActiveGamer) {
-        super(PlayerNickname, TypeofMessage.GAMEINFO);
+        super(TypeofMessage.GAMEINFO);
         this.SpecialCards = SpecialCards;
         this.Gamers = Gamers;
         this.IslandLeft = IslandLeft;

@@ -1,18 +1,18 @@
-package it.polimi.ingsw.Network.message;
+package it.polimi.ingsw.Network;
 
-import it.polimi.ingsw.Model_old.GameBoard;
+import it.polimi.ingsw.Model.Game;
 
 public class GameBoardUpdateMessage extends Message{
-    private GameBoard board;
+    private Game board;
     private int IdPlayer;
 
-    public GameBoardUpdateMessage( GameBoard board, int Idplayer ) {
-        super( ,TypeofMessage.GAMEBOARDUPDATE);
+    public GameBoardUpdateMessage(Game board, int Idplayer) {
+        super(TypeofMessage.GAMEBOARDUPDATE);
         this.board = board;
         this.IdPlayer = Idplayer;
     }
 
-    public GameBoard getBoard() {
+    public Game getBoard() {
         return board;
     }
 

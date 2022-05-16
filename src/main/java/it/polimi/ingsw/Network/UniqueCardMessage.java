@@ -1,12 +1,10 @@
-package it.polimi.ingsw.Network.message;
-
-import it.polimi.ingsw.Model.Game;
+package it.polimi.ingsw.Network;
 
 public class UniqueCardMessage extends Message{
     private boolean isAlreadyUsed;
 
-    public UniqueCardMessage(, boolean isAlreadyUsed) {
-        super(, TypeofMessage.ALREADYUSED);
+    public UniqueCardMessage(boolean isAlreadyUsed) {
+        super(TypeofMessage.ALREADYUSED);
         this.isAlreadyUsed = isAlreadyUsed;
     }
 

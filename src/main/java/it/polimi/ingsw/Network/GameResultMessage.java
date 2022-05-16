@@ -1,10 +1,10 @@
-package it.polimi.ingsw.Network.message;
+package it.polimi.ingsw.Network;
 
 public class GameResultMessage extends Message{
     private final String winnerNickname;
 
     public GameResultMessage( String winnerNickname) {
-        super(, TypeofMessage.GAMERESULT);
+        super(TypeofMessage.GAMERESULT);
         this.winnerNickname = winnerNickname;
     }
 

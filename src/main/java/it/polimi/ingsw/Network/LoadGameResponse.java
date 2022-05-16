@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Network.message;
+package it.polimi.ingsw.Network;
 
 import it.polimi.ingsw.Model.Player;
 
@@ -6,7 +6,7 @@ public class LoadGameResponse extends Message {
     private final Player firstPlayer;
 
     public LoadGameResponse( Player firstPlayer) {
-        super(, TypeofMessage.LOADGAME);
+        super(TypeofMessage.LOADGAME);
         this.firstPlayer = firstPlayer;
     }
 

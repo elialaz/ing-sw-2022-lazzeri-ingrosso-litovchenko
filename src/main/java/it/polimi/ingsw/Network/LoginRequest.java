@@ -1,9 +1,9 @@
-package it.polimi.ingsw.Network.message;
+package it.polimi.ingsw.Network;
 
 public class LoginRequest extends Message {
 
     public LoginRequest(String PlayerNickname) {
-        super(PlayerNickname, TypeofMessage.LOGINREQUEST);
+        super(TypeofMessage.LOGINREQUEST);
     }
 
     @Override

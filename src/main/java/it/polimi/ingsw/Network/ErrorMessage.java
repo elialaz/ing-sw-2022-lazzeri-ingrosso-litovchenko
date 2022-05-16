@@ -1,9 +1,9 @@
-package it.polimi.ingsw.Network.message;
+package it.polimi.ingsw.Network;
 
 public class ErrorMessage extends Message{
 
     public ErrorMessage() {
-        super( , TypeofMessage.ERROR);
+        super(TypeofMessage.ERROR);
     }
 
     @Override

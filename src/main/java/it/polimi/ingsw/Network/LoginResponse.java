@@ -1,9 +1,9 @@
-package it.polimi.ingsw.Network.message;
+package it.polimi.ingsw.Network;
 
 public class LoginResponse extends  Message{
 
-    public LoginResponse(,) {
-        super(, TypeofMessage.LOGINRESPONSE);
+    public LoginResponse() {
+        super(TypeofMessage.LOGINRESPONSE);
     }
 
     @Override
