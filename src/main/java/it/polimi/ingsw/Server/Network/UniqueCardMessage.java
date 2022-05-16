@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Network;
+package it.polimi.ingsw.Server.Network;
 
 public class UniqueCardMessage extends Message{
     private boolean isAlreadyUsed;
