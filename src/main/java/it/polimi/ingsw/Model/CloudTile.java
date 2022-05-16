@@ -1,13 +1,13 @@
 package it.polimi.ingsw.Model;
 
 /**
- * Main Class of the model, all the interraction from the controller is made with method here
+ * Main Class of the model, all the interaction from the controller is made with method here
  * @author elia_laz
  **/
 public class CloudTile {
     private int[] students;
     private final int numStudents;
-    private boolean whitoutPhase;
+    private boolean withoutPhase;
 
     /**
      * Constructor of the CloudTile
@@ -15,7 +15,7 @@ public class CloudTile {
      * @param numStudents students number on the CloudTile island
      **/
     public CloudTile(int numStudents){
-        whitoutPhase = false;
+        withoutPhase = false;
         this.numStudents = numStudents;
     }
 
@@ -27,7 +27,7 @@ public class CloudTile {
     public int[] getStudents() {
         int[] arr = students;
         students = new int[]{0, 0, 0, 0, 0};
-        whitoutPhase = true;
+        withoutPhase = true;
         return arr;
     }
 
@@ -37,16 +37,16 @@ public class CloudTile {
      * @param bag bag that generate the students on the CloudTile
      **/
     public void setStudents(Bag bag) {
-        whitoutPhase = false;
+        withoutPhase = false;
         students = bag.getStudents(numStudents);
     }
 
     /**
      * Check if the CloudTile is empty
      * @author elia_laz
-     * @return if CloudTile is whitout students
+     * @return if CloudTile is without students
      **/
-    public boolean isWhitoutPhase() {
-        return whitoutPhase;
+    public boolean isWithoutPhase() {
+        return withoutPhase;
     }
 }

@@ -28,7 +28,7 @@ public class Island {
     }
 
     /**
-     * Pubblic Constructor of all the Island
+     * Public Constructor of all the Island
      * @author elia_laz
      * @param position position of motherNature
      * @return an ArrayList<Island> of all the island correctly initialized based on motherNature position
@@ -101,7 +101,7 @@ public class Island {
     }
 
     /**
-     * Service method to get get studnets number on island
+     * Service method to get students number on island
      * @author elia_laz
      * @param index color of the students
      **/
@@ -132,6 +132,11 @@ public class Island {
     public boolean isEntryTileMotherNature(){
         return noEntryTile!=0;
     }
+
+    /**
+     * Service method to get number of entry tiles on island
+     **/
+    public int getNoEntryTile(){ return this.noEntryTile; }
 
     /**
      * Service method for set the noCountTower effect

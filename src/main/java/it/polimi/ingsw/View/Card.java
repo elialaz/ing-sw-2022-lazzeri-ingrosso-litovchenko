@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Client.View;
+package it.polimi.ingsw.View;
 
 public class Card implements Animation{
 }
