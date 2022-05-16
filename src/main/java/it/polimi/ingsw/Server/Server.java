@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Network.server;
+package it.polimi.ingsw.Server;
 
 import it.polimi.ingsw.Controller.ControlEventManager;
 
