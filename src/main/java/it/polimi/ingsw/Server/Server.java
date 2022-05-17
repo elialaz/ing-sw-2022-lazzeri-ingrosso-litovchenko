@@ -35,19 +35,20 @@ public class Server {
     /**
      * Listener of the server for new connection
      * @author filibertoingrosso, elia_laz
-     * @param EventManager EventManager for the controller
+     * @param EventManager EventManager for the server
      **/
-    public ConnectionHandler listen(ControlEventManager EventManager){
-        ConnectionHandler manager = new ConnectionHandler(EventManager);
-        try{
-            Socket listener = serverSocket.accept();
-            Thread t = new Thread(() -> manager.managerClient(listener));
-            t.start();
+    public void listen(ServerEventManager EventManager){
+        int count=0;
+        while(true){
+            try {
+                Socket listener = serverSocket.accept();
+                System.out.println("connection Established");
+                ServerThread st=new ServerThread(listener, EventManager, count);
+                st.start();
+            } catch (IOException e) {
+                System.out.println("Errore nella connessione con il client: "+ e);
+            }
         }
-        catch(IOException e){
-            System.out.println("Errore nella connessione con il client: "+ e);
-        }
-        return manager;
     }
 
     /**
@@ -56,7 +57,6 @@ public class Server {
      **/
     public static void main(String[] args){
         int serverPort;
-        ConnectionHandler prova;
         do {
             Scanner in = new Scanner(System.in);
             System.out.print("Choose the number of server port (it must be between 1024 and 65535):");
@@ -67,8 +67,7 @@ public class Server {
 
         System.out.println("Premere Ctrl + C per fermare il server");
 
-        while(true){
-            prova = server.listen(ControlEventManager.createControlEventManager());
-        }
+        Thread acceptConnection = new Thread(() -> server.listen(ServerEventManager.createControlEventManager()));
+        acceptConnection.start();
     }
 }

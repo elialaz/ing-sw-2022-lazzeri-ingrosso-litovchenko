@@ -1,4 +1,4 @@
 package it.polimi.ingsw.Controller;
 
-public class SetupPhase implements GameController {
+public class SetupPhase {
 }

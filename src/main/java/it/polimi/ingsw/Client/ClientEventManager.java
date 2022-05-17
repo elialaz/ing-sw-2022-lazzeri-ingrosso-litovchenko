@@ -24,13 +24,14 @@ public class ClientEventManager implements EventManager {
         }
     }
 
+    //TODO
     /**
      * Factory Constructor
      * @author elia_laz
      * @return new ClientEventManager instance
      **/
     static public ClientEventManager createClientEventManager(){
-        return new ClientEventManager("playerJoin", "setupStart", "cloudTileUpdate", "islandUpdate", "deckUpdate", "coinUpdate", "schoolBoardUpdate", "islandControlUpdate", "unionUpdate", "professorUpdate", "motherNatureUpdate", "characterCardUpdate");
+        return new ClientEventManager();
     }
 
     /**
