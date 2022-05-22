@@ -19,7 +19,7 @@ public class ChosenIsland extends SpecialCard {
     /**
      * Method that execute the effect
      * @author elia_laz
-     * @param game game where the effect need to be applyed
+     * @param game game where the effect need to be applied
      * @param island island on where the influence need to be calculated
      **/
     public void GetEffect(Game game, Island island) {

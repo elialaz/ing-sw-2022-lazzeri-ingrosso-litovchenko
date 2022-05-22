@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.Controller.PlanningPhase;
+import it.polimi.ingsw.Event.EventReciver;
 import it.polimi.ingsw.Exception.*;
 import java.util.*;
 
@@ -49,8 +51,8 @@ public class Game {
         professorControl = false;
         plusTwoEffect = false;
         professor = new boolean[]{true,true,true,true,true};
-        islandTile = Island.tableIslandConstructor(position);
         position = new MotherNature();
+        islandTile = Island.tableIslandConstructor(position);
         bag = new Bag(24);
         if(expert){
             expertCard = SpecialCard.getCharacter(bag);
@@ -73,7 +75,7 @@ public class Game {
     }
 
     /**
-     * Service method to add the remain Players to the Game
+     * Service method to add the remaining Players to the Game
      * @author elia_laz
      * @param playerName name of the player to be added to the current Game
      * @throws ToMuchPlayerExcetpion when playerNum is equal to gamer lenght
@@ -95,7 +97,7 @@ public class Game {
     }
 
     /**
-     * Service method setup the model for 2 player Game
+     * Service method set up the model for 2 player Game
      * @author elia_laz
      **/
     private void setupTwo(){
@@ -432,5 +434,119 @@ public class Game {
      **/
     public ArrayList<SpecialCard> getExpertCard(){
         return expertCard;
+    }
+
+    /**
+     * Service method for subscribe to a particular event
+     * @author elia_laz
+     * @param subscriber listener for the events
+     * @param events event type
+     **/
+    public void eventSubscrbe(EventReciver subscriber, String events) {
+        manager.subscribe(events, subscriber);
+    }
+
+    /**
+     * Getter of the player nikname
+     * @author elia_laz
+     * @param id number of the player in the arraylist
+     * @return String nickname of the player selected
+     **/
+    public String getGamerbyid(int id) {
+        return gamer.get(id).getName();
+    }
+
+    /**
+     * Getter of the player id
+     * @author elia_laz
+     * @param nickname nickname of the player to get the id
+     * @return int id of the player selected
+     **/
+    public int getGamerIdbynickname(String nickname){
+        for (Player p: gamer) {
+            if(p.getName().equals(nickname)){
+                return p.getId();
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Service Method to get the player order
+     * @author elia_laz
+     * @return int array with the player order of the next turn based on player id
+     **/
+    public ArrayList<Integer> getPlanningPhaseOrder(){
+        ArrayList<Integer> order = new ArrayList<Integer>();
+        ArrayList<Integer> value = new ArrayList<Integer>();
+        order.add(0);
+        value.add(assistantCard.get(0).getLastCardValue());
+        for(int i=1; i<playerNum; i++){
+            for(int j=0; j<=i; j++){
+                if(assistantCard.get(i).getLastCardValue() < value.get(j)){
+                    value.add(j, assistantCard.get(i).getLastCardValue());
+                    order.add(j, i);
+                }
+            }
+        }
+        return order;
+    }
+
+    /**
+     * Service Method to get the Island by the id
+     * @author elia_laz
+     * @return and Island
+     **/
+    public Island getIslandById(int id){
+        return islandTile.get(id);
+    }
+
+    /**
+     * Service Method to get last used card value by a player
+     * @author elia_laz
+     * @param id id of the player
+     * @return int movement allowed
+     **/
+    public int getLastCardMovementAllowed(int id) {
+        return assistantCard.get(id).getLastMotherNatureValue();
+    }
+
+    /**
+     * Service Method to check if the player as ended is tower
+     * @author elia_laz
+     * @param id id of the player
+     **/
+    public boolean isFinishTower(int id) {
+        return (schoolboards.get(id).getTower() == 0);
+    }
+
+    /**
+     * Service Method to check island number
+     * @author elia_laz
+     **/
+    public int islandNUm() {
+        return islandTile.size();
+    }
+
+    /**
+     * Service Method to check which player get the big number of tower on the gameboard
+     * @author elia_laz
+     * @return nickname of the player
+     **/
+    public String checkTowerNum() {
+        int id = 0;
+        int num = schoolboards.get(0).getTower();
+        for(int i=1; i< schoolboards.size(); i++){
+            if(schoolboards.get(i).getTower() > num){
+                num = schoolboards.get(i).getTower();
+                id = i;
+            }
+            if(schoolboards.get(i).getTower() == num){
+                if(schoolboards.get(i).getProfessor() > schoolboards.get(id).getProfessor()){
+                    id = i;
+                }
+            }
+        }
+        return this.getGamerbyid(id);
     }
 }

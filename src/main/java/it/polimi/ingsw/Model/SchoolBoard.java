@@ -158,4 +158,26 @@ public class SchoolBoard {
         }
         return -1;
     }
+
+    /**
+     * Getter of the Tower variable
+     * @author elia_laz
+     **/
+    public int getTower() {
+        return tower;
+    }
+
+    /**
+     * Getter of the professor number
+     * @author elia_laz
+     **/
+    public int getProfessor() {
+        int count=0;
+        for (boolean b : professor) {
+            if (b) {
+                count++;
+            }
+        }
+        return count;
+    }
 }

@@ -54,7 +54,7 @@ public class ModelEventManager implements EventManager {
     public void notify(String eventType) {
         List<EventReciver> users = listeners.get(eventType);
         for (EventReciver listener : users) {
-            listener.update();
+            listener.update(eventType);
         }
     }
 }

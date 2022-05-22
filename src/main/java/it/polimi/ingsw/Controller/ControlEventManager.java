@@ -27,7 +27,7 @@ public class ControlEventManager implements EventManager {
      * @return new ClientEventManager instance
      **/
     static public ControlEventManager createControlEventManager(){
-        return new ControlEventManager();
+        return new ControlEventManager("nextmove", "muchPlayer", "gamerPlanningTurnNotify", "gamerActionTurnNotify", "movingMotherNatureGamerTurn", "selectCloudTile", "win");
     }
 
     /**
@@ -51,7 +51,7 @@ public class ControlEventManager implements EventManager {
     public void notify(String eventType) {
         List<EventReciver> users = listeners.get(eventType);
         for (EventReciver listener : users) {
-            listener.update();
+            listener.update(eventType);
         }
     }
 }

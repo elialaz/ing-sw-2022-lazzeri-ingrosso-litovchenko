@@ -34,11 +34,11 @@ class ServerThread extends Thread{
             }
         } catch (IOException e) {
 
-            line=this.getName(); //reused String line for getting thread name
+            line=this.getName();
             System.out.println("IO Error/ Client "+line+" terminated abruptly");
         }
         catch(NullPointerException e){
-            line=this.getName(); //reused String line for getting thread name
+            line=this.getName();
             System.out.println("Client "+line+" Closed");
         }
 
@@ -63,6 +63,6 @@ class ServerThread extends Thread{
             catch(IOException ie){
                 System.out.println("Socket Close Error");
             }
-        }//end finally
+        }
     }
 }

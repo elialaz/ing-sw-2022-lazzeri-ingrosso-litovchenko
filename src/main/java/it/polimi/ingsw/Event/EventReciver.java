@@ -6,5 +6,5 @@ package it.polimi.ingsw.Event;
  * @author elia_laz
  **/
 public interface EventReciver {
-    public void update();
+    public void update(String eventType);
 }
