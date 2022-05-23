@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Main Class of the Client Connection
- * @author filibertoingrosso, elia_laz
+ * @author Filiberto Ingrosso, Elia Lazzeri, Nikita Litovchenko
  **/
 public class Client {
     private int serverPort;
@@ -22,7 +22,6 @@ public class Client {
 
     /**
      * Constructor of the Client
-     * @author filibertoingrosso, elia_laz
      * @param serverPort Number of the port of the server
      * @param serverIP Ip of the server
      **/
@@ -43,14 +42,15 @@ public class Client {
 
     /**
      * Service method for sending packet to the server
-     * @author filibertoingrosso, elia_laz
+     * @param data Contains the data of the packet
+     * @param type Is the type of packet
      **/
     public synchronized void sendPacket(String data, String type){
-        String risposta;
+        String answer;
         try {
             out.println(type + "////" + data);
-            risposta = in.readLine();
-            String[] tokens = risposta.split("////");
+            answer = in.readLine();
+            String[] tokens = answer.split("////");
             //manager.notify(tokens[0]);
             Client.response = tokens[1];
             System.out.println(tokens[1] + " " + tokens[0]);
@@ -62,7 +62,6 @@ public class Client {
 
     /**
      * Service method for receive packet from the server
-     * @author elia_laz
      **/
     public void recivePacket(){
         String response;
@@ -81,7 +80,6 @@ public class Client {
 
     /**
      * Service method for closing the socket
-     * @author filibertoingrosso, elia_laz
      **/
     public void close(){
         try{
@@ -93,13 +91,31 @@ public class Client {
     }
 
     /**
+     * Getter for returning the Server Port
+     **/
+    public int getServerPort() {
+        return serverPort;
+    }
+
+    /**
+     * Getter for returning the Server IP
+     **/
+    public String getServerIP() {
+        return serverIP;
+    }
+
+    /**
      * Service method for closing the socket
-     * @author filibertoingrosso, elia_laz
      **/
     public void sendAck(){
         out.println("ack////");
     }
 
+
+    /**
+     * The Main Class of the Client.
+     * @param args of type String[], the standard java main parameter
+     */
     public static void main(String[] args) throws InterruptedException {
 
         int serverPort = 21000;
