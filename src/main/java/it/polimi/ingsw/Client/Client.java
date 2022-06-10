@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Main Class of the Client Connection
- * @author Filiberto Ingrosso, Elia Lazzeri, Nikita Litovchenko
+ * @author filibertoingrosso, elia_laz, litovn
  **/
 public class Client {
     private int serverPort;

@@ -1,20 +1,52 @@
 package it.polimi.ingsw.Client.View.cli;
 
-import it.polimi.ingsw.Client.View.cli.template.Color;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
  * Class containing all the utilities needed to create a visual CLI
- * @author Nikita Litovchenko
+ * @author litovn
  **/
 
 public class CLIutils {
 
-    private CLIutils() {}
+    //ANSI character color
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[36m"; //cyan
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_PINK = "\u001B[35m"; //magenta
+    public static final String ANSI_WHITE = "\u001B[37m";
+    public static final String ANSI_RESET = "\u001B[0m";
+
+    //ANSI background color
+    public static final String ANSI_BRIGHT_BLACK = "\u001B[30;1m";
+    public static final String ANSI_BRIGHT_RED = "\u001B[31;1m";
+    public static final String ANSI_BRIGHT_GREEN = "\u001B[32;1m";
+    public static final String ANSI_BRIGHT_YELLOW = "\u001B[33;1m";
+    public static final String ANSI_BRIGHT_BLUE = "\u001B[34;1m";
+    public static final String ANSI_BRIGHT_PURPLE = "\u001B[35;1m";
+    public static final String ANSI_BRIGHT_CYAN = "\u001B[36m;1";
+    public static final String ANSI_BRIGHT_WHITE = "\u001B[37m:1";
+
+    //Symbols
+    public static final String VERT_DIVIDER = "⎪";
+    public static final String BOTTOM_LEFT_CORNER = "⌊";
+    public static final String BOTTOM_RIGHT_CORNER = "⌋";
+    public static final String TOP_LEFT_CORNER = "⌈";
+    public static final String TOP_RIGHT_CORNER = "⌉";
+    public static final String HOR_DIVIDER = "—";
+
+    public static final String PROFESSOR = "\u2742"; // ❂
+    public static final String STUDENT = "\u2A37"; // ⊛
+    public static final String MOTHER_NATURE = "\u26B6"; // ⚶
+    public static final String TOWER = "\u265C"; // ♜
+    public static final String COIN = "$";
+
+
 
     public static final String ERIANTYS =
-                " ██████████            ███                        █████                      \n"
+                 " ██████████            ███                        █████                      \n"
                 +"░░███░░░░░█           ░░░                        ░░███                       \n"
                 +" ░███  █ ░  ████████  ████   ██████   ████████   ███████   █████ ████  █████ \n"
                 +" ░██████   ░░███░░███░░███  ░░░░░███ ░░███░░███ ░░░███░   ░░███ ░███  ███░░  \n"
@@ -27,19 +59,11 @@ public class CLIutils {
                 +"                                                            ░░░░░░           \n";
 
     public static final String AUTHORS =
-                "\nDeveloped by: "
-                + "                            ┌┬┐┌─┐┌─┐┌┬┐    ┌─┐ ┌─┐                          \n"
-                + "                             │ ├┤ ├─┤│││     /   ├┤                          \n"
-                + "                             ┴ └─┘┴ ┴┴ ┴    └── └─┘                          \n\n"
-                + Color.YELLOW + "Elia Lazzeri" + Color.DEFAULT + ", "
-                + Color.WHITE + "Nikita Litovchenko"  + Color.DEFAULT + " & "
-                + Color.GREEN + "Filiberto Ingrosso" + Color.DEFAULT;
-
-    /**
-     * Initialization screen, the first thing that pops up once you start the game on CLI
-     **/
-
-    public void createGameboard() {
-
-    }
+                 "\nDeveloped by: "
+                +"                            ┌┬┐┌─┐┌─┐┌┬┐    ┌─┐ ┌─┐                          \n"
+                +"                             │ ├┤ ├─┤│││     /   ├┤                          \n"
+                +"                             ┴ └─┘┴ ┴┴ ┴    └── └─┘                          \n"
+                +CLIutils.ANSI_YELLOW + "Elia Lazzeri" + CLIutils.ANSI_RESET + ", "
+                +CLIutils.ANSI_WHITE + "Nikita Litovchenko"  + CLIutils.ANSI_RESET + " & "
+                +CLIutils.ANSI_GREEN + "Filiberto Ingrosso" + CLIutils.ANSI_RESET;
 }

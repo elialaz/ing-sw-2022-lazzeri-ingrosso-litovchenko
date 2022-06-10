@@ -1,5 +1,9 @@
 package it.polimi.ingsw.Server.Network;
 
+/**
+ * Network message class to request a new game creation
+ * @author filibertoingrosso
+ */
 public class NewGameRequest extends Message{
     private int numPlayer;
     private int gameId;

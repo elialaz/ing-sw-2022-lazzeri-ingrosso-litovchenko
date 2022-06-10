@@ -11,7 +11,6 @@ public class Deck {
 
     /**
      * Constructor of the Deck
-     * @author elia_laz
      **/
     public Deck(){
         assistantCardDeck = new int[][]{{1,2,3,4,5,6,7,8,9,10},{1,1,2,2,3,3,4,4,5,5}};
@@ -21,7 +20,6 @@ public class Deck {
 
     /**
      * Service method that add 2 move to the current card used
-     * @author elia_laz
      **/
     public void setEffectMove(){
         lastMotherNatureValue += 2;
@@ -29,7 +27,6 @@ public class Deck {
 
     /**
      * Service method that play a card
-     * @author elia_laz
      * @param card card index played
      **/
     public void playCard(int card) {
@@ -41,7 +38,6 @@ public class Deck {
 
     /**
      * Getter of lastCardUsedvalue
-     * @author elia_laz
      **/
     public int getLastCardValue() {
         return lastCardValue;
@@ -49,7 +45,6 @@ public class Deck {
 
     /**
      * Getter of lastMotherNatureValue
-     * @author elia_laz
      **/
     public int getLastMotherNatureValue() {
         return lastMotherNatureValue;
@@ -57,7 +52,6 @@ public class Deck {
 
     /**
      * Getter of assistantCardDeck
-     * @author elia_laz
      **/
     public int[][] getAssistantCardDeck() {
         return assistantCardDeck;

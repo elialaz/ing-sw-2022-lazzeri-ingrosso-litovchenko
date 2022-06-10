@@ -14,7 +14,6 @@ public class SchoolBoard {
 
     /**
      * Constructor one of the SchoolBoard
-     * @author elia_laz
      * @param color color of the tower in the schoolboard
      * @param numTower number of the tower in the schoolboard
      * @param entrance students in the entrance
@@ -29,7 +28,6 @@ public class SchoolBoard {
 
     /**
      * Constructor two of the SchoolBoard
-     * @author elia_laz
      **/
     public SchoolBoard(int[] entrance){
         corridor = new int[]{0,0,0,0,0};
@@ -38,7 +36,6 @@ public class SchoolBoard {
 
     /**
      * Service method that move the students to the corrispettive corridor
-     * @author elia_laz
      * @param toSchoolBoard students moved from entrance to corridor
      **/
     public void moveCorridor(int[] toSchoolBoard) {
@@ -55,7 +52,6 @@ public class SchoolBoard {
 
     /**
      * Service method that set the player that own this schoolboard
-     * @author elia_laz
      * @param player player that own this schoolboard
      **/
     public void setPlayer(Player player) {
@@ -64,7 +60,6 @@ public class SchoolBoard {
 
     /**
      * Service method that move the students to the entrance
-     * @author elia_laz
      * @param students moved from entrance to corridor
      **/
     public void moveToEntrance(int[] students) {
@@ -75,7 +70,6 @@ public class SchoolBoard {
 
     /**
      * Service method that remove the students from the entrance
-     * @author elia_laz
      * @param students moved from entrance to corridor
      **/
     public void removeEntrance(int[] students) {
@@ -86,7 +80,6 @@ public class SchoolBoard {
 
     /**
      * Service method that return the Corridor
-     * @author elia_laz
      * @param index moved from entrance to corridor
      **/
     public int getCorridor(int index) {
@@ -95,7 +88,6 @@ public class SchoolBoard {
 
     /**
      * Service method that return true if the Schoolboard has the Professor
-     * @author elia_laz
      * @param index moved from entrance to corridor
      **/
     public boolean isProfessor(int index) {
@@ -104,7 +96,6 @@ public class SchoolBoard {
 
     /**
      * Service method that set the Professor
-     * @author elia_laz
      * @param index moved from entrance to corridor
      * @param value value of the index professor
      **/
@@ -114,7 +105,6 @@ public class SchoolBoard {
 
     /**
      * Service method that remove tower
-     * @author elia_laz
      * @param number number of the toweer to be removed
      **/
     public void removeTower(int number) {
@@ -123,7 +113,6 @@ public class SchoolBoard {
 
     /**
      * Service method that add tower
-     * @author elia_laz
      * @param number number of the tower to be added
      **/
     public void addTower(int number) {
@@ -132,7 +121,6 @@ public class SchoolBoard {
 
     /**
      * Service method that get the color of the tower
-     * @author elia_laz
      * @return color of the tower
      **/
     public TowerColor getColor() {
@@ -141,7 +129,6 @@ public class SchoolBoard {
 
     /**
      * Service method that remove students from corridor
-     * @author elia_laz
      * @param students students need to be removed
      **/
     public int removeFromCorridor(int[] students) {
@@ -161,7 +148,6 @@ public class SchoolBoard {
 
     /**
      * Getter of the Tower variable
-     * @author elia_laz
      **/
     public int getTower() {
         return tower;
@@ -169,7 +155,6 @@ public class SchoolBoard {
 
     /**
      * Getter of the professor number
-     * @author elia_laz
      **/
     public int getProfessor() {
         int count=0;

@@ -11,7 +11,6 @@ public class NoEntryTilesEffect extends SpecialCard {
 
     /**
      * Constructor
-     * @author elia_laz
      **/
     public NoEntryTilesEffect(){
         setup(2);
@@ -20,7 +19,6 @@ public class NoEntryTilesEffect extends SpecialCard {
 
     /**
      * Method that execute the effect
-     * @author elia_laz
      * @param ChosenIsland island where the NoEntryTile need to be placed
      **/
     public void GetEffect(Island ChosenIsland) {
@@ -36,7 +34,6 @@ public class NoEntryTilesEffect extends SpecialCard {
 
     /**
      * Getter for the noEntryTiles on the card
-     * @author elia_laz
      * @return the number of EntryTile
      **/
     public int getNumEntryTile() {

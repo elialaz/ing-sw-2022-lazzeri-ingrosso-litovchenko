@@ -1,5 +1,9 @@
 package it.polimi.ingsw.Server.Network;
 
+/**
+ * Network message class to receive a generic response
+ * @author filibertoingrosso, elia_laz
+ */
 public class GenericResponse extends Message{
     private String message;
 

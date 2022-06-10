@@ -11,7 +11,6 @@ public class ReplaceStudentsInBag extends SpecialCard {
 
     /**
      * Constructor
-     * @author elia_laz
      **/
     public ReplaceStudentsInBag(){
         setup(3);
@@ -19,7 +18,6 @@ public class ReplaceStudentsInBag extends SpecialCard {
 
     /**
      * Method that execute the effect
-     * @author elia_laz
      * @param schoolBoards schoolboard list
      * @param students students that need to be replaced
      * @param bag bag where students where generated

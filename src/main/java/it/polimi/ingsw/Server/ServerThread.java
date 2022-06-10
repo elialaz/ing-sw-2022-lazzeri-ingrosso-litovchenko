@@ -3,6 +3,10 @@ package it.polimi.ingsw.Server;
 import java.io.*;
 import java.net.Socket;
 
+/**
+ * Thread for Server concurrent execution
+ * @author elia_laz
+ **/
 class ServerThread extends Thread{
     int id;
     String line;
@@ -10,6 +14,12 @@ class ServerThread extends Thread{
     PrintWriter os;
     Socket s;
 
+    /**
+     * Constructor of ServerThread class
+     * @param s of type Socket
+     * @param eventManager of type ServerEventManager
+     * @param id of type int
+     */
     public ServerThread(Socket s, ServerEventManager eventManager, int id){
         this.id = id;
         line = null;
@@ -22,6 +32,9 @@ class ServerThread extends Thread{
         }
     }
 
+    /**
+     * Class to start running concurrent threads
+     */
     public void run() {
         try {
             line=is.readLine();

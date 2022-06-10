@@ -11,7 +11,6 @@ import it.polimi.ingsw.Model.*;
 public class ProfessorControl extends SpecialCard {
     /**
      * Constructor
-     * @author elia_laz
      **/
     public ProfessorControl(){
         setup(2);
@@ -19,7 +18,6 @@ public class ProfessorControl extends SpecialCard {
 
     /**
      * Method that execute the effect
-     * @author elia_laz
      * @param g game where apply the effect
      **/
     public void GetEffect(Game g) {

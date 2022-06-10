@@ -17,8 +17,7 @@ public class ServerEventManager implements EventManager {
     private Map<String, List<EventReciver>> listeners = new HashMap<>();
 
     /**
-     * Constructor
-     * @author elia_laz
+     * Constructor of class ServerEventManager
      **/
     private ServerEventManager(String... operations) {
         for (String operation : operations) {
@@ -29,7 +28,6 @@ public class ServerEventManager implements EventManager {
     //TODO
     /**
      * Factory Constructor
-     * @author elia_laz
      * @return new ClientEventManager instance
      **/
     static public ServerEventManager createControlEventManager(){
@@ -38,7 +36,6 @@ public class ServerEventManager implements EventManager {
 
     /**
      * Adding EventReciver instance to the subscriber List
-     * @author elia_laz
      * @param eventType Event that the Client are interested in
      * @param listener Client that are interested in a some particular Event
      **/
@@ -50,7 +47,6 @@ public class ServerEventManager implements EventManager {
 
     /**
      * Notify to some particular EventReciver that something is appened
-     * @author elia_laz
      * @param eventType Client type to notify some event
      **/
     @Override

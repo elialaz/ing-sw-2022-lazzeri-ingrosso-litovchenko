@@ -1,5 +1,9 @@
 package it.polimi.ingsw.Server.Network;
 
+/**
+ * Enum class of message types
+ * @author filibertoingrosso
+ */
 public enum TypeofMessage {
     LOGINREQUEST,
     LOGINRESPONSE,
@@ -15,5 +19,4 @@ public enum TypeofMessage {
     CHOOSECLOUDTILE,
     CHOOSECARD,
     ALREADYUSED,
-
 }

@@ -2,6 +2,10 @@ package it.polimi.ingsw.Server.Network;
 
 import java.io.Serializable;
 
+/**
+ * Network message class to define a type of message
+ * @author filibertoingrosso
+ */
 public class Message implements Serializable {
     private String PlayerNickname;
     private TypeofMessage typeofMessage;

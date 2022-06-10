@@ -2,6 +2,10 @@ package it.polimi.ingsw.Server.Network;
 
 import it.polimi.ingsw.Model.TowerColor;
 
+/**
+ * Network message class to set a tower to a  specific island
+ * @author filibertoingrosso
+ */
 public class SetTowerMessage extends Message{
     private final TowerColor towerColor;
     private final int IdIsland;

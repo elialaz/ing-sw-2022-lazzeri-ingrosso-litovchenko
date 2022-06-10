@@ -29,7 +29,6 @@ public class Game {
 
     /**
      * Constructor of the Model
-     * @author elia_laz
      * @param playerNum Number of Players attended to play this Game
      * @param firstPlayer Name of the player creating this Game
      * @param idGame id number of the current Game session
@@ -76,7 +75,6 @@ public class Game {
 
     /**
      * Service method to add the remaining Players to the Game
-     * @author elia_laz
      * @param playerName name of the player to be added to the current Game
      * @throws ToMuchPlayerExcetpion when playerNum is equal to gamer lenght
      **/
@@ -98,7 +96,6 @@ public class Game {
 
     /**
      * Service method set up the model for 2 player Game
-     * @author elia_laz
      **/
     private void setupTwo(){
         cloudTiles = new ArrayList<CloudTile>();
@@ -111,7 +108,6 @@ public class Game {
 
     /**
      * Service method setup the model for 3 player Game
-     * @author elia_laz
      **/
     private void setupTree() {
         cloudTiles = new ArrayList<CloudTile>();
@@ -126,7 +122,6 @@ public class Game {
 
     /**
      * Service method setup the model for 4 player Game
-     * @author elia_laz
      **/
     private void setupFour() {
         cloudTiles = new ArrayList<CloudTile>();
@@ -143,7 +138,6 @@ public class Game {
 
     /**
      * Service method plusTwoEffect effect
-     * @author elia_laz
      **/
     public void setPlusTwoEffectPlayer(int plusTwoEffectPlayer) {
         this.plusTwoEffectPlayer = plusTwoEffectPlayer;
@@ -151,7 +145,6 @@ public class Game {
 
     /**
      * Service method plusTwoEffect effect
-     * @author elia_laz
      **/
     public void setPlusTwoEffect(boolean plusTwoEffect) {
         this.plusTwoEffect = plusTwoEffect;
@@ -159,7 +152,6 @@ public class Game {
 
     /**
      * Service method professorControl effect
-     * @author elia_laz
      **/
     public void setProfessorControl(boolean professorControl) {
         this.professorControl = professorControl;
@@ -167,7 +159,6 @@ public class Game {
 
     /**
      * Service method for CloudTile to set the students on the Tile
-     * @author elia_laz
      **/
     public void updateCloudTile(){
         for (CloudTile c: cloudTiles) {
@@ -180,7 +171,6 @@ public class Game {
 
     /**
      * Service method for CloudTile to bring the students on the Schoolboard
-     * @author elia_laz
      **/
     public void takeCloudTile(int idPlayer, int indexCloudTile){
         for (int i=0; i<playerNum; i++) {
@@ -193,7 +183,6 @@ public class Game {
 
     /**
      * Service method for play a Card
-     * @author elia_laz
      * @param playerId Player id that play the card
      * @param card card that be played by the player
      **/
@@ -204,7 +193,6 @@ public class Game {
 
     /**
      * Service method for moving students from schoolboard entrance to schoolboard corridor
-     * @author elia_laz
      * @param toSchoolBoard students moving to SchoolBoard
      * @param idPlayer id of the Player that make the move
      **/
@@ -220,7 +208,6 @@ public class Game {
 
     /**
      * Service method for moving students from schoolboard entrance to island
-     * @author elia_laz
      * @param students students moving from entrance
      * @param idPlayer id of the Player that make the move
      * @param island island where player move the students
@@ -238,7 +225,6 @@ public class Game {
 
     /**
      * Service method for checking influence over professor
-     * @author elia_laz
      * @param schoolBoard schoolboard where the influence over professor need to be checked
      **/
     public void checkProfessorInfluence(SchoolBoard schoolBoard){
@@ -259,7 +245,6 @@ public class Game {
 
     /**
      * Service method for moving MotherNature
-     * @author elia_laz
      * @param move move forward of this number of island
      **/
     public void moveMotherNature(int move){
@@ -276,7 +261,6 @@ public class Game {
 
     /**
      * Service method for check control over island
-     * @author elia_laz
      * @param island island where Control need to be checked
      **/
     public void checkControl(Island island){
@@ -300,7 +284,6 @@ public class Game {
 
     /**
      * Service method for checking influence
-     * @author elia_laz
      * @param island island where the method need to chek influence
      **/
     public int checkInfluence(Island island){
@@ -339,7 +322,6 @@ public class Game {
 
     /**
      * Service method for checking union
-     * @author elia_laz
      * @param island island where the method need to check influence
      **/
     public void checkUnion(Island island){
@@ -418,7 +400,6 @@ public class Game {
 
     /**
      * Service method for playing the special card effect
-     * @author elia_laz
      * @return the expert card
      **/
     public ArrayList<SpecialCard> playEffect(){
@@ -429,7 +410,6 @@ public class Game {
 
     /**
      * Service method for getting the special card effect
-     * @author elia_laz
      * @return the expert card
      **/
     public ArrayList<SpecialCard> getExpertCard(){
@@ -438,7 +418,6 @@ public class Game {
 
     /**
      * Service method for subscribe to a particular event
-     * @author elia_laz
      * @param subscriber listener for the events
      * @param events event type
      **/
@@ -448,7 +427,6 @@ public class Game {
 
     /**
      * Getter of the player nikname
-     * @author elia_laz
      * @param id number of the player in the arraylist
      * @return String nickname of the player selected
      **/
@@ -458,7 +436,6 @@ public class Game {
 
     /**
      * Getter of the player id
-     * @author elia_laz
      * @param nickname nickname of the player to get the id
      * @return int id of the player selected
      **/
@@ -473,7 +450,6 @@ public class Game {
 
     /**
      * Service Method to get the player order
-     * @author elia_laz
      * @return int array with the player order of the next turn based on player id
      **/
     public ArrayList<Integer> getPlanningPhaseOrder(){
@@ -494,7 +470,6 @@ public class Game {
 
     /**
      * Service Method to get the Island by the id
-     * @author elia_laz
      * @return and Island
      **/
     public Island getIslandById(int id){
@@ -503,7 +478,6 @@ public class Game {
 
     /**
      * Service Method to get last used card value by a player
-     * @author elia_laz
      * @param id id of the player
      * @return int movement allowed
      **/
@@ -513,7 +487,6 @@ public class Game {
 
     /**
      * Service Method to check if the player as ended is tower
-     * @author elia_laz
      * @param id id of the player
      **/
     public boolean isFinishTower(int id) {
@@ -522,7 +495,6 @@ public class Game {
 
     /**
      * Service Method to check island number
-     * @author elia_laz
      **/
     public int islandNUm() {
         return islandTile.size();
@@ -530,7 +502,6 @@ public class Game {
 
     /**
      * Service Method to check which player get the big number of tower on the gameboard
-     * @author elia_laz
      * @return nickname of the player
      **/
     public String checkTowerNum() {

@@ -11,7 +11,6 @@ public class CloudTile {
 
     /**
      * Constructor of the CloudTile
-     * @author elia_laz
      * @param numStudents students number on the CloudTile island
      **/
     public CloudTile(int numStudents){
@@ -21,7 +20,6 @@ public class CloudTile {
 
     /**
      * Getter of the students on the CloudTile
-     * @author elia_laz
      * @return array of students
      **/
     public int[] getStudents() {
@@ -33,7 +31,6 @@ public class CloudTile {
 
     /**
      * Setter of the students on the CloudTile
-     * @author elia_laz
      * @param bag bag that generate the students on the CloudTile
      **/
     public void setStudents(Bag bag) {
@@ -43,7 +40,6 @@ public class CloudTile {
 
     /**
      * Check if the CloudTile is empty
-     * @author elia_laz
      * @return if CloudTile is without students
      **/
     public boolean isWithoutPhase() {

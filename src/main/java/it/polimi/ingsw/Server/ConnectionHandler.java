@@ -9,8 +9,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 /**
- * Connection Handler for t+every Client
- * @author filibertoingrosso, elia_laz
+ * Connection Handler for every Client
+ * @author filibertoingrosso, elia_laz, litovn
  **/
 public class ConnectionHandler{
     private Socket client;
@@ -25,7 +25,6 @@ public class ConnectionHandler{
 
     /**
      * Constructor of the ConnectionHandler
-     * @author filibertoingrosso, elia_laz
      * @param manager Event manager of the Controller
      **/
     public ConnectionHandler(ControlEventManager manager){
@@ -35,7 +34,6 @@ public class ConnectionHandler{
 
     /**
      * Client manager for every message incoming
-     * @author filibertoingrosso, elia_laz
      * @param socket socket where listen
      **/
     public void managerClient(Socket socket){
@@ -55,18 +53,17 @@ public class ConnectionHandler{
                     //manager.notify(tokens[0]);
                     ConnectionHandler.data_in = tokens[1];
                     System.out.println(tokens[0] + " " + tokens[1]);
-                    this.sendPacket("ricevuto", "server");
+                    this.sendPacket("recieved", "server");
                 }
             }
         }
         catch(IOException e){
-            System.out.println("Errore nella comunicazione con il client: "+ e);
+            System.out.println("Error while talking with the client: "+ e);
         }
     }
 
     /**
      * Check if Client is connected
-     * @author filibertoingrosso, elia_laz
      * @return true or false
      **/
     public boolean connectionStatus(){
@@ -75,7 +72,6 @@ public class ConnectionHandler{
 
     /**
      * Send a message
-     * @author elia_laz
      **/
     public void sendPacket(String data, String command){
         this.data_out = data;

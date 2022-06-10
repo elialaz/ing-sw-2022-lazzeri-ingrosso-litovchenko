@@ -1,5 +1,9 @@
 package it.polimi.ingsw.Server.Network;
 
+/**
+ * Network message class to receive a login request
+ * @author filibertoingrosso
+ */
 public class LoginRequest extends Message {
 
     public LoginRequest(String PlayerNickname) {

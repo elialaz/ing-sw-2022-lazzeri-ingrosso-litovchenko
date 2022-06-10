@@ -4,14 +4,12 @@ import it.polimi.ingsw.Model.*;
 
 /**
  * Character Card Class
- * @author elia_laz
  **/
 public class StudentToIsland extends SpecialCard {
     private int[] students;
 
     /**
      * Constructor
-     * @author elia_laz
      **/
     public StudentToIsland(Bag bag) {
         students = bag.getStudents(4);
@@ -20,7 +18,6 @@ public class StudentToIsland extends SpecialCard {
 
     /**
      * Method that execute the effect
-     * @author elia_laz
      * @param chosenStudent stedents that the player choose
      * @param chosenIsland island where the students need to be placed
      * @param bag bag where students where generated
@@ -42,7 +39,6 @@ public class StudentToIsland extends SpecialCard {
 
     /**
      * Getter for the students on the card
-     * @author elia_laz
      * @return the students number on the cart
      **/
     public int[] getStudents() {

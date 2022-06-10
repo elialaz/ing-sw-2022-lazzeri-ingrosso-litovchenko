@@ -15,14 +15,12 @@ public abstract class SpecialCard {
 
     /**
      * Service method for effect usage
-     * @author elia_laz
      **/
     public void GetEffect() {
     }
 
     /**
      * Service method for setup
-     * @author elia_laz
      **/
     public void setup(int num){
         price = num;
@@ -31,7 +29,6 @@ public abstract class SpecialCard {
 
     /**
      * Service method for price get
-     * @author elia_laz
      **/
     public int getPrice(){
         return price;
@@ -39,7 +36,6 @@ public abstract class SpecialCard {
 
     /**
      * Service method for new price set
-     * @author elia_laz
      **/
     public void setPrice(){
         price++;
@@ -47,7 +43,6 @@ public abstract class SpecialCard {
 
     /**
      * Getter method for neverUse
-     * @author elia_laz
      **/
     public boolean isNeverUse() {
         return neverUse;
@@ -55,7 +50,6 @@ public abstract class SpecialCard {
 
     /**
      * Setter method for neverUse
-     * @author elia_laz
      **/
     public void setNeverUse() {
         neverUse=false;
@@ -63,7 +57,6 @@ public abstract class SpecialCard {
 
     /**
      * Factory Constructor for CharacterCard Array random selected
-     * @author elia_laz
      **/
     static public ArrayList<SpecialCard> getCharacter(Bag bag){
         ArrayList<SpecialCard> selector = new ArrayList<SpecialCard>();

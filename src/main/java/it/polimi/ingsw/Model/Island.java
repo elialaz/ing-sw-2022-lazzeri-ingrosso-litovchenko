@@ -16,7 +16,6 @@ public class Island {
 
     /**
      * Constructor of the Island
-     * @author elia_laz
      * @param students students array of the new initialized island
      **/
     public Island(int[] students, int towerNum){
@@ -29,7 +28,6 @@ public class Island {
 
     /**
      * Public Constructor of all the Island
-     * @author elia_laz
      * @param position position of motherNature
      * @return an ArrayList<Island> of all the island correctly initialized based on motherNature position
      **/
@@ -54,7 +52,6 @@ public class Island {
 
     /**
      * Service method that add students to island
-     * @author elia_laz
      * @param students students array of the new initialized island
      **/
     public void addStudents(int[] students){
@@ -65,7 +62,6 @@ public class Island {
 
     /**
      * Service method check tower number on island
-     * @author elia_laz
      * @return true if there is no tower on the island
      **/
     public boolean checkNotTower(){
@@ -74,7 +70,6 @@ public class Island {
 
     /**
      * Service method check tower color
-     * @author elia_laz
      * @return tower color
      **/
     public TowerColor colorTower(){
@@ -83,7 +78,6 @@ public class Island {
 
     /**
      * Service method to set tower on island
-     * @author elia_laz
      * @param color color of the tower added
      * @param number number of the tower added
      **/
@@ -94,7 +88,6 @@ public class Island {
 
     /**
      * Service method to get tower on island
-     * @author elia_laz
      **/
     public int getTowerNum(){
         return tower;
@@ -102,7 +95,6 @@ public class Island {
 
     /**
      * Service method to get students number on island
-     * @author elia_laz
      * @param index color of the students
      **/
     public int getStudents(int index){
@@ -111,7 +103,6 @@ public class Island {
 
     /**
      * Service method to set the NoEntryTile effect
-     * @author elia_laz
      **/
     public void setNoEntryTile(){
         noEntryTile += 1;
@@ -119,7 +110,6 @@ public class Island {
 
     /**
      * Service method to update effect noEntryTile when motherNature be on island
-     * @author elia_laz
      **/
     public void noEntryTileMotherNature(){
         noEntryTile -= 1;
@@ -127,7 +117,6 @@ public class Island {
 
     /**
      * Service method to check effect noEntryTile
-     * @author elia_laz
      **/
     public boolean isEntryTileMotherNature(){
         return noEntryTile!=0;
@@ -140,7 +129,6 @@ public class Island {
 
     /**
      * Service method for set the noCountTower effect
-     * @author elia_laz
      **/
     public void setNoCountTower(boolean noCountTower) {
         this.noCountTower = noCountTower;
@@ -148,7 +136,6 @@ public class Island {
 
     /**
      * Service method for check the noCountTower effect
-     * @author elia_laz
      **/
     public boolean isNoCountTower() {
         return noCountTower;
@@ -156,7 +143,6 @@ public class Island {
 
     /**
      * Service method to set the noCountTower effect
-     * @author elia_laz
      **/
     public void setColorNotCount(int colorNotCount) {
         this.colorNotCount = colorNotCount;
@@ -164,7 +150,6 @@ public class Island {
 
     /**
      * Service method to get the noCountTower effect
-     * @author elia_laz
      **/
     public int getColorNotCount() {
         return colorNotCount;

@@ -13,7 +13,6 @@ public class EndPhase{
 
     /**
      * Constructor of the EndPhase
-     * @author elia_laz
      * @param manager manager for the Controller events
      * @param model current game model
      * @param controller controller of the current game
@@ -26,7 +25,6 @@ public class EndPhase{
 
     /**
      * Service method for check if the current game as ended
-     * @author elia_laz
      **/
     public void checkWin(){
         if(controller.isWinPhase()){

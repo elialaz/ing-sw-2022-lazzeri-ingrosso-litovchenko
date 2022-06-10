@@ -12,7 +12,6 @@ public class Player {
 
     /**
      * Constructor of Player
-     * @author elia_laz
      * @param player player name
      * @param id id of the player
      **/
@@ -24,7 +23,6 @@ public class Player {
 
     /**
      * Getter of the id of the player
-     * @author elia_laz
      * @return of the playerId
      **/
     public int getId(){
@@ -33,7 +31,6 @@ public class Player {
 
     /**
      * Add one coin to the player reserve
-     * @author elia_laz
      **/
     public void addCoin(){
         coin++;
@@ -41,7 +38,6 @@ public class Player {
 
     /**
      * Remove one coin to the player reserve
-     * @author elia_laz
      **/
     public void removeCoin(){
         coin--;
@@ -49,7 +45,6 @@ public class Player {
 
     /**
      * Getter of the coin player reserve
-     * @author elia_laz
      * @return coin number
      **/
     public int getCoin(){
@@ -58,7 +53,6 @@ public class Player {
 
     /**
      * Getter of the player name
-     * @author elia_laz
      * @return of the player name
      **/
     public String getName(){

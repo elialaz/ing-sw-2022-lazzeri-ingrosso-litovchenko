@@ -11,7 +11,6 @@ public class FromEntranceToDiningRoom extends SpecialCard {
 
     /**
      * Constructor
-     * @author elia_laz
      **/
     public FromEntranceToDiningRoom(){
         setup(1);
@@ -19,7 +18,6 @@ public class FromEntranceToDiningRoom extends SpecialCard {
 
     /**
      * Method that execute the effect
-     * @author elia_laz
      **/
     public void GetEffect(SchoolBoard schoolBoard, int[] studentsToDining, int[] studentsToEntrance) {
         schoolBoard.removeEntrance(studentsToDining);

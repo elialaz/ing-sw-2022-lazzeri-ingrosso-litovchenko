@@ -11,7 +11,6 @@ public class FromCartToEntrance extends SpecialCard {
 
     /**
      * Constructor
-     * @author elia_laz
      **/
     public FromCartToEntrance(Bag bag){
         students = bag.getStudents(6);
@@ -20,7 +19,6 @@ public class FromCartToEntrance extends SpecialCard {
 
     /**
      * Method that execute the effect
-     * @author elia_laz
      **/
     public void GetEffect(SchoolBoard schoolBoard, int[] studentsFromCart, int[] studentsFromEntrance) {
         schoolBoard.removeEntrance(studentsFromEntrance);
@@ -35,7 +33,6 @@ public class FromCartToEntrance extends SpecialCard {
 
     /**
      * Getter for the students on the card
-     * @author elia_laz
      * @return students on the cart
      **/
     public int[] getStudents() {
@@ -44,7 +41,6 @@ public class FromCartToEntrance extends SpecialCard {
 
     /**
      * Add students on the card
-     * @author elia_laz
      **/
     private void addStudents(int[] stud) {
         for(int i=0; i<5; i++){
@@ -54,7 +50,6 @@ public class FromCartToEntrance extends SpecialCard {
 
     /**
      * Remove students from the card
-     * @author elia_laz
      **/
     private void removeStudents(int[] stud) {
         for(int i=0; i<5; i++){

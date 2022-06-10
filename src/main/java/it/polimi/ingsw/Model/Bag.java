@@ -4,7 +4,7 @@ package it.polimi.ingsw.Model;
 import java.util.Random;
 
 /**
- * Bag class for students geenration
+ * Bag class for students generation
  * @author elia_laz
  **/
 public class Bag {

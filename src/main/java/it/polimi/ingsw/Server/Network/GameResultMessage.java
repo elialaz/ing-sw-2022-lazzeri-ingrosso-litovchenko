@@ -1,5 +1,9 @@
 package it.polimi.ingsw.Server.Network;
 
+/**
+ * Network message class to announce the game result with its winner
+ * @author filibertoingrosso, elia_laz
+ */
 public class GameResultMessage extends Message{
     private final String winnerNickname;
 

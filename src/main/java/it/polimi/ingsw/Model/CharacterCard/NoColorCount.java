@@ -10,7 +10,6 @@ public class NoColorCount extends SpecialCard {
 
     /**
      * Constructor
-     * @author elia_laz
      **/
     public NoColorCount(){
         setup(3);
@@ -18,7 +17,6 @@ public class NoColorCount extends SpecialCard {
 
     /**
      * Method that execute the effect
-     * @author elia_laz
      **/
     public void GetEffect(int color, Island island) {
         island.setColorNotCount(color);

@@ -2,6 +2,10 @@ package it.polimi.ingsw.Server.Network;
 
 import it.polimi.ingsw.Model.CloudTile;
 
+/**
+ * Network message class to choose a cloud tile
+ * @author filibertoingrosso, elia_laz
+ */
 public class ChooseCloudTileMessage extends Message{
     private final CloudTile cloudTile;
 

@@ -1,11 +1,12 @@
 package it.polimi.ingsw.Model;
 
 /**
- * Enum Class for TowerColor
- * @author elia_laz
+ * Enumeration Class for TowerColor
+ * @author litovn
  **/
+
 public enum TowerColor {
-    WHITE,
-    GRAY,
+    WHITE ,
+    GRAY ,
     BLACK
 }

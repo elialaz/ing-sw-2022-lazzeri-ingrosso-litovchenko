@@ -26,7 +26,6 @@ public class Controller implements EventReciver{
 
     /**
      * Constructor of the Controller
-     * @author elia_laz
      * @param playerNum number of the player attended
      * @param firstPlayer first player nickname
      * @param idGame unique id of the game
@@ -50,7 +49,6 @@ public class Controller implements EventReciver{
 
     /**
      * Service method to add more player to the current game session
-     * @author elia_laz
      * @param player player to be added to the game
      **/
     public void addPlayer(String player) throws ToMuchPlayerExcetpion{
@@ -59,7 +57,6 @@ public class Controller implements EventReciver{
 
     /**
      * Service Method to do the next move
-     * @author elia_laz
      **/
     @Override
     public void update(String eventType) {
@@ -89,7 +86,6 @@ public class Controller implements EventReciver{
 
     /**
      * Service Method to decide the next player nickname to play
-     * @author elia_laz
      * @param name nickname of the player
      **/
     public void setNextPlayerTurn(String name) {
@@ -98,7 +94,6 @@ public class Controller implements EventReciver{
 
     /**
      * Getter of the nextTurnPlayer
-     * @author elia_laz
      **/
     public String getNextTurnPlayer() {
         return nextTurnPlayer;
@@ -106,7 +101,6 @@ public class Controller implements EventReciver{
 
     /**
      * Setter of the nextMove
-     * @author elia_laz
      **/
     public void setNextMove(int nextMove) {
         this.nextMove = nextMove;
@@ -114,7 +108,6 @@ public class Controller implements EventReciver{
 
     /**
      * Service Method to play an assistant Card
-     * @author elia_laz
      * @param card card to be played
      **/
     public void playAssistantCard(int card) throws PlayerNotexist{
@@ -129,7 +122,6 @@ public class Controller implements EventReciver{
 
     /**
      * Service Method to move Students to Island
-     * @author elia_laz
      * @param students students array
      * @param islandNum island Number
      **/
@@ -141,7 +133,6 @@ public class Controller implements EventReciver{
 
     /**
      * Service Method to move Students to SchoolBoard
-     * @author elia_laz
      * @param students students array
      **/
     public void moveStudentsToSchoolboard(int[] students) throws PlayerNotexist{
@@ -151,7 +142,6 @@ public class Controller implements EventReciver{
 
     /**
      * Service Method to move Mother Nature
-     * @author elia_laz
      * @param num number of island to move
      **/
     public void moveMotherNature(int num) throws MoveNotAllowed{
@@ -169,7 +159,6 @@ public class Controller implements EventReciver{
 
     /**
      * Service Method to take the CloudTile
-     * @author elia_laz
      * @param num id of the cloud tile to be taken
      **/
     public void takeCloudTile(int num){
@@ -179,7 +168,6 @@ public class Controller implements EventReciver{
 
     /**
      * Getter of WinPhase
-     * @author elia_laz
      **/
     public boolean isWinPhase() {
         return winPhase;

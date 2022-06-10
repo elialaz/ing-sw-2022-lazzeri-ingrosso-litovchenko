@@ -19,7 +19,6 @@ public class PlanningPhase{
 
     /**
      * Constructor of the PlanningPhase
-     * @author elia_laz
      * @param manager manager for the controller events
      * @param model model of the current game session
      * @param playerNum number of the player in the current game session
@@ -36,7 +35,6 @@ public class PlanningPhase{
 
     /**
      * Service method to start the current game session
-     * @author elia_laz
      **/
     public void startGame(){
         controller.setNextPlayerTurn(model.getGamerbyid(playerPlayed));
@@ -50,7 +48,6 @@ public class PlanningPhase{
 
     /**
      * Service method to select the next player to do a planning move
-     * @author elia_laz
      **/
     public void planningMove(){
         if(playerPlayed == 0){

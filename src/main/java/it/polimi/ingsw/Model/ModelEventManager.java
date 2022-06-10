@@ -16,7 +16,6 @@ public class ModelEventManager implements EventManager {
 
     /**
      * Constructor
-     * @author elia_laz
      **/
     private ModelEventManager(String... operations) {
         for (String operation : operations) {
@@ -26,7 +25,6 @@ public class ModelEventManager implements EventManager {
 
     /**
      * Factory Constructor
-     * @author elia_laz
      * @return new ModelEventManager instance
      **/
     static public ModelEventManager createModelEventManager(){
@@ -34,8 +32,7 @@ public class ModelEventManager implements EventManager {
     }
 
     /**
-     * Adding EventReciver instance to the subscriber List
-     * @author elia_laz
+     * Adding EventReciever instance to the subscriber List
      * @param eventType Event that the Client are interested in
      * @param listener Client that are interested in a some particular Event
      **/
@@ -46,8 +43,7 @@ public class ModelEventManager implements EventManager {
     }
 
     /**
-     * Notify to some particular EventReciver that something is appened
-     * @author elia_laz
+     * Notify to some particular EventReciver that something is happened
      * @param eventType Client type to notify some event
      **/
     @Override

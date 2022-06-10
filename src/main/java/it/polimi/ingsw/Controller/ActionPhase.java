@@ -17,7 +17,6 @@ public class ActionPhase {
 
     /**
      * Constructor of the ActionPhase
-     * @author elia_laz
      * @param manager manager of the controller events
      * @param model model of the current game session
      * @param controller controller of the current game session
@@ -31,7 +30,6 @@ public class ActionPhase {
 
     /**
      * Service method for the set up of the action phase
-     * @author elia_laz
      **/
     public void setup(){
         playerOrder = model.getPlanningPhaseOrder();
@@ -42,7 +40,6 @@ public class ActionPhase {
 
     /**
      * Service method for the first part of the action phase turn
-     * @author elia_laz
      **/
     public void studentsMovePhase(){
         controller.setNextPlayerTurn(model.getGamerbyid(playerOrder.get(playerPlayed)));
@@ -52,7 +49,6 @@ public class ActionPhase {
 
     /**
      * Service method for the second part of the action phase turn
-     * @author elia_laz
      **/
     public void moveMotherNaturePhase(){
         controller.setNextMove(6);
@@ -61,7 +57,6 @@ public class ActionPhase {
 
     /**
      * Service method for third part of the action phase
-     * @author elia_laz
      **/
     public void takeCloudTile(){
         if(playerPlayed == playerOrder.size()){

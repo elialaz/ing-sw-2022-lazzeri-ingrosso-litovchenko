@@ -11,7 +11,6 @@ public class StudentToDiningRoom extends SpecialCard {
 
     /**
      * Constructor
-     * @author elia_laz
      **/
     public StudentToDiningRoom(Bag bag) {
         cardStudents = bag.getStudents(4);
@@ -20,7 +19,6 @@ public class StudentToDiningRoom extends SpecialCard {
 
     /**
      * Getter for the students on the card
-     * @author elia_laz
      * @return the students on the card
      **/
     public int[] getStudents() {
@@ -29,7 +27,6 @@ public class StudentToDiningRoom extends SpecialCard {
 
     /**
      * Method that execute the effect
-     * @author elia_laz
      * @param b schoolboard on the effect need to be applyed
      * @param chosenStudent the students to move
      * @param bag bag where students where generated

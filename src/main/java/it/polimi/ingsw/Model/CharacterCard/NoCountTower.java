@@ -10,7 +10,6 @@ public class NoCountTower extends SpecialCard {
 
     /**
      * Constructor
-     * @author elia_laz
      **/
     public NoCountTower(){
         setup(3);
@@ -18,7 +17,6 @@ public class NoCountTower extends SpecialCard {
 
     /**
      * Method that execute the effect
-     * @author elia_laz
      **/
     public void GetEffect(Island island) {
         island.setNoCountTower(true);

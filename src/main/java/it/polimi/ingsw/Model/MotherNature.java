@@ -11,7 +11,6 @@ public class MotherNature {
 
     /**
      * Constructor
-     * @author elia_laz
      **/
     public MotherNature() {
         Random a = new Random();
@@ -20,7 +19,6 @@ public class MotherNature {
 
     /**
      * Move MotherNature to another position
-     * @author elia_laz
      * @param island Number of Island to move forward
      **/
     public void move(int island){
@@ -34,7 +32,6 @@ public class MotherNature {
 
     /**
      * Move MotherNature to another position
-     * @author elia_laz
      * @return integer number, position of MotherNature
      **/
     public int getPosition() {
