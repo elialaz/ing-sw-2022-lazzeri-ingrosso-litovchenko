@@ -28,7 +28,7 @@ class BagTest {
     void ControlMaxStudents(){
         StudentsGenerated = bag.getStudents(50);
         for (int i=0; i<5; i++){
-            assertEquals(10, StudentsGenerated[i] );
+            assertEquals( 10, StudentsGenerated[i] );
         }
     }
 

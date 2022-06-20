@@ -9,7 +9,7 @@ import java.util.Arrays;
 public class ChooseCardMessage extends Message{
     private final int [][] cardChosen;
 
-    public ChooseCardMessage(String PlayerNickname, int [][] cardChosen) {
+    public ChooseCardMessage(int [][] cardChosen) {
         super(TypeofMessage.CHOOSECARD);
         this.cardChosen = cardChosen;
     }

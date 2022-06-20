@@ -520,4 +520,14 @@ public class Game {
         }
         return this.getGamerbyid(id);
     }
+
+    public ArrayList<Player> getGamer() {
+        return gamer;
+    }
+
+    public int getPlayerNum(){ return playerNum; }
+
+    public ArrayList<CloudTile> getCloudTiles() {
+        return cloudTiles;
+    }
 }

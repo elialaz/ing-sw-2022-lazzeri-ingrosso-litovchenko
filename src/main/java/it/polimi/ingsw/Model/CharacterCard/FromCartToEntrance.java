@@ -33,7 +33,7 @@ public class FromCartToEntrance extends SpecialCard {
 
     /**
      * Getter for the students on the card
-     * @return students on the cart
+     * @return students on the card
      **/
     public int[] getStudents() {
         return students;
