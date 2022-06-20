@@ -3,8 +3,10 @@ package it.polimi.ingsw.Client.View.cli;
 import it.polimi.ingsw.Model.Deck;
 import it.polimi.ingsw.Model.PawnColor;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.Scanner;
+
 
 /**
  * CLI class, all the created View modules for controlling the CLI will be used here
@@ -15,7 +17,38 @@ public class CLI {
     private static ArrayList<ArrayList<PawnColor>> cloud;
     private static ArrayList<Integer> cardIndex;
 
-    protected Scanner scan = new Scanner(System.in);
+    protected static Scanner scan = new Scanner(System.in);
+
+    /**
+     * CLI Constructor, creates a new CLI instance
+     */
+    public CLI(){
+
+    }
+
+    /**
+     * CLI client main class. It instantiates a new CLI class and runs it.
+     * @param args type String[], the standard java main parameter.
+     */
+    public static void main(String[] args){
+        System.out.println(CLIutils.ERIANTYS);
+        System.out.println(CLIutils.AUTHORS);
+        String ip = getIP();
+        int port = getPort();
+        //collegati al seguente IP e PORTA
+
+        /*boolean noConnection = true;
+        CLI view = new CLI();
+
+        while(noConnection){
+            try {
+                //connect to socket
+                noConnection = false;
+            } catch (IOException e) {
+                System.out.println("Something went wrong... Try again");
+            }
+        }*/
+    }
 
     /**
      * Used to flush the screen of the terminal
@@ -29,10 +62,10 @@ public class CLI {
      * Reads a String inserted by the user. An empty string is not accepted.
      * @return str of type String
      */
-    public String ReadStringInput() {
+    public static String ReadStringInput() {
         String str;
         do {
-            System.out.print(">");
+            System.out.print("> ");
             str = scan.nextLine();
             if(str.equals(""))
                 System.out.println("Empty string is not valid. Write something.");
@@ -46,7 +79,7 @@ public class CLI {
      * @param max of type int
      * @return num of type int
      */
-    private int ReadIntInput(int min,int max) {
+    private static int ReadIntInput(int min, int max) {
         int num = -10;
         do {
             System.out.print(">");
@@ -61,13 +94,11 @@ public class CLI {
         return num;
     }
 
-
-
     /**
      * Ask for the IP the player wants to connect to
      * @return the game's IP
      */
-    public String getIP(){
+    public static String getIP(){
         System.out.println("Insert IP: ");
         return ReadStringInput();
     }
@@ -76,18 +107,9 @@ public class CLI {
      * Ask for the Port the player wants to connect to
      * @return the game's Port
      */
-    public int getPort(){
+    public static int getPort(){
         System.out.println("Insert Port: ");
         return ReadIntInput(1024, 65535);
-    }
-
-    /**
-     * Ask for the player's username
-     * @return the player username
-     */
-    public String askUsername() {
-        System.out.print("Enter your username: ");
-        return ReadStringInput();
     }
 
     /**
@@ -99,6 +121,19 @@ public class CLI {
         numPlayers = ReadIntInput(2,4);
         return numPlayers;
     }
+
+    /**
+     * Method establishConnection called to secure a connection to the socket, displaying a message on the CLI when active
+     */
+    public void establishConnection(){
+        System.out.print("Enter your username: ");
+        String username =  ReadStringInput();
+
+        //socket connection
+
+    }
+
+
 
     /**
      * Choose a between creating or joining a game

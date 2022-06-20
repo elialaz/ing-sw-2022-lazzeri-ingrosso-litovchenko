@@ -2,7 +2,7 @@ package it.polimi.ingsw.Model;
 
 /**
  * Deck class for AssistantCard, one for each player
- * @author elia_laz
+ * @author elia_laz, litovn
  **/
 public class Deck {
     private int[][] assistantCardDeck;
@@ -30,10 +30,10 @@ public class Deck {
      * @param card card index played
      **/
     public void playCard(int card) {
-        lastCardValue = assistantCardDeck[card][0];
-        assistantCardDeck[card][0] = -1;
-        lastMotherNatureValue = assistantCardDeck[card][1];
-        assistantCardDeck[card][1] = -1;
+        lastCardValue = assistantCardDeck[0][card];
+        assistantCardDeck[0][card] = -1;
+        lastMotherNatureValue = assistantCardDeck[1][card];
+        assistantCardDeck[1][card] = -1;
     }
 
     /**

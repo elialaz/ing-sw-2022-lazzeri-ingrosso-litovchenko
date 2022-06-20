@@ -45,7 +45,7 @@ class SchoolBoardTest {
         int [] entranceStudents = new int []{ 2, 1, 3, 0, 1};
         schoolBoard = new SchoolBoard(entranceStudents);
         int [] studentsToRemove = new int[] { 1, 0, 0, 0, 1};
-        schoolBoard.moveToEntrance(studentsToRemove);
+        schoolBoard.removeEntrance(studentsToRemove);
         assertEquals(1, entranceStudents[0]);
         assertEquals(1, entranceStudents[1]);
         assertEquals(3, entranceStudents[2]);

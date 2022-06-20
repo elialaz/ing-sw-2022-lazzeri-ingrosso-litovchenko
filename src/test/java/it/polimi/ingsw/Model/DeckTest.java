@@ -11,9 +11,9 @@ class DeckTest {
      **/
     @Test
     void setEffectMove() {
-        deck.playCard(4);
+        deck.playCard(2);
         deck.setEffectMove();
-        assertEquals(5, deck.getLastMotherNatureValue());
+        assertEquals(4, deck.getLastMotherNatureValue());
     }
 
     /**
@@ -24,7 +24,7 @@ class DeckTest {
         deck.playCard(1);
         assertEquals(2, deck.getLastCardValue());
         assertEquals(1, deck.getLastMotherNatureValue());
-        assertEquals(-1, deck.getAssistantCardDeck()[1][0]);
+        assertEquals(-1, deck.getAssistantCardDeck()[0][1]);
         assertEquals(-1, deck.getAssistantCardDeck()[1][1]);
     }
 
@@ -55,8 +55,8 @@ class DeckTest {
         deck.playCard(2);
         int [][] deckModified = deck.getAssistantCardDeck();
         for (int i=0; i<2; i++){
-            assertEquals(-1, deckModified[9][i]);
-            assertEquals(-1, deckModified[2][i]);
+            assertEquals(-1, deckModified[i][9]);
+            assertEquals(-1, deckModified[i][2]);
         }
     }
 }
