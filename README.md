@@ -63,8 +63,6 @@ All tests in model and controller has a classes' coverage at x%.
 
 **Intellij IDEA Ultimate** - main IDE 
 
-**Codefactor** - code analysis
-
 ## Copyright
 
 Eriantys Board Game is copyrighted 2021.
