@@ -33,7 +33,7 @@ public class Island {
      **/
     static public ArrayList<Island> tableIslandConstructor(MotherNature position){
         ArrayList<Island> archipelago = new ArrayList<Island>();
-        Bag generator = new Bag(10);
+        Bag generator = new Bag(2);
         int pos = position.getPosition();
         position.move(6);
         int pos2 = position.getPosition();

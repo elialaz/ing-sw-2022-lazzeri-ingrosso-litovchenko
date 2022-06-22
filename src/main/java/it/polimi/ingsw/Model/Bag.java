@@ -3,6 +3,8 @@ package it.polimi.ingsw.Model;
 
 import java.util.Random;
 
+//TODO aggiungere check per estrazione random altrimenti entra in loop
+
 /**
  * Bag class for students generation
  * @author elia_laz
