@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Class of the Island
- * @author elia_laz
+ * @author elia_laz, litovn
  **/
 public class Island {
     private int[] students;
@@ -33,7 +33,7 @@ public class Island {
      **/
     static public ArrayList<Island> tableIslandConstructor(MotherNature position){
         ArrayList<Island> archipelago = new ArrayList<Island>();
-        Bag generator = new Bag(2);
+        Bag generator = new Bag(10);
         int pos = position.getPosition();
         position.move(6);
         int pos2 = position.getPosition();
@@ -42,9 +42,8 @@ public class Island {
                 archipelago.add(new Island(generator.getStudents(0), 0));
             } else if (i==pos2) {
                 archipelago.add(new Island(generator.getStudents(0), 0));
-            }
-            else{
-                archipelago.add(new Island(generator.getStudents(2), 0));
+            } else {
+                archipelago.add(new Island(generator.getStudents(1), 0));
             }
         }
         return archipelago;

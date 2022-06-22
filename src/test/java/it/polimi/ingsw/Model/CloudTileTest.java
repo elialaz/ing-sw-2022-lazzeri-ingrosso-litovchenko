@@ -29,7 +29,7 @@ class CloudTileTest {
         cloudTile = new CloudTile(3);
         cloudTile.setStudents(bag);
         assertFalse(cloudTile.isWithoutPhase());
-        assertEquals(3, cloudTile.getStudents().length);
+        assertArrayEquals(cloudTile.getStudents(), bag.getStudents(4));
     }
 
     /**

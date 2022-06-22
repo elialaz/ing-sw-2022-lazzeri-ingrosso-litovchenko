@@ -11,15 +11,15 @@ class IslandTest {
     private ArrayList<Island> archipelago;
 
     @BeforeEach
-    void setUp() {
-        MotherNature position = new MotherNature();
-        archipelago = Island.tableIslandConstructor(position);
+    void getPosition() {
+        MotherNature motherNature = new MotherNature();
+        archipelago = Island.tableIslandConstructor(motherNature);
     }
 
     @Test
     void addStudents() {
         int [] studentsToAdd = new int[] {1, 0, 0, 1, 0};
-        int [] studentsOn = null;
+        int [] studentsOn = new int[5];
         for (int j=0; j<5; j++){
             studentsOn[j] = archipelago.get(4).getStudents(j);
         }

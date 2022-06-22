@@ -3,18 +3,20 @@ package it.polimi.ingsw.Model;
 import static org.junit.jupiter.api.Assertions.*;
 
 import it.polimi.ingsw.Exception.ToMuchPlayerExcetpion;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class GameTest {
-    private Game gameTest =  new Game(3, "Filiberto", 47396, true);
+    private Game gameTest =  new Game(2, "Panzerotto", 11111, false);
+    private int playernum = 0;
 
+    /*
     @Test
-    void addPlayer() {
-        if (gameTest.getGamer().size() > gameTest.getPlayerNum() ){
-
-        }
-
-    }
+    void addPlayer() throws ToMuchPlayerExcetpion {
+        //Assertion to do, but Exception class not defined
+        gameTest.addPlayer("Xx");
+        assertEquals(2, gameTest.getPlayerNum());
+    }*/
 
     /**
      * control if cloud tiles are updated in a correct way
@@ -26,6 +28,7 @@ class GameTest {
             assertFalse(c.isWithoutPhase());
         }
     }
+
 
     /**
      * control if a player take students from a cloud tile and if it results empty
