@@ -35,43 +35,25 @@ public class Bag {
     public int[] getStudents(int num){
         int[] arr = {0,0,0,0,0};
         int i=0;
+        int cont;
         while (i<num){
-            switch (random.nextInt(5)){
-                case 0:
-                    if(studentsGenerated[0]<maxNum){
-                        arr[0]++;
-                        studentsGenerated[0]++;
-                        i++;
-                    }
-                    break;
-                case 1:
-                    if(studentsGenerated[1]<maxNum){
-                        arr[1]++;
-                        studentsGenerated[1]++;
-                        i++;
-                    }
-                    break;
-                case 2:
-                    if(studentsGenerated[2]<maxNum){
-                        arr[2]++;
-                        studentsGenerated[2]++;
-                        i++;
-                    }
-                    break;
-                case 3:
-                    if(studentsGenerated[3]<maxNum){
-                        arr[3]++;
-                        studentsGenerated[3]++;
-                        i++;
-                    }
-                    break;
-                case 4:
-                    if(studentsGenerated[4]<maxNum){
-                        arr[4]++;
-                        studentsGenerated[4]++;
-                        i++;
-                    }
-                    break;
+            cont=0;
+            for(int j=0; j<5; j++){
+                if(studentsGenerated[i]==maxNum){
+                    cont++;
+                }
+            }
+            int extracted = random.nextInt(5-cont);
+            cont=0;
+            for(int j=0; j<5; j++){
+                if(studentsGenerated[i]!=maxNum && extracted==cont){
+                    arr[i]++;
+                    studentsGenerated[i]++;
+                    i++;
+                }
+                else if(studentsGenerated[i]!=maxNum){
+                    cont++;
+                }
             }
         }
         return arr;
