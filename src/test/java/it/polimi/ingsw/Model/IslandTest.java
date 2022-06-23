@@ -56,13 +56,14 @@ class IslandTest {
     @Test
     void getStudents() {
         int [] studentsToAdd = new int[] {1, 0, 0, 1, 1};
-        int [] studentsOn = null;
-        for (int j=0; j<5; j++){
-            studentsOn[j] = archipelago.get(10).getStudents(j);
+        int [] studentsOn = archipelago.get(10).getStudents();
+        int [] newStudents = new int[] {0,0,0,0,0};
+        for (int i = 0; i < 5; i++) {
+            newStudents[i] = studentsOn[i] + studentsToAdd[i];
         }
         archipelago.get(10).addStudents(studentsToAdd);
         for(int i=0; i<5; i++){
-            assertEquals(archipelago.get(10).getStudents(i), studentsOn[i] + studentsToAdd[i]);
+            assertArrayEquals(archipelago.get(10).getStudents(), newStudents);
         }
     }
 
@@ -75,10 +76,10 @@ class IslandTest {
 
     @Test
     void noEntryTileMotherNature() {
-        archipelago.get(12).setNoEntryTile();
-        archipelago.get(12).setNoEntryTile();
-        archipelago.get(12).noEntryTileMotherNature();
-        assertEquals(1, archipelago.get(12).getNoEntryTile());
+        archipelago.get(11).setNoEntryTile();
+        archipelago.get(11).setNoEntryTile();
+        archipelago.get(11).noEntryTileMotherNature();
+        assertEquals(1, archipelago.get(11).getNoEntryTile());
     }
 
     @Test

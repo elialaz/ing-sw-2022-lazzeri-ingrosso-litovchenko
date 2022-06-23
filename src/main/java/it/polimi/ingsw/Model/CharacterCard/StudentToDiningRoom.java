@@ -32,7 +32,7 @@ public class StudentToDiningRoom extends SpecialCard {
      * @param bag bag where students where generated
      **/
     public void GetEffect(SchoolBoard b, int[] chosenStudent, Bag bag) {
-        b.moveToEntrance(chosenStudent);
+        b.addCorridor(chosenStudent);
         for(int i=0; i<5; i++){
             cardStudents[i]-=chosenStudent[i];
         }

@@ -144,6 +144,11 @@ public class Game {
     }
 
     /**
+     * Service method to know which player want to use the effect
+     **/
+    public int getPlusTwoEffectPlayer() { return this.plusTwoEffectPlayer; }
+
+    /**
      * Service method plusTwoEffect effect
      **/
     public void setPlusTwoEffect(boolean plusTwoEffect) {
@@ -151,11 +156,21 @@ public class Game {
     }
 
     /**
+     * Service method to check plusTwoEffect
+     **/
+    public boolean isPlusTwoEffect() { return plusTwoEffect; }
+
+    /**
      * Service method professorControl effect
      **/
     public void setProfessorControl(boolean professorControl) {
         this.professorControl = professorControl;
     }
+
+    /**
+     * Service method to check professorControl effect
+     **/
+    public boolean isProfessorControl() { return professorControl; }
 
     /**
      * Service method for CloudTile to set the students on the Tile
@@ -521,13 +536,7 @@ public class Game {
         return this.getGamerbyid(id);
     }
 
-    public ArrayList<Player> getGamer() {
-        return gamer;
-    }
-
-    public int getPlayerNum(){ return playerNum; }
-
-    public ArrayList<CloudTile> getCloudTiles() {
-        return cloudTiles;
+    public Bag getBag() {
+        return bag;
     }
 }

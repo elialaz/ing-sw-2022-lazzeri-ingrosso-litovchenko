@@ -60,6 +60,11 @@ public class Island {
     }
 
     /**
+     * Getter of students of island
+     **/
+    public int[] getStudents(){ return students;}
+
+    /**
      * Service method check tower number on island
      * @return true if there is no tower on the island
      **/

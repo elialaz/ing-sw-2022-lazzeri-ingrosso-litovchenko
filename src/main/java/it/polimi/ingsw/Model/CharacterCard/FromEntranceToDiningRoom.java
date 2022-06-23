@@ -20,7 +20,6 @@ public class FromEntranceToDiningRoom extends SpecialCard {
      * Method that execute the effect
      **/
     public void GetEffect(SchoolBoard schoolBoard, int[] studentsToDining, int[] studentsToEntrance) {
-        schoolBoard.removeEntrance(studentsToDining);
         schoolBoard.removeFromCorridor(studentsToEntrance);
         schoolBoard.moveCorridor(studentsToDining);
         schoolBoard.moveToEntrance(studentsToEntrance);

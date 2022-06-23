@@ -21,6 +21,22 @@ class SchoolBoardTest {
         }
     }
 
+    @Test
+    void addCorridor(){
+        int [] entranceStudents = new int []{ 2, 1, 3, 0, 1};
+        schoolBoard = new SchoolBoard(entranceStudents);
+        int [] studentsToAdd = new int[] { 1, 0, 0, 1, 1};
+        schoolBoard.addCorridor(studentsToAdd);
+        for (int i=0; i<5; i++){
+            assertEquals(schoolBoard.getCorridor(i) + studentsToAdd[i], schoolBoard.getCorridor(i) + studentsToAdd[i]);
+        }
+    }
+
+    @Test
+    void setPlayer(){
+
+    }
+
     /**
      * Control that this method return the correct num of student on the selected corridor
      **/
@@ -30,11 +46,7 @@ class SchoolBoardTest {
         schoolBoard = new SchoolBoard(entranceStudents);
         int [] studentsToMove = new int[] { 1, 0, 0, 1, 1};
         schoolBoard.moveToEntrance(studentsToMove);
-        assertEquals(3, entranceStudents[0]);
-        assertEquals(1, entranceStudents[1]);
-        assertEquals(3, entranceStudents[2]);
-        assertEquals(1, entranceStudents[3]);
-        assertEquals(2, entranceStudents[4]);
+        assertArrayEquals(new int[]{3,1,3,1,2}, entranceStudents);
     }
 
     /**
@@ -46,11 +58,7 @@ class SchoolBoardTest {
         schoolBoard = new SchoolBoard(entranceStudents);
         int [] studentsToRemove = new int[] { 1, 0, 0, 0, 1};
         schoolBoard.removeEntrance(studentsToRemove);
-        assertEquals(1, entranceStudents[0]);
-        assertEquals(1, entranceStudents[1]);
-        assertEquals(3, entranceStudents[2]);
-        assertEquals(0, entranceStudents[3]);
-        assertEquals(0, entranceStudents[4]);
+        assertArrayEquals(new int[]{1,1,3,0,0}, entranceStudents);
     }
 
     /**
@@ -58,7 +66,9 @@ class SchoolBoardTest {
      **/
     @Test
     void getCorridor() {
+        Player player = new Player("Josh",0, 0);
         schoolBoard = new SchoolBoard(new int []{ 2, 1, 3, 0, 1});
+        schoolBoard.setPlayer(player);
         int [] studentsMoved = new int[]{5, 3, 1, 0, 3};
         schoolBoard.moveCorridor(studentsMoved);
         for (int i=0; i<5; i++){
@@ -89,5 +99,40 @@ class SchoolBoardTest {
             assertTrue(schoolBoard.isProfessor(3));
             assertTrue(schoolBoard.isProfessor(4));
             assertFalse(schoolBoard.isProfessor(1));
+    }
+
+    @Test
+    void removeTower(){
+
+    }
+
+    @Test
+    void addTower(){
+
+    }
+
+    @Test
+    void getColor(){
+
+    }
+
+    @Test
+    void getTower(){
+
+    }
+
+    @Test
+    void removeFromCorridor(){
+
+    }
+
+    @Test
+    void getProfessor(){
+
+    }
+
+    @Test
+    void getEntranceStudents(){
+
     }
 }

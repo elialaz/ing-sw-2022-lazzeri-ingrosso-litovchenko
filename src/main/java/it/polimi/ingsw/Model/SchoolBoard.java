@@ -2,7 +2,7 @@ package it.polimi.ingsw.Model;
 
 /**
  * SchoolBoard Class for every Player
- * @author elia_laz
+ * @author elia_laz, filibertoingrosso
  **/
 public class SchoolBoard {
     private int[] corridor;
@@ -51,6 +51,22 @@ public class SchoolBoard {
     }
 
     /**
+     * Service method to add students to  corridor
+     * @param chosenStudents students moved to corridor
+     **/
+    public void addCorridor(int[] chosenStudents) {
+        for(int i=0; i<5; i++){
+            for(int j=0; j<chosenStudents[i]; j++){
+                corridor[i]+=1;
+                if(corridor[i]==3 || corridor[i]==6 || corridor[i]==9) {
+                    player.addCoin();
+                }
+            }
+
+        }
+    }
+
+    /**
      * Service method that set the player that own this schoolboard
      * @param player player that own this schoolboard
      **/
@@ -60,7 +76,7 @@ public class SchoolBoard {
 
     /**
      * Service method that move the students to the entrance
-     * @param students moved from entrance to corridor
+     * @param students moved from corridor to entrance
      **/
     public void moveToEntrance(int[] students) {
         for(int i=0; i<5; i++){
@@ -164,5 +180,12 @@ public class SchoolBoard {
             }
         }
         return count;
+    }
+
+    /**
+     * Getter of entrance students
+     **/
+    public int[] getEntranceStudents() {
+        return entrance;
     }
 }

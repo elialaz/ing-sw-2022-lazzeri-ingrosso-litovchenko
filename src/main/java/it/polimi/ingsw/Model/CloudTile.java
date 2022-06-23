@@ -45,4 +45,12 @@ public class CloudTile {
     public boolean isWithoutPhase() {
         return withoutPhase;
     }
+
+    /**
+     * Getter of the numstudents
+     **/
+    public int getNumStudents() {
+        return numStudents;
+    }
 }
+
