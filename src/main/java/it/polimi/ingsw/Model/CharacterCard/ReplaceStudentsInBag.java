@@ -20,7 +20,7 @@ public class ReplaceStudentsInBag extends SpecialCard {
      * Method that execute the effect
      * @param schoolBoards schoolboard list
      * @param students students that need to be replaced
-     * @param bag bag where students where generated
+     * @param bag bag where students were generated
      **/
     public void GetEffect(ArrayList<SchoolBoard> schoolBoards, int[] students, Bag bag) {
         for (SchoolBoard s: schoolBoards) {

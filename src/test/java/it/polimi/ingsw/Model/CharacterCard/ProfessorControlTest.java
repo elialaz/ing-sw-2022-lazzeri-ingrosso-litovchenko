@@ -10,7 +10,7 @@ class ProfessorControlTest {
     @Test
     void getEffect() {
         ProfessorControl professorControl = new ProfessorControl();
-        Game game = new Game(2, "steph", 874,true);
+        Game game = new Game(3, "steph", 874,true);
         professorControl.GetEffect(game);
         assertTrue(game.isProfessorControl());
     }

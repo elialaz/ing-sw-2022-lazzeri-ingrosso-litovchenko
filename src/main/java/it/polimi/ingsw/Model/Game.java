@@ -536,7 +536,15 @@ public class Game {
         return this.getGamerbyid(id);
     }
 
+    /**
+     * getter of bag
+     **/
     public Bag getBag() {
         return bag;
     }
+
+    /**
+     * getter of schoolBoards
+     **/
+    public ArrayList<SchoolBoard> getSchoolboards() { return schoolboards; }
 }

@@ -15,8 +15,13 @@ class CloudTileTest {
     @Test
     void getStudents() {
         cloudTile = new CloudTile(3);
-        int [] StartStudentOnIt = cloudTile.getStudents();
-        assertEquals(3, StartStudentOnIt.length);
+        cloudTile.setStudents(new Bag(10));
+        int [] startStudentOnIt = cloudTile.getStudents();
+        int sum = 0;
+        for (int i = 0; i <5; i++) {
+            sum = sum + startStudentOnIt[i];
+        }
+        assertEquals(3, sum);
         assertTrue(cloudTile.isWithoutPhase());
     }
 
@@ -29,7 +34,7 @@ class CloudTileTest {
         cloudTile = new CloudTile(3);
         cloudTile.setStudents(bag);
         assertFalse(cloudTile.isWithoutPhase());
-        assertArrayEquals(cloudTile.getStudents(), bag.getStudents(4));
+        assertEquals(3, cloudTile.getNumStudents());
     }
 
     /**

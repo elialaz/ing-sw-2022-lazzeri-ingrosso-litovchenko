@@ -75,6 +75,11 @@ public class SchoolBoard {
     }
 
     /**
+     * getter of player
+     **/
+    public Player getPlayer(){ return player; }
+
+    /**
      * Service method that move the students to the entrance
      * @param students moved from corridor to entrance
      **/
@@ -135,6 +140,7 @@ public class SchoolBoard {
         tower += number;
     }
 
+
     /**
      * Service method that get the color of the tower
      * @return color of the tower
@@ -143,12 +149,13 @@ public class SchoolBoard {
         return color;
     }
 
+
     /**
      * Service method that remove students from corridor
      * @param students students need to be removed
      **/
     public int removeFromCorridor(int[] students) {
-        for(int i=0; i<5; i++){
+        for(int i =0; i < 5; i++){
             if(this.corridor[i] < students[i]){
                 int j = corridor[i];
                 this.corridor[i]=0;
@@ -156,7 +163,6 @@ public class SchoolBoard {
             }
             else{
                 this.corridor[i]-=students[i];
-                return -1;
             }
         }
         return -1;
