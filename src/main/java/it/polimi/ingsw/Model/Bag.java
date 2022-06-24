@@ -39,20 +39,20 @@ public class Bag {
         while (i<num){
             cont=0;
             for(int j=0; j<5; j++){
-                if(studentsGenerated[i]==maxNum){
+                if(studentsGenerated[j]==maxNum){
                     cont++;
                 }
             }
+            int extracted = random.nextInt(0, 5-cont);
             if(cont!=5){
-                int extracted = random.nextInt(6-cont) - 1;
                 cont=0;
                 for(int j=0; j<5; j++){
-                    if(studentsGenerated[i]!=maxNum && extracted==cont){
+                    if(studentsGenerated[j]!=maxNum && extracted==cont){
                         arr[i]++;
-                        studentsGenerated[i]++;
+                        studentsGenerated[j]++;
                         i++;
                     }
-                    else if(studentsGenerated[i]!=maxNum){
+                    else if(studentsGenerated[j]!=maxNum && extracted!=cont){
                         cont++;
                     }
                 }
