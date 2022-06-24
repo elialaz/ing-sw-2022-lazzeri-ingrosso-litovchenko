@@ -43,17 +43,22 @@ public class Bag {
                     cont++;
                 }
             }
-            int extracted = random.nextInt(5-cont);
-            cont=0;
-            for(int j=0; j<5; j++){
-                if(studentsGenerated[i]!=maxNum && extracted==cont){
-                    arr[i]++;
-                    studentsGenerated[i]++;
-                    i++;
+            if(cont!=5){
+                int extracted = random.nextInt(6-cont) - 1;
+                cont=0;
+                for(int j=0; j<5; j++){
+                    if(studentsGenerated[i]!=maxNum && extracted==cont){
+                        arr[i]++;
+                        studentsGenerated[i]++;
+                        i++;
+                    }
+                    else if(studentsGenerated[i]!=maxNum){
+                        cont++;
+                    }
                 }
-                else if(studentsGenerated[i]!=maxNum){
-                    cont++;
-                }
+            }
+            else{
+                break;
             }
         }
         return arr;
