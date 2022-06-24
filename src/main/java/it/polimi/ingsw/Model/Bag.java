@@ -43,7 +43,7 @@ public class Bag {
                     cont++;
                 }
             }
-            int extracted = random.nextInt(0, 5-cont);
+            int extracted = random.nextInt(0, (5-cont));
             if(cont!=5){
                 cont=0;
                 for(int j=0; j<5; j++){
