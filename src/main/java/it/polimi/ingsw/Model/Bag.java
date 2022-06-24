@@ -1,5 +1,8 @@
 package it.polimi.ingsw.Model;
 
+import it.polimi.ingsw.Server.Server;
+import it.polimi.ingsw.Server.ServerEventManager;
+
 import java.util.Random;
 import java.util.Scanner;
 
@@ -42,17 +45,20 @@ public class Bag {
                 }
             }
             if(cont!=5){
-                int extracted = random.nextInt(6-cont)-1;
+                int extracted = random.nextInt(5-cont);
                 cont=0;
-                for(int j=0; j<5; j++){
+                int j=0;
+                while(j<5){
                     if(studentsGenerated[j]!=maxNum && extracted==cont){
                         arr[j]++;
                         studentsGenerated[j]++;
                         i++;
+                        j=6;
                     }
                     else if(studentsGenerated[j]!=maxNum && extracted!=cont){
                         cont++;
                     }
+                    j++;
                 }
             }
             else{
