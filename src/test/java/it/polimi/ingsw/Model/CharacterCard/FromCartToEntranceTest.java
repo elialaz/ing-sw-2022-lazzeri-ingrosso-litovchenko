@@ -12,7 +12,7 @@ class FromCartToEntranceTest {
 
     @Test
     void getEffect() {
-        fromCartToEntrance= new FromCartToEntrance(new Bag(10));
+        fromCartToEntrance= new FromCartToEntrance(new Bag(7));
         int [] startStudents = fromCartToEntrance.getStudents();
         SchoolBoard schoolBoard = new SchoolBoard(new int[]{2,1,3,1,0});
         int[] studentsFromEntrance = new int[]{0,1,1,0,0};

@@ -253,6 +253,9 @@ public class Game {
                     professor[i]=false;
                     schoolBoard.setProfessor(i, true);
                 }
+                /*else{
+                    s.setProfessor(i,true);
+                }*/
             }
         }
         manager.notify("professorUpdate");
@@ -547,4 +550,19 @@ public class Game {
      * getter of schoolBoards
      **/
     public ArrayList<SchoolBoard> getSchoolboards() { return schoolboards; }
+
+    /**
+     * getter of schoolBoards
+     **/
+    public ArrayList<CloudTile> getCloudTiles() { return cloudTiles; }
+
+    /**
+     * getter of gamers
+     **/
+    public ArrayList<Player> getGamer() { return gamer; }
+
+    /**
+     * getter of islandTiles
+     **/
+    public ArrayList<Island> getIslandTile() { return islandTile;}
 }
