@@ -43,8 +43,8 @@ public class Bag {
                     cont++;
                 }
             }
-            int extracted = random.nextInt(0, (5-cont));
             if(cont!=5){
+                int extracted = random.nextInt(0, (5-cont));
                 cont=0;
                 for(int j=0; j<5; j++){
                     if(studentsGenerated[j]!=maxNum && extracted==cont){
