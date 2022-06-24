@@ -1,9 +1,7 @@
 package it.polimi.ingsw.Model;
 
-
 import java.util.Random;
-
-//TODO aggiungere check per estrazione random altrimenti entra in loop
+import java.util.Scanner;
 
 /**
  * Bag class for students generation
@@ -44,11 +42,11 @@ public class Bag {
                 }
             }
             if(cont!=5){
-                int extracted = random.nextInt(0, (5-cont));
+                int extracted = random.nextInt(6-cont)-1;
                 cont=0;
                 for(int j=0; j<5; j++){
                     if(studentsGenerated[j]!=maxNum && extracted==cont){
-                        arr[i]++;
+                        arr[j]++;
                         studentsGenerated[j]++;
                         i++;
                     }
