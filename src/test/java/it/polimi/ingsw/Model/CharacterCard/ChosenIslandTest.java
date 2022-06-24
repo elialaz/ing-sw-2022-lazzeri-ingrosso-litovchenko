@@ -13,6 +13,5 @@ class ChosenIslandTest {
         Island island = new Island(new int[]{1,2,0,0,0}, 0);
         Game game = new Game(2, "john", 565, true);
         chosenIsland.GetEffect(game, island);
-
     }
 }
