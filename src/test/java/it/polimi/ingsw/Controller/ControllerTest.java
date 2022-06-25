@@ -2,7 +2,7 @@ package it.polimi.ingsw.Controller;
 
 import it.polimi.ingsw.Exception.MoveNotAllowed;
 import it.polimi.ingsw.Exception.PlayerNotexist;
-import it.polimi.ingsw.Exception.ToMuchPlayerException;
+import it.polimi.ingsw.Exception.ToMuchPlayerExcetpion;
 import it.polimi.ingsw.Model.Game;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +16,7 @@ class ControllerTest {
     void addPlayer() {
         try {
             control.addPlayer("X");
-        } catch (ToMuchPlayerException e) {
+        } catch (ToMuchPlayerExcetpion e) {
         }
     }
 
@@ -77,7 +77,7 @@ class ControllerTest {
         try {
             control.addPlayer("Gio");
             control.playAssistantCard(1);
-        } catch (PlayerNotexist | ToMuchPlayerException e) {
+        } catch (PlayerNotexist | ToMuchPlayerExcetpion e) {
         }
     }
 
@@ -104,7 +104,7 @@ class ControllerTest {
             control.playAssistantCard(5);
             control.setNextPlayerTurn("Gio");
             control.moveMotherNature(2);
-        } catch (MoveNotAllowed | ToMuchPlayerException | PlayerNotexist e) {
+        } catch (MoveNotAllowed | ToMuchPlayerExcetpion | PlayerNotexist e) {
         }
     }
 
@@ -113,7 +113,7 @@ class ControllerTest {
         try {
             control.addPlayer("X");
             control.takeCloudTile(1);
-        } catch (ToMuchPlayerException e) {
+        } catch (ToMuchPlayerExcetpion e) {
         }
     }
 
