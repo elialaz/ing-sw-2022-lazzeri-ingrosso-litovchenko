@@ -87,7 +87,7 @@ public class Game {
         }
         else{
             gamer.add(new Player(playerName, gamer.size(), 1));
-            schoolboards.get(gamer.size()).setPlayer(gamer.get(gamer.size()));
+            schoolboards.get(gamer.size()-1).setPlayer(gamer.get(gamer.size()-1));
             assistantCard.add(new Deck());
             coinPile--;
             manager.notify("playerJoin");
