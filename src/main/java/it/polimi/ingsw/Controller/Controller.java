@@ -64,23 +64,32 @@ public class Controller implements EventReciver{
             case "setupStart":
                 nextMove = 1;
                 phaseone.startGame();
+                break;
             case "nextmove":
                 switch (nextMove){
                     case 1:
                         phaseone.startGame();
+                        break;
                     case 2:
                         phaseone.planningMove();
+                        break;
                     case 3:
                         phasetwo.setup();
+                        break;
                     case 4:
                         phasetwo.studentsMovePhase();
+                        break;
                     case 5:
                         phasetwo.moveMotherNaturePhase();
+                        break;
                     case 6:
                         phasetwo.takeCloudTile();
+                        break;
                     case 7:
                         phasethree.checkWin();
+                        break;
                 }
+                break;
         }
     }
 
@@ -171,5 +180,19 @@ public class Controller implements EventReciver{
      **/
     public boolean isWinPhase() {
         return winPhase;
+    }
+
+    /**
+     * Getter of the EventManager
+     **/
+    public ControlEventManager getManager() {
+        return manager;
+    }
+
+    /**
+     * Getter of the Model
+     **/
+    public Game getModel() {
+        return model;
     }
 }
