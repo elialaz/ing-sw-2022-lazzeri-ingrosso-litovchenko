@@ -18,7 +18,7 @@ public class ReplaceStudentsInBag extends SpecialCard {
 
     /**
      * Method that execute the effect
-     * @param schoolBoards schoolboard list
+     * @param schoolBoards schoolBoard list
      * @param students students that need to be replaced
      * @param bag bag where students were generated
      **/

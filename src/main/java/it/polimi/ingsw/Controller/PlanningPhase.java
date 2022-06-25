@@ -9,12 +9,12 @@ import java.util.Random;
  * @author elia_laz
  **/
 public class PlanningPhase{
-    private Game model;
-    private ControlEventManager manager;
+    private final Game model;
+    private final ControlEventManager manager;
     private Random random;
-    private int playerNum;
+    private final int playerNum;
     private int playerPlayed;
-    private Controller controller;
+    private final Controller controller;
     private ArrayList<Integer> playerOrder;
 
     /**

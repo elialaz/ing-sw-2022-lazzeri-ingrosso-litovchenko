@@ -1,21 +1,21 @@
 package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Event.EventManager;
-import it.polimi.ingsw.Event.EventReciver;
+import it.polimi.ingsw.Event.EventReciever;
 
 import java.util.*;
 
 
 /**
- * Event Manager for the entire model classes
+ * Event Manager for all the model classes
  * @author elia_laz
  **/
 public class ModelEventManager implements EventManager {
 
-    private Map<String, List<EventReciver>> listeners = new HashMap<>();
+    private final Map<String, List<EventReciever>> listeners = new HashMap<>();
 
     /**
-     * Constructor
+     * Constructor Event Manager
      **/
     private ModelEventManager(String... operations) {
         for (String operation : operations) {
@@ -37,8 +37,8 @@ public class ModelEventManager implements EventManager {
      * @param listener Client that are interested in a some particular Event
      **/
     @Override
-    public void subscribe(String eventType, EventReciver listener) {
-        List<EventReciver> users = listeners.get(eventType);
+    public void subscribe(String eventType, EventReciever listener) {
+        List<EventReciever> users = listeners.get(eventType);
         users.add(listener);
     }
 
@@ -48,8 +48,8 @@ public class ModelEventManager implements EventManager {
      **/
     @Override
     public void notify(String eventType) {
-        List<EventReciver> users = listeners.get(eventType);
-        for (EventReciver listener : users) {
+        List<EventReciever> users = listeners.get(eventType);
+        for (EventReciever listener : users) {
             listener.update(eventType);
         }
     }

@@ -9,10 +9,10 @@ import java.util.ArrayList;
  * @author elia_laz
  **/
 public class ActionPhase {
-    private ControlEventManager manager;
-    private Game model;
+    private final ControlEventManager manager;
+    private final Game model;
     private ArrayList<Integer> playerOrder;
-    private Controller controller;
+    private final Controller controller;
     private int playerPlayed;
 
     /**

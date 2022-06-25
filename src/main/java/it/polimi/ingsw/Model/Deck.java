@@ -5,7 +5,7 @@ package it.polimi.ingsw.Model;
  * @author elia_laz, litovn
  **/
 public class Deck {
-    private int[][] assistantCardDeck;
+    private final int[][] assistantCardDeck;
     private int lastCardValue;
     private int lastMotherNatureValue;
 
@@ -19,14 +19,14 @@ public class Deck {
     }
 
     /**
-     * Service method that add 2 move to the current card used
+     * Service method that adds 2 move to the current used card
      **/
     public void setEffectMove(){
         lastMotherNatureValue += 2;
     }
 
     /**
-     * Service method that play a card
+     * Service method that plays a card
      * @param card card index played
      **/
     public void playCard(int card) {
@@ -37,21 +37,21 @@ public class Deck {
     }
 
     /**
-     * Getter of lastCardUsedvalue
+     * Getter of last used card value
      **/
     public int getLastCardValue() {
         return lastCardValue;
     }
 
     /**
-     * Getter of lastMotherNatureValue
+     * Getter of last Mother Nature card value
      **/
     public int getLastMotherNatureValue() {
         return lastMotherNatureValue;
     }
 
     /**
-     * Getter of assistantCardDeck
+     * Getter of assistants Card Deck
      **/
     public int[][] getAssistantCardDeck() {
         return assistantCardDeck;

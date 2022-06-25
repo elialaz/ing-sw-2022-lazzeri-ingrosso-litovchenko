@@ -1,9 +1,7 @@
 package it.polimi.ingsw.Client.View.cli;
 
 import it.polimi.ingsw.Model.Deck;
-import it.polimi.ingsw.Model.PawnColor;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.Scanner;
 
@@ -14,7 +12,7 @@ import java.util.Scanner;
  **/
 public class CLI {
     private static int numPlayers;
-    private static ArrayList<ArrayList<PawnColor>> cloud;
+    //private static ArrayList<> cloud;
     private static ArrayList<Integer> cardIndex;
 
     protected static Scanner scan = new Scanner(System.in);
@@ -202,7 +200,7 @@ public class CLI {
     /**
      * Planning phase 1: cloud setup, adding random students to cloud
      * */
-    public void FillCloud(){
+    /* public void FillCloud(){
         int yellowStudents = 26;
         int blueStudents = 26;
         int greenStudents = 26;
@@ -241,7 +239,7 @@ public class CLI {
             }
             System.out.println(" ");
         }
-    }
+    }*/
 
     /**
      * Planning phase 2: play assistant card

@@ -15,9 +15,9 @@ public abstract class SpecialCard {
 
     /**
      * Service method for effect usage
-     *
-     * @param game
-     * @param chosenIsland*/
+     * @param game the played game
+     * @param chosenIsland a choosen island
+     * */
     public void GetEffect(Game game, ChosenIsland chosenIsland) {
     }
 

@@ -1,7 +1,10 @@
 package it.polimi.ingsw.Model;
 
-import it.polimi.ingsw.Event.EventReciver;
+import it.polimi.ingsw.Controller.PlanningPhase;
+import it.polimi.ingsw.Event.EventReciever;
 import it.polimi.ingsw.Exception.*;
+//import it.polimi.ingsw.Server.Server;
+//import it.polimi.ingsw.Server.ServerEventManager;
 
 import java.util.*;
 
@@ -76,11 +79,11 @@ public class Game {
     /**
      * Service method to add the remaining Players to the Game
      * @param playerName name of the player to be added to the current Game
-     * @throws ToMuchPlayerExcetpion when playerNum is equal to gamer lenght
+     * @throws ToMuchPlayerException when playerNum is equal to gamer lenght
      **/
-    public void addPlayer(String playerName) throws ToMuchPlayerExcetpion {
+    public void addPlayer(String playerName) throws ToMuchPlayerException {
         if (gamer.size() > playerNum){
-            throw new ToMuchPlayerExcetpion();
+            throw new ToMuchPlayerException();
         }
         else{
             gamer.add(new Player(playerName, gamer.size(), 1));
@@ -436,7 +439,7 @@ public class Game {
      * @param subscriber listener for the events
      * @param events event type
      **/
-    public void eventSubscrbe(EventReciver subscriber, String events) {
+    public void eventSubscrbe(EventReciever subscriber, String events) {
         manager.subscribe(events, subscriber);
     }
 
@@ -546,7 +549,7 @@ public class Game {
     /**
      * getter of schoolBoards
      **/
-    public ArrayList<SchoolBoard> getSchoolboards() { return schoolboards; }
+    public ArrayList<SchoolBoard> getSchoolBoards() { return schoolboards; }
 
     /**
      * getter of the ModelManager

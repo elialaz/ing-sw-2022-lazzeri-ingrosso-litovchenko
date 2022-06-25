@@ -7,7 +7,7 @@ package it.polimi.ingsw.Model;
  **/
 public class Player {
     private final int playerId;
-    private String name;
+    private final String name;
     private int coin;
 
     /**

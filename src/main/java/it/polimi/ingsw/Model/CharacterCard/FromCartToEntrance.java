@@ -7,7 +7,7 @@ import it.polimi.ingsw.Model.*;
  * @author elia_laz
  **/
 public class FromCartToEntrance extends SpecialCard {
-    private int[] students;
+    private final int[] students;
 
     /**
      * Constructor

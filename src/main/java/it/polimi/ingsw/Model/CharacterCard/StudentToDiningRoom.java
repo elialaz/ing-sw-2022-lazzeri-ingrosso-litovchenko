@@ -7,7 +7,7 @@ import it.polimi.ingsw.Model.*;
  * @author elia_laz
  **/
 public class StudentToDiningRoom extends SpecialCard {
-    private int[] cardStudents;
+    private final int[] cardStudents;
 
     /**
      * Constructor
@@ -27,7 +27,7 @@ public class StudentToDiningRoom extends SpecialCard {
 
     /**
      * Method that execute the effect
-     * @param b schoolboard on the effect need to be applyed
+     * @param b schoolBoard on the effect need to be applied
      * @param chosenStudent the students to move
      * @param bag bag where students where generated
      **/

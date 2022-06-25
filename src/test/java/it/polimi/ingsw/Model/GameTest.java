@@ -2,8 +2,7 @@ package it.polimi.ingsw.Model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import it.polimi.ingsw.Exception.ToMuchPlayerExcetpion;
-import org.junit.jupiter.api.Assertions;
+import it.polimi.ingsw.Exception.ToMuchPlayerException;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -11,6 +10,14 @@ import java.util.ArrayList;
 class GameTest {
    private final Game game = new Game(2, "elvis", 56, true);
    private CloudTile cloud = new CloudTile(4);
+
+   @Test
+   void addPlayer() {
+       try {
+           game.addPlayer("Gio");
+       } catch (ToMuchPlayerException e) {
+       }
+   }
 
     @Test
     void setPlusTwoEffectPlayer() {
@@ -59,7 +66,7 @@ class GameTest {
 
     @Test
     void TakeCloudTile() {
-        ArrayList<SchoolBoard> schoolEntrance = game.getSchoolboards();
+        ArrayList<SchoolBoard> schoolEntrance = game.getSchoolBoards();
         game.takeCloudTile(0,0);
         int[] entrance = schoolEntrance.get(0).getEntranceStudents();
         int totEntrance = 0;
@@ -78,7 +85,7 @@ class GameTest {
 
     @Test
     void MoveStudentsToSchoolBoard() {
-        SchoolBoard schoolBoard = game.getSchoolboards().get(0);
+        SchoolBoard schoolBoard = game.getSchoolBoards().get(0);
         int [] studentsMove = new int[] {1,1,1,0,0};
         game.moveStudentsToSchoolBoard(studentsMove, 0);
         for (int i = 0; i < 5; i++) {
@@ -88,13 +95,13 @@ class GameTest {
 
     @Test
     void moveStudentsToIsland() {
-        int[] init = game.getSchoolboards().get(0).getEntranceStudents();
+        int[] init = game.getSchoolBoards().get(0).getEntranceStudents();
         int[] remove = new int[]{1,0,1,1,0};
         game.moveStudentsToIsland(remove, 0, game.getIslandTile().get(1));
         for (int i=0; i<5; i++){
             init[i] -= remove[i];
         }
-        assertArrayEquals(init, game.getSchoolboards().get(0).getEntranceStudents());
+        assertArrayEquals(init, game.getSchoolBoards().get(0).getEntranceStudents());
     }
 
     @Test

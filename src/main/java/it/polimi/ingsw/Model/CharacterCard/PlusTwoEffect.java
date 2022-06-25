@@ -17,7 +17,7 @@ public class PlusTwoEffect extends SpecialCard {
 
     /**
      * Method that execute the effect
-     * @param g game where the effect need to be applyed
+     * @param g game where the effect need to be applied
      * @param playerId id of the player
      **/
     public void GetEffect(Game g, int playerId) {

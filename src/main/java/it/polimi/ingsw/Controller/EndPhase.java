@@ -7,9 +7,9 @@ import it.polimi.ingsw.Model.Game;
  * @author elia_laz
  **/
 public class EndPhase{
-    private Controller controller;
-    private Game model;
-    private ControlEventManager manager;
+    private final Controller controller;
+    private final Game model;
+    private final ControlEventManager manager;
 
     /**
      * Constructor of the EndPhase

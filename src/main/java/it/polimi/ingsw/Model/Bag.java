@@ -3,18 +3,17 @@ package it.polimi.ingsw.Model;
 import java.util.Random;
 
 /**
- * Bag class for students generation
+ * Bag class used to generate students
  * @author elia_laz
  **/
 public class Bag {
 
-    private int[] studentsGenerated;
-    private Random random;
-    private int maxNum;
+    private final int[] studentsGenerated;
+    private final Random random;
+    private final int maxNum;
 
     /**
-     * Constructor
-     * @author elia_laz
+     * Constructor for the Bag class
      * @param maxNum max number of the students generated
      **/
     public Bag(int maxNum){
@@ -25,34 +24,33 @@ public class Bag {
 
     /**
      * Students Generation/Random extraction
-     * @author elia_laz
      * @param num Number of Students that need to be generated
-     * @return integer array represent the students extracted
+     * @return int array to represent the extracted students
      **/
     public int[] getStudents(int num){
         int[] arr = {0,0,0,0,0};
         int i=0;
-        int cont;
+        int count;
         while (i<num){
-            cont=0;
+            count=0;
             for(int j=0; j<5; j++){
                 if(studentsGenerated[j]==maxNum){
-                    cont++;
+                    count++;
                 }
             }
-            if(cont!=5){
-                int extracted = random.nextInt(5-cont);
-                cont=0;
+            if(count!=5){
+                int extracted = random.nextInt(5-count);
+                count=0;
                 int j=0;
                 while(j<5){
-                    if(studentsGenerated[j]!=maxNum && extracted==cont){
+                    if(studentsGenerated[j]!=maxNum && extracted==count){
                         arr[j]++;
                         studentsGenerated[j]++;
                         i++;
                         j=6;
                     }
-                    else if(studentsGenerated[j]!=maxNum && extracted!=cont){
-                        cont++;
+                    else if(studentsGenerated[j]!=maxNum && extracted!=count){
+                        count++;
                     }
                     j++;
                 }
@@ -65,7 +63,7 @@ public class Bag {
     }
 
     /**
-     * Students inserction
+     * Students insertion
      * @author elia_laz
      * @param students Students that need to be reinserted inside the Bag
      **/

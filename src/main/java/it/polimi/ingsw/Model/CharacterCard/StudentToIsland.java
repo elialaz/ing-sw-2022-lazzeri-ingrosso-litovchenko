@@ -6,7 +6,7 @@ import it.polimi.ingsw.Model.*;
  * Character Card Class
  **/
 public class StudentToIsland extends SpecialCard {
-    private int[] students;
+    private final int[] students;
 
     /**
      * Constructor

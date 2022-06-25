@@ -6,31 +6,36 @@ Eriantys Board Game is the final test of **"Software Engineering"**, course of *
 
 **Teacher** San Pietro Pierluigi
 
+## The Team
+* [Elia Lazzeri](https://github.com/elialaz) - 
+* [Filiberto Ingrosso](https://github.com/filibertoingrosso) - 
+* [Litovchenko Nikita](https://github.com/litovn) - 10656602
+
 ## Project specification
 The project consists of a Java version of the board game *Eriantys*, made by Cranio Creations.
 
 You can find the full game [here](https://www.craniocreations.it/wp-content/uploads/2021/11/Eriantys_ITA_bassa.pdf).
 
 The final version includes:
-* initial UML diagram;
-* final UML diagram, generated from the code by automated tools;
-* working game implementation, which has to be rules compliant;
-* source code of the implementation;
-* source code of unity tests.
+* Initial UML diagram;
+* Final UML diagram, generated from the code by automated tools;
+* Working game implementation, which has to be rules compliant;
+* Source code of the implementation;
+* Source code of unity tests.
 
 ## Implemented Functionalities
-| Functionality | Status |
-|:-----------------------|:------------------------------------:|
-| Basic rules | [✅](https://github.com/elialaz/ing-sw-2022-lazzeri-ingrosso-litovchenko/tree/main/src/main/java/it/polimi/ingsw/Model) |
-| Complete rules | [✅](https://github.com/elialaz/ing-sw-2022-lazzeri-ingrosso-litovchenko/tree/main/src/main/java/it/polimi/ingsw/Model) |
-| Socket |[✅](https://github.com/elialaz/ing-sw-2022-lazzeri-ingrosso-litovchenko/tree/main/src/main/java/it/polimi/ingsw/Server) |
-| GUI | [⚠️]() |
-| CLI |[⚠️](https://github.com/elialaz/ing-sw-2022-lazzeri-ingrosso-litovchenko/tree/main/src/main/java/it/polimi/ingsw/Client/View/cli) |
-| All charachter cards | [✅](https://github.com/elialaz/ing-sw-2022-lazzeri-ingrosso-litovchenko/tree/main/src/main/java/it/polimi/ingsw/Model/CharacterCard)|
-| 4 player game | [⚠️]() |
-| Multiple games | [⛔]() |
-| Persistence | [⛔]() |
-| Resilience | [⛔]() |
+| Functionality |                                                               Status                                                                |
+|:-----------------------|:-----------------------------------------------------------------------------------------------------------------------------------:|
+| Basic rules |       [✅](https://github.com/elialaz/ing-sw-2022-lazzeri-ingrosso-litovchenko/tree/main/src/main/java/it/polimi/ingsw/Model)        |
+| Complete rules |       [✅](https://github.com/elialaz/ing-sw-2022-lazzeri-ingrosso-litovchenko/tree/main/src/main/java/it/polimi/ingsw/Model)        |
+| Socket |       [✅](https://github.com/elialaz/ing-sw-2022-lazzeri-ingrosso-litovchenko/tree/main/src/main/java/it/polimi/ingsw/Server)       |
+| GUI |                                                               [⚠️]()                                                                |
+| CLI |  [⚠️](https://github.com/elialaz/ing-sw-2022-lazzeri-ingrosso-litovchenko/tree/main/src/main/java/it/polimi/ingsw/Client/View/cli)  |
+| All charachter cards |[✅](https://github.com/elialaz/ing-sw-2022-lazzeri-ingrosso-litovchenko/tree/main/src/main/java/it/polimi/ingsw/Model/CharacterCard) |
+| 4 player game |                                                               [✅️](https://github.com/elialaz/ing-sw-2022-lazzeri-ingrosso-litovchenko/tree/main/src/main/java/it/polimi/ingsw/Model)                                                                |
+| Multiple games |                                                                [✅](https://github.com/elialaz/ing-sw-2022-lazzeri-ingrosso-litovchenko/blob/67c2f4935901df4e9343b7842e2be8f7bbd4d0fa/src/main/java/it/polimi/ingsw/Server)                                                                 |
+| Persistence |                                                                [⛔]()                                                                |
+| Resilience |                                                                [⛔]()                                                                |
 
 #### Legend
 [⛔]() Not Implemented &nbsp;&nbsp;&nbsp;&nbsp;[⚠️]() Implementing&nbsp;&nbsp;&nbsp;&nbsp;[✅]() Implemented
@@ -43,19 +48,19 @@ The final version includes:
 -->
 
 ## Test cases
-All tests in model and controller has a classes' coverage at x%.
+All tests in model and controller has a classes' coverage at 100%.
 
 **Coverage criteria: code lines.**
 
-| Package |Tested Class | Coverage |
-|:-----------------------|:------------------|:------------------------------------:|
-| Controller | ActionController | x/x (x%)
-| Model | Global Package | x/x (x%)
+| Package | Tested Class        | Coverage |
+|:-----------------------|:--------------------|:------------------------------------:|
+| Controller | ActionPhase         | 13/19 (68%)
+| Controller | ControlEventManager | 11/11 (100%)
+| Controller | Controller          | 47/54 (87%)
+| Controller | EndPhase            | 8/11 (72%)
+| Controller | PlanningPhase       | 18/22 (81%)
+| Model | Global Package      | 459/533 (86%)
 
-## The Team
-* [Elia Lazzeri](https://github.com/elialaz)
-* [Filiberto Ingrosso](https://github.com/filibertoingrosso)
-* [Litovchenko Nikita](https://github.com/litovn)
 
 ## Software used
 

@@ -5,17 +5,17 @@ package it.polimi.ingsw.Model;
  * @author elia_laz, filibertoingrosso
  **/
 public class SchoolBoard {
-    private int[] corridor;
+    private final int[] corridor;
     private int tower;
     private TowerColor color;
-    private int[] entrance;
+    private final int[] entrance;
     private boolean[] professor;
     private Player player;
 
     /**
-     * Constructor one of the SchoolBoard
-     * @param color color of the tower in the schoolboard
-     * @param numTower number of the tower in the schoolboard
+     * Constructor 1, of the SchoolBoard
+     * @param color color of the tower in the schoolBoard
+     * @param numTower number of the tower in the schoolBoard
      * @param entrance students in the entrance
      **/
     public SchoolBoard(TowerColor color, int numTower, int[] entrance){
@@ -27,7 +27,7 @@ public class SchoolBoard {
     }
 
     /**
-     * Constructor two of the SchoolBoard
+     * Constructor 2, of the SchoolBoard
      **/
     public SchoolBoard(int[] entrance){
         corridor = new int[]{0,0,0,0,0};
@@ -35,7 +35,7 @@ public class SchoolBoard {
     }
 
     /**
-     * Service method that move the students to the corrispettive corridor
+     * Service method that move the students to the corrispeCtive corridor
      * @param toSchoolBoard students moved from entrance to corridor
      **/
     public void moveCorridor(int[] toSchoolBoard) {
@@ -67,8 +67,8 @@ public class SchoolBoard {
     }
 
     /**
-     * Service method that set the player that own this schoolboard
-     * @param player player that own this schoolboard
+     * Service method that set the player that own this schoolBoard
+     * @param player player that own this schoolBoard
      **/
     public void setPlayer(Player player) {
         this.player = player;
@@ -108,7 +108,7 @@ public class SchoolBoard {
     }
 
     /**
-     * Service method that return true if the Schoolboard has the Professor
+     * Service method that return true if the SchoolBoard has the Professor
      * @param index moved from entrance to corridor
      **/
     public boolean isProfessor(int index) {
@@ -126,7 +126,7 @@ public class SchoolBoard {
 
     /**
      * Service method that remove tower
-     * @param number number of the toweer to be removed
+     * @param number number of the tower to be removed
      **/
     public void removeTower(int number) {
         tower -= number;

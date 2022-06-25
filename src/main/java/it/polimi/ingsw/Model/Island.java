@@ -3,11 +3,11 @@ package it.polimi.ingsw.Model;
 import java.util.ArrayList;
 
 /**
- * Class of the Island
+ * Class Island, to manage the islands
  * @author elia_laz, litovn
  **/
 public class Island {
-    private int[] students;
+    private final int[] students;
     private int tower;
     private TowerColor color;
     private int noEntryTile;
@@ -15,7 +15,7 @@ public class Island {
     private int colorNotCount;
 
     /**
-     * Constructor of the Island
+     * Constructor of the Island class
      * @param students students array of the new initialized island
      **/
     public Island(int[] students, int towerNum){
@@ -27,12 +27,12 @@ public class Island {
     }
 
     /**
-     * Public Constructor of all the Island
+     * Public Constructor of all the Islands
      * @param position position of motherNature
      * @return an ArrayList<Island> of all the island correctly initialized based on motherNature position
      **/
     static public ArrayList<Island> tableIslandConstructor(MotherNature position){
-        ArrayList<Island> archipelago = new ArrayList<Island>();
+        ArrayList<Island> archipelago = new ArrayList<>();
         Bag generator = new Bag(2);
         int pos = position.getPosition();
         position.move(6);
@@ -61,11 +61,12 @@ public class Island {
 
     /**
      * Getter of students of island
+     * @return int array of students on an island
      **/
     public int[] getStudents(){ return students;}
 
     /**
-     * Service method check tower number on island
+     * Service method to check the number of towers on an island
      * @return true if there is no tower on the island
      **/
     public boolean checkNotTower(){
@@ -73,7 +74,7 @@ public class Island {
     }
 
     /**
-     * Service method check tower color
+     * Service method toe check the tower color
      * @return tower color
      **/
     public TowerColor colorTower(){
@@ -81,7 +82,7 @@ public class Island {
     }
 
     /**
-     * Service method to set tower on island
+     * Service method to set tower on an island
      * @param color color of the tower added
      * @param number number of the tower added
      **/
@@ -91,14 +92,15 @@ public class Island {
     }
 
     /**
-     * Service method to get tower on island
+     * Service method to get the tower to on island
+     * @return int number of towers
      **/
     public int getTowerNum(){
         return tower;
     }
 
     /**
-     * Service method to get students number on island
+     * Service method to get the number of students on an island
      * @param index color of the students
      **/
     public int getStudents(int index){
@@ -121,6 +123,7 @@ public class Island {
 
     /**
      * Service method to check effect noEntryTile
+     * @return boolean is there's an entry tile
      **/
     public boolean isEntryTileMotherNature(){
         return noEntryTile!=0;
@@ -128,18 +131,21 @@ public class Island {
 
     /**
      * Service method to get number of entry tiles on island
+     * @return int the number of no entry tiles on an island
      **/
     public int getNoEntryTile(){ return this.noEntryTile; }
 
     /**
-     * Service method for set the noCountTower effect
+     * Service method to set the noCountTower effect
+     * @param noCountTower boolean passed
      **/
     public void setNoCountTower(boolean noCountTower) {
         this.noCountTower = noCountTower;
     }
 
     /**
-     * Service method for check the noCountTower effect
+     * Service method to check the noCountTower effect
+     * @return boolean is there are no towers
      **/
     public boolean isNoCountTower() {
         return noCountTower;
@@ -147,6 +153,7 @@ public class Island {
 
     /**
      * Service method to set the noCountTower effect
+     * @param colorNotCount number of towers
      **/
     public void setColorNotCount(int colorNotCount) {
         this.colorNotCount = colorNotCount;
@@ -154,6 +161,7 @@ public class Island {
 
     /**
      * Service method to get the noCountTower effect
+     * @return int of colors not to count
      **/
     public int getColorNotCount() {
         return colorNotCount;
