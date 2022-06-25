@@ -32,8 +32,8 @@ public class EndPhase{
         }
         else{
             if(model.islandNUm() == 3){
-                manager.notify("win");
                 controller.setNextPlayerTurn(model.checkTowerNum());
+                manager.notify("win");
             }
             else {
                 controller.setNextMove(2);

@@ -23,13 +23,12 @@ public class ClientEventManager implements EventManager {
         }
     }
 
-    //TODO
     /**
      * Factory Constructor
      * @return new ClientEventManager instance
      **/
     static public ClientEventManager createClientEventManager(){
-        return new ClientEventManager();
+        return new ClientEventManager("clientSend", "updateGameBoard");
     }
 
     /**
@@ -38,7 +37,7 @@ public class ClientEventManager implements EventManager {
      * @param listener Client that are interested in a some particular Event
      **/
     @Override
-    public void subscribe(String eventType, EventReciver listener) {
+    public synchronized void subscribe(String eventType, EventReciver listener) {
         List<EventReciver> users = listeners.get(eventType);
         users.add(listener);
     }

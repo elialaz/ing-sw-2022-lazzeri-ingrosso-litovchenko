@@ -1,81 +1,189 @@
 package it.polimi.ingsw.Server;
 
+import it.polimi.ingsw.Client.ClientEventManager;
 import it.polimi.ingsw.Controller.ControlEventManager;
+import it.polimi.ingsw.Controller.Controller;
+import it.polimi.ingsw.Event.EventReciver;
+import it.polimi.ingsw.Exception.ToMuchPlayerExcetpion;
+import it.polimi.ingsw.Model.Game;
+import it.polimi.ingsw.Model.ModelEventManager;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.Socket;
+import java.util.ArrayList;
 
 /**
- * Connection Handler for every Client
+ * Connection Handler for managing Client
  * @author filibertoingrosso, elia_laz, litovn
  **/
-public class ConnectionHandler{
-    private Socket client;
-    private PrintWriter out;
-    private BufferedReader in;
-    private boolean send;
-    private String data_out;
-    private String header_out;
-    static String data_in;
-    private ControlEventManager manager;
-    static boolean recived;
+public class ConnectionHandler implements EventReciver {
+    private int idGame;
+    private ArrayList<String> client;
+    private int actualGamer;
+    private int expectedGamer;
+    private ServerEventManager manager;
+    private ClientEventManager clientManager;
+    private ModelEventManager gameManager;
+    private ControlEventManager controlManager;
+    private Controller controller;
+    private Game model;
+    private int actionType;
+    private boolean start;
 
     /**
      * Constructor of the ConnectionHandler
-     * @param manager Event manager of the Controller
+     * @param eventManager Event Manager per il Server
+     * @param clientManager of type ServerEventManager
+     * @param nikname of the first player
+     * @param playerNum number of the player expected
+     * @param idGame id of the game
+     * @param expertMode boolean value of the expert mode
      **/
-    public ConnectionHandler(ControlEventManager manager){
-        this.manager = manager;
-        recived = false;
+    public ConnectionHandler(ServerEventManager eventManager, ClientEventManager clientManager, String nikname, int playerNum, int idGame, boolean expertMode, boolean chatEnable){
+        client = new ArrayList<String>();
+
+        manager = eventManager;
+        client.add(nikname);
+        expectedGamer = playerNum;
+        actualGamer = 1;
+        this.clientManager = clientManager;
+        this.idGame = idGame;
+        controller = new Controller(playerNum, nikname, idGame, expertMode);
+        controlManager = controller.getManager();
+        model = controller.getModel();
+        gameManager = model.getManager();
+        controlManager.subscribe("gamerPlanningTurnNotify", this);
+        controlManager.subscribe("gamerActionTurnNotify", this);
+        controlManager.subscribe("movingMotherNatureGamerTurn", this);
+        controlManager.subscribe("selectCloudTile", this);
+        controlManager.subscribe("win", this);
+        gameManager.subscribe("update", this);
+
+        start = false;
     }
 
     /**
-     * Client manager for every message incoming
-     * @param socket socket where listen
+     * Getter of the Game ID
+     * @return integer of the game id
      **/
-    public void managerClient(Socket socket){
-        try{
-            out = new PrintWriter(socket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            String response;
+    public int getIdGame(){
+        return idGame;
+    }
 
-            while(socket.isConnected()){
-                client = socket;
-                if(send){
-                    out.println(header_out + "////" + data_out);
-                }
-                response = in.readLine();
-                if(response!=null){
-                    String[] tokens = response.split("////");
-                    //manager.notify(tokens[0]);
-                    ConnectionHandler.data_in = tokens[1];
-                    System.out.println(tokens[0] + " " + tokens[1]);
-                    this.sendPacket("recieved", "server");
-                }
-            }
+    /**
+     * Service Method for adding a player to the current game
+     * @param
+     **/
+    public synchronized void clientAdd(String nikname){
+        try {
+            controller.addPlayer(nikname);
+            client.add(nikname);
+            actualGamer++;
         }
-        catch(IOException e){
-            System.out.println("Error while talking with the client: "+ e);
+        catch(ToMuchPlayerExcetpion e){
+            manager.notify("clientError");
         }
     }
 
     /**
-     * Check if Client is connected
-     * @return true or false
+     * Getter of the number of player currently in game
+     * @return integer of player num in game
      **/
-    public boolean connectionStatus(){
-        return client.isConnected();
+    public int getActualGamer() {
+        return actualGamer;
     }
 
     /**
-     * Send a message
+     * Getter of the number of player expected in game
+     * @return integer of player num expected
      **/
-    public void sendPacket(String data, String command){
-        this.data_out = data;
-        this.header_out = command;
-        this.send = true;
+    public int getExpectedGamer() {
+        return expectedGamer;
+    }
+
+    //TODO
+    /**
+     * Getter of the status of the GameBoard
+     * @return String with all the GameBoard info
+     **/
+    public synchronized String gameBoardStatus() {
+        String status = new String("");
+        status += " ";
+        return status;
+    }
+
+    /**
+     * Getter of the next player that can play
+     * @return String nickname of the player
+     **/
+    public synchronized String getCurrentPlayerTurn(){
+        return controller.getNextTurnPlayer();
+    }
+
+    /**
+     * Getter of the action type param
+     * @return int action to be executed
+     **/
+    public int getActionType(){
+        return actionType;
+    }
+
+    /**
+     * Getter of the controller
+     * @return Controller
+     **/
+    public synchronized Controller getController(){
+        return controller;
+    }
+
+    @Override
+    public void update(String eventType) {
+        switch (eventType){
+            case "update":
+                clientManager.notify("updateGameBoard");
+                break;
+            case "gamerPlanningTurnNotify":
+                actionType = 0;
+                clientManager.notify("clientSend");
+                break;
+            case "gamerActionTurnNotify":
+                actionType = 1;
+                clientManager.notify("clientSend");
+                break;
+            case "movingMotherNatureGamerTurn":
+                actionType = 2;
+                clientManager.notify("clientSend");
+                break;
+            case "selectCloudTile":
+                actionType = 3;
+                clientManager.notify("clientSend");
+                break;
+            case "win":
+                actionType = 4;
+                clientManager.notify("clientSend");
+                break;
+        }
+    }
+
+    /**
+     * Getter of the ClientManager
+     * @return ClientManager
+     **/
+    public ClientEventManager getClientManager() {
+        return clientManager;
+    }
+
+    /**
+     * Getter of the start variable that verify if the game can start
+     * @return Boolean
+     **/
+    public boolean isStart() {
+        return start;
+    }
+
+    /**
+     * Setter of the start variable that verify if the game can start
+     * @param start boolean value
+     **/
+    public void setStart(boolean start) {
+        this.start = start;
     }
 }

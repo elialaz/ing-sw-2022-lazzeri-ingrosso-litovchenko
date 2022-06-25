@@ -40,20 +40,14 @@ public class Client {
         }
     }
 
-    /**
-     * Service method for sending packet to the server
-     * @param data Contains the data of the packet
-     * @param type Is the type of packet
-     **/
-    public synchronized void sendPacket(String data, String type){
+    public void sendPacket(String data){
         String answer;
         try {
-            out.println(type + "////" + data);
+            out.println(data);
             answer = in.readLine();
-            String[] tokens = answer.split("////");
+            String[] tokens = answer.split("/");
             //manager.notify(tokens[0]);
-            Client.response = tokens[1];
-            System.out.println(tokens[1] + " " + tokens[0]);
+            System.out.println(answer);
         }
         catch(IOException e){
             System.out.println("Errore nell'invio: "+ e);
@@ -61,8 +55,52 @@ public class Client {
     }
 
     /**
-     * Service method for receive packet from the server
-     **/
+     * The Main Class of the Client.
+     * @param args of type String[], the standard java main parameter
+     */
+    public static void main(String[] args) throws InterruptedException {
+
+        int serverPort = 21000;
+        String serverIP = "localhost";
+        int cont = 0;
+
+        ClientEventManager prova = ClientEventManager.createClientEventManager();
+        Client client = new Client(serverPort, serverIP, prova);
+
+        client.sendPacket("login");
+
+        if(Integer.parseInt(args[0])==1){
+            client.sendPacket("newGame/stominchia/2/1/true/true");
+        }
+        if(Integer.parseInt(args[0])==3){
+            client.sendPacket("newGame/stominchia3/2/2/true/true");
+        }
+        else{
+            client.sendPacket("loadGame/stominchia2/1");
+        }
+
+        client.sendPacket("");
+
+    }
+}
+
+
+/*
+public synchronized void sendPacket(String data, String type){
+    String answer;
+    try {
+        out.println(type + "////" + data);
+        answer = in.readLine();
+        String[] tokens = answer.split("////");
+        //manager.notify(tokens[0]);
+        Client.response = tokens[1];
+        System.out.println(tokens[1] + " " + tokens[0]);
+    }
+    catch(IOException e){
+        System.out.println("Errore nell'invio: "+ e);
+    }
+}
+
     public void recivePacket(){
         String response;
         try {
@@ -78,9 +116,6 @@ public class Client {
         }
     }
 
-    /**
-     * Service method for closing the socket
-     **/
     public void close(){
         try{
             socket.close();
@@ -90,45 +125,16 @@ public class Client {
         }
     }
 
-    /**
-     * Getter for returning the Server Port
-     **/
     public int getServerPort() {
         return serverPort;
     }
 
-    /**
-     * Getter for returning the Server IP
-     **/
     public String getServerIP() {
         return serverIP;
     }
 
-    /**
-     * Service method for closing the socket
-     **/
     public void sendAck(){
         out.println("ack////");
     }
 
-
-    /**
-     * The Main Class of the Client.
-     * @param args of type String[], the standard java main parameter
-     */
-    public static void main(String[] args) throws InterruptedException {
-
-        int serverPort = 21000;
-        String serverIP = "localhost";
-        int cont = 0;
-
-        ClientEventManager prova = ClientEventManager.createClientEventManager();
-        Client client = new Client(serverPort, serverIP, prova);
-
-        while(cont < 10){
-            TimeUnit.SECONDS.sleep(5);
-            client.sendPacket("prova" + cont, "ciao");
-            cont++;
-        }
-    }
-}
+ */

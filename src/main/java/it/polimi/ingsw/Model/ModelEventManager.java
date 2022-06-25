@@ -32,7 +32,7 @@ public class ModelEventManager implements EventManager {
     }
 
     /**
-     * Adding EventReciever instance to the subscriber List
+     * Adding EventReceiver instance to the subscriber List
      * @param eventType Event that the Client are interested in
      * @param listener Client that are interested in a some particular Event
      **/
@@ -43,7 +43,7 @@ public class ModelEventManager implements EventManager {
     }
 
     /**
-     * Notify to some particular EventReciver that something is happened
+     * Notify to some particular EventReceiver that something is happened
      * @param eventType Client type to notify some event
      **/
     @Override

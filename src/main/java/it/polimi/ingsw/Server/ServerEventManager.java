@@ -25,17 +25,16 @@ public class ServerEventManager implements EventManager {
         }
     }
 
-    //TODO
     /**
      * Factory Constructor
      * @return new ClientEventManager instance
      **/
     static public ServerEventManager createControlEventManager(){
-        return new ServerEventManager();
+        return new ServerEventManager("clientError", "LoginSuccess");
     }
 
     /**
-     * Adding EventReciver instance to the subscriber List
+     * Adding EventReceiver instance to the subscriber List
      * @param eventType Event that the Client are interested in
      * @param listener Client that are interested in a some particular Event
      **/
@@ -46,7 +45,7 @@ public class ServerEventManager implements EventManager {
     }
 
     /**
-     * Notify to some particular EventReciver that something is appened
+     * Notify to some particular EventReceiver that something is appended
      * @param eventType Client type to notify some event
      **/
     @Override

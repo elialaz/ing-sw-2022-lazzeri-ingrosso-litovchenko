@@ -1,10 +1,15 @@
 package it.polimi.ingsw.Server;
 
+import it.polimi.ingsw.Client.ClientEventManager;
 import it.polimi.ingsw.Controller.ControlEventManager;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -14,6 +19,7 @@ import java.util.Scanner;
 public class Server {
     private ServerSocket serverSocket;
     private int port;
+    private ArrayList<ConnectionHandler> game;
 
     /**
      * Constructor of the Server
@@ -24,6 +30,7 @@ public class Server {
             this.port = port;
             serverSocket = new ServerSocket(port);
             System.out.println("Server has started on port" + port);
+            game = new ArrayList<ConnectionHandler>();
         }
         catch(IOException e){
             System.out.println("Error");
@@ -41,8 +48,7 @@ public class Server {
             try {
                 Socket listener = serverSocket.accept();
                 System.out.println("Connection Established");
-                ServerThread st=new ServerThread(listener, EventManager, count);
-                st.start();
+                new ServerThread(listener, EventManager, count, this).start();
             } catch (IOException e) {
                 System.out.println("Error while connecting to client: "+ e);
             }
@@ -50,10 +56,51 @@ public class Server {
     }
 
     /**
+     * Creator of a new ConnectionHandler for a new Game
+     * @param eventManager EventManager for the server
+     **/
+    public synchronized ConnectionHandler startGame(ServerEventManager eventManager, ClientEventManager clientManager, String nikname, int playerNum, int idGame, boolean expertMode, boolean chatEnable){
+        ConnectionHandler nuova = new ConnectionHandler(eventManager, clientManager, nikname, playerNum, idGame, expertMode, chatEnable);
+        game.add(nuova);
+        return nuova;
+    }
+
+    /**
+     * Service Method for loading a Game
+     * @param nikname EventManager for the server
+     **/
+    public synchronized boolean loadGame(String nikname, int idGame) {
+        for (ConnectionHandler c: game) {
+            if (c.getIdGame() == idGame){
+                if(c.getActualGamer() == c.getExpectedGamer()){
+                    return false;
+                }
+                c.clientAdd(nikname);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Service Method for getting the client game manager
+     * @param idGame id of the game
+     **/
+    public synchronized ConnectionHandler getMaster(int idGame) {
+        for (ConnectionHandler c: game) {
+            if (c.getIdGame() == idGame){
+                return c;
+            }
+        }
+        return game.get(0);
+    }
+
+    /**
      * Main for testing the Server
      **/
     public static void main(String[] args){
         int serverPort;
+
         do {
             Scanner in = new Scanner(System.in);
             System.out.print("Choose the number of server port (it must be between 1024 and 65535):");
@@ -64,7 +111,8 @@ public class Server {
 
         System.out.println("Press 'Ctrl+C' to stop the server execution");
 
-        Thread acceptConnection = new Thread(() -> server.listen(ServerEventManager.createControlEventManager()));
-        acceptConnection.start();
+        new Thread(() -> server.listen(ServerEventManager.createControlEventManager())).start();
+
+
     }
 }

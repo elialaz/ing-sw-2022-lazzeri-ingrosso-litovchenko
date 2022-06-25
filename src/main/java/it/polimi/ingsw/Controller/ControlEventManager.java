@@ -23,9 +23,8 @@ public class ControlEventManager implements EventManager {
         }
     }
 
-    //TODO
     /**
-     * Factory Constructor* @author elia_laz
+     * Factory Constructor
      * @return new ClientEventManager instance
      **/
     static public ControlEventManager createControlEventManager(){

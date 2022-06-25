@@ -1,10 +1,7 @@
 package it.polimi.ingsw.Model;
 
-import it.polimi.ingsw.Controller.PlanningPhase;
 import it.polimi.ingsw.Event.EventReciver;
 import it.polimi.ingsw.Exception.*;
-import it.polimi.ingsw.Server.Server;
-import it.polimi.ingsw.Server.ServerEventManager;
 
 import java.util.*;
 
