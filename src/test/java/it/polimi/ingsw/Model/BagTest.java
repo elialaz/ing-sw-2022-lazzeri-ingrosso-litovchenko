@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BagTest {
     private Bag bag = new Bag(10);
-    int[] StudentsGenerated = new int[]{0,0,0,0,0};
+    int[] StudentsGenerated;
 
     /**
      * Control of number of student extracted
@@ -14,11 +14,11 @@ class BagTest {
     @Test
     void getStudents() {
         int NumStudentExtracted =0;
-        StudentsGenerated = bag.getStudents(7);
+        StudentsGenerated = bag.getStudents(4);
         for (int i=0; i<5; i++){
             NumStudentExtracted += StudentsGenerated[i];
         }
-        assertEquals(7, NumStudentExtracted);
+        assertEquals(4, NumStudentExtracted);
     }
 
     /**

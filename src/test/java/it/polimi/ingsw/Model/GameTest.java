@@ -9,7 +9,11 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 class GameTest {
-   private final Game game = new Game(3, "elvis", 56, true);
+   private final Game game = new Game(2, "elvis", 56, true);
+   private CloudTile cloud = new CloudTile(4);
+   private SchoolBoard school = new SchoolBoard(TowerColor.WHITE, 6, new int[]{2,3,1,3,0});
+   private SchoolBoard school2 = new SchoolBoard(TowerColor.BLACK, 6, new int[]{3,2,1,1,2});
+   private MotherNature mom = new MotherNature();
     /*
     @Test
     void addPlayer() throws ToMuchPlayerExcetpion {
@@ -61,29 +65,34 @@ class GameTest {
 
     @Test
     void UpdateCloudTile() {
+        cloud = new CloudTile(4);
+        cloud.setStudents(new Bag(10));
         ArrayList<CloudTile> cloudTiles = game.getCloudTiles();
-           game.takeCloudTile(0, 0);
-           game.updateCloudTile();
-        for (CloudTile c: cloudTiles) {
-           assertFalse(c.isWithoutPhase());
-        }
+        game.updateCloudTile();
+        assertFalse(cloudTiles.get(0).isWithoutPhase());
     }
 
     @Test
     void TakeCloudTile() {
-        ArrayList<CloudTile> cloudTiles = game.getCloudTiles();
-        game.moveStudentsToSchoolBoard(new int[] {1,0,1,1,0}, 0);
-        int [] studentsToMove = cloudTiles.get(0).getStudents();
-        game.takeCloudTile(0,1);
-        assertEquals(7, game.getSchoolboards().get(0).getEntranceStudents().length);
-
+        cloud = new CloudTile(4);
+        cloud.setStudents(new Bag(5));
+        ArrayList<SchoolBoard> schoolEntrance = game.getSchoolboards();
+        game.takeCloudTile(0,0);
+        int[] entrance = schoolEntrance.get(0).getEntranceStudents();
+        int totEntrance = 0;
+        for (int i=0; i<entrance.length; i++){
+            totEntrance += entrance[i];
+        }
+        assertEquals(5, totEntrance);
     }
 
     @Test
     void PlayCard() {
-
+        game.playCard(0,7);
+        assertEquals(4, game.getLastCardMovementAllowed(0));
     }
 
+    /*
     @Test
     void MoveStudentsToSchoolBoard() {
         SchoolBoard schoolBoard = game.getSchoolboards().get(0);
@@ -98,40 +107,47 @@ class GameTest {
     void moveStudentsToIsland() {
     }
 
+
     @Test
     void checkProfessorInfluence() {
-        Game game = new Game(2, "Panzerotto", 11111, true);
         ArrayList<SchoolBoard> schoolBoards = game.getSchoolboards();
-        schoolBoards.get(0).moveCorridor(new int[]{0, 1, 2, 0, 1});
+        schoolBoards.get(0).moveCorridor(new int[]{0, 2, 1, 0, 0});
         Player player1 = new Player("nik",1,0);
         schoolBoards.get(1).setPlayer(player1);
-        schoolBoards.get(1).moveCorridor(new int[]{2, 1, 3, 0, 0});
-        game.checkProfessorInfluence(schoolBoards.get(0));
-        assertEquals(false, schoolBoards.get(1).isProfessor(0));
-        assertEquals(false, schoolBoards.get(1).isProfessor(1));
-        assertEquals(false, schoolBoards.get(1).isProfessor(2));
-        assertEquals(false, schoolBoards.get(1).isProfessor(3));
-        assertEquals(false, schoolBoards.get(1).isProfessor(4));
+        schoolBoards.get(1).moveCorridor(new int[]{0, 2, 0, 1, 0});
+        game.checkProfessorInfluence(schoolBoards.get(1));
+        assertEquals(false, schoolBoards.get(0).isProfessor(0));
+        assertEquals(true, schoolBoards.get(0).isProfessor(1));
+        assertEquals(true, schoolBoards.get(0).isProfessor(2));
+        assertEquals(false, schoolBoards.get(0).isProfessor(3));
+        assertEquals(false, schoolBoards.get(0).isProfessor(4));
+    }*/
 
-    }
-
-    @Test
+    //TODO quanto checkControl e Union testate
+    /*@Test
     void moveMotherNature() {
-    }
+        int mom_pos = mom.getPosition();
+        game.moveMotherNature(3);
+        assertEquals(mom_pos+3, mom.getPosition());
+    }*/
 
     @Test
     void checkControl() {
+        Island isle = new Island(new int[]{1,0,0,0,0}, 1);
+        game.checkInfluence(isle);
+        game.checkControl(game.getIslandTile().get(0));
     }
 
     @Test
     void checkInfluence() {
-        Game game = new Game(2, "Panzerotto", 11111, false);
-        Island isle = new Island(new int[]{1,0,0,0,0}, 1);
+        Island isle = new Island(new int[]{2,0,0,0,0}, 1);
         assertEquals(-1, game.checkInfluence(isle));
     }
 
     @Test
     void checkUnion() {
+        Island isle = new Island(new int[]{1,0,0,0,0}, 1);
+        game.checkUnion(isle);
     }
 
     @Test
@@ -146,9 +162,6 @@ class GameTest {
         assertEquals(Cards, game.getExpertCard());
     }
 
-    @Test
-    void eventSubscrbe() {
-    }
 
     @Test
     void getGamerbyid() {
@@ -164,6 +177,7 @@ class GameTest {
 
     @Test
     void getPlanningPhaseOrder() {
+
     }
 
     @Test
