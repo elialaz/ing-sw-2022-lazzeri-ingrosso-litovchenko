@@ -14,7 +14,7 @@ import java.util.*;
  **/
 public class Game {
     private final int idGame;
-    private final int playerNum;
+    private int playerNum;
     private ArrayList<Player> gamer;
     private ArrayList<Island> islandTile;
     private ArrayList<CloudTile> cloudTiles;
@@ -82,7 +82,7 @@ public class Game {
      * @throws ToMuchPlayerExcetpion when playerNum is equal to gamer lenght
      **/
     public void addPlayer(String playerName) throws ToMuchPlayerExcetpion {
-        if (playerNum > gamer.size()){
+        if (playerNum < gamer.size()){
             throw new ToMuchPlayerExcetpion();
         }
         else{
@@ -184,7 +184,7 @@ public class Game {
                 c.setStudents(bag);
             }
         }
-        manager.notify("cloudTileUpdate");
+        manager.notify("update");
     }
 
     /**
@@ -196,7 +196,7 @@ public class Game {
                 schoolboards.get(i).moveToEntrance(cloudTiles.get(indexCloudTile).getStudents());
             }
         }
-        manager.notify("cloudTileUpdate");
+        manager.notify("update");
     }
 
     /**
@@ -206,7 +206,7 @@ public class Game {
      **/
     public void playCard(int playerId, int card){
         assistantCard.get(playerId).playCard(card);
-        manager.notify("deckUpdate");
+        manager.notify("update");
     }
 
     /**
@@ -221,7 +221,7 @@ public class Game {
                 this.checkProfessorInfluence(schoolboards.get(i));
             }
         }
-        manager.notify("schoolBoardUpdate");
+        manager.notify("update");
     }
 
     /**
@@ -237,8 +237,8 @@ public class Game {
                 island.addStudents(students);
             }
         }
-        manager.notify("schoolBoardUpdate");
-        manager.notify("islandUpdate");
+        manager.notify("update");
+        manager.notify("update");
     }
 
     /**
@@ -258,7 +258,7 @@ public class Game {
                 }
             }
         }
-        manager.notify("professorUpdate");
+        manager.notify("update");
     }
 
     /**
@@ -274,7 +274,7 @@ public class Game {
             this.checkControl(islandTile.get(position.getPosition()));
             this.checkUnion(islandTile.get(position.getPosition()));
         }
-        manager.notify("motherNatureUpdate");
+        manager.notify("update");
     }
 
     /**
@@ -286,7 +286,7 @@ public class Game {
         if(island.checkNotTower() && playerId != -1 && playerId != -2){
             schoolboards.get(playerId).removeTower(island.getTowerNum());
             island.setTower(island.getTowerNum(), schoolboards.get(playerId).getColor());
-            manager.notify("islandControlUpdate");
+            manager.notify("update");
         }
         else if(!island.checkNotTower() && playerId != -1 && playerId != -2){
             for (SchoolBoard s: schoolboards) {
@@ -296,7 +296,7 @@ public class Game {
             }
             schoolboards.get(playerId).removeTower(island.getTowerNum());
             island.setTower(island.getTowerNum(), schoolboards.get(playerId).getColor());
-            manager.notify("islandControlUpdate");
+            manager.notify("update");
         }
     }
 
@@ -412,7 +412,7 @@ public class Game {
             if(unionBefore){
                 islandTile.remove(idBefore);
             }
-            manager.notify("unionUpdate");
+            manager.notify("update");
         }
     }
 
@@ -421,8 +421,8 @@ public class Game {
      * @return the expert card
      **/
     public ArrayList<SpecialCard> playEffect(){
-        manager.notify("characterCardUpdate");
-        manager.notify("coinUpdate");
+        manager.notify("update");
+        manager.notify("update");
         return expertCard;
     }
 
