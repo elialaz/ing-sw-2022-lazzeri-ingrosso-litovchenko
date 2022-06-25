@@ -28,7 +28,7 @@ public class ModelEventManager implements EventManager {
      * @return new ModelEventManager instance
      **/
     static public ModelEventManager createModelEventManager(){
-        return new ModelEventManager("playerJoin", "setupStart", "cloudTileUpdate", "islandUpdate", "deckUpdate", "coinUpdate", "schoolBoardUpdate", "islandControlUpdate", "unionUpdate", "professorUpdate", "motherNatureUpdate", "characterCardUpdate");
+        return new ModelEventManager("playerJoin", "setupStart", "update");
     }
 
     /**
