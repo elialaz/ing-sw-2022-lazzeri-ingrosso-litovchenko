@@ -2,7 +2,7 @@ package it.polimi.ingsw.Model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import it.polimi.ingsw.Exception.ToMuchPlayerException;
+import it.polimi.ingsw.Exception.ToMuchPlayerExcetpion;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ class GameTest {
    void addPlayer() {
        try {
            game.addPlayer("Gio");
-       } catch (ToMuchPlayerException e) {
+       } catch (ToMuchPlayerExcetpion e) {
        }
    }
 

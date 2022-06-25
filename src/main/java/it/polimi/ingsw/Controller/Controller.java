@@ -1,9 +1,9 @@
 package it.polimi.ingsw.Controller;
 
-import it.polimi.ingsw.Event.EventReciever;
+import it.polimi.ingsw.Event.EventReciver;
 import it.polimi.ingsw.Exception.MoveNotAllowed;
 import it.polimi.ingsw.Exception.PlayerNotexist;
-import it.polimi.ingsw.Exception.ToMuchPlayerException;
+import it.polimi.ingsw.Exception.ToMuchPlayerExcetpion;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Island;
 
@@ -12,7 +12,7 @@ import it.polimi.ingsw.Model.Island;
  * Main Class of the Controller, one for each game
  * @author elia_laz
  **/
-public class Controller implements EventReciever {
+public class Controller implements EventReciver {
     private final int idGame;
     private final int playerNum;
     private final Game model;
@@ -51,7 +51,7 @@ public class Controller implements EventReciever {
      * Service method to add more player to the current game session
      * @param player player to be added to the game
      **/
-    public void addPlayer(String player) throws ToMuchPlayerException {
+    public void addPlayer(String player) throws ToMuchPlayerExcetpion {
         model.addPlayer(player);
     }
 
