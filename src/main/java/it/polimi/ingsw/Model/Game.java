@@ -555,4 +555,25 @@ public class Game {
      * getter of the ModelManager
      **/
     public ModelEventManager getManager() { return manager; }
+
+    /**
+     * getter of gamers
+     **/
+    public ArrayList<Player> getGamer() {
+        return gamer;
+    }
+
+    /**
+     * getter of cloudTiles
+     **/
+    public ArrayList<CloudTile> getCloudTiles() {
+        return cloudTiles;
+    }
+
+    /**
+     * getter of islandTiles
+     **/
+    public ArrayList<Island> getIslandTile() {
+        return islandTile;
+    }
 }

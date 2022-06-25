@@ -14,8 +14,9 @@ class CloudTileTest {
      **/
     @Test
     void getStudents() {
+        Bag bag = new Bag(5);
         cloudTile = new CloudTile(3);
-        cloudTile.setStudents(new Bag(10));
+        cloudTile.setStudents(bag);
         int [] startStudentOnIt = cloudTile.getStudents();
         int sum = 0;
         for (int i = 0; i <5; i++) {
