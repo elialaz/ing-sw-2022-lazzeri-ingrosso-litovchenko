@@ -3,6 +3,9 @@ package it.polimi.ingsw.Model;
 import it.polimi.ingsw.Controller.PlanningPhase;
 import it.polimi.ingsw.Event.EventReciver;
 import it.polimi.ingsw.Exception.*;
+import it.polimi.ingsw.Server.Server;
+import it.polimi.ingsw.Server.ServerEventManager;
+
 import java.util.*;
 
 /**
@@ -188,7 +191,7 @@ public class Game {
      * Service method for CloudTile to bring the students on the Schoolboard
      **/
     public void takeCloudTile(int idPlayer, int indexCloudTile){
-        for (int i=0; i<playerNum; i++) {
+        for (int i=0; i<gamer.size(); i++) {
             if(gamer.get(i).getId() == idPlayer){
                 schoolboards.get(i).moveToEntrance(cloudTiles.get(indexCloudTile).getStudents());
             }
@@ -212,7 +215,7 @@ public class Game {
      * @param idPlayer id of the Player that make the move
      **/
     public void moveStudentsToSchoolBoard(int[] toSchoolBoard, int idPlayer){
-        for (int i=0; i<playerNum; i++) {
+        for (int i=0; i<gamer.size(); i++) {
             if(gamer.get(i).getId() == idPlayer){
                 schoolboards.get(i).moveCorridor(toSchoolBoard);
                 this.checkProfessorInfluence(schoolboards.get(i));
@@ -228,7 +231,7 @@ public class Game {
      * @param island island where player move the students
      **/
     public void moveStudentsToIsland(int[] students, int idPlayer, Island island){
-        for (int i=0; i<playerNum; i++) {
+        for (int i=0; i<gamer.size(); i++) {
             if(gamer.get(i).getId() == idPlayer){
                 schoolboards.get(i).removeEntrance(students);
                 island.addStudents(students);
@@ -253,9 +256,6 @@ public class Game {
                     professor[i]=false;
                     schoolBoard.setProfessor(i, true);
                 }
-                /*else{
-                    s.setProfessor(i,true);
-                }*/
             }
         }
         manager.notify("professorUpdate");
@@ -475,7 +475,7 @@ public class Game {
         ArrayList<Integer> value = new ArrayList<Integer>();
         order.add(0);
         value.add(assistantCard.get(0).getLastCardValue());
-        for(int i=1; i<playerNum; i++){
+        for(int i=1; i<gamer.size(); i++){
             for(int j=0; j<=i; j++){
                 if(assistantCard.get(i).getLastCardValue() < value.get(j)){
                     value.add(j, assistantCard.get(i).getLastCardValue());
@@ -552,17 +552,7 @@ public class Game {
     public ArrayList<SchoolBoard> getSchoolboards() { return schoolboards; }
 
     /**
-     * getter of schoolBoards
+     * getter of the ModelManager
      **/
-    public ArrayList<CloudTile> getCloudTiles() { return cloudTiles; }
-
-    /**
-     * getter of gamers
-     **/
-    public ArrayList<Player> getGamer() { return gamer; }
-
-    /**
-     * getter of islandTiles
-     **/
-    public ArrayList<Island> getIslandTile() { return islandTile;}
+    public ModelEventManager getManager() { return manager; }
 }

@@ -1,10 +1,6 @@
 package it.polimi.ingsw.Model;
 
-import it.polimi.ingsw.Server.Server;
-import it.polimi.ingsw.Server.ServerEventManager;
-
 import java.util.Random;
-import java.util.Scanner;
 
 /**
  * Bag class for students generation
