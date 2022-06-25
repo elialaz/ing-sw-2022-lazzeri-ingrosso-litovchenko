@@ -1,12 +1,7 @@
 package it.polimi.ingsw.Server;
 
 import it.polimi.ingsw.Client.ClientEventManager;
-import it.polimi.ingsw.Controller.ControlEventManager;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -59,23 +54,23 @@ public class Server {
      * Creator of a new ConnectionHandler for a new Game
      * @param eventManager EventManager for the server
      **/
-    public synchronized ConnectionHandler startGame(ServerEventManager eventManager, ClientEventManager clientManager, String nikname, int playerNum, int idGame, boolean expertMode, boolean chatEnable){
-        ConnectionHandler nuova = new ConnectionHandler(eventManager, clientManager, nikname, playerNum, idGame, expertMode, chatEnable);
-        game.add(nuova);
-        return nuova;
+    public synchronized ConnectionHandler startGame(ServerEventManager eventManager, ClientEventManager clientManager, String nickname, int playerNum, int idGame, boolean expertMode, boolean chatEnable){
+        ConnectionHandler n = new ConnectionHandler(eventManager, clientManager, nickname, playerNum, idGame, expertMode, chatEnable);
+        game.add(n);
+        return n;
     }
 
     /**
      * Service Method for loading a Game
-     * @param nikname EventManager for the server
+     * @param nickname EventManager for the server
      **/
-    public synchronized boolean loadGame(String nikname, int idGame) {
+    public synchronized boolean loadGame(String nickname, int idGame) {
         for (ConnectionHandler c: game) {
             if (c.getIdGame() == idGame){
                 if(c.getActualGamer() == c.getExpectedGamer()){
                     return false;
                 }
-                c.clientAdd(nikname);
+                c.clientAdd(nickname);
                 return true;
             }
         }
