@@ -82,7 +82,7 @@ public class Game {
      * @throws ToMuchPlayerExcetpion when playerNum is equal to gamer lenght
      **/
     public void addPlayer(String playerName) throws ToMuchPlayerExcetpion {
-        if (playerNum < gamer.size()){
+        if (gamer.size() > playerNum){
             throw new ToMuchPlayerExcetpion();
         }
         else{
