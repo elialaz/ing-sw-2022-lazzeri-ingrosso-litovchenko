@@ -2,6 +2,8 @@ package it.polimi.ingsw.Client;
 
 import it.polimi.ingsw.Client.View.cli.CLIutils;
 import it.polimi.ingsw.Event.EventReciver;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -17,6 +19,13 @@ public class Cli implements EventReciver {
     private int gameID;
     private boolean expert;
     private boolean chat;
+    private int cardPlayed;
+    private String statusGameBoard;
+    private int[] studentsToSchoolboard;
+    private ArrayList<int[]> studentsToIsland;
+    private ArrayList<Integer> island;
+    private int moveMotherNature;
+    private int whichClodTile;
 
     /**
      * Constructor of the Cli
@@ -27,6 +36,8 @@ public class Cli implements EventReciver {
         this.manager = manager;
         connection = owner;
         in = new Scanner(System.in);
+        studentsToIsland = new ArrayList<int[]>();
+        island = new ArrayList<Integer>();
         manager.subscribe("updateData", this);
         manager.subscribe("loginReceived", this);
         manager.subscribe("planningPhaseRecived", this);
@@ -189,12 +200,15 @@ public class Cli implements EventReciver {
     }
 
     //TODO
-    public int planningPhase(){
+    public void planningPhase(){
 
-        return 0;
     }
 
-    //TODO
-    public void setData() {
+    public void setData(String input) {
+        statusGameBoard = input;
+    }
+
+    public int getCardPlayed() {
+        return cardPlayed;
     }
 }

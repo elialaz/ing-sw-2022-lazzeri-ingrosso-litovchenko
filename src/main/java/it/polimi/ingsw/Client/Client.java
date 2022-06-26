@@ -40,6 +40,11 @@ public class Client implements EventReciver {
         manager.subscribe("loginSend", this);
         manager.subscribe("newGameSend", this);
         manager.subscribe("loadGameSend", this);
+        manager.subscribe("planningPhaseSend", this);
+        manager.subscribe("actionPhase1Send", this);
+        manager.subscribe("actionPhase2Send", this);
+        manager.subscribe("actionPhase3Send", this);
+        manager.subscribe("finishSend", this);
         userInterface = new Cli(manager, this);
         game = true;
         userInterface.login();
@@ -90,11 +95,7 @@ public class Client implements EventReciver {
                         }
                         break;
                     case "updateGameBoard":
-                        //TODO da fare parser
-                        System.out.println(input);
-                        int[][] islandStudents;
-                        userInterface.setData();
-                        manager.notify("updateData");
+                        userInterface.setData(input);
                         break;
                 }
             }
@@ -156,6 +157,25 @@ public class Client implements EventReciver {
                 else{
                     manager.notify("loginReceived");
                 }
+                break;
+            case "planningPhaseSend":
+                synchronized (outputLock){
+                    out.println(userInterface.getCardPlayed());
+                }
+                break;
+            case "actionPhase1Send":
+                synchronized (outputLock){
+                    out.println(userInterface.getCardPlayed());
+                }
+                break;
+            case "actionPhase2Send":
+                //TODO
+                break;
+            case "actionPhase3Send":
+                //TODO
+                break;
+            case "finishSend":
+                //TODO
                 break;
         }
     }
