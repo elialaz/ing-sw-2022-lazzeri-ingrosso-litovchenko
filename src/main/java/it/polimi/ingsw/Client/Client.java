@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  * Main Class of the Client Connection
@@ -50,20 +51,6 @@ public class Client implements EventReciver {
         userInterface.login();
     }
 
-    public void sendPacket(String data){
-        String answer;
-        try {
-            out.println(data);
-            answer = in.readLine();
-            String[] tokens = answer.split("/");
-            //manager.notify(tokens[0]);
-            System.out.println(answer);
-        }
-        catch(IOException e){
-            System.out.println("Errore nell'invio: "+ e);
-        }
-    }
-
     /**
      * Main method for the connection handling with the server
      **/
@@ -90,6 +77,7 @@ public class Client implements EventReciver {
                                 manager.notify("actionPhase3Recived");
                                 break;
                             case "finish":
+                                userInterface.setWinner(parsed[2]);
                                 manager.notify("finish");
                                 break;
                         }
@@ -105,7 +93,6 @@ public class Client implements EventReciver {
         }
     }
 
-    //TODO manca invio dati in input
     @Override
     public void update(String eventType) {
         switch (eventType){
@@ -164,18 +151,53 @@ public class Client implements EventReciver {
                 }
                 break;
             case "actionPhase1Send":
+                String studentsToSchoolboard = "";
+                String studentsToIsland = "";
+                int[] studentsToSchoolboardArray = userInterface.getStudentsToSchoolboard();
+                ArrayList<int[]> studentsToIslandArray = userInterface.getStudentsToIsland();
+                for(int i=0; i<5; i++){
+                    if(i<4){
+                        studentsToSchoolboard = studentsToSchoolboard + studentsToSchoolboardArray[i] + "!";
+                    }
+                    else{
+                        studentsToSchoolboard = studentsToSchoolboard + studentsToSchoolboardArray[i];
+                    }
+                }
+                if(studentsToIslandArray.size()==0){
+                    studentsToIsland = "0/0";
+                }
+                else{
+                    studentsToIsland = String.valueOf(studentsToIslandArray.size()) + "/";
+                    for (int[] p: studentsToIslandArray) {
+                        studentsToIsland = studentsToIsland + p[0] + "!";
+                        for(int i=1; i<6; i++){
+                            if(i<4){
+                                studentsToSchoolboard = studentsToSchoolboard + p[i] + "!";
+                            }
+                            else{
+                                studentsToSchoolboard = studentsToSchoolboard + p[i];
+                            }
+                        }
+                    }
+                }
                 synchronized (outputLock){
-                    out.println(userInterface.getCardPlayed());
+                    out.println(studentsToSchoolboard + "/" + studentsToIsland);
                 }
                 break;
             case "actionPhase2Send":
-                //TODO
+                synchronized (outputLock){
+                    out.println(userInterface.getMoveMotherNature());
+                }
                 break;
             case "actionPhase3Send":
-                //TODO
+                synchronized (outputLock){
+                    out.println(userInterface.getWhichClodTile());
+                }
                 break;
             case "finishSend":
-                //TODO
+                synchronized (outputLock){
+                    out.println("ack");
+                }
                 break;
         }
     }
@@ -261,6 +283,22 @@ public synchronized void sendPacket(String data, String type){
 
     public void sendAck(){
         out.println("ack////");
+    }
+
+
+
+    public void sendPacket(String data){
+        String answer;
+        try {
+            out.println(data);
+            answer = in.readLine();
+            String[] tokens = answer.split("/");
+            //manager.notify(tokens[0]);
+            System.out.println(answer);
+        }
+        catch(IOException e){
+            System.out.println("Errore nell'invio: "+ e);
+        }
     }
 
  */

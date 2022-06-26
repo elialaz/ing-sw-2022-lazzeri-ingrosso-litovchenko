@@ -104,14 +104,6 @@ public class ConnectionHandler implements EventReciver {
     }
 
     /**
-     * Getter of the next player that can play
-     * @return String nickname of the player
-     **/
-    public synchronized String getCurrentPlayerTurn(){
-        return controller.getNextTurnPlayer();
-    }
-
-    /**
      * Getter of the controller
      * @return Controller
      **/
@@ -213,24 +205,37 @@ public class ConnectionHandler implements EventReciver {
                 break;
             case 1:
                 input = message.split("/");
-                int[] studentsToIsland = new int[5];
-                int[] studentsToSchoolBoard = new int[5];
+                int[] studentsToIsland = new int[]{0, 0, 0, 0, 0};
+                int[] studentsToSchoolBoard = new int[]{0, 0, 0, 0, 0};
+                int island;
                 //TODO inserire if per gioca carte esperto
                 String[] firstMove = input[0].split("!");
                 for (int i = 0; i < 5; i++) {
                     studentsToIsland[i] = Integer.parseInt(firstMove[i]);
                 }
-                String[] secondMove = input[1].split("!");
-                for (int i = 0; i < 5; i++) {
-                    studentsToSchoolBoard[i] = Integer.parseInt(secondMove[i]);
-                }
-                int island = Integer.parseInt(input[2]);
                 try {
-                    controller.moveStudentsToIsland(studentsToIsland, island);
                     controller.moveStudentsToSchoolboard(studentsToSchoolBoard);
                 }
                 catch (PlayerNotexist e){
-                    System.out.println("Error Moving the students");
+                    System.out.println("Error Moving the students to schoolboard");
+                }
+                String[] secondMove = input[2].split("!");
+                island = Integer.parseInt(input[1]);
+                int c=1;
+                if(island!=0){
+                    for(int i=0; i<island; i++){
+                        int witchIsland = Integer.parseInt(secondMove[c-1]);
+                        for (int j=c; j<(5+c); j++) {
+                            studentsToIsland[j] = Integer.parseInt(secondMove[j]);
+                        }
+                        try {
+                            controller.moveStudentsToIsland(studentsToIsland, witchIsland);
+                        }
+                        catch (PlayerNotexist e){
+                            System.out.println("Error Moving the students to island");
+                        }
+                        c = c + 6;
+                    }
                 }
                 controlManager.notify("nextmove");
                 break;
@@ -260,9 +265,5 @@ public class ConnectionHandler implements EventReciver {
                 }
                 break;
         }
-    }
-
-    public synchronized Object getLock() {
-        return lock;
     }
 }

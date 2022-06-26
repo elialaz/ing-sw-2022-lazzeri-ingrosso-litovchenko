@@ -23,9 +23,9 @@ public class Cli implements EventReciver {
     private String statusGameBoard;
     private int[] studentsToSchoolboard;
     private ArrayList<int[]> studentsToIsland;
-    private ArrayList<Integer> island;
     private int moveMotherNature;
     private int whichClodTile;
+    private String winner;
 
     /**
      * Constructor of the Cli
@@ -36,8 +36,8 @@ public class Cli implements EventReciver {
         this.manager = manager;
         connection = owner;
         in = new Scanner(System.in);
-        studentsToIsland = new ArrayList<int[]>();
-        island = new ArrayList<Integer>();
+        studentsToIsland = new ArrayList<>();
+        studentsToSchoolboard = new int[]{0, 0, 0, 0, 0};
         manager.subscribe("updateData", this);
         manager.subscribe("loginReceived", this);
         manager.subscribe("planningPhaseRecived", this);
@@ -210,5 +210,25 @@ public class Cli implements EventReciver {
 
     public int getCardPlayed() {
         return cardPlayed;
+    }
+
+    public int getMoveMotherNature() {
+        return moveMotherNature;
+    }
+
+    public int getWhichClodTile() {
+        return whichClodTile;
+    }
+
+    public void setWinner(String winner) {
+        this.winner = winner;
+    }
+
+    public ArrayList<int[]> getStudentsToIsland() {
+        return studentsToIsland;
+    }
+
+    public int[] getStudentsToSchoolboard() {
+        return studentsToSchoolboard;
     }
 }
