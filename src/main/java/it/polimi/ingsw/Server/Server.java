@@ -9,8 +9,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Main Class of the server, all the interaction from the controller is made with method here
@@ -20,12 +19,16 @@ public class Server {
     private ServerSocket serverSocket;
     private int port;
     private ArrayList<ConnectionHandler> game;
+    private final Map<String, ServerThread> clientStatus;
+    private final Object lock;
 
     /**
      * Constructor of the Server
      * @param port Number of the port for the server
      **/
     public Server(int port){
+        this.lock = new Object();
+        this.clientStatus = Collections.synchronizedMap(new HashMap<>());
         try{
             this.port = port;
             serverSocket = new ServerSocket(port);
@@ -33,7 +36,7 @@ public class Server {
             game = new ArrayList<ConnectionHandler>();
         }
         catch(IOException e){
-            System.out.println("Error");
+            System.out.println("Error during server startup");
             System.exit(-1);
         }
     }
@@ -48,7 +51,8 @@ public class Server {
             try {
                 Socket listener = serverSocket.accept();
                 System.out.println("Connection Established");
-                new ServerThread(listener, EventManager, count, this).start();
+                new ServerThread(listener, EventManager, this).start();
+                count++;
             } catch (IOException e) {
                 System.out.println("Error while connecting to client: "+ e);
             }
@@ -59,8 +63,8 @@ public class Server {
      * Creator of a new ConnectionHandler for a new Game
      * @param eventManager EventManager for the server
      **/
-    public synchronized ConnectionHandler startGame(ServerEventManager eventManager, ClientEventManager clientManager, String nikname, int playerNum, int idGame, boolean expertMode, boolean chatEnable){
-        ConnectionHandler nuova = new ConnectionHandler(eventManager, clientManager, nikname, playerNum, idGame, expertMode, chatEnable);
+    public synchronized ConnectionHandler startGame(ServerEventManager eventManager, String nikname, ServerThread client, int playerNum, int idGame, boolean expertMode, boolean chatEnable){
+        ConnectionHandler nuova = new ConnectionHandler(eventManager, nikname, client, playerNum, idGame, expertMode, chatEnable, this);
         game.add(nuova);
         return nuova;
     }
@@ -69,13 +73,13 @@ public class Server {
      * Service Method for loading a Game
      * @param nikname EventManager for the server
      **/
-    public synchronized boolean loadGame(String nikname, int idGame) {
+    public synchronized boolean loadGame(String nikname, int idGame, ServerThread client) {
         for (ConnectionHandler c: game) {
             if (c.getIdGame() == idGame){
                 if(c.getActualGamer() == c.getExpectedGamer()){
                     return false;
                 }
-                c.clientAdd(nikname);
+                c.clientAdd(nikname, client);
                 return true;
             }
         }
@@ -95,8 +99,40 @@ public class Server {
         return game.get(0);
     }
 
+    public void onDisconnect(ServerThread client) {
+        synchronized (lock) {
+            String nickname = client.getNickname();
+
+            if (nickname != null) {
+                /*
+                boolean gameStarted = gameController.isGameStarted();
+                removeClient(nickname, !gameStarted); // enable lobby notifications only if the game didn't start yet.
+
+                if(gameController.getTurnController() != null &&
+                        !gameController.getTurnController().getNicknameQueue().contains(nickname)) {
+                    return;
+                }
+
+                // Resets server status only if the game was already started.
+                // Otherwise the server will wait for a new player to connect.
+                if (gameStarted) {
+                    gameController.broadcastDisconnectionMessage(nickname, " disconnected from the server. GAME ENDED.");
+
+                    gameController.endGame();
+                    clientHandlerMap.clear();
+                }
+
+                 */
+            }
+        }
+    }
+
+    public void addClient(String nickname, ServerThread client) {
+        clientStatus.put(nickname, client);
+    }
+
     /**
-     * Main for testing the Server
+     * Main for launch the Server
      **/
     public static void main(String[] args){
         int serverPort;
@@ -112,7 +148,5 @@ public class Server {
         System.out.println("Press 'Ctrl+C' to stop the server execution");
 
         new Thread(() -> server.listen(ServerEventManager.createControlEventManager())).start();
-
-
     }
 }

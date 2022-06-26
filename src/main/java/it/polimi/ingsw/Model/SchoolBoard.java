@@ -102,6 +102,7 @@ public class SchoolBoard {
     /**
      * Service method that return the Corridor
      * @param index moved from entrance to corridor
+     * @return integer number of students in the corridor
      **/
     public int getCorridor(int index) {
         return corridor[index];

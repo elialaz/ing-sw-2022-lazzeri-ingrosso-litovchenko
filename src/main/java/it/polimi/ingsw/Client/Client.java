@@ -1,43 +1,48 @@
 package it.polimi.ingsw.Client;
+import it.polimi.ingsw.Event.EventReciver;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Main Class of the Client Connection
  * @author filibertoingrosso, elia_laz, litovn
  **/
-public class Client {
+public class Client implements EventReciver {
     private int serverPort;
     private String serverIP;
     private Socket socket;
     private PrintWriter out;
     private BufferedReader in;
     private ClientEventManager manager;
-    static String response;
-    static boolean use;
+    private Cli userInterface;
+    private boolean game;
+    private String input;
+    private String[] parsed;
+    private final Object inputLock;
+    private final Object outputLock;
 
     /**
      * Constructor of the Client
      * @param serverPort Number of the port of the server
      * @param serverIP Ip of the server
+     * @param manager EventManager for the client
      **/
-    public Client(int serverPort, String serverIP, ClientEventManager man){
-        try{
-            use = false;
-            this.serverPort = serverPort;
-            this.serverIP = serverIP;
-            socket = new Socket(serverIP, serverPort);
-            out = new PrintWriter(socket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            manager = man;
-        }
-        catch(IOException e){
-            System.out.println("Error: "+ e);
-        }
+    public Client(int serverPort, String serverIP, ClientEventManager manager){
+        this.serverPort = serverPort;
+        this.serverIP = serverIP;
+        this.manager = manager;
+        this.inputLock = new Object();
+        this.outputLock = new Object();
+        manager.subscribe("loginSend", this);
+        manager.subscribe("newGameSend", this);
+        manager.subscribe("loadGameSend", this);
+        userInterface = new Cli(manager, this);
+        game = true;
+        userInterface.login();
     }
 
     public void sendPacket(String data){
@@ -55,32 +60,133 @@ public class Client {
     }
 
     /**
+     * Main method for the connection handling with the server
+     **/
+    public void connectionHandler(){
+        while (game){
+            try{
+                synchronized (inputLock){
+                    input = in.readLine();
+                }
+                parsed = input.split("/");
+                switch (parsed[0]){
+                    case "enable":
+                        switch (parsed[1]){
+                            case "planningPhase":
+                                manager.notify("planningPhaseRecived");
+                                break;
+                            case "actionPhase1":
+                                manager.notify("actionPhase1Recived");
+                                break;
+                            case "actionPhase2":
+                                manager.notify("actionPhase2Recived");
+                                break;
+                            case "actionPhase3":
+                                manager.notify("actionPhase3Recived");
+                                break;
+                            case "finish":
+                                manager.notify("finish");
+                                break;
+                        }
+                        break;
+                    case "updateGameBoard":
+                        //TODO da fare parser
+                        System.out.println(input);
+                        int[][] islandStudents;
+                        userInterface.setData();
+                        manager.notify("updateData");
+                        break;
+                }
+            }
+            catch(IOException e){
+                System.out.println("Errore nella chiusura della socket: "+ e);
+            }
+        }
+    }
+
+    //TODO manca invio dati in input
+    @Override
+    public void update(String eventType) {
+        switch (eventType){
+            case "loginSend":
+                try{
+                    socket = new Socket(serverIP, serverPort);
+                    out = new PrintWriter(socket.getOutputStream(), true);
+                    in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                }
+                catch(IOException e){
+                    System.out.println("Error: "+ e);
+                }
+                do{
+                    synchronized (outputLock){
+                        out.println("login/" + userInterface.getNickname());
+                    }
+                    try{
+                        synchronized (inputLock){
+                            input = in.readLine();
+                        }
+                    }
+                    catch(IOException e){
+                        System.out.println("Errore nella chiusura della socket: "+ e);
+                    }
+                }while(!input.equals("loginSuccess"));
+                manager.notify("loginReceived");
+                break;
+            case "newGameSend":
+                synchronized (outputLock){
+                    out.println("newGame" + "/" + userInterface.getPlayerNumber() + "/" + userInterface.getGameID() + "/" + userInterface.isExpert() + "/" + userInterface.isChat());
+                }
+                new Thread(this::connectionHandler).start();
+                break;
+            case "loadGameSend":
+                synchronized (outputLock){
+                    out.println("loadGame" + "/" + userInterface.getGameID());
+                }
+                try{
+                    synchronized (inputLock){
+                        input = in.readLine();
+                    }
+                }
+                catch(IOException e){
+                    System.out.println("Errore nella chiusura della socket: "+ e);
+                }
+                if (input.equals("success")){
+                    new Thread(this::connectionHandler).start();
+                }
+                else{
+                    manager.notify("loginReceived");
+                }
+                break;
+        }
+    }
+
+    /**
+     * Setter of the ServerIP
+     * @param serverIP String of the server IP
+     */
+    public void setServerIP(String serverIP) {
+        this.serverIP = serverIP;
+    }
+
+    /**
+     * Setter of the ServerPort
+     * @param serverPort Int of the server Port
+     */
+    public void setServerPort(int serverPort) {
+        this.serverPort = serverPort;
+    }
+
+    /**
      * The Main Class of the Client.
      * @param args of type String[], the standard java main parameter
      */
     public static void main(String[] args) throws InterruptedException {
 
-        int serverPort = 21000;
         String serverIP = "localhost";
-        int cont = 0;
+        int serverPort = 21000;
 
         ClientEventManager prova = ClientEventManager.createClientEventManager();
         Client client = new Client(serverPort, serverIP, prova);
-
-        client.sendPacket("login");
-
-        if(Integer.parseInt(args[0])==1){
-            client.sendPacket("newGame/stominchia/2/1/true/true");
-        }
-        if(Integer.parseInt(args[0])==3){
-            client.sendPacket("newGame/stominchia3/2/2/true/true");
-        }
-        else{
-            client.sendPacket("loadGame/stominchia2/1");
-        }
-
-        client.sendPacket("");
-
     }
 }
 

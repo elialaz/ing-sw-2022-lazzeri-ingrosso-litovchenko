@@ -1,10 +1,5 @@
 package it.polimi.ingsw.Server;
 
-import it.polimi.ingsw.Client.ClientEventManager;
-import it.polimi.ingsw.Controller.Controller;
-import it.polimi.ingsw.Event.EventReciver;
-import it.polimi.ingsw.Exception.ToMuchPlayerExcetpion;
-
 import java.io.*;
 import java.net.Socket;
 
@@ -12,52 +7,123 @@ import java.net.Socket;
  * Thread for Server concurrent execution
  * @author elia_laz
  **/
-class ServerThread extends Thread implements EventReciver {
-    private int id;
-    private String line;
-    private BufferedReader is;
-    private PrintWriter os;
-    private Socket s;
-    private ServerEventManager eventManager;
+class ServerThread extends Thread{
+    private String[] input;
+    private BufferedReader in;
+    private PrintWriter out;
+    private Socket socket;
     private Server server;
-    private boolean setup;
-    private boolean game;
-    private ClientEventManager clientManager;
+    private ServerEventManager eventManager;
+    private boolean connected;
     private ConnectionHandler master;
     private String nickname;
-    private Controller controller;
-    private boolean send;
+    private final Object inputLock;
+    private final Object outputLock;
 
 
     /**
      * Constructor of ServerThread class
      * @param s of type Socket
      * @param eventManager of type ServerEventManager
-     * @param id of type int
      * @param server reference to the server
      */
-    public ServerThread(Socket s, ServerEventManager eventManager, int id, Server server){
-        this.id = id;
-        line = null;
-        this.s = s;
+    public ServerThread(Socket s, ServerEventManager eventManager, Server server){
+        input = null;
+        this.socket = s;
         this.eventManager = eventManager;
+        this.inputLock = new Object();
+        this.outputLock = new Object();
         try{
-            is = new BufferedReader(new InputStreamReader(s.getInputStream()));
-            os = new PrintWriter(s.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+            out = new PrintWriter(s.getOutputStream(), true);
         }catch(IOException e){
-            System.out.println("IO error in server thread");
+            System.out.println("Error during the input output buffet open of the client");
         }
         this.server = server;
-        setup = true;
-        game=true;
-        send=false;
+        connected = true;
     }
 
     /**
      * Class to start running concurrent threads
      */
     public void run() {
-        try{
+        try {
+            receiveData();
+        } catch (IOException e) {
+            this.disconnect();
+        }
+    }
+
+    public void receiveData() throws IOException{
+        try {
+            while(!Thread.currentThread().isInterrupted()) {
+                synchronized (inputLock) {
+                    String message = in.readLine();
+                    input = message.split("/");
+                    if (input[0] != null) {
+                        if (input[0].equals("login")) {
+                            server.addClient(input[1], this);
+                            nickname = input[1];
+                            sendMessage("loginSuccess");
+                        }
+                        else if(input[0].equals("newGame")){
+                            master = server.startGame(eventManager, nickname, this, Integer.parseInt(input[1]), Integer.parseInt(input[2]), Boolean.parseBoolean(input[3]), Boolean.parseBoolean(input[4]));
+                        }
+                        else if(input[0].equals("loadGame")){
+                            boolean response = server.loadGame(nickname, Integer.parseInt(input[1]), this);
+                            if (response) {
+                                master = server.getMaster(Integer.parseInt(input[1]));
+                                sendMessage("success");
+                                if (master.getExpectedGamer() == master.getActualGamer()) {
+                                    master.setStart(true);
+                                }
+                            } else {
+                                sendMessage("failed");
+                            }
+                        }
+                        else {
+                            master.onMessageReceived(message, nickname);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error during receive of the data");
+        }
+        connected = false;
+        socket.close();
+    }
+
+    public void disconnect() {
+        if(connected) {
+            try {
+                if (!socket.isClosed()) {
+                    socket.close();
+                }
+            } catch (IOException e) {
+                System.out.println("Error during closing of the socket");
+            }
+            connected = false;
+            Thread.currentThread().interrupt();
+
+            server.onDisconnect(this);
+        }
+    }
+
+    public void sendMessage(String message) {
+        synchronized (outputLock) {
+            out.println(message);
+        }
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+}
+
+/*
+
+try{
             while(setup){
                 line=is.readLine();
                 String[] parsed = line.split("/");
@@ -72,6 +138,7 @@ class ServerThread extends Thread implements EventReciver {
                         nickname = parsed[1];
                         master = server.startGame(eventManager, clientManager, parsed[1], Integer.parseInt(parsed[2]), Integer.parseInt(parsed[3]), Boolean.parseBoolean(parsed[4]), Boolean.parseBoolean(parsed[5]));
                         controller = master.getController();
+                        nextMove = controller.getManager();
                         setup=false;
                         break;
                     case "loadGame":
@@ -79,8 +146,9 @@ class ServerThread extends Thread implements EventReciver {
                         if (response) {
                             master = server.getMaster(Integer.parseInt(parsed[2]));
                             controller = master.getController();
-                            os.println("success");
+                            nextMove = controller.getManager();
                             setup=false;
+                            os.println("success");
                             if(master.getExpectedGamer()== master.getActualGamer()){
                                 master.setStart(true);
                             }
@@ -91,7 +159,7 @@ class ServerThread extends Thread implements EventReciver {
                         break;
                 }
             }
-            while(game) {
+            while(!Thread.currentThread().isInterrupted()) {
                 if (send && master.isStart()) {
                     send=false;
                     String[] parsed;
@@ -101,6 +169,7 @@ class ServerThread extends Thread implements EventReciver {
                             line = is.readLine();
                             parsed = line.split("/");
                             controller.playAssistantCard(Integer.parseInt(parsed[0]));
+                            nextMove.notify("nextmove");
                             break;
                         case 1:
                             os.println("enable/actionPhase1");
@@ -120,6 +189,7 @@ class ServerThread extends Thread implements EventReciver {
                             int island = Integer.parseInt(parsed[2]);
                             controller.moveStudentsToIsland(studentsToIsland, island);
                             controller.moveStudentsToSchoolboard(studentsToSchoolBoard);
+                            nextMove.notify("nextmove");
                             break;
                         case 2:
                             os.println("enable/actionPhase2");
@@ -127,6 +197,7 @@ class ServerThread extends Thread implements EventReciver {
                             parsed = line.split("/");
                             //TODO inserire if per gioca carte esperto
                             controller.moveMotherNature(Integer.parseInt(parsed[0]));
+                            nextMove.notify("nextmove");
                             break;
                         case 3:
                             os.println("enable/actionPhase3");
@@ -134,6 +205,7 @@ class ServerThread extends Thread implements EventReciver {
                             parsed = line.split("/");
                             //TODO inserire if per gioca carte esperto
                             controller.takeCloudTile(Integer.parseInt(parsed[0]));
+                            nextMove.notify("nextmove");
                             break;
                         case 4:
                             os.println("enable/finish");
@@ -149,23 +221,4 @@ class ServerThread extends Thread implements EventReciver {
             System.out.println("IO Error/ Client terminated abruptly");
             eventManager.notify("clientError");
         }
-    }
-
-    @Override
-    public void update(String eventType) {
-        try{
-            if(eventType.equals("updateGameBoard")){
-                os.println(master.gameBoardStatus());
-            }
-            else if(eventType.equals("clientSend")){
-                if(master.getCurrentPlayerTurn().equals(nickname)){
-                    send=true;
-                }
-            }
-        }
-        catch (Exception e) {
-            System.out.println("IO Error/ Client terminated abruptly");
-            eventManager.notify("clientError");
-        }
-    }
-}
+ */

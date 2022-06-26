@@ -1,9 +1,10 @@
 package it.polimi.ingsw.Server;
 
-import it.polimi.ingsw.Client.ClientEventManager;
 import it.polimi.ingsw.Controller.ControlEventManager;
 import it.polimi.ingsw.Controller.Controller;
 import it.polimi.ingsw.Event.EventReciver;
+import it.polimi.ingsw.Exception.MoveNotAllowed;
+import it.polimi.ingsw.Exception.PlayerNotexist;
 import it.polimi.ingsw.Exception.ToMuchPlayerExcetpion;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.ModelEventManager;
@@ -16,40 +17,43 @@ import java.util.ArrayList;
  **/
 public class ConnectionHandler implements EventReciver {
     private int idGame;
-    private ArrayList<String> client;
     private int actualGamer;
     private int expectedGamer;
     private ServerEventManager manager;
-    private ClientEventManager clientManager;
     private ModelEventManager gameManager;
     private ControlEventManager controlManager;
     private Controller controller;
     private Game model;
+    private Server server;
     private int actionType;
     private boolean start;
+    private final ArrayList<Pair> client;
+    private String[] input;
+    private final Object lock;
 
     /**
      * Constructor of the ConnectionHandler
      * @param eventManager Event Manager per il Server
-     * @param clientManager of type ServerEventManager
-     * @param nikname of the first player
+     * @param nickname of the first player
      * @param playerNum number of the player expected
      * @param idGame id of the game
      * @param expertMode boolean value of the expert mode
      **/
-    public ConnectionHandler(ServerEventManager eventManager, ClientEventManager clientManager, String nikname, int playerNum, int idGame, boolean expertMode, boolean chatEnable){
-        client = new ArrayList<String>();
+    public ConnectionHandler(ServerEventManager eventManager, String nickname, ServerThread client, int playerNum, int idGame, boolean expertMode, boolean chatEnable, Server server){
+        this.client = new ArrayList<>();
+        this.client.add(new Pair(nickname, client));
+        this.lock = new Object();
 
         manager = eventManager;
-        client.add(nikname);
         expectedGamer = playerNum;
         actualGamer = 1;
-        this.clientManager = clientManager;
         this.idGame = idGame;
-        controller = new Controller(playerNum, nikname, idGame, expertMode);
+        controller = new Controller(playerNum, nickname, idGame, expertMode);
         controlManager = controller.getManager();
         model = controller.getModel();
         gameManager = model.getManager();
+        this.server = server;
+
         controlManager.subscribe("gamerPlanningTurnNotify", this);
         controlManager.subscribe("gamerActionTurnNotify", this);
         controlManager.subscribe("movingMotherNatureGamerTurn", this);
@@ -64,7 +68,7 @@ public class ConnectionHandler implements EventReciver {
      * Getter of the Game ID
      * @return integer of the game id
      **/
-    public int getIdGame(){
+    public synchronized int getIdGame(){
         return idGame;
     }
 
@@ -72,10 +76,10 @@ public class ConnectionHandler implements EventReciver {
      * Service Method for adding a player to the current game
      * @param
      **/
-    public synchronized void clientAdd(String nikname){
+    public synchronized void clientAdd(String nickname, ServerThread client){
         try {
-            controller.addPlayer(nikname);
-            client.add(nikname);
+            controller.addPlayer(nickname);
+            this.client.add(new Pair(nickname, client));
             actualGamer++;
         }
         catch(ToMuchPlayerExcetpion e){
@@ -87,7 +91,7 @@ public class ConnectionHandler implements EventReciver {
      * Getter of the number of player currently in game
      * @return integer of player num in game
      **/
-    public int getActualGamer() {
+    public synchronized int getActualGamer() {
         return actualGamer;
     }
 
@@ -95,19 +99,8 @@ public class ConnectionHandler implements EventReciver {
      * Getter of the number of player expected in game
      * @return integer of player num expected
      **/
-    public int getExpectedGamer() {
+    public synchronized int getExpectedGamer() {
         return expectedGamer;
-    }
-
-    //TODO
-    /**
-     * Getter of the status of the GameBoard
-     * @return String with all the GameBoard info
-     **/
-    public synchronized String gameBoardStatus() {
-        String status = new String("");
-        status += " ";
-        return status;
     }
 
     /**
@@ -116,14 +109,6 @@ public class ConnectionHandler implements EventReciver {
      **/
     public synchronized String getCurrentPlayerTurn(){
         return controller.getNextTurnPlayer();
-    }
-
-    /**
-     * Getter of the action type param
-     * @return int action to be executed
-     **/
-    public int getActionType(){
-        return actionType;
     }
 
     /**
@@ -138,37 +123,63 @@ public class ConnectionHandler implements EventReciver {
     public void update(String eventType) {
         switch (eventType){
             case "update":
-                clientManager.notify("updateGameBoard");
+                synchronized (lock){
+                    for (Pair p: client) {
+                        p.getClient().sendMessage(model.toString());
+                    }
+                }
                 break;
             case "gamerPlanningTurnNotify":
                 actionType = 0;
-                clientManager.notify("clientSend");
+                synchronized (lock){
+                    for (Pair p: client) {
+                        if(p.getNickname().equals(controller.getNextTurnPlayer())){
+                            p.getClient().sendMessage("enable/planningPhase");
+                        }
+                    }
+                }
                 break;
             case "gamerActionTurnNotify":
                 actionType = 1;
-                clientManager.notify("clientSend");
+                synchronized (lock){
+                    for (Pair p: client) {
+                        if(p.getNickname().equals(controller.getNextTurnPlayer())){
+                            p.getClient().sendMessage("enable/actionPhase1");
+                        }
+                    }
+                }
                 break;
             case "movingMotherNatureGamerTurn":
                 actionType = 2;
-                clientManager.notify("clientSend");
+                synchronized (lock){
+                    for (Pair p: client) {
+                        if(p.getNickname().equals(controller.getNextTurnPlayer())){
+                            p.getClient().sendMessage("enable/actionPhase2");
+                        }
+                    }
+                }
                 break;
             case "selectCloudTile":
                 actionType = 3;
-                clientManager.notify("clientSend");
+                synchronized (lock){
+                    for (Pair p: client) {
+                        if(p.getNickname().equals(controller.getNextTurnPlayer())){
+                            p.getClient().sendMessage("enable/actionPhase3");
+                        }
+                    }
+                }
                 break;
             case "win":
                 actionType = 4;
-                clientManager.notify("clientSend");
+                synchronized (lock){
+                    for (Pair p: client) {
+                        if(p.getNickname().equals(controller.getNextTurnPlayer())){
+                            p.getClient().sendMessage("enable/finish/" + controller.getNextTurnPlayer());
+                        }
+                    }
+                }
                 break;
         }
-    }
-
-    /**
-     * Getter of the ClientManager
-     * @return ClientManager
-     **/
-    public ClientEventManager getClientManager() {
-        return clientManager;
     }
 
     /**
@@ -185,5 +196,73 @@ public class ConnectionHandler implements EventReciver {
      **/
     public void setStart(boolean start) {
         this.start = start;
+        controlManager.notify("start");
+    }
+
+    public synchronized void onMessageReceived(String message, String nickname){
+        switch(actionType){
+            case 0:
+                input = message.split("/");
+                try {
+                    controller.playAssistantCard(Integer.parseInt(input[0]));
+                }
+                catch (PlayerNotexist e){
+                    System.out.println("Error Playing the Assistant Card");
+                }
+                controlManager.notify("nextmove");
+                break;
+            case 1:
+                input = message.split("/");
+                int[] studentsToIsland = new int[5];
+                int[] studentsToSchoolBoard = new int[5];
+                //TODO inserire if per gioca carte esperto
+                String[] firstMove = input[0].split("!");
+                for (int i = 0; i < 5; i++) {
+                    studentsToIsland[i] = Integer.parseInt(firstMove[i]);
+                }
+                String[] secondMove = input[1].split("!");
+                for (int i = 0; i < 5; i++) {
+                    studentsToSchoolBoard[i] = Integer.parseInt(secondMove[i]);
+                }
+                int island = Integer.parseInt(input[2]);
+                try {
+                    controller.moveStudentsToIsland(studentsToIsland, island);
+                    controller.moveStudentsToSchoolboard(studentsToSchoolBoard);
+                }
+                catch (PlayerNotexist e){
+                    System.out.println("Error Moving the students");
+                }
+                controlManager.notify("nextmove");
+                break;
+            case 2:
+                input = message.split("/");
+                //TODO inserire if per gioca carte esperto
+                try {
+                    controller.moveMotherNature(Integer.parseInt(input[0]));
+                } catch (MoveNotAllowed e) {
+                    System.out.println("Error Moving mother nature");
+                }
+                controlManager.notify("nextmove");
+                break;
+            case 3:
+                input = message.split("/");
+                //TODO inserire if per gioca carte esperto
+                controller.takeCloudTile(Integer.parseInt(input[0]));
+                controlManager.notify("nextmove");
+                break;
+            case 4:
+                input = message.split("/");
+                if(input[0].equals("ack")){
+                    //TODO disconnesione
+                }
+                else{
+                    controlManager.notify("win");
+                }
+                break;
+        }
+    }
+
+    public synchronized Object getLock() {
+        return lock;
     }
 }

@@ -40,9 +40,8 @@ public class Controller implements EventReciver {
         phaseone = new PlanningPhase(manager, model, playerNum, this);
         phasetwo = new ActionPhase(manager, model, this);
         phasethree = new EndPhase(manager, model, this);
-
+        manager.subscribe("start", this);
         manager.subscribe("nextmove", this);
-        model.eventSubscrbe(this, "setupStart");
         nextMove = 0;
         winPhase = false;
     }
@@ -61,7 +60,7 @@ public class Controller implements EventReciver {
     @Override
     public void update(String eventType) {
         switch (eventType){
-            case "setupStart":
+            case "start":
                 nextMove = 1;
                 phaseone.startGame();
                 break;

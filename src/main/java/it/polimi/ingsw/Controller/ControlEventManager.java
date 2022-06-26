@@ -28,7 +28,7 @@ public class ControlEventManager implements EventManager {
      * @return new ClientEventManager instance
      **/
     static public ControlEventManager createControlEventManager(){
-        return new ControlEventManager("nextmove", "muchPlayer", "gamerPlanningTurnNotify", "gamerActionTurnNotify", "movingMotherNatureGamerTurn", "selectCloudTile", "win");
+        return new ControlEventManager("nextmove", "muchPlayer", "gamerPlanningTurnNotify", "gamerActionTurnNotify", "movingMotherNatureGamerTurn", "selectCloudTile", "win", "start");
     }
 
     /**

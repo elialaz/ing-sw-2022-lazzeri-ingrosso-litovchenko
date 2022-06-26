@@ -28,6 +28,7 @@ public class Game {
     private boolean professorControl;
     private boolean plusTwoEffect;
     private int plusTwoEffectPlayer;
+    private boolean expertMode;
 
     /**
      * Constructor of the Model
@@ -55,6 +56,7 @@ public class Game {
         position = new MotherNature();
         islandTile = Island.tableIslandConstructor(position);
         bag = new Bag(24);
+        expertMode = expert;
         if(expert){
             expertCard = SpecialCard.getCharacter(bag);
         }
@@ -539,40 +541,74 @@ public class Game {
     }
 
     /**
-     * getter of bag
+     * Getter of bag
      **/
     public Bag getBag() {
         return bag;
     }
 
     /**
-     * getter of schoolBoards
+     * Getter of schoolBoards
      **/
     public ArrayList<SchoolBoard> getSchoolBoards() { return schoolboards; }
 
     /**
-     * getter of the ModelManager
+     * Getter of the ModelManager
      **/
     public ModelEventManager getManager() { return manager; }
 
     /**
-     * getter of gamers
+     * Getter of gamers
      **/
     public ArrayList<Player> getGamer() {
         return gamer;
     }
 
     /**
-     * getter of cloudTiles
+     * Getter of cloudTiles
      **/
     public ArrayList<CloudTile> getCloudTiles() {
         return cloudTiles;
     }
 
     /**
-     * getter of islandTiles
+     * Getter of islandTiles
      **/
     public ArrayList<Island> getIslandTile() {
         return islandTile;
+    }
+
+    @Override
+    public String toString() {
+        String text = "updateGameBoard" + "/" + idGame + "/" + playerNum + "/";
+        for (Player p: gamer) {
+            text = text + p.getName() + "/";
+        }
+        for (Island i: islandTile) {
+            text = text + Arrays.toString(i.getStudents()) + "/";
+            text = text + i.colorTower() + "/" + i.getTowerNum() + "/";
+            if(expertMode){
+                text = text + i.isEntryTileMotherNature() + "/" + i.getNoEntryTile() + "/";
+            }
+        }
+        for (CloudTile i: cloudTiles) {
+            text = text + Arrays.toString(i.getStudents()) + "/";
+        }
+        //TODO manca expertcard
+        if(expertMode){
+            for (SpecialCard s: expertCard) {
+                text = text + s.toString() + "/";
+            }
+        }
+        for (Deck d: assistantCard) {
+            text = text + Arrays.deepToString(d.getAssistantCardDeck()) + "/";
+        }
+        for (SchoolBoard b: schoolboards) {
+            text = text + Arrays.toString(b.getEntranceStudents()) + "/" + b.getTower() + "/" + b.isProfessor(0) + "/" + b.getCorridor(0) + "/" + b.isProfessor(1) + "/" + b.getCorridor(1) + "/" + b.isProfessor(2) + "/" + b.getCorridor(2) + "/" + b.isProfessor(3) + "/" + b.getCorridor(3) + "/" + b.isProfessor(4) + "/" + b.getCorridor(4) + "/";
+        }
+        text = text + position.getPosition() + "/";
+        text = text + Arrays.toString(professor) + "/";
+        text = text + coinPile;
+        return text;
     }
 }
