@@ -215,7 +215,38 @@ public class Cli implements EventReciver {
 
     //TODO
     private void actionPhase3() {
+        int[] cloud;
         clearScreen();
+        System.out.println("Choose a cloud between those below:");
+        for (int i=0; i<playerNumber; i++) {
+            toFind = "cloudTile"+i+":";
+            String schoolBoard_island_students = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length(), statusGameBoard.indexOf("]endCloud/", statusGameBoard.indexOf(toFind)));
+            schoolBoard_island_students = schoolBoard_island_students.replace("[","");
+            cloud = Arrays.stream(schoolBoard_island_students.split(", ")).mapToInt(Integer::parseInt).toArray();
+            System.out.println(i+1 + ") Cloud "+ i+1 + ": ");
+            for (int j=0; j<5; j++) {
+                switch(i){
+                    case 0:
+                        System.out.print(CLIutils.ANSI_GREEN + cloud[i] + CLIutils.STUDENT + CLIutils.ANSI_RESET + ", ");
+                        break;
+                    case 1:
+                        System.out.print(CLIutils.ANSI_RED + cloud[i] + CLIutils.STUDENT + CLIutils.ANSI_RESET + ", ");
+                        break;
+                    case 2:
+                        System.out.print(CLIutils.ANSI_YELLOW + cloud[i] + CLIutils.STUDENT + CLIutils.ANSI_RESET + ", ");
+                        break;
+                    case 3:
+                        System.out.print(CLIutils.ANSI_PINK + cloud[i] + CLIutils.STUDENT + CLIutils.ANSI_RESET + ", ");
+                        break;
+                    case 4:
+                        System.out.println(CLIutils.ANSI_BLUE + cloud[i] + CLIutils.STUDENT + CLIutils.ANSI_RESET + ".");
+                        break;
+                }
+            }
+        }
+        System.out.println();
+        System.out.println("Which cloud will you choose (1,"+ playerNumber +"): ");
+        whichClodTile = ReadIntInput(1,playerNumber)-1;
         manager.notify("actionPhase3Send");
     }
 
@@ -412,10 +443,10 @@ public class Cli implements EventReciver {
                         System.out.print(CLIutils.ANSI_YELLOW + StudentsOnIslands[j] + CLIutils.STUDENT + CLIutils.ANSI_RESET + ", ");
                         break;
                     case 3:
-                        System.out.print(CLIutils.ANSI_PINK + StudentsOnIslands[j] + CLIutils.STUDENT + CLIutils.ANSI_RESET + " and ");
+                        System.out.print(CLIutils.ANSI_PINK + StudentsOnIslands[j] + CLIutils.STUDENT + CLIutils.ANSI_RESET + ", ");
                         break;
                     case 4:
-                        System.out.println(CLIutils.ANSI_BLUE + StudentsOnIslands[j] + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
+                        System.out.println(CLIutils.ANSI_BLUE + StudentsOnIslands[j] + CLIutils.STUDENT + CLIutils.ANSI_RESET + ".");
                         break;
                 }
             }

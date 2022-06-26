@@ -606,8 +606,8 @@ public class Game {
             num++;
         }
         num = 0;
-        for (CloudTile i: cloudTiles) {
-            text = text + "cloudTile" + num + ":" +Arrays.toString(i.getStudents()) + "/";
+        for (CloudTile c: cloudTiles) {
+            text = text + "cloudTile" + num + ":" +Arrays.toString(c.getStudents()) + "endCloud/";
             num++;
         }
         num = 0;
