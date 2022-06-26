@@ -43,7 +43,7 @@ public class ClientEventManager implements EventManager {
     }
 
     /**
-     * Notify to some particular EventReciver that something is appened
+     * Notify to some particular EventReciver that something is happened
      * @param eventType Client type to notify some event
      **/
     @Override

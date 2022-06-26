@@ -17,6 +17,7 @@ public class CLIutils {
     public static final String ANSI_RED = "\u001B[31m";
     public static final String ANSI_PINK = "\u001B[35m"; //magenta
     public static final String ANSI_WHITE = "\u001B[37m";
+    public static final String ANSI_GRAY = "\u001b[38;5;249m";
     public static final String ANSI_RESET = "\u001B[0m";
 
     //ANSI background color
@@ -37,7 +38,6 @@ public class CLIutils {
     public static final String TOP_RIGHT_CORNER = "⌉";
     public static final String HOR_DIVIDER = "—";
 
-    public static final String PROFESSOR = "\u2742"; // ❂
     public static final String STUDENT = "\u2A37"; // ⊛
     public static final String MOTHER_NATURE = "\u26B6"; // ⚶
     public static final String TOWER = "\u265C"; // ♜

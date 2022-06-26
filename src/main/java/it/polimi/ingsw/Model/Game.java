@@ -580,35 +580,48 @@ public class Game {
 
     @Override
     public String toString() {
+        int num = 0;
         String text = "updateGameBoard" + "/" + idGame + "/" + playerNum + "/";
         for (Player p: gamer) {
-            text = text + p.getName() + "/";
+            text = text + "gamer" + num + ":" + p.getName() + "/";
+            num++;
         }
+        num = 0;
+        for (Deck d: assistantCard) {
+            text = text + "assistantCard" + num + ":" + Arrays.deepToString(d.getAssistantCardDeck()) + "/";
+            num++;
+        }
+        num = 0;
+        for (SchoolBoard b: schoolboards) {
+            text = text + "schoolBoard" + num + ":" + Arrays.toString(b.getEntranceStudents()) + "entranceEnd/" + b.getTower() + "tower/get0" + b.isProfessor(0) + "/" + b.getCorridor(0) + "end0/get1" + b.isProfessor(1) + "/" + b.getCorridor(1) + "end1/get2" + b.isProfessor(2) + "/" + b.getCorridor(2) + "end2/get3" + b.isProfessor(3) + "/" + b.getCorridor(3) + "end3/get4" + b.isProfessor(4) + "/" + b.getCorridor(4) + "end4/";
+            num++;
+        }
+        num = 0;
         for (Island i: islandTile) {
-            text = text + Arrays.toString(i.getStudents()) + "/";
-            text = text + i.colorTower() + "/" + i.getTowerNum() + "/";
+            text = text + "island" + num + ":" + Arrays.toString(i.getStudents()) + "studentsOnIsland" + num + "/";
+            text = text + "tower" + num + i.colorTower() + "/" + i.getTowerNum() + "endTower"+ num + "/";
             if(expertMode){
                 text = text + i.isEntryTileMotherNature() + "/" + i.getNoEntryTile() + "/";
             }
+            num++;
         }
+        num = 0;
         for (CloudTile i: cloudTiles) {
-            text = text + Arrays.toString(i.getStudents()) + "/";
+            text = text + "cloudTile" + num + ":" +Arrays.toString(i.getStudents()) + "/";
+            num++;
         }
+        num = 0;
         //TODO manca expertcard
         if(expertMode){
             for (SpecialCard s: expertCard) {
-                text = text + s.toString() + "/";
+                text = text + "expertCard" + num + ":" + s.toString() + "/";
             }
         }
-        for (Deck d: assistantCard) {
-            text = text + Arrays.deepToString(d.getAssistantCardDeck()) + "/";
-        }
-        for (SchoolBoard b: schoolboards) {
-            text = text + Arrays.toString(b.getEntranceStudents()) + "/" + b.getTower() + "/" + b.isProfessor(0) + "/" + b.getCorridor(0) + "/" + b.isProfessor(1) + "/" + b.getCorridor(1) + "/" + b.isProfessor(2) + "/" + b.getCorridor(2) + "/" + b.isProfessor(3) + "/" + b.getCorridor(3) + "/" + b.isProfessor(4) + "/" + b.getCorridor(4) + "/";
-        }
-        text = text + position.getPosition() + "/";
-        text = text + Arrays.toString(professor) + "/";
-        text = text + coinPile;
+        text = text + "position:" + position.getPosition() + "/";
+        text = text + "professor:" + Arrays.toString(professor) + "/";
+        text = text + "coinPile:" + coinPile;
         return text;
     }
 }
+
+
