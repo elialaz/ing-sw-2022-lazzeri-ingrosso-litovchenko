@@ -31,7 +31,7 @@ public class MotherNature {
     }
 
     /**
-     * Move MotherNature to another position
+     * Get MotherNature current island position
      * @return integer number, position of MotherNature
      **/
     public int getPosition() {

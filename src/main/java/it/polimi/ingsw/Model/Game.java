@@ -598,8 +598,8 @@ public class Game {
         }
         num = 0;
         for (Island i: islandTile) {
-            text = text + "island" + num + ":" + Arrays.toString(i.getStudents()) + "studentsOnIsland" + num + "/";
-            text = text + "tower" + num + i.colorTower() + "/" + i.getTowerNum() + "endTower"+ num + "/";
+            text = text + "island" + num + ":" + Arrays.toString(i.getStudents()) + "studentsOnIsland/";
+            text = text + "tower" + i.colorTower() + "/" + i.getTowerNum() + "endTower"+ num + "/";
             if(expertMode){
                 text = text + i.isEntryTileMotherNature() + "/" + i.getNoEntryTile() + "/";
             }
