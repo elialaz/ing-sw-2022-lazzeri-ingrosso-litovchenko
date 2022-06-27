@@ -125,6 +125,9 @@ public class ConnectionHandler implements EventReciver {
                 actionType = 0;
                 synchronized (lock){
                     for (Pair p: client) {
+                        p.getClient().sendMessage(model.toString());
+                    }
+                    for (Pair p: client) {
                         if(p.getNickname().equals(controller.getNextTurnPlayer())){
                             p.getClient().sendMessage("enable/planningPhase");
                         }

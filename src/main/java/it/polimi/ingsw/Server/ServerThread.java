@@ -75,6 +75,7 @@ class ServerThread extends Thread{
                                 master = server.getMaster(Integer.parseInt(input[1]));
                                 sendMessage("success");
                                 if (master.getExpectedGamer() == master.getActualGamer()) {
+                                    master.update("update");
                                     master.setStart(true);
                                 }
                             } else {

@@ -84,6 +84,7 @@ public class Client implements EventReciver {
                         break;
                     case "updateGameBoard":
                         userInterface.setData(input);
+                        manager.notify("updateData");
                         break;
                 }
             }
