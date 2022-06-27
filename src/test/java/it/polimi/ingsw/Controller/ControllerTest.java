@@ -21,38 +21,55 @@ class ControllerTest {
     }
 
     @Test
-    void update1() throws MoveNotAllowed {
-        control.setNextMove(1);
+    void update1() {
+        //fare tutte le azioni tra fasi
+        try {
+            control.addPlayer("jeff");
+        } catch (ToMuchPlayerExcetpion e) {}
+        control.update("start");
         control.update("nextmove");
-    }
+        control.setNextPlayerTurn("Panzerotto");
+        try {
+            control.playAssistantCard(7);
+        } catch (PlayerNotexist e) {}
+        control.setNextPlayerTurn("jeff");
+        try {
+            control.playAssistantCard(2);
+        } catch (PlayerNotexist e) {}
 
-    @Test
-    void update2() throws MoveNotAllowed {
-        control.setNextMove(2);
+        /*control.setNextMove(2);
         control.update("nextmove");
-    }
+        control.update("nextmove"); // 3*/
 
-    @Test
-    void update3() throws MoveNotAllowed {
-        control.setNextMove(3);
-        control.update("nextmove");
-    }
+        try {
+            control.moveStudentsToIsland(new int[] {1,0,0,0,0}, 5);
+            control.moveStudentsToSchoolboard(new int[] {2,0,0,0,0});
+        } catch (PlayerNotexist e) {}
 
-    @Test
-    void update5() throws MoveNotAllowed {
-        control.setNextMove(5);
-        control.update("nextmove");
-    }
+        /*control.setNextMove(4);
+        control.update("nextmove"); // 4*/
 
-    @Test
-    void update7() throws MoveNotAllowed {
-        control.setNextMove(7);
-        control.update("nextmove");
-    }
+        try {
+            control.moveMotherNature(5);
+            control.moveMotherNature(1);
+        } catch (MoveNotAllowed e) {}
+        control.update("nextmove"); // 5
+        control.update("nextmove"); // 6
 
-    @Test
-    void update() throws MoveNotAllowed {
-        control.update("setupStart");
+
+        try {
+            control.moveStudentsToIsland(new int[] {0,0,0,0,0}, 3);
+            control.moveStudentsToSchoolboard(new int[] {1,1,1,0,0});
+        } catch (PlayerNotexist e) {}
+        control.update("nextmove"); // 4
+        try {
+            control.moveMotherNature(5);
+        } catch (MoveNotAllowed e) {}
+        control.update("nextmove"); // 5
+        control.update("nextmove"); // 6
+        control.update("nextmove"); // 7
+        control.update("nextmove"); // 2
+        control.update("nextmove"); // 2
     }
 
     @Test

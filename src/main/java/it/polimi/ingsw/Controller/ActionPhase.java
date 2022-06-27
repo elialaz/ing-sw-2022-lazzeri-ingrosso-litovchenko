@@ -59,7 +59,7 @@ public class ActionPhase {
      * Service method for third part of the action phase
      **/
     public void takeCloudTile(){
-        if(playerPlayed == playerOrder.size()){
+        if(playerPlayed != playerOrder.size()-1){
             controller.setNextMove(4);
             playerPlayed++;
         }
