@@ -105,22 +105,82 @@ class GameTest {
     }
 
     @Test
-    void checkControl() {
-        Island isle = new Island(new int[]{1,0,0,0,0}, 1);
-        game.checkInfluence(isle);
-        game.checkControl(game.getIslandTile().get(0));
+    void moveMotherNature() {
+
     }
 
     @Test
-    void checkInfluence() {
-        Island isle = new Island(new int[]{2,0,0,0,0}, 1);
-        assertEquals(-1, game.checkInfluence(isle));
+    void checkControl() {
+        try {
+            game.addPlayer("kyle");
+        } catch (ToMuchPlayerExcetpion e) {}
+        game.setProfessorControl(true);
+        game.moveStudentsToSchoolBoard(new int[] {2,1,0,2,0}, 0);
+        game.moveStudentsToIsland(new int[] {1,0,1,1,0}, 0, game.getIslandById(5) );
+        game.moveStudentsToSchoolBoard(new int[] {0,0,3,2,2},1);
+        game.checkControl(game.getIslandById(5));
+        assertEquals(1, game.getIslandById(5).getTowerNum());
+        game.checkControl(game.getIslandById(5));
+    }
+
+    @Test
+    void checks() {
+        try {
+            game.addPlayer("kyle");
+        } catch (ToMuchPlayerExcetpion e) {}
+        game.setProfessorControl(true);
+        game.setPlusTwoEffect(true);
+        game.setPlusTwoEffectPlayer(0);
+        game.moveStudentsToSchoolBoard(new int[] {2,1,0,2,0}, 0);
+        game.moveStudentsToIsland(new int[] {1,0,1,1,0}, 0, game.getIslandById(5) );
+        game.moveStudentsToSchoolBoard(new int[] {0,0,3,2,2},1);
+        game.checkProfessorInfluence(game.getSchoolBoards().get(0));
+        assertTrue(game.getSchoolBoards().get(0).isProfessor(0));
+        assertTrue(game.getSchoolBoards().get(0).isProfessor(1));
+        assertFalse(game.getSchoolBoards().get(0).isProfessor(2));
+        assertTrue(game.getSchoolBoards().get(0).isProfessor(3));
+        assertFalse(game.getSchoolBoards().get(0).isProfessor(4));
+        assertEquals(0, game.checkInfluence(game.getIslandById(5)));
     }
 
     @Test
     void checkUnion() {
-        Island isle = new Island(new int[]{1,0,0,0,0}, 1);
-        game.checkUnion(isle);
+        try {
+            game.addPlayer("kyle");
+        } catch (ToMuchPlayerExcetpion e) {}
+        game.getIslandTile().get(2).setTower(1, game.getSchoolBoards().get(0).getColor());
+        game.getIslandTile().get(3).setTower(1, game.getSchoolBoards().get(0).getColor());
+        game.getIslandTile().get(4).setTower(1, game.getSchoolBoards().get(0).getColor());
+        game.checkUnion(game.getIslandById(3));
+        assertEquals(3,game.getIslandTile().get(2).getTowerNum());
+        assertEquals(10, game.getIslandTile().size());
+    }
+
+    @Test
+    void checkUnionFirst() {
+        try {
+            game.addPlayer("kyle");
+        } catch (ToMuchPlayerExcetpion e) {}
+        game.getIslandTile().get(11).setTower(1,game.getSchoolBoards().get(0).getColor());
+        game.getIslandTile().get(0).setTower(1, game.getSchoolBoards().get(0).getColor());
+        game.getIslandTile().get(1).setTower(0, game.getSchoolBoards().get(1).getColor());
+        game.checkUnion(game.getIslandById(0));
+        assertEquals(2,game.getIslandTile().get(0).getTowerNum());
+        assertEquals(11, game.getIslandTile().size());
+
+    }
+
+    @Test
+    void checkUnionLast() {
+        try {
+            game.addPlayer("kyle");
+        } catch (ToMuchPlayerExcetpion e) {}
+        game.getIslandTile().get(10).setTower(1, game.getSchoolBoards().get(1).getColor());
+        game.getIslandTile().get(11).setTower(1, game.getSchoolBoards().get(0).getColor());
+        game.getIslandTile().get(0).setTower(1, game.getSchoolBoards().get(0).getColor());
+        game.checkUnion(game.getIslandById(11));
+        assertEquals(2,game.getIslandTile().get(10).getTowerNum());
+        assertEquals(11, game.getIslandTile().size());
     }
 
     @Test
@@ -135,7 +195,6 @@ class GameTest {
         assertEquals(Cards, game.getExpertCard());
     }
 
-
     @Test
     void getGamerbyid() {
         ArrayList<Player> gamers = game.getGamer();
@@ -149,19 +208,11 @@ class GameTest {
     }
 
     @Test
-    void getPlanningPhaseOrder() {
-
-    }
-
-    @Test
     void getIslandById() {
         ArrayList<Island> islandTiles = game.getIslandTile();
         assertEquals(game.getIslandTile().get(5), game.getIslandById(5));
     }
 
-    @Test
-    void getLastCardMovementAllowed() {
-    }
 
     @Test
     void isFinishTower() {
@@ -171,5 +222,23 @@ class GameTest {
     @Test
     void islandNUm() {
         assertEquals(12, game.islandNUm());
+    }
+
+    @Test
+    void checkTowerNum(){
+        try {
+            game.addPlayer("shelby");
+        } catch (ToMuchPlayerExcetpion e) {}
+        game.getIslandTile().get(3).setTower(2, game.getSchoolBoards().get(0).getColor());
+        game.getIslandTile().get(7).setTower(1, game.getSchoolBoards().get(0).getColor());
+        game.getSchoolBoards().get(0).removeTower(3);
+        game.getIslandTile().get(11).setTower(1, game.getSchoolBoards().get(1).getColor());
+        game.getSchoolBoards().get(1).removeTower(1);
+        assertEquals("shelby", game.checkTowerNum());
+    }
+
+    @Test
+    void getManager(){
+       assertNotNull(game.getManager());
     }
 }

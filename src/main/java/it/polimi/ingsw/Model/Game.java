@@ -107,7 +107,7 @@ public class Game {
         cloudTiles.add(new CloudTile(3));
 
         schoolboards.add(new SchoolBoard(TowerColor.BLACK, 8, bag.getStudents(7)));
-        schoolboards.add(new SchoolBoard(TowerColor.BLACK, 8, bag.getStudents(7)));
+        schoolboards.add(new SchoolBoard(TowerColor.WHITE, 8, bag.getStudents(7)));
     }
 
     /**
@@ -285,8 +285,8 @@ public class Game {
     public void checkControl(Island island){
         int playerId = this.checkInfluence(island);
         if(island.checkNotTower() && playerId != -1 && playerId != -2){
-            schoolboards.get(playerId).removeTower(island.getTowerNum());
-            island.setTower(island.getTowerNum(), schoolboards.get(playerId).getColor());
+            schoolboards.get(playerId).removeTower(1);
+            island.setTower(1, schoolboards.get(playerId).getColor());
             manager.notify("update");
         }
         else if(!island.checkNotTower() && playerId != -1 && playerId != -2){
@@ -406,12 +406,18 @@ public class Game {
         newIsland.setTower(towerNum, island.colorTower());
 
         if(unionBefore || unionAfter){
-            islandTile.set(idIsland, newIsland);
-            if(unionAfter){
+            if (idIsland == 0 && unionAfter && unionBefore){
+                islandTile.remove(idBefore);
                 islandTile.remove(idAfter);
             }
-            if(unionBefore){
-                islandTile.remove(idBefore);
+            else{
+                islandTile.set(idIsland, newIsland);
+                if(unionAfter){
+                    islandTile.remove(idAfter);
+                }
+                if(unionBefore){
+                    islandTile.remove(idBefore);
+                }
             }
             manager.notify("update");
         }
@@ -440,7 +446,7 @@ public class Game {
      * @param subscriber listener for the events
      * @param events event type
      **/
-    public void eventSubscrbe(EventReciver subscriber, String events) {
+    public void eventSubscribe(EventReciver subscriber, String events) {
         manager.subscribe(events, subscriber);
     }
 
@@ -477,7 +483,7 @@ public class Game {
         order.add(0);
         value.add(assistantCard.get(0).getLastCardValue());
         for(int i=1; i<gamer.size(); i++){
-            for(int j=0; j<=i; j++){
+            for(int j=0; j<i; j++){                 //tolto = da <= per coverage controller
                 if(assistantCard.get(i).getLastCardValue() < value.get(j)){
                     value.add(j, assistantCard.get(i).getLastCardValue());
                     order.add(j, i);
@@ -578,7 +584,7 @@ public class Game {
         return islandTile;
     }
 
-    @Override
+   @Override
     public String toString() {
         int num = 0;
         String text = "updateGameBoard" + "/" + idGame + "/" + playerNum + "/";
