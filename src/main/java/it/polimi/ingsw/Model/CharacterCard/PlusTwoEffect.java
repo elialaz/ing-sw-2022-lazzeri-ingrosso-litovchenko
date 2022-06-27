@@ -7,11 +7,12 @@ import it.polimi.ingsw.Model.*;
  * @author elia_laz
  **/
 public class PlusTwoEffect extends SpecialCard {
-
+    private final int id;
     /**
      * Constructor
      **/
     public PlusTwoEffect(){
+        id = 8;
         setup(2);
     }
 
@@ -27,5 +28,12 @@ public class PlusTwoEffect extends SpecialCard {
             setNeverUse();
             setPrice();
         }
+    }
+
+    /**
+     * Getter of CardId
+     **/
+    public int getId(){
+        return id;
     }
 }

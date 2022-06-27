@@ -7,12 +7,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class FromCartToEntranceTest {
-    private FromCartToEntrance fromCartToEntrance;
+    private FromCartToEntrance fromCartToEntrance = new FromCartToEntrance(new Bag(7));
 
 
     @Test
     void getEffect() {
-        fromCartToEntrance= new FromCartToEntrance(new Bag(7));
         int [] startStudents = fromCartToEntrance.getStudents();
         SchoolBoard schoolBoard = new SchoolBoard(new int[]{2,1,3,1,0});
         int[] studentsFromEntrance = new int[]{0,1,1,0,0};
@@ -24,9 +23,12 @@ class FromCartToEntranceTest {
 
     @Test
     void getStudents() {
-        fromCartToEntrance = new FromCartToEntrance(new Bag(10));
         int [] startStudents = fromCartToEntrance.getStudents();
         assertArrayEquals(startStudents, fromCartToEntrance.getStudents());
+    }
 
+    @Test
+    void getCardId(){
+        assertEquals(2, fromCartToEntrance.getId());
     }
 }

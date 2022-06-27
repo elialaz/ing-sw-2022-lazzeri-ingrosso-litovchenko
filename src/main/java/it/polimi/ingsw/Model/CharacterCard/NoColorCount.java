@@ -7,11 +7,12 @@ import it.polimi.ingsw.Model.*;
  * @author elia_laz
  **/
 public class NoColorCount extends SpecialCard {
-
+    private final int id;
     /**
      * Constructor
      **/
     public NoColorCount(){
+        id = 5;
         setup(3);
     }
 
@@ -24,5 +25,12 @@ public class NoColorCount extends SpecialCard {
             setNeverUse();
             setPrice();
         }
+    }
+
+    /**
+     * Getter of CardId
+     **/
+    public int getId(){
+        return id;
     }
 }

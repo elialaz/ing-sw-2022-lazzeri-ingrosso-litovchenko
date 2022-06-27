@@ -22,4 +22,9 @@ class NoEntryTilesEffectTest {
         noEntryTilesEffect.GetEffect(island);
         assertEquals(numEntryTile-1, noEntryTilesEffect.getNumEntryTile());
     }
+
+    @Test
+    void getCardId(){
+        assertEquals(7, noEntryTilesEffect.getId());
+    }
 }

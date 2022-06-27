@@ -8,11 +8,13 @@ import java.util.ArrayList;
  * @author elia_laz
  **/
 public class ReplaceStudentsInBag extends SpecialCard {
+    private final int id;
 
     /**
      * Constructor
      **/
     public ReplaceStudentsInBag(){
+        id = 10;
         setup(3);
     }
 
@@ -45,5 +47,12 @@ public class ReplaceStudentsInBag extends SpecialCard {
             setNeverUse();
             setPrice();
         }
+    }
+
+    /**
+     * Getter of CardId
+     **/
+    public int getId(){
+        return id;
     }
 }

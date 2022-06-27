@@ -14,4 +14,10 @@ class ProfessorControlTest {
         professorControl.GetEffect(game);
         assertTrue(game.isProfessorControl());
     }
+
+    @Test
+    void getCardId(){
+        ProfessorControl professorControl = new ProfessorControl();
+        assertEquals(9, professorControl.getId());
+    }
 }

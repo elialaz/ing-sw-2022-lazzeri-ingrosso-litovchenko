@@ -15,4 +15,10 @@ class NoColorCountTest {
         noColorCount.GetEffect(color, island);
         assertEquals(1, island.getColorNotCount());
     }
+
+    @Test
+    void getCardId(){
+        NoColorCount noColorCount = new NoColorCount();
+        assertEquals(5, noColorCount.getId());
+    }
 }

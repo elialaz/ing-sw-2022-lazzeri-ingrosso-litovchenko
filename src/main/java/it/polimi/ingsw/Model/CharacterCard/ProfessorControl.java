@@ -9,10 +9,12 @@ import it.polimi.ingsw.Model.*;
  * @author elia_laz
  **/
 public class ProfessorControl extends SpecialCard {
+    private final int id;
     /**
      * Constructor
      **/
     public ProfessorControl(){
+        id = 9;
         setup(2);
     }
 
@@ -26,5 +28,12 @@ public class ProfessorControl extends SpecialCard {
             setNeverUse();
             setPrice();
         }
+    }
+
+    /**
+     * Getter of CardId
+     **/
+    public int getId(){
+        return id;
     }
 }

@@ -26,4 +26,9 @@ class StudentToIslandTest {
         assertArrayEquals(new int[] {2,1,1,1,0}, island.getStudents());
         assertEquals(studentsOnCard.length, studentToIsland.getStudents().length);
     }
+
+    @Test
+    void getCardId(){
+        assertEquals(12, studentToIsland.getId());
+    }
 }

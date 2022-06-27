@@ -34,4 +34,9 @@ class StudentToDiningRoomTest {
         assertEquals(3, schoolBoard.getCorridor(0));
         assertEquals(studentsOnCard.length, studentToDiningRoom.getStudents().length);
     }
+
+    @Test
+    void getCardId(){
+        assertEquals(11, studentToDiningRoom.getId());
+    }
 }

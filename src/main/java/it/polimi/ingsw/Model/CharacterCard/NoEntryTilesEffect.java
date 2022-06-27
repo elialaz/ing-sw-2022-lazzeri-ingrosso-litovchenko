@@ -8,6 +8,7 @@ import it.polimi.ingsw.Model.*;
  **/
 public class NoEntryTilesEffect extends SpecialCard {
     int numEntryTile;
+    private final int id;
 
     /**
      * Constructor
@@ -15,6 +16,7 @@ public class NoEntryTilesEffect extends SpecialCard {
     public NoEntryTilesEffect(){
         setup(2);
         numEntryTile = 4;
+        id = 7;
     }
 
     /**
@@ -38,5 +40,12 @@ public class NoEntryTilesEffect extends SpecialCard {
      **/
     public int getNumEntryTile() {
         return numEntryTile;
+    }
+
+    /**
+     * Getter of CardId
+     **/
+    public int getId(){
+        return id;
     }
 }

@@ -16,4 +16,10 @@ class MoveAgainMotherNatureTest {
         moveAgainMotherNature.GetEffect(deck);
         assertEquals(deck.getLastMotherNatureValue(), moveBeforeEffect+2);
     }
+
+    @Test
+    void getCardId(){
+        MoveAgainMotherNature motherNature = new MoveAgainMotherNature();
+        assertEquals(4, motherNature.getId());
+    }
 }

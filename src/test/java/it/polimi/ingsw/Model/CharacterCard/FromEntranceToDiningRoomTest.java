@@ -2,7 +2,6 @@ package it.polimi.ingsw.Model.CharacterCard;
 
 import it.polimi.ingsw.Model.SchoolBoard;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class FromEntranceToDiningRoomTest {
@@ -17,5 +16,11 @@ class FromEntranceToDiningRoomTest {
         int[] studentsToEntrance = new int[] {1,0,0,1,0};
         fromEntranceToDiningRoom.GetEffect(schoolBoard, studentsToDining, studentsToEntrance);
         assertArrayEquals(new int[]{1,2,0,1,0}, schoolBoard.getEntranceStudents());
+    }
+
+    @Test
+    void getCardId(){
+        FromEntranceToDiningRoom fromEntranceToDiningRoom = new FromEntranceToDiningRoom();
+        assertEquals(3, fromEntranceToDiningRoom.getId());
     }
 }

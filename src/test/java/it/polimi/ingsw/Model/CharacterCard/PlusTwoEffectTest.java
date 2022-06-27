@@ -16,4 +16,10 @@ class PlusTwoEffectTest {
         assertTrue(game.isPlusTwoEffect());
         assertEquals(2, game.getPlusTwoEffectPlayer());
     }
+
+    @Test
+    void getCardId(){
+        PlusTwoEffect plusTwoEffect = new PlusTwoEffect();
+        assertEquals(8, plusTwoEffect.getId());
+    }
 }

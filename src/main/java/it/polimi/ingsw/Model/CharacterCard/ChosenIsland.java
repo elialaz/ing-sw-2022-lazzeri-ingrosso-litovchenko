@@ -7,11 +7,13 @@ import it.polimi.ingsw.Model.*;
  * @author elia_laz
  **/
 public class ChosenIsland extends SpecialCard {
+    private final int id;
 
     /**
      * Constructor
      **/
     public ChosenIsland(){
+        id = 1;
         setup(3);
     }
 
@@ -26,5 +28,12 @@ public class ChosenIsland extends SpecialCard {
             setNeverUse();
             setPrice();
         }
+    }
+
+    /**
+     * Getter of CardId
+     **/
+    public int getId(){
+        return id;
     }
 }

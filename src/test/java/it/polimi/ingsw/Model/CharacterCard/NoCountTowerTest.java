@@ -14,4 +14,10 @@ class NoCountTowerTest {
         noCountTower.GetEffect(island);
         assertTrue(island.isNoCountTower());
     }
+
+    @Test
+    void getCardId(){
+        NoCountTower noCountTower = new NoCountTower();
+        assertEquals(6, noCountTower.getId());
+    }
 }

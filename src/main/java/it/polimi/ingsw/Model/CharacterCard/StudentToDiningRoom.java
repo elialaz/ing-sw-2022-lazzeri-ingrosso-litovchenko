@@ -8,6 +8,7 @@ import it.polimi.ingsw.Model.*;
  **/
 public class StudentToDiningRoom extends SpecialCard {
     private final int[] cardStudents;
+    private final int id;
 
     /**
      * Constructor
@@ -15,6 +16,7 @@ public class StudentToDiningRoom extends SpecialCard {
     public StudentToDiningRoom(Bag bag) {
         cardStudents = bag.getStudents(4);
         setup(2);
+        id = 11;
     }
 
     /**
@@ -44,5 +46,12 @@ public class StudentToDiningRoom extends SpecialCard {
             setNeverUse();
             setPrice();
         }
+    }
+
+    /**
+     * Getter of CardId
+     **/
+    public int getId(){
+        return id;
     }
 }

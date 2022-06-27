@@ -8,11 +8,13 @@ import it.polimi.ingsw.Model.*;
  **/
 public class FromCartToEntrance extends SpecialCard {
     private final int[] students;
+    private final int id;
 
     /**
      * Constructor
      **/
     public FromCartToEntrance(Bag bag){
+        id = 2;
         students = bag.getStudents(6);
         setup(1);
     }
@@ -55,5 +57,12 @@ public class FromCartToEntrance extends SpecialCard {
         for(int i=0; i<5; i++){
             students[i]-=stud[i];
         }
+    }
+
+    /**
+     * Getter of CardId
+     **/
+    public int getId(){
+        return id;
     }
 }

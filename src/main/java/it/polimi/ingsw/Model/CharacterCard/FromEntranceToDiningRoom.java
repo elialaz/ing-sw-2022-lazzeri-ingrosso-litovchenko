@@ -8,11 +8,13 @@ import it.polimi.ingsw.Model.SpecialCard;
  * @author elia_laz
  **/
 public class FromEntranceToDiningRoom extends SpecialCard {
+    private final int id;
 
     /**
      * Constructor
      **/
     public FromEntranceToDiningRoom(){
+        id = 3;
         setup(1);
     }
 
@@ -27,5 +29,12 @@ public class FromEntranceToDiningRoom extends SpecialCard {
             setNeverUse();
             setPrice();
         }
+    }
+
+    /**
+     * Getter of CardId
+     **/
+    public int getId(){
+        return id;
     }
 }

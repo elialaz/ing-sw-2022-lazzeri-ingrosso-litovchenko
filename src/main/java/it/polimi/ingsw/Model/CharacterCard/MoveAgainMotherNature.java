@@ -7,11 +7,12 @@ import it.polimi.ingsw.Model.*;
  * @author elia_laz
  **/
 public class MoveAgainMotherNature extends SpecialCard {
-
+    private final int id;
     /**
      * Constructor
      **/
     public MoveAgainMotherNature(){
+        id = 4;
         setup(1);
     }
 
@@ -24,5 +25,12 @@ public class MoveAgainMotherNature extends SpecialCard {
             setNeverUse();
             setPrice();
         }
+    }
+
+    /**
+     * Getter of CardId
+     **/
+    public int getId(){
+        return id;
     }
 }

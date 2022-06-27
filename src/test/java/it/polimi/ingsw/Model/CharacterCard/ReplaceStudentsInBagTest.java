@@ -23,6 +23,11 @@ class ReplaceStudentsInBagTest {
         ReplaceStudentsInBag replaceStudentsInBag = new ReplaceStudentsInBag();
         replaceStudentsInBag.GetEffect(schoolBoards, new int[] {3,0,0,0,0}, game.getBag());
         assertEquals(0,schoolBoards.get(0).getCorridor(0));
+    }
 
+    @Test
+    void getCardId(){
+        ReplaceStudentsInBag replaceStudentsInBag = new ReplaceStudentsInBag();
+        assertEquals(10, replaceStudentsInBag.getId());
     }
 }
