@@ -65,7 +65,7 @@ public class Cli implements EventReciver {
     public String ReadStringInput() {
         String str;
         do {
-            System.out.print(">");
+            System.out.print("> ");
             str = scan.nextLine();
             if (str.equals(""))
                 System.out.println(CLIutils.ANSI_BRIGHT_RED + "Empty string is not valid. Write something." + CLIutils.ANSI_RESET);
@@ -82,7 +82,7 @@ public class Cli implements EventReciver {
     private int ReadIntInput(int min, int max) {
         int num = -1;
         do {
-            System.out.print(">");
+            System.out.print("> ");
             if (scan.hasNextInt()) {
                 num = scan.nextInt();
                 if (num < min || num > max)
@@ -103,10 +103,10 @@ public class Cli implements EventReciver {
         System.out.println(CLIutils.ERIANTYS);
         System.out.println(CLIutils.AUTHORS);
         System.out.println();
-        System.out.print("Choose the number of server port you want to connect to (value must be between 1024 and 65535):");
+        System.out.println("Choose the number of server port you want to connect to (value must be between 1024 and 65535):");
         serverPort = ReadIntInput(1024, 65535);
         connection.setServerPort(serverPort);
-        System.out.print("Select your unique Nickname: ");
+        System.out.println("Select your unique Nickname: ");
         nickname = ReadStringInput();
         manager.notify("loginSend");
     }
@@ -123,28 +123,21 @@ public class Cli implements EventReciver {
         System.out.println("Choose a game option: 1) New Game || 2) Load Game");
         selection = ReadIntInput(1, 2);
         if (selection == 1) {
-            clearScreen();
-            System.out.println(CLIutils.ERIANTYS);
-            System.out.println(CLIutils.AUTHORS);
-            System.out.println();
-            System.out.print("Select number of player (from 2 to 4): ");
+            System.out.println("Select number of player (from 2 to 4): ");
             playerNumber = ReadIntInput(2, 4);
-            System.out.print("Create a Game ID: >");
-            gameID = Integer.parseInt(scan.nextLine());
+            System.out.println("Create a Game ID: ");
+            gameID = ReadIntInput(1, 99999);
             System.out.println("You want to enable ExpertMode?: 1) Yes || 2) No ");
             selection = ReadIntInput(1, 2);
             expert = selection == 1;
             System.out.println("You want to enable Chat? 1) Yes || 2) No ");
             selection = ReadIntInput(1, 2);
+            System.out.println("waiting for players to join...");
             chat = selection == 1;
             manager.notify("newGameSend");
         } else {
-            clearScreen();
-            System.out.println(CLIutils.ERIANTYS);
-            System.out.println(CLIutils.AUTHORS);
-            System.out.println();
-            System.out.print("Insert the ID of the Game you want to join: ");
-            gameID = Integer.parseInt(scan.nextLine());
+            System.out.println("Insert the ID of the Game you want to join: ");
+            gameID = ReadIntInput(1, 99999);
             manager.notify("loadGameSend");
         }
     }
@@ -332,28 +325,51 @@ public class Cli implements EventReciver {
         clearScreen();
         System.out.print("Your School Board: ");
         //TODO CURRENT PLAYER, not 0
-        //showSchoolBoard(0);
+        showSchoolBoard(0);
         System.out.print("Other School Board: ");
         //TODO Other player
-        /*for (int i=0; i<playerNumber && i!=currentPlayerID; i++){
-            showSchoolBoard(i);
-        }*/
-        System.out.println("\nCurrent islands are: ");
+        showSchoolBoard(1);
+        System.out.print("\nCurrent islands are: ");
         showIslands();
         System.out.println("\nProfessors remaining: ");
         toFind = "professor:";
         String profRemains = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length(), statusGameBoard.indexOf("]/", statusGameBoard.indexOf(toFind)));
         profRemains = profRemains.replace("[", "");
-        int[] professors = Arrays.stream(profRemains.split(", ")).mapToInt(Integer::parseInt).toArray();
-        displayStudents(professors);
+        String[] profRemain = profRemains.split(", ");
+        int[] profInNum = new int[5];
+        for (int i=0; i<5; i++){
+            if (profRemain[i] == "false") {
+                profInNum[i] = 0;
+            } else {
+                profInNum[i] = 1;
+            }
+            switch (i) {
+                case 0:
+                    System.out.print(CLIutils.ANSI_GREEN + profInNum[i] + CLIutils.PROF + CLIutils.ANSI_RESET + ", ");
+                    break;
+                case 1:
+                    System.out.print(CLIutils.ANSI_RED + profInNum[i] + CLIutils.PROF + CLIutils.ANSI_RESET + ", ");
+                    break;
+                case 2:
+                    System.out.print(CLIutils.ANSI_YELLOW + profInNum[i] + CLIutils.PROF + CLIutils.ANSI_RESET + ", ");
+                    break;
+                case 3:
+                    System.out.print(CLIutils.ANSI_PINK + profInNum[i] + CLIutils.PROF + CLIutils.ANSI_RESET + ", ");
+                    break;
+                case 4:
+                    System.out.println(CLIutils.ANSI_BLUE + profInNum[i] + CLIutils.PROF + CLIutils.ANSI_RESET + ".");
+                    break;
+            }
+        }
         System.out.print("\nCoins remaining: ");
         toFind = "coinPile:";
         String coin = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length());
         System.out.println(coin);
+        System.out.println();
     }
 
     /**
-     * Setter for the GameBaord status
+     * Setter for the GameBoard status
      */
     public void setData(String input) {
         statusGameBoard = input;
@@ -436,15 +452,13 @@ public class Cli implements EventReciver {
         String schoolBoard_entrance = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length(), statusGameBoard.indexOf("]entranceEnd/", statusGameBoard.indexOf(toFind)));
         schoolBoard_entrance = schoolBoard_entrance.replace("[", "");
         int[] entrance = Arrays.stream(schoolBoard_entrance.split(", ")).mapToInt(Integer::parseInt).toArray();
-        System.out.println("School Board '" + playerID + "', has these students (" + CLIutils.STUDENT + ") in its entrance: ");
+        System.out.print("School Board '" + playerID + "', has these students (" + CLIutils.STUDENT + ") in its entrance: ");
         displayStudents(entrance);
-        System.out.println();
         toFind = "entranceEnd/";
         String schoolBoard_tower = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length(), statusGameBoard.indexOf("tower/", statusGameBoard.indexOf(toFind)));
         int towerNum = Integer.parseInt(schoolBoard_tower);
         //TODO gestire colore torre per schoolBoard
-        System.out.println(CLIutils.ANSI_WHITE + towerNum + CLIutils.TOWER + CLIutils.ANSI_RESET + " and... ");
-        System.out.println("\"");
+        System.out.println("Towers:" + CLIutils.ANSI_WHITE + towerNum + CLIutils.TOWER + CLIutils.ANSI_RESET + " and in its corridor... ");
         for (int i = 0; i < 5; i++) {
             toFind = "/get" + i;
             String schoolBoard_corridor = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length(), statusGameBoard.indexOf("end" + i, statusGameBoard.indexOf(toFind)));
@@ -479,10 +493,10 @@ public class Cli implements EventReciver {
             String schoolBoard_island_students = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length(), statusGameBoard.indexOf("]studentsOnIsland/", statusGameBoard.indexOf(toFind)));
             schoolBoard_island_students = schoolBoard_island_students.replace("[", "");
             StudentsOnIslands = Arrays.stream(schoolBoard_island_students.split(", ")).mapToInt(Integer::parseInt).toArray();
-            toFind = "/tower:";
+            toFind = "tower"+ i +":";
             String schoolBoard_island_tower = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length(), statusGameBoard.indexOf("endTower/", statusGameBoard.indexOf(toFind)));
             String[] tower = schoolBoard_island_tower.split("/");
-            System.out.println("Island "+ i +" has these pawns: ");
+            System.out.println("\nIsland "+ i +" has these pawns: ");
             System.out.print("... students: ");
             displayStudents(StudentsOnIslands);
             System.out.print("... towers: ");

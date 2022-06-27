@@ -32,7 +32,7 @@ public class Server {
         try{
             this.port = port;
             serverSocket = new ServerSocket(port);
-            System.out.println("Server has started on port" + port);
+            System.out.println("Server has started on port " + port);
             game = new ArrayList<ConnectionHandler>();
         }
         catch(IOException e){

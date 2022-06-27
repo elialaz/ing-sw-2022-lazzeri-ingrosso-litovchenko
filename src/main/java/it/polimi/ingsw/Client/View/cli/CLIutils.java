@@ -39,6 +39,7 @@ public class CLIutils {
     public static final String HOR_DIVIDER = "—";
 
     public static final String STUDENT = "\u2A37"; // ⊛
+    public static final String PROF = "\u272A"; // ✪
     public static final String MOTHER_NATURE = "\u15F0"; // ᗰ
     public static final String TOWER = "\u265C"; // ♜
     public static final String COIN = "$";
