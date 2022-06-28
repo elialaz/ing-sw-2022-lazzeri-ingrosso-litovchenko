@@ -65,7 +65,7 @@ public class CLIutils {
                 +"                            ┌┬┐┌─┐┌─┐┌┬┐    ┌─┐ ┌─┐                          \n"
                 +"                             │ ├┤ ├─┤│││     /   ├┤                          \n"
                 +"                             ┴ └─┘┴ ┴┴ ┴    └── └─┘                          \n"
-                +CLIutils.ANSI_YELLOW + "Elia Lazzeri" + CLIutils.ANSI_RESET + ", "
+                +CLIutils.ANSI_YELLOW + "" + "             Elia Lazzeri" + CLIutils.ANSI_RESET + ", "
                 +CLIutils.ANSI_WHITE + "Nikita Litovchenko"  + CLIutils.ANSI_RESET + " & "
                 +CLIutils.ANSI_GREEN + "Filiberto Ingrosso" + CLIutils.ANSI_RESET;
 }

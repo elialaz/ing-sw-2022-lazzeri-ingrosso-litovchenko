@@ -294,23 +294,31 @@ public class Cli implements EventReciver {
         showSchoolBoard(playerID);
         showIslands();
         //choose if you want to move students into 1 or 2
-        System.out.println("\nDecide which student to move: 1) " + CLIutils.ANSI_GREEN + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 2) " + CLIutils.ANSI_RED + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 3) " + CLIutils.ANSI_YELLOW + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 4) " + CLIutils.ANSI_PINK + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 5) " + CLIutils.ANSI_BLUE + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
+        System.out.println("\nDecide which student to move: 0) " + CLIutils.ANSI_GREEN + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 1) " + CLIutils.ANSI_RED + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 2) " + CLIutils.ANSI_YELLOW + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 3) " + CLIutils.ANSI_PINK + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 4) " + CLIutils.ANSI_BLUE + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
         System.out.println("Decide where to move students: 1) Dining Room || 2) Island\n");
+        int[] students_isle = new int[] {0,0,0,0,0,0};
+        int[] students_entrance = entranceSchoolBoard.get(playerID);
         for (int j = 0; j < studentsToMove; j++) {
             System.out.print("Move student: ");
-            chosenStudent = ReadIntInput(1, 5) - 1;
+            chosenStudent = ReadIntInput(0, 4) ;
+            while (students_entrance[chosenStudent] == 0){
+                System.out.println("What are you doing? You don't have these students in your entrance. Select another one.");
+                chosenStudent = ReadIntInput(0, 4);
+            }
             System.out.print("to: ");
             action1 = ReadIntInput(1, 2);
-            int[] students = StudentsOnIslands.get(playerID);
             switch (action1) {
                 case 1:
                     studentsToSchoolboard[chosenStudent]++;
+                    students_entrance[chosenStudent]--;
                     break;
                 case 2:
-                    System.out.print("\nTo which island (choose from 1 to 12): ");
-                    chosenIsland = ReadIntInput(1, 12) - 1;
-                    students[chosenStudent]++;
-                    studentsToIsland.set(chosenIsland, students);
+                    students_isle[chosenStudent+1]++;
+                    students_entrance[chosenStudent]--;
+                    System.out.print("To which island (choose from 0 to 11): ");
+                    chosenIsland = ReadIntInput(0, 11);
+                    students_isle[0] = chosenIsland;
+                    studentsToIsland.add(students_isle);
                     break;
             }
             System.out.println();
