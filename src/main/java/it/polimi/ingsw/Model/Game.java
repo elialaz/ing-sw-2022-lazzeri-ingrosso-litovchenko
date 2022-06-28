@@ -71,9 +71,7 @@ public class Game {
                 this.setupFour();
                 break;
         }
-        for (CloudTile c: cloudTiles) {
-            c.setStudents(bag);
-        }
+        updateCloudTile();
         schoolboards.get(0).setPlayer(gamer.get(0));
     }
 
@@ -282,6 +280,7 @@ public class Game {
      * Service method for check control over island
      * @param island island where Control need to be checked
      **/
+    //TODO rivedere poiche da torre su isole che non dovrebbe
     public void checkControl(Island island){
         int playerId = this.checkInfluence(island);
         if(island.checkNotTower() && playerId != -1 && playerId != -2){
@@ -353,31 +352,31 @@ public class Game {
             if(islandTile.get(i).equals(island)){
                 idIsland = i;
                 if(i==0){
-                    if(islandTile.get(islandTile.size()-1).colorTower().equals(island.colorTower())){
+                    if(islandTile.get(islandTile.size()-1).colorTower().equals(island.colorTower()) && !island.colorTower().equals(TowerColor.NOT)){
                         unionBefore = true;
                         idBefore = islandTile.size()-1;
                     }
-                    if(islandTile.get(i+1).colorTower().equals(island.colorTower())){
+                    if(islandTile.get(i+1).colorTower().equals(island.colorTower()) && !island.colorTower().equals(TowerColor.NOT)){
                         unionAfter = true;
                         idAfter = i+1;
                     }
                 }
                 else if(i==islandTile.size()-1){
-                    if(islandTile.get(i-1).colorTower().equals(island.colorTower())){
+                    if(islandTile.get(i-1).colorTower().equals(island.colorTower()) && !island.colorTower().equals(TowerColor.NOT)){
                         unionBefore = true;
                         idBefore = i-1;
                     }
-                    if(islandTile.get(0).colorTower().equals(island.colorTower())){
+                    if(islandTile.get(0).colorTower().equals(island.colorTower()) && !island.colorTower().equals(TowerColor.NOT)){
                         unionAfter = true;
                         idAfter = 0;
                     }
                 }
                 else{
-                    if(islandTile.get(i-1).colorTower().equals(island.colorTower())){
+                    if(islandTile.get(i-1).colorTower().equals(island.colorTower()) && !island.colorTower().equals(TowerColor.NOT)){
                         unionBefore = true;
                         idBefore = i-1;
                     }
-                    if(islandTile.get(i+1).colorTower().equals(island.colorTower())){
+                    if(islandTile.get(i+1).colorTower().equals(island.colorTower()) && !island.colorTower().equals(TowerColor.NOT)){
                         unionAfter = true;
                         idAfter = i+1;
                     }

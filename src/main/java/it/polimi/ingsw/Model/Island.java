@@ -24,6 +24,7 @@ public class Island {
         noEntryTile = 0;
         noCountTower = false;
         colorNotCount = -1;
+        color = TowerColor.NOT;
     }
 
     /**

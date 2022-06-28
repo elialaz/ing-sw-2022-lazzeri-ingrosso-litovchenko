@@ -214,7 +214,7 @@ public class ConnectionHandler implements EventReciver {
                 //TODO inserire if per gioca carte esperto
                 String[] firstMove = input[0].split("!");
                 for (int i = 0; i < 5; i++) {
-                    studentsToIsland[i] = Integer.parseInt(firstMove[i]);
+                    studentsToSchoolBoard[i] = Integer.parseInt(firstMove[i]);
                 }
                 try {
                     controller.moveStudentsToSchoolboard(studentsToSchoolBoard);
@@ -229,7 +229,7 @@ public class ConnectionHandler implements EventReciver {
                     for(int i=0; i<island; i++){
                         int witchIsland = Integer.parseInt(secondMove[c-1]);
                         for (int j=c; j<(5+c); j++) {
-                            studentsToIsland[j] = Integer.parseInt(secondMove[j]);
+                            studentsToIsland[j-c] = Integer.parseInt(secondMove[j]);
                         }
                         try {
                             controller.moveStudentsToIsland(studentsToIsland, witchIsland);

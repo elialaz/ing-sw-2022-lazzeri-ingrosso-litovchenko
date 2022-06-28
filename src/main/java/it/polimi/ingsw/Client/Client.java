@@ -60,32 +60,34 @@ public class Client implements EventReciver {
                 synchronized (inputLock){
                     input = in.readLine();
                 }
-                parsed = input.split("/");
-                switch (parsed[0]){
-                    case "enable":
-                        switch (parsed[1]){
-                            case "planningPhase":
-                                manager.notify("planningPhaseRecived");
-                                break;
-                            case "actionPhase1":
-                                manager.notify("actionPhase1Recived");
-                                break;
-                            case "actionPhase2":
-                                manager.notify("actionPhase2Recived");
-                                break;
-                            case "actionPhase3":
-                                manager.notify("actionPhase3Recived");
-                                break;
-                            case "finish":
-                                userInterface.setWinner(parsed[2]);
-                                manager.notify("finish");
-                                break;
-                        }
-                        break;
-                    case "updateGameBoard":
-                        userInterface.setData(input);
-                        manager.notify("updateData");
-                        break;
+                if(input!=null){
+                    parsed = input.split("/");
+                    switch (parsed[0]){
+                        case "enable":
+                            switch (parsed[1]){
+                                case "planningPhase":
+                                    manager.notify("planningPhaseRecived");
+                                    break;
+                                case "actionPhase1":
+                                    manager.notify("actionPhase1Recived");
+                                    break;
+                                case "actionPhase2":
+                                    manager.notify("actionPhase2Recived");
+                                    break;
+                                case "actionPhase3":
+                                    manager.notify("actionPhase3Recived");
+                                    break;
+                                case "finish":
+                                    userInterface.setWinner(parsed[2]);
+                                    manager.notify("finish");
+                                    break;
+                            }
+                            break;
+                        case "updateGameBoard":
+                            userInterface.setData(input);
+                            manager.notify("updateData");
+                            break;
+                    }
                 }
             }
             catch(IOException e){
@@ -161,28 +163,35 @@ public class Client implements EventReciver {
                         studentsToSchoolboard = studentsToSchoolboard + studentsToSchoolboardArray[i] + "!";
                     }
                     else{
-                        studentsToSchoolboard = studentsToSchoolboard + studentsToSchoolboardArray[i];
+                        studentsToSchoolboard = studentsToSchoolboard + studentsToSchoolboardArray[i] + "/";
                     }
                 }
+                boolean first = true;
                 if(studentsToIslandArray.size()==0){
                     studentsToIsland = "0/0";
                 }
                 else{
-                    studentsToIsland = String.valueOf(studentsToIslandArray.size()) + "/";
+                    studentsToIsland = studentsToIsland + studentsToIslandArray.size() + "/";
                     for (int[] p: studentsToIslandArray) {
-                        studentsToIsland = studentsToIsland + p[0] + "!";
+                        if(studentsToIslandArray.size() > 1 && !first){
+                            studentsToIsland = studentsToIsland + "!" + p[0] + "!";
+                        }
+                        else{
+                            studentsToIsland = studentsToIsland + p[0] + "!";
+                        }
+                        first = false;
                         for(int i=1; i<6; i++){
-                            if(i<4){
-                                studentsToSchoolboard = studentsToSchoolboard + p[i] + "!";
+                            if(i<5){
+                                studentsToIsland = studentsToIsland + p[i] + "!";
                             }
                             else{
-                                studentsToSchoolboard = studentsToSchoolboard + p[i];
+                                studentsToIsland = studentsToIsland + p[i];
                             }
                         }
                     }
                 }
                 synchronized (outputLock){
-                    out.println(studentsToSchoolboard + "/" + studentsToIsland);
+                    out.println(studentsToSchoolboard + studentsToIsland);
                 }
                 break;
             case "actionPhase2Send":

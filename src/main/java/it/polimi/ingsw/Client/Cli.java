@@ -26,7 +26,7 @@ public class Cli implements EventReciver {
     private int playerNumber;
     private int gameID;
     private String statusGameBoard;
-    private final int[] studentsToSchoolboard;
+    private int[] studentsToSchoolboard;
     private final ArrayList<int[]> studentsToIsland;
     private int moveMotherNature;
     private int whichClodTile;
@@ -275,6 +275,7 @@ public class Cli implements EventReciver {
     }
 
     //TODO
+    //TODO students to island arrayList sfanculato per quello model si rompe
     private void actionPhase1() {
         clearScreen();
         System.out.println("--------------------------------------------");
@@ -296,9 +297,10 @@ public class Cli implements EventReciver {
         //choose if you want to move students into 1 or 2
         System.out.println("\nDecide which student to move: 0) " + CLIutils.ANSI_GREEN + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 1) " + CLIutils.ANSI_RED + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 2) " + CLIutils.ANSI_YELLOW + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 3) " + CLIutils.ANSI_PINK + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 4) " + CLIutils.ANSI_BLUE + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
         System.out.println("Decide where to move students: 1) Dining Room || 2) Island\n");
-        int[] students_isle = new int[] {0,0,0,0,0,0};
         int[] students_entrance = entranceSchoolBoard.get(playerID);
+        studentsToSchoolboard = new int[]{0, 0, 0, 0, 0};
         for (int j = 0; j < studentsToMove; j++) {
+            int[] students_isle = new int[] {0,0,0,0,0,0};
             System.out.print("Move student: ");
             chosenStudent = ReadIntInput(0, 4) ;
             while (students_entrance[chosenStudent] == 0){
@@ -313,12 +315,33 @@ public class Cli implements EventReciver {
                     students_entrance[chosenStudent]--;
                     break;
                 case 2:
-                    students_isle[chosenStudent+1]++;
-                    students_entrance[chosenStudent]--;
-                    System.out.print("To which island (choose from 0 to 11): ");
-                    chosenIsland = ReadIntInput(0, 11);
-                    students_isle[0] = chosenIsland;
-                    studentsToIsland.add(students_isle);
+                    if(studentsToIsland.size()==0){
+                        students_isle[chosenStudent+1]++;
+                        students_entrance[chosenStudent]--;
+                        System.out.print("To which island (choose from 0 to 11): ");
+                        chosenIsland = ReadIntInput(0, 11);
+                        students_isle[0] = chosenIsland;
+                        studentsToIsland.add(students_isle);
+                    }
+                    else{
+                        boolean trovato = false;
+                        students_isle[chosenStudent+1]++;
+                        students_entrance[chosenStudent]--;
+                        System.out.print("To which island (choose from 0 to 11): ");
+                        chosenIsland = ReadIntInput(0, 11);
+                        for (int[] s: studentsToIsland) {
+                            if(s[0]==chosenIsland){
+                                for(int l=1; l<6; l++){
+                                    s[l]+=students_isle[l];
+                                }
+                                trovato = true;
+                            }
+                        }
+                        if(!trovato){
+                            students_isle[0] = chosenIsland;
+                            studentsToIsland.add(students_isle);
+                        }
+                    }
                     break;
             }
             System.out.println();
@@ -327,6 +350,7 @@ public class Cli implements EventReciver {
     }
 
     //TODO gestire expertmode
+    //TODO sistemare card last played sempre un + 1
     public void planningPhase() {
         int k = 0;
         clearScreen();
