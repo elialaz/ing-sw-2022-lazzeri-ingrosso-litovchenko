@@ -18,6 +18,7 @@ public class CLIutils {
     public static final String ANSI_PINK = "\u001B[35m"; //magenta
     public static final String ANSI_WHITE = "\u001B[37m";
     public static final String ANSI_GRAY = "\u001b[38;5;249m";
+    public static final String ANSI_BLACK = "\u001b[0;30m";
     public static final String ANSI_RESET = "\u001B[0m";
 
     //ANSI background color
@@ -60,7 +61,7 @@ public class CLIutils {
                 +"                                                            ░░░░░░           \n";
 
     public static final String AUTHORS =
-                 "\nDeveloped by: "
+                 "\nDeveloped by: \n"
                 +"                            ┌┬┐┌─┐┌─┐┌┬┐    ┌─┐ ┌─┐                          \n"
                 +"                             │ ├┤ ├─┤│││     /   ├┤                          \n"
                 +"                             ┴ └─┘┴ ┴┴ ┴    └── └─┘                          \n"

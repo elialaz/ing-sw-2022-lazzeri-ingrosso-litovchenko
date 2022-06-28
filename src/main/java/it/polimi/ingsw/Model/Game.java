@@ -511,6 +511,15 @@ public class Game {
     }
 
     /**
+     * Service Method to get value of the last used card by a player
+     * @param id id of the player
+     * @return int last card used value
+     **/
+    public int getLastCardValue(int id) {
+        return assistantCard.get(id).getLastCardValue();
+    }
+
+    /**
      * Service Method to check if the player as ended is tower
      * @param id id of the player
      **/
@@ -586,41 +595,38 @@ public class Game {
 
    @Override
     public String toString() {
-        int num = 0;
         String text = "updateGameBoard" + "/" + idGame + "/" + playerNum + "/";
-        for (Player p: gamer) {
-            text = text + "gamer" + num + ":" + p.getName() + "/";
-            num++;
+       int temp = 0;
+       for (Player p: gamer) {
+            text = text + "gamer"+temp+":" + p.getName() + "/";
+            temp++;
         }
-        num = 0;
+        temp = 0;
         for (Deck d: assistantCard) {
-            text = text + "assistantCard" + num + ":" + Arrays.deepToString(d.getAssistantCardDeck()) + "/";
-            num++;
+            text = text + "assistantCard"+temp+":" + Arrays.deepToString(d.getAssistantCardDeck()) + "/lastValue" + getLastCardValue(temp) + "/";
+            temp++;
         }
-        num = 0;
+        temp = 0;
         for (SchoolBoard b: schoolboards) {
-            text = text + "schoolBoard" + num + ":" + Arrays.toString(b.getEntranceStudents()) + "entranceEnd/" + b.getTower() + "tower/get0" + b.isProfessor(0) + "/" + b.getCorridor(0) + "end0/get1" + b.isProfessor(1) + "/" + b.getCorridor(1) + "end1/get2" + b.isProfessor(2) + "/" + b.getCorridor(2) + "end2/get3" + b.isProfessor(3) + "/" + b.getCorridor(3) + "end3/get4" + b.isProfessor(4) + "/" + b.getCorridor(4) + "end4/";
-            num++;
+            text = text + "schoolBoard"+temp+":" + Arrays.toString(b.getEntranceStudents()) + "entranceEnd/" + b.getTower() + "/" + b.getColor().toString() + "tower/get0" + b.isProfessor(0) + "/" + b.getCorridor(0) + "end0/get1" + b.isProfessor(1) + "/" + b.getCorridor(1) + "end1/get2" + b.isProfessor(2) + "/" + b.getCorridor(2) + "end2/get3" + b.isProfessor(3) + "/" + b.getCorridor(3) + "end3/get4" + b.isProfessor(4) + "/" + b.getCorridor(4) + "end4/";
+            temp++;
         }
-        num = 0;
+        temp = 0;
         for (Island i: islandTile) {
-            text = text + "island" + num + ":" + Arrays.toString(i.getStudents()) + "studentsOnIsland/";
-            text = text + "tower"+ num + ":" + i.colorTower() + "/" + i.getTowerNum() + "endTower/";
+            text = text + "island"+temp+":" + Arrays.toString(i.getStudents()) + "studentsOnIsland/";
+            text = text + "tower:" + i.colorTower() + "/" + i.getTowerNum() + "endTower/";
             if(expertMode){
                 text = text + i.isEntryTileMotherNature() + "/" + i.getNoEntryTile() + "/";
             }
-            num++;
+            temp++;
         }
-        num = 0;
         for (CloudTile c: cloudTiles) {
-            text = text + "cloudTile" + num + ":" +Arrays.toString(c.getStudents()) + "endCloud/";
-            num++;
+            text = text + "cloudTile:" +Arrays.toString(c.getStudents()) + "/";
         }
-        num = 0;
         //TODO manca expertcard
         if(expertMode){
             for (SpecialCard s: expertCard) {
-                text = text + "expertCard" + num + ":" + s.toString() + "/";
+                text = text + "expertCard:" + s.toString() + "/";
             }
         }
         text = text + "position:" + position.getPosition() + "/";
