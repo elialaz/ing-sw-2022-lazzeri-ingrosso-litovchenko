@@ -603,12 +603,12 @@ public class Game {
         }
         temp = 0;
         for (Deck d: assistantCard) {
-            text = text + "assistantCard"+temp+":" + Arrays.deepToString(d.getAssistantCardDeck()) + "/lastValue" + getLastCardValue(temp) + "/";
+            text = text + "assistantCard"+temp+":" + Arrays.deepToString(d.getAssistantCardDeck()) + "/lastValue"+ temp + getLastCardValue(temp) + "/";
             temp++;
         }
         temp = 0;
         for (SchoolBoard b: schoolboards) {
-            text = text + "schoolBoard"+temp+":" + Arrays.toString(b.getEntranceStudents()) + "entranceEnd/" + b.getTower() + "/" + b.getColor().toString() + "tower/get0" + b.isProfessor(0) + "/" + b.getCorridor(0) + "end0/get1" + b.isProfessor(1) + "/" + b.getCorridor(1) + "end1/get2" + b.isProfessor(2) + "/" + b.getCorridor(2) + "end2/get3" + b.isProfessor(3) + "/" + b.getCorridor(3) + "end3/get4" + b.isProfessor(4) + "/" + b.getCorridor(4) + "end4/";
+            text = text + "schoolBoard"+temp+":" + Arrays.toString(b.getEntranceStudents()) + "entranceEnd/" + b.getTower() + "/" + b.getColor().toString() + "tower/corridor" + b.getCorridor(0) + "/" + b.getCorridor(1) + "/" + b.getCorridor(2) + "/" + b.getCorridor(3) + "/" + b.getCorridor(4) + "/prof" + b.isProfessor(0) + "/" + b.isProfessor(1) + "/" + b.isProfessor(2) + "/" + b.isProfessor(3) + "/" + b.isProfessor(4) + "end/";
             temp++;
         }
         temp = 0;

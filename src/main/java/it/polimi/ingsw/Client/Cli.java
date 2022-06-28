@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 
 /**
@@ -32,13 +33,17 @@ public class Cli implements EventReciver {
     private String winner;
     private String toFind;
 
-    private final ArrayList<String> players = new ArrayList<>(playerNumber);
+    private final ArrayList<String> players = new ArrayList<>();
     private int playerID;
-    private final ArrayList<int[]> cloudTiles = new ArrayList<>(playerNumber);
-    private final ArrayList<int[][]> assistantCard = new ArrayList<>(playerNumber);
+    private final ArrayList<int[]> cloudTiles = new ArrayList<>();
+    private final ArrayList<int[][]> assistantCard = new ArrayList<>();
     private final int[] lastPlayedAssistantCard = new int[playerNumber];
-    private int[] StudentsOnIslands = new int[5];
-    private String[] tower;
+    private final ArrayList<int[]> entranceSchoolBoard = new ArrayList<>();
+    private final ArrayList<String[]> towerSchoolBoard = new ArrayList<>();
+    private final ArrayList<String[]> corridorSchoolBoard = new ArrayList<>();
+    private final ArrayList<String[]> profSchoolBoard = new ArrayList<>();
+    private final ArrayList<int[]> StudentsOnIslands = new ArrayList<>();
+    private ArrayList<String[]> tower_island = new ArrayList<>();
     private final int[] professor = new int[5];
     private int positionMN;
     private int coinPile;
@@ -83,7 +88,7 @@ public class Cli implements EventReciver {
             if (str.equals(""))
                 System.out.println(CLIutils.ANSI_BRIGHT_RED + "Empty string is not valid. Write something." + CLIutils.ANSI_RESET);
         } while (str.equals(""));
-        return str.toLowerCase();
+        return str;
     }
 
     /**
@@ -284,6 +289,7 @@ public class Cli implements EventReciver {
             chosenStudent = ReadIntInput(1, 5) - 1;
             System.out.print("\nto: ");
             action1 = ReadIntInput(1, 2);
+            int[] students = StudentsOnIslands.get(playerID);
             switch (action1) {
                 case 1:
                     studentsToSchoolboard[chosenStudent]++;
@@ -291,8 +297,8 @@ public class Cli implements EventReciver {
                 case 2:
                     System.out.print("\nTo which island (choose from 1 to 12): ");
                     chosenIsland = ReadIntInput(1, 12) - 1;
-                    StudentsOnIslands[chosenStudent]++;
-                    studentsToIsland.set(chosenIsland, StudentsOnIslands);
+                    students[chosenStudent]++;
+                    studentsToIsland.set(chosenIsland, students);
                     break;
             }
             System.out.println();
@@ -334,7 +340,6 @@ public class Cli implements EventReciver {
     }
 
     private void statusGameBoard() {
-        playerID = players.indexOf(nickname);
         clearScreen();
         System.out.print("Your School Board: ");
         showSchoolBoard(playerID);
@@ -384,13 +389,14 @@ public class Cli implements EventReciver {
             String gamerRemains = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length(), statusGameBoard.indexOf("/", statusGameBoard.indexOf(toFind)));
             players.add(gamerRemains);
         }
+        playerID = players.indexOf(nickname);
 
         int[][] AssistantCards = new int[2][10];
         for (int id=0; id<playerNumber; id++) {
             toFind = "assistantCard" + id + ":";
             String assCardsRemains = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length(), statusGameBoard.indexOf("]]/", statusGameBoard.indexOf(toFind)));
-            assCardsRemains = assCardsRemains.replace("[", "");
-            String[] cardArray = assCardsRemains.split("],");
+            assCardsRemains = assCardsRemains.replace("[[", "");
+            String[] cardArray = assCardsRemains.split(Pattern.quote("], ["));
             for (int i = 0; i < cardArray.length; i++) {
                 cardArray[i] = cardArray[i].trim();
                 String[] oneInt = cardArray[i].split(", ");
@@ -400,26 +406,47 @@ public class Cli implements EventReciver {
                 }
             assistantCard.add(AssistantCards);
 
-            toFind = "lastValue";
+            toFind = "lastValue"+id;
             String lastValue = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length(), statusGameBoard.indexOf("/", statusGameBoard.indexOf(toFind)));
-            lastPlayedAssistantCard[id] = Integer.parseInt(lastValue);
+            if (Integer.parseInt(lastValue) != -1) {
+                lastPlayedAssistantCard[id] = Integer.parseInt(lastValue);
+            }
         }
 
         //TODO gestire charachterCard in base all'ID ricevuto
 
+        for(int id=0; id<playerNumber; id++) {
+            toFind = "schoolBoard" + id + ":";
+            String schoolBoard_entrance = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length(), statusGameBoard.indexOf("]entranceEnd/", statusGameBoard.indexOf(toFind)));
+            schoolBoard_entrance = schoolBoard_entrance.replace("[", "");
+            entranceSchoolBoard.add(Arrays.stream(schoolBoard_entrance.split(", ")).mapToInt(Integer::parseInt).toArray());
 
-        for (int i = 0; i < 12; i++){
-            toFind = "island" + i + ":";
+            toFind = "entranceEnd/";
+            String schoolBoard_tower = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length(), statusGameBoard.indexOf("tower/", statusGameBoard.indexOf(toFind)));
+            towerSchoolBoard.add(schoolBoard_tower.split("/"));
+
+            toFind = "/corridor";
+            String schoolBoard_corridor = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length(), statusGameBoard.indexOf("/prof", statusGameBoard.indexOf(toFind)));
+            corridorSchoolBoard.add(schoolBoard_corridor.split("/"));
+
+            toFind = "/prof";
+            String schoolBoard_prof = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length(), statusGameBoard.indexOf("/end", statusGameBoard.indexOf(toFind)));
+            profSchoolBoard.add(schoolBoard_prof.split("/"));
+        }
+
+
+        for (int id = 0; id < 12; id++){
+            toFind = "island" + id + ":";
             String schoolBoard_island_students = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length(), statusGameBoard.indexOf("]studentsOnIsland/", statusGameBoard.indexOf(toFind)));
             schoolBoard_island_students = schoolBoard_island_students.replace("[", "");
-            StudentsOnIslands = Arrays.stream(schoolBoard_island_students.split(", ")).mapToInt(Integer::parseInt).toArray();
+            StudentsOnIslands.add(Arrays.stream(schoolBoard_island_students.split(", ")).mapToInt(Integer::parseInt).toArray());
             toFind = "tower:";
             String schoolBoard_island_tower = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length(), statusGameBoard.indexOf("endTower/", statusGameBoard.indexOf(toFind)));
-            tower = schoolBoard_island_tower.split("/");
+            tower_island.add(schoolBoard_island_tower.split("/"));
             //TODO gestire expertMode
         }
 
-        for (int i = 0; i < playerNumber; i++) {
+        for (int id = 0; id < playerNumber; id++) {
             toFind = "cloudTile:";
             String schoolBoard_island_students = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length(), statusGameBoard.indexOf("]endCloud/", statusGameBoard.indexOf(toFind)));
             schoolBoard_island_students = schoolBoard_island_students.replace("[", "");
@@ -521,15 +548,10 @@ public class Cli implements EventReciver {
      * @param playerID in representing the player you want to show the schoolBoard of
      */
     public void showSchoolBoard(int playerID) {
-        toFind = "schoolBoard" + playerID + ":";
-        String schoolBoard_entrance = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length(), statusGameBoard.indexOf("]entranceEnd/", statusGameBoard.indexOf(toFind)));
-        schoolBoard_entrance = schoolBoard_entrance.replace("[", "");
-        int[] entrance = Arrays.stream(schoolBoard_entrance.split(", ")).mapToInt(Integer::parseInt).toArray();
         System.out.print("School Board of player'" + players.get(playerID) + "', has these students (" + CLIutils.STUDENT + ") in its entrance: ");
-        displayStudents(entrance);
-        toFind = "entranceEnd/";
-        String schoolBoard_tower = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length(), statusGameBoard.indexOf("tower/", statusGameBoard.indexOf(toFind)));
-        String[] tempTower = schoolBoard_tower.split("/");
+        displayStudents(entranceSchoolBoard.get(playerID));
+
+        String[] tempTower = towerSchoolBoard.get(playerID);
         switch (tempTower[1]) {
             case "WHITE":
                 System.out.println("Towers:" + CLIutils.ANSI_WHITE + tempTower[0] + CLIutils.TOWER + CLIutils.ANSI_RESET + " and in its corridor... ");
@@ -541,25 +563,24 @@ public class Cli implements EventReciver {
                 System.out.println("Towers:" + CLIutils.ANSI_GRAY + tempTower[0] + CLIutils.TOWER + CLIutils.ANSI_RESET + " and in its corridor... ");
                 break;
         }
+        String[] corridor = corridorSchoolBoard.get(playerID);
+        String[] professor = profSchoolBoard.get(playerID);
         for (int i = 0; i < 5; i++) {
-            toFind = "/get" + i;
-            String schoolBoard_corridor = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length(), statusGameBoard.indexOf("end" + i, statusGameBoard.indexOf(toFind)));
-            String[] corridor = schoolBoard_corridor.split("/");
             switch (i) {
                 case 0:
-                    System.out.println("..." + i + ") Green corridor: " + CLIutils.ANSI_GREEN + corridor[1] + CLIutils.STUDENT + CLIutils.ANSI_RESET + " and with Professor = " + corridor[0]);
+                    System.out.println("..." + i + ") Green corridor: " + CLIutils.ANSI_GREEN + corridor[0] + CLIutils.STUDENT + CLIutils.ANSI_RESET + " and with Professor = " + professor[0]);
                     break;
                 case 1:
-                    System.out.println("..." + i + ") Red corridor: " + CLIutils.ANSI_RED + corridor[1] + CLIutils.STUDENT + CLIutils.ANSI_RESET + " and with Professor = " + corridor[0]);
+                    System.out.println("..." + i + ") Red corridor: " + CLIutils.ANSI_RED + corridor[1] + CLIutils.STUDENT + CLIutils.ANSI_RESET + " and with Professor = " + professor[1]);
                     break;
                 case 2:
-                    System.out.println("..." + i + ") Yellow corridor: " + CLIutils.ANSI_YELLOW + corridor[1] + CLIutils.STUDENT + CLIutils.ANSI_RESET + " and with Professor = " + corridor[0]);
+                    System.out.println("..." + i + ") Yellow corridor: " + CLIutils.ANSI_YELLOW + corridor[2] + CLIutils.STUDENT + CLIutils.ANSI_RESET + " and with Professor = " + professor[2]);
                     break;
                 case 3:
-                    System.out.println("..." + i + ") Pink corridor: " + CLIutils.ANSI_PINK + corridor[1] + CLIutils.STUDENT + CLIutils.ANSI_RESET + " and with Professor = " + corridor[0]);
+                    System.out.println("..." + i + ") Pink corridor: " + CLIutils.ANSI_PINK + corridor[3] + CLIutils.STUDENT + CLIutils.ANSI_RESET + " and with Professor = " + professor[3]);
                     break;
                 case 4:
-                    System.out.println("..." + i + ") Blue corridor: " + CLIutils.ANSI_BLUE + corridor[1] + CLIutils.STUDENT + CLIutils.ANSI_RESET + " and with Professor = " + corridor[0]);
+                    System.out.println("..." + i + ") Blue corridor: " + CLIutils.ANSI_BLUE + corridor[4] + CLIutils.STUDENT + CLIutils.ANSI_RESET + " and with Professor = " + professor[4]);
                     break;
             }
         }
@@ -571,19 +592,21 @@ public class Cli implements EventReciver {
      */
     public void showIslands() {
         for (int i = 0; i < 12; i++) {
+            int[] students = StudentsOnIslands.get(i);
+            String[] towers = tower_island.get(i);
             System.out.println("\nIsland "+ i +" has these pawns: ");
             System.out.print("... students: ");
-            displayStudents(StudentsOnIslands);
+            displayStudents(students);
             System.out.print("... towers: ");
-            switch (tower[0]) {
+            switch (towers[0]) {
                 case "WHITE":
-                    System.out.println(CLIutils.ANSI_WHITE + tower[1] + CLIutils.TOWER + CLIutils.ANSI_RESET);
+                    System.out.println(CLIutils.ANSI_WHITE + towers[1] + CLIutils.TOWER + CLIutils.ANSI_RESET);
                     break;
                 case "GRAY":
-                    System.out.println(CLIutils.ANSI_GRAY + tower[1] + CLIutils.TOWER + CLIutils.ANSI_RESET);
+                    System.out.println(CLIutils.ANSI_GRAY + towers[1] + CLIutils.TOWER + CLIutils.ANSI_RESET);
                     break;
                 case "BLACK":
-                    System.out.println(CLIutils.ANSI_BRIGHT_BLACK + tower[1] + CLIutils.TOWER + CLIutils.ANSI_RESET);
+                    System.out.println(CLIutils.ANSI_BRIGHT_BLACK + towers[1] + CLIutils.TOWER + CLIutils.ANSI_RESET);
                     break;
             }
             if (i == positionMN){
