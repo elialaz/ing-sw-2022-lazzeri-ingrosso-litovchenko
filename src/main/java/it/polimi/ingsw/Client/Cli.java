@@ -37,7 +37,7 @@ public class Cli implements EventReciver {
     private int playerID;
     private final ArrayList<int[]> cloudTiles = new ArrayList<>();
     private final ArrayList<int[][]> assistantCard = new ArrayList<>();
-    private final int[] lastPlayedAssistantCard = new int[playerNumber];
+    private final int[] lastPlayedAssistantCard = new int[3];
     private final ArrayList<int[]> entranceSchoolBoard = new ArrayList<>();
     private final ArrayList<String[]> towerSchoolBoard = new ArrayList<>();
     private final ArrayList<String[]> corridorSchoolBoard = new ArrayList<>();
@@ -105,6 +105,10 @@ public class Cli implements EventReciver {
                 num = scan.nextInt();
                 if (num < min || num > max)
                     System.out.println(CLIutils.ANSI_BRIGHT_RED + "The input must be between " + min + " and " + max + CLIutils.ANSI_RESET);
+                else if (min == max){
+                    System.out.println(CLIutils.ANSI_BRIGHT_RED + "The input must be " + min + CLIutils.ANSI_RESET);
+                }
+
             } else
                 System.out.println("Invalid input, reinsert another chosen number.");
             scan.nextLine();
@@ -233,6 +237,9 @@ public class Cli implements EventReciver {
     private void actionPhase3() {
         int[] cloud;
         clearScreen();
+        System.out.println("--------------------------------------------");
+        System.out.println("-------------- ACTION PHASE 3 --------------");
+        System.out.println("--------------------------------------------\n");
         System.out.println("Choose a cloud between those below:");
         /*
         for (int i = 0; i < playerNumber; i++) {
@@ -254,12 +261,15 @@ public class Cli implements EventReciver {
     private void actionPhase2() {
         int[][] AssistantCard = new int[][]{{1,2,3,4,5,6,7,8,9,10},{1,1,2,2,3,3,4,4,5,5}};
         clearScreen();
+        System.out.println("--------------------------------------------");
+        System.out.println("-------------- ACTION PHASE 2 --------------");
+        System.out.println("--------------------------------------------\n");
         toFind = "position:";
         String MotherNaturePosition = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length(), statusGameBoard.indexOf("/", statusGameBoard.indexOf(toFind)));
         showIslands();
-        System.out.println("Mother Nature ("+ CLIutils.MOTHER_NATURE +") is currently on island "+ MotherNaturePosition+"");
-        System.out.println("Because of the Assistant Card you previously player, you can move "+ CLIutils.MOTHER_NATURE +" to a max of "+ AssistantCard[1][cardPlayed] +"islands.");
-        System.out.print("How many islands you want to move "+ CLIutils.MOTHER_NATURE +" for: ");
+        System.out.println("\nMother Nature ("+ CLIutils.MOTHER_NATURE +") is currently on island "+ MotherNaturePosition+"");
+        System.out.println("Because of the Assistant Card you previously played, you can move the "+ CLIutils.ANSI_BRIGHT_YELLOW + CLIutils.MOTHER_NATURE + CLIutils.ANSI_RESET +" up to a max of "+ AssistantCard[1][cardPlayed] +" islands.");
+        System.out.print("How many islands you want to move "+ CLIutils.ANSI_BRIGHT_YELLOW + CLIutils.MOTHER_NATURE + CLIutils.ANSI_RESET +" to: ");
         moveMotherNature = ReadIntInput(1,AssistantCard[1][cardPlayed]);
         manager.notify("actionPhase2Send");
     }
@@ -267,7 +277,9 @@ public class Cli implements EventReciver {
     //TODO
     private void actionPhase1() {
         clearScreen();
-        System.out.println("ACTION PHASE:");
+        System.out.println("--------------------------------------------");
+        System.out.println("-------------- ACTION PHASE 1 --------------");
+        System.out.println("--------------------------------------------\n");
 
         int studentsToMove, chosenStudent, chosenIsland, action1;
         if (playerNumber == 3) {
@@ -282,12 +294,12 @@ public class Cli implements EventReciver {
         showSchoolBoard(playerID);
         showIslands();
         //choose if you want to move students into 1 or 2
-        System.out.println("Decide which student to move: 1) " + CLIutils.ANSI_GREEN + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 2) " + CLIutils.ANSI_RED + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 3) " + CLIutils.ANSI_YELLOW + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 4) " + CLIutils.ANSI_PINK + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 5) " + CLIutils.ANSI_BLUE + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
-        System.out.println("Decide where to move students: 1) Dining Room || 2) Island");
+        System.out.println("\nDecide which student to move: 1) " + CLIutils.ANSI_GREEN + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 2) " + CLIutils.ANSI_RED + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 3) " + CLIutils.ANSI_YELLOW + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 4) " + CLIutils.ANSI_PINK + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 5) " + CLIutils.ANSI_BLUE + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
+        System.out.println("Decide where to move students: 1) Dining Room || 2) Island\n");
         for (int j = 0; j < studentsToMove; j++) {
             System.out.print("Move student: ");
             chosenStudent = ReadIntInput(1, 5) - 1;
-            System.out.print("\nto: ");
+            System.out.print("to: ");
             action1 = ReadIntInput(1, 2);
             int[] students = StudentsOnIslands.get(playerID);
             switch (action1) {
@@ -310,22 +322,24 @@ public class Cli implements EventReciver {
     public void planningPhase() {
         int k = 0;
         clearScreen();
-        System.out.println("PLANNING PHASE:");
-        System.out.println("1. The " + playerNumber + " clouds, have been filled.");
+        System.out.println("--------------------------------------------");
+        System.out.println("-------------- PLANNING PHASE --------------");
+        System.out.println("--------------------------------------------\n");
+        System.out.println("1. The " + playerNumber + " clouds, have been filled.\n");
 
         System.out.println("2. Play 1 assistant card of your choice, you currently have: ");
         int[][] AssistantCards = assistantCard.get(playerID);
         int[] usable = new int[10];
         while (k < 10) {
             if (AssistantCards[0][k] != -1 || AssistantCards[1][k] != -1) {
-                System.out.println(k + 1 + ") Value: " + AssistantCards[0][k] + " - Mother Nature: " + AssistantCards[1][k]);
+                System.out.println(k + 1 + ") V:" + AssistantCards[0][k] + " - "+ CLIutils.ANSI_BRIGHT_YELLOW + CLIutils.MOTHER_NATURE + CLIutils.ANSI_RESET + ":" + AssistantCards[1][k]);
                 usable[k] = 1;
             } else {
                 usable[k] = 0;
             }
             k++;
         }
-        System.out.println("Which one will you play (choose between the ones above): ");
+        System.out.println("\nWhich one will you play (choose between the ones above): ");
         cardPlayed = ReadIntInput(1, 10) - 1;
         while (usable[cardPlayed] == 0 || IntStream.of(lastPlayedAssistantCard).anyMatch(x -> x == cardPlayed)) {
             if (usable[cardPlayed] == 0) {
@@ -341,16 +355,16 @@ public class Cli implements EventReciver {
 
     private void statusGameBoard() {
         clearScreen();
-        System.out.print("Your School Board: ");
+        System.out.println("Your School Board: ");
         showSchoolBoard(playerID);
         System.out.println();
-        System.out.print("Other School Board: ");
+        System.out.println("Other School Board: ");
         for(int i=0; i<playerNumber; i++){
             if(playerID!=i)
                 showSchoolBoard(i);
         }
         System.out.println();
-        System.out.print("\nCurrent islands are: ");
+        System.out.print("Current islands are: ");
         showIslands();
         System.out.println("\nProfessors remaining: ");
         for (int i=0; i<5; i++){
@@ -384,6 +398,10 @@ public class Cli implements EventReciver {
     public void setData(String input) {
         statusGameBoard = input;
 
+        toFind = "playerNum";
+        String playerNum = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length(), statusGameBoard.indexOf("/", statusGameBoard.indexOf(toFind)));
+        playerNumber = Integer.parseInt(playerNum);
+
         for (int id=0; id<playerNumber; id++) {
             toFind = "gamer"+id+":";
             String gamerRemains = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length(), statusGameBoard.indexOf("/", statusGameBoard.indexOf(toFind)));
@@ -402,14 +420,16 @@ public class Cli implements EventReciver {
                 String[] oneInt = cardArray[i].split(", ");
                 for(int j=0; j<oneInt.length; j++){
                     AssistantCards[i][j] = Integer.parseInt(oneInt[j]);
-                    }
                 }
+            }
             assistantCard.add(AssistantCards);
 
             toFind = "lastValue"+id;
             String lastValue = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length(), statusGameBoard.indexOf("/", statusGameBoard.indexOf(toFind)));
-            if (Integer.parseInt(lastValue) != -1) {
+            if (!lastValue.equals("-1")) {
                 lastPlayedAssistantCard[id] = Integer.parseInt(lastValue);
+            } else {
+                lastPlayedAssistantCard[id] = 0;
             }
         }
 
@@ -430,7 +450,7 @@ public class Cli implements EventReciver {
             corridorSchoolBoard.add(schoolBoard_corridor.split("/"));
 
             toFind = "/prof";
-            String schoolBoard_prof = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length(), statusGameBoard.indexOf("/end", statusGameBoard.indexOf(toFind)));
+            String schoolBoard_prof = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length(), statusGameBoard.indexOf("end/", statusGameBoard.indexOf(toFind)));
             profSchoolBoard.add(schoolBoard_prof.split("/"));
         }
 
@@ -447,7 +467,7 @@ public class Cli implements EventReciver {
         }
 
         for (int id = 0; id < playerNumber; id++) {
-            toFind = "cloudTile:";
+            toFind = "cloudTile"+id+":";
             String schoolBoard_island_students = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length(), statusGameBoard.indexOf("]endCloud/", statusGameBoard.indexOf(toFind)));
             schoolBoard_island_students = schoolBoard_island_students.replace("[", "");
             int[] cloud = Arrays.stream(schoolBoard_island_students.split(", ")).mapToInt(Integer::parseInt).toArray();
@@ -554,13 +574,13 @@ public class Cli implements EventReciver {
         String[] tempTower = towerSchoolBoard.get(playerID);
         switch (tempTower[1]) {
             case "WHITE":
-                System.out.println("Towers:" + CLIutils.ANSI_WHITE + tempTower[0] + CLIutils.TOWER + CLIutils.ANSI_RESET + " and in its corridor... ");
+                System.out.println("Towers:" + CLIutils.ANSI_WHITE + tempTower[0] + CLIutils.TOWER + CLIutils.ANSI_RESET );
                 break;
             case "BLACK":
-                System.out.println("Towers:" + CLIutils.ANSI_BLACK + tempTower[0] + CLIutils.TOWER + CLIutils.ANSI_RESET + " and in its corridor... ");
+                System.out.println("Towers:" + CLIutils.ANSI_BLACK + tempTower[0] + CLIutils.TOWER + CLIutils.ANSI_RESET );
                 break;
             case "GRAY":
-                System.out.println("Towers:" + CLIutils.ANSI_GRAY + tempTower[0] + CLIutils.TOWER + CLIutils.ANSI_RESET + " and in its corridor... ");
+                System.out.println("Towers:" + CLIutils.ANSI_GRAY + tempTower[0] + CLIutils.TOWER + CLIutils.ANSI_RESET );
                 break;
         }
         String[] corridor = corridorSchoolBoard.get(playerID);
@@ -568,19 +588,19 @@ public class Cli implements EventReciver {
         for (int i = 0; i < 5; i++) {
             switch (i) {
                 case 0:
-                    System.out.println("..." + i + ") Green corridor: " + CLIutils.ANSI_GREEN + corridor[0] + CLIutils.STUDENT + CLIutils.ANSI_RESET + " and with Professor = " + professor[0]);
+                    System.out.println("... Corridor" + i + ") Green corridor: " + CLIutils.ANSI_GREEN + corridor[0] + CLIutils.STUDENT + CLIutils.ANSI_RESET + " and with Professor = " + professor[0]);
                     break;
                 case 1:
-                    System.out.println("..." + i + ") Red corridor: " + CLIutils.ANSI_RED + corridor[1] + CLIutils.STUDENT + CLIutils.ANSI_RESET + " and with Professor = " + professor[1]);
+                    System.out.println("... Corridor" + i + ") Red corridor: " + CLIutils.ANSI_RED + corridor[1] + CLIutils.STUDENT + CLIutils.ANSI_RESET + " and with Professor = " + professor[1]);
                     break;
                 case 2:
-                    System.out.println("..." + i + ") Yellow corridor: " + CLIutils.ANSI_YELLOW + corridor[2] + CLIutils.STUDENT + CLIutils.ANSI_RESET + " and with Professor = " + professor[2]);
+                    System.out.println("... Corridor" + i + ") Yellow corridor: " + CLIutils.ANSI_YELLOW + corridor[2] + CLIutils.STUDENT + CLIutils.ANSI_RESET + " and with Professor = " + professor[2]);
                     break;
                 case 3:
-                    System.out.println("..." + i + ") Pink corridor: " + CLIutils.ANSI_PINK + corridor[3] + CLIutils.STUDENT + CLIutils.ANSI_RESET + " and with Professor = " + professor[3]);
+                    System.out.println("... Corridor" + i + ") Pink corridor: " + CLIutils.ANSI_PINK + corridor[3] + CLIutils.STUDENT + CLIutils.ANSI_RESET + " and with Professor = " + professor[3]);
                     break;
                 case 4:
-                    System.out.println("..." + i + ") Blue corridor: " + CLIutils.ANSI_BLUE + corridor[4] + CLIutils.STUDENT + CLIutils.ANSI_RESET + " and with Professor = " + professor[4]);
+                    System.out.println("... Corridor" + i + ") Blue corridor: " + CLIutils.ANSI_BLUE + corridor[4] + CLIutils.STUDENT + CLIutils.ANSI_RESET + " and with Professor = " + professor[4]);
                     break;
             }
         }
@@ -594,10 +614,10 @@ public class Cli implements EventReciver {
         for (int i = 0; i < 12; i++) {
             int[] students = StudentsOnIslands.get(i);
             String[] towers = tower_island.get(i);
-            System.out.println("\nIsland "+ i +" has these pawns: ");
-            System.out.print("... students: ");
+            System.out.print("\nIsland "+ i +" has ");
+            System.out.print("students: ");
             displayStudents(students);
-            System.out.print("... towers: ");
+            System.out.print("towers: ");
             switch (towers[0]) {
                 case "WHITE":
                     System.out.println(CLIutils.ANSI_WHITE + towers[1] + CLIutils.TOWER + CLIutils.ANSI_RESET);
@@ -610,7 +630,7 @@ public class Cli implements EventReciver {
                     break;
             }
             if (i == positionMN){
-                System.out.println(" also "+ CLIutils.ANSI_BRIGHT_YELLOW + CLIutils.MOTHER_NATURE + CLIutils.ANSI_RESET);
+                System.out.print(" also "+ CLIutils.ANSI_BRIGHT_YELLOW + CLIutils.MOTHER_NATURE + CLIutils.ANSI_RESET);
             }
         }
         System.out.println();

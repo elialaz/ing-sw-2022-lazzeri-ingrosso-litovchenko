@@ -595,7 +595,7 @@ public class Game {
 
    @Override
     public String toString() {
-        String text = "updateGameBoard" + "/" + idGame + "/" + playerNum + "/";
+        String text = "updateGameBoard" + "/" + idGame + "/playerNum" + playerNum + "/";
        int temp = 0;
        for (Player p: gamer) {
             text = text + "gamer"+temp+":" + p.getName() + "/";
@@ -620,9 +620,12 @@ public class Game {
             }
             temp++;
         }
+        temp = 0;
         for (CloudTile c: cloudTiles) {
-            text = text + "cloudTile:" +Arrays.toString(c.getStudents()) + "/";
+            text = text + "cloudTile"+temp+":" +Arrays.toString(c.getStudents()) + "endCloud/";
+            temp++;
         }
+
         //TODO manca expertcard
         if(expertMode){
             for (SpecialCard s: expertCard) {
