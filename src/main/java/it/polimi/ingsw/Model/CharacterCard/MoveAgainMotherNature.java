@@ -3,7 +3,7 @@ package it.polimi.ingsw.Model.CharacterCard;
 import it.polimi.ingsw.Model.*;
 
 /**
- * Character Card Class
+ * You may move Mother Nature up to 2 additional Islands than is indicated by the Assistant card you've played
  * @author elia_laz
  **/
 public class MoveAgainMotherNature extends SpecialCard {

@@ -5,7 +5,7 @@ import it.polimi.ingsw.Model.*;
 //TODO rethink if the implementation is correct
 
 /**
- * Character Card Class
+ * During this turn, you take control of any number of Professors even if you have the same number of Students as the player who currently controls them
  * @author elia_laz
  **/
 public class ProfessorControl extends SpecialCard {

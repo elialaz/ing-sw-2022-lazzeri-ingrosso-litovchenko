@@ -625,10 +625,10 @@ public class Game {
             temp++;
         }
 
-        //TODO manca expertcard
         if(expertMode){
             for (SpecialCard s: expertCard) {
-                text = text + "expertCard:" + s.toString() + "/";
+                text = text + "expertCard:" + /*s.toString() + "/"+*/ s.getId() + "/";
+                text = text + "expertPrice" + /*s.toString() + "/"+*/ s.getPrice() + "/";
             }
         }
         text = text + "position:" + position.getPosition() + "/";

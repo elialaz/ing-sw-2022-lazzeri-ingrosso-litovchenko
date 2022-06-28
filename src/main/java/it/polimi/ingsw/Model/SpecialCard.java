@@ -11,6 +11,7 @@ import java.util.Random;
  **/
 public abstract class SpecialCard {
     private int price;
+    private int id;
     private boolean neverUse;
 
     /**
@@ -27,6 +28,7 @@ public abstract class SpecialCard {
     public void setup(int num){
         price = num;
         neverUse = true;
+        id=0;
     }
 
     /**
@@ -41,6 +43,13 @@ public abstract class SpecialCard {
      **/
     public void setPrice(){
         price++;
+    }
+
+    /**
+     * Service method for new price set
+     **/
+    public int getId(){
+        return id;
     }
 
     /**

@@ -3,7 +3,7 @@ package it.polimi.ingsw.Model.CharacterCard;
 import it.polimi.ingsw.Model.*;
 
 /**
- * Character Card Class
+ * During the influence calculation this turn, you count as having 2 more influence
  * @author elia_laz
  **/
 public class PlusTwoEffect extends SpecialCard {

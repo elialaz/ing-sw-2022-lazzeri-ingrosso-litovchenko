@@ -3,7 +3,7 @@ package it.polimi.ingsw.Model.CharacterCard;
 import it.polimi.ingsw.Model.*;
 
 /**
- * Character Card Class
+ * Take 1 Student from this card and place it in your Dining Room. Then, draw a new Student from the Bag and place it on this card
  * @author elia_laz
  **/
 public class StudentToDiningRoom extends SpecialCard {

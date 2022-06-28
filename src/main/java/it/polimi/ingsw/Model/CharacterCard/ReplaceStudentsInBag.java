@@ -4,7 +4,7 @@ import it.polimi.ingsw.Model.*;
 import java.util.ArrayList;
 
 /**
- * Character Card Class
+ * Choose a type of Student: every player (including yourself) must return 3 Students of that type from their Dining Room to the bag. If any player has fewer than 3 Students of that type, return as many students as they have
  * @author elia_laz
  **/
 public class ReplaceStudentsInBag extends SpecialCard {

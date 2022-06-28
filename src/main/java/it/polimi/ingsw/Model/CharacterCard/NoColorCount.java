@@ -3,7 +3,7 @@ package it.polimi.ingsw.Model.CharacterCard;
 import it.polimi.ingsw.Model.*;
 
 /**
- * Character Card Class
+ * Choose a color of Student: during the influence calculation this turn, that color adds no influence
  * @author elia_laz
  **/
 public class NoColorCount extends SpecialCard {

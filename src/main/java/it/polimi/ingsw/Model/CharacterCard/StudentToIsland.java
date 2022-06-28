@@ -3,7 +3,8 @@ package it.polimi.ingsw.Model.CharacterCard;
 import it.polimi.ingsw.Model.*;
 
 /**
- * Character Card Class
+ * Take 1 Student from this card and place it on an Island of your choice. Then, draw a new Student from the Bag and place it on this card
+ * @author elia_laz
  **/
 public class StudentToIsland extends SpecialCard {
     private final int[] students;

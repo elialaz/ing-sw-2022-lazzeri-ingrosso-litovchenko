@@ -3,7 +3,7 @@ package it.polimi.ingsw.Model.CharacterCard;
 import it.polimi.ingsw.Model.*;
 
 /**
- * Character Card Class
+ * When resolving a Conquering on an Island, towers do not count towards influence
  * @author elia_laz
  **/
 public class NoCountTower extends SpecialCard {

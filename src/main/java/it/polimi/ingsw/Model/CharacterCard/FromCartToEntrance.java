@@ -3,7 +3,7 @@ package it.polimi.ingsw.Model.CharacterCard;
 import it.polimi.ingsw.Model.*;
 
 /**
- * Character Card Class
+ * You may take up to 3 students for this card and replace them with the same number of Students form your Entrance
  * @author elia_laz
  **/
 public class FromCartToEntrance extends SpecialCard {

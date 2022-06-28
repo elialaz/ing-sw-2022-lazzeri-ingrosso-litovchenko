@@ -4,7 +4,7 @@ import it.polimi.ingsw.Model.SchoolBoard;
 import it.polimi.ingsw.Model.SpecialCard;
 
 /**
- * Character Card Class
+ * You may exchange up to 2 Students between your Entrance and your Dining Room
  * @author elia_laz
  **/
 public class FromEntranceToDiningRoom extends SpecialCard {
