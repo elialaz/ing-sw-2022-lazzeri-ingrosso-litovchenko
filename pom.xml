@@ -7,7 +7,7 @@
     <artifactId>PSP23</artifactId>
 
     <version>1.0-SNAPSHOT</version>
-    <name>Eryantis</name>
+    <name>Eriantys</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -20,6 +20,29 @@
             <artifactId>junit-jupiter</artifactId>
             <version>5.8.2</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>18.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>18.0.1</version>
+            <classifier>win</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>18.0.1</version>
+            <classifier>linux</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>18.0.1</version>
+            <classifier>mac</classifier>
         </dependency>
     </dependencies>
 
