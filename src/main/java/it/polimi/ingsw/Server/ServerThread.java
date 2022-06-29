@@ -62,12 +62,23 @@ class ServerThread extends Thread{
                     input = message.split("/");
                     if (input[0] != null) {
                         if (input[0].equals("login")) {
-                            server.addClient(input[1], this);
-                            nickname = input[1];
-                            sendMessage("loginSuccess");
+                            if(server.verifyClient(input[1])){
+                                server.addClient(input[1], this);
+                                nickname = input[1];
+                                sendMessage("loginSuccess");
+                            }
+                            else{
+                                sendMessage("nickname");
+                            }
                         }
                         else if(input[0].equals("newGame")){
-                            master = server.startGame(eventManager, nickname, this, Integer.parseInt(input[1]), Integer.parseInt(input[2]), Boolean.parseBoolean(input[3]), Boolean.parseBoolean(input[4]));
+                            if(server.verifyGameId(Integer.parseInt(input[2]))){
+                                master = server.startGame(eventManager, nickname, this, Integer.parseInt(input[1]), Integer.parseInt(input[2]), Boolean.parseBoolean(input[3]), Boolean.parseBoolean(input[4]));
+                                sendMessage("createSuccess");
+                            }
+                            else{
+                                sendMessage("idWrong");
+                            }
                         }
                         else if(input[0].equals("loadGame")){
                             boolean response = server.loadGame(nickname, Integer.parseInt(input[1]), this);
@@ -105,6 +116,8 @@ class ServerThread extends Thread{
                 System.out.println("Error during closing of the socket");
             }
             connected = false;
+
+            master.clientRemove(nickname);
             Thread.currentThread().interrupt();
 
             server.onDisconnect(this);

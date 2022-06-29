@@ -84,8 +84,12 @@ public class Client implements EventReciver {
                             }
                             break;
                         case "updateGameBoard":
-                            userInterface.setData(input);
+                            VirtualModel nuovo = new VirtualModel(input);
+                            userInterface.setModel(nuovo);
                             manager.notify("updateData");
+                            break;
+                        case "clientDisconnection":
+                            manager.notify("disconnection");
                             break;
                     }
                 }
@@ -108,26 +112,43 @@ public class Client implements EventReciver {
                 catch(IOException e){
                     System.out.println("Error: "+ e);
                 }
-                do{
-                    synchronized (outputLock){
-                        out.println("login/" + userInterface.getNickname());
+                synchronized (outputLock){
+                    out.println("login/" + userInterface.getNickname());
+                }
+                try{
+                    synchronized (inputLock){
+                        input = in.readLine();
                     }
-                    try{
-                        synchronized (inputLock){
-                            input = in.readLine();
-                        }
-                    }
-                    catch(IOException e){
-                        System.out.println("Errore nella chiusura della socket: "+ e);
-                    }
-                }while(!input.equals("loginSuccess"));
-                manager.notify("loginReceived");
+                }
+                catch(IOException e){
+                    System.out.println("Errore nella chiusura della socket: "+ e);
+                }
+                if(!input.equals("loginSuccess")){
+                    manager.notify("retryNickname");
+                }
+                else{
+                    manager.notify("loginReceived");
+                }
                 break;
             case "newGameSend":
                 synchronized (outputLock){
                     out.println("newGame" + "/" + userInterface.getPlayerNumber() + "/" + userInterface.getGameID() + "/" + userInterface.isExpert() + "/" + userInterface.isChat());
                 }
-                new Thread(this::connectionHandler).start();
+                try{
+                    synchronized (inputLock){
+                        input = in.readLine();
+                    }
+                }
+                catch(IOException e){
+                    System.out.println("Errore nella chiusura della socket: "+ e);
+                }
+                if(!input.equals("createSuccess")){
+                    manager.notify("loginReceived");
+                }
+                else{
+                    manager.notify("waitAddPlayer");
+                    new Thread(this::connectionHandler).start();
+                }
                 break;
             case "loadGameSend":
                 synchronized (outputLock){

@@ -1,12 +1,6 @@
 package it.polimi.ingsw.Server;
 
-import it.polimi.ingsw.Client.ClientEventManager;
-import it.polimi.ingsw.Controller.ControlEventManager;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
@@ -20,6 +14,7 @@ public class Server {
     private int port;
     private ArrayList<ConnectionHandler> game;
     private final Map<String, ServerThread> clientStatus;
+    private ArrayList<String> clientNickname;
     private final Object lock;
 
     /**
@@ -129,6 +124,33 @@ public class Server {
 
     public void addClient(String nickname, ServerThread client) {
         clientStatus.put(nickname, client);
+        clientNickname.add(nickname);
+    }
+
+    public boolean verifyClient(String s){
+        for (String nick: clientNickname) {
+            if(nick.equals(s)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean verifyGameId(int id){
+        for (ConnectionHandler c: game) {
+            if(c.getIdGame()==id){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void deleteGame(ConnectionHandler connectionHandler) {
+        for (ConnectionHandler c: game) {
+            if(c.equals(connectionHandler)){
+                game.remove(c);
+            }
+        }
     }
 
     /**
