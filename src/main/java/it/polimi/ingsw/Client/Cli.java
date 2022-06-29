@@ -507,6 +507,15 @@ public class Cli implements EventReciver {
      */
     public void setData(String input) {
         statusGameBoard = input;
+        cloudTiles.clear();
+        assistantCard.clear();
+        entranceSchoolBoard.clear();
+        towerSchoolBoard.clear();
+        cloudTiles.clear();
+        corridorSchoolBoard.clear();
+        profSchoolBoard.clear();
+        StudentsOnIslands.clear();
+        tower_island.clear();
 
         toFind = "playerNum";
         String playerNum = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length(), statusGameBoard.indexOf("/", statusGameBoard.indexOf(toFind)));
