@@ -612,11 +612,12 @@ public class Game {
        int temp = 0;
        for (Player p: gamer) {
             text = text + "gamer"+temp+":" + p.getName() + "/";
+            text = text + "coin" + p.getCoin() + "/";
             temp++;
         }
         temp = 0;
         for (Deck d: assistantCard) {
-            text = text + "assistantCard"+temp+":" + Arrays.deepToString(d.getAssistantCardDeck()) + "/lastValue"+ temp + getLastCardValue(temp) + "/";
+            text = text + "assistantCard"+temp+":" + Arrays.deepToString(d.getAssistantCardDeck()) + "/lastValue" + d.getLastCardValue() + "/";
             temp++;
         }
         temp = 0;
