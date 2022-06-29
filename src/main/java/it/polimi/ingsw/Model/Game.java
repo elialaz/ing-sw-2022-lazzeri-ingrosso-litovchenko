@@ -483,7 +483,6 @@ public class Game {
      * Service Method to get the player order
      * @return int array with the player order of the next turn based on player id
      **/
-    //TODO da rivedere perche restituisce solo un numero
     public ArrayList<Integer> getPlanningPhaseOrder(){
         ArrayList<Integer> order = new ArrayList<Integer>();
         ArrayList<Integer> value = new ArrayList<Integer>();
