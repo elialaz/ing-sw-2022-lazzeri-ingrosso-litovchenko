@@ -440,7 +440,7 @@ public class Cli implements EventReciver {
                         break;
                     case 2:
                         //cost 1
-                        System.out.println("> You may take up to 3 students for this card and replace them with the same number of Students form your Entrance: ");
+                        System.out.println("> You may take up to 3 students for this card and replace them with the same number of Students from your Entrance: ");
                         System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
                         break;
                     case 3:
