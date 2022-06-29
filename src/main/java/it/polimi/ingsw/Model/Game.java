@@ -71,7 +71,9 @@ public class Game {
                 this.setupFour();
                 break;
         }
-        updateCloudTile();
+        for (CloudTile c: cloudTiles) {
+            c.setStudents(bag);
+        }
         schoolboards.get(0).setPlayer(gamer.get(0));
     }
 
@@ -308,15 +310,20 @@ public class Game {
         int influence = 0;
         boolean notEven = true;
         int id = -1;
-        if(!island.isNoCountTower()){
-            influence = island.getTowerNum();
-            island.setNoCountTower(false);
-        }
+        int[] studentsOnIsland = island.getStudents();
         for (int i=0; i<playerNum && notEven; i++) {
             int temporaryInfluence = 0;
             for(int j=0; j<5; j++){
+                if(!island.isNoCountTower()){
+                    if(island.colorTower().equals(schoolboards.get(i).getColor())){
+                        temporaryInfluence += island.getTowerNum();
+                        island.setNoCountTower(false);
+                    }
+                }
                 if(schoolboards.get(i).isProfessor(j) && island.getColorNotCount()!=j){
-                    temporaryInfluence += schoolboards.get(i).getCorridor(j);
+                    if(studentsOnIsland[j]!=0){
+                        temporaryInfluence += studentsOnIsland[j];
+                    }
                 }
                 if(island.getColorNotCount()!=j){
                     island.setColorNotCount(-1);
@@ -476,17 +483,25 @@ public class Game {
      * Service Method to get the player order
      * @return int array with the player order of the next turn based on player id
      **/
+    //TODO da rivedere perche restituisce solo un numero
     public ArrayList<Integer> getPlanningPhaseOrder(){
         ArrayList<Integer> order = new ArrayList<Integer>();
         ArrayList<Integer> value = new ArrayList<Integer>();
+        boolean inserted=false;
         order.add(0);
         value.add(assistantCard.get(0).getLastCardValue());
         for(int i=1; i<gamer.size(); i++){
-            for(int j=0; j<i; j++){                 //tolto = da <= per coverage controller
+            inserted=false;
+            for(int j=0; j<order.size(); j++){
                 if(assistantCard.get(i).getLastCardValue() < value.get(j)){
                     value.add(j, assistantCard.get(i).getLastCardValue());
                     order.add(j, i);
+                    inserted=true;
                 }
+            }
+            if(!inserted){
+                value.add(assistantCard.get(i).getLastCardValue());
+                order.add(i);
             }
         }
         return order;
@@ -621,7 +636,7 @@ public class Game {
         }
         temp = 0;
         for (CloudTile c: cloudTiles) {
-            text = text + "cloudTile"+temp+":" +Arrays.toString(c.getStudents()) + "endCloud/";
+            text = text + "cloudTile"+temp+":" +Arrays.toString(c.getStudents2()) + "endCloud/";
             temp++;
         }
 

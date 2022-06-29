@@ -35,19 +35,19 @@ public class Cli implements EventReciver {
 
     private final ArrayList<String> players = new ArrayList<>();
     private int playerID;
-    private final int[] characterCards = new int[3];
-    private final int[] characterCards_prices = new int[3];
-    private final int[] coinsPlayers = new int[playerNumber];
-    private final ArrayList<int[]> cloudTiles = new ArrayList<>();
-    private final ArrayList<int[][]> assistantCard = new ArrayList<>();
-    private final int[] lastPlayedAssistantCard = new int[4];
-    private final ArrayList<int[]> entranceSchoolBoard = new ArrayList<>();
-    private final ArrayList<String[]> towerSchoolBoard = new ArrayList<>();
-    private final ArrayList<String[]> corridorSchoolBoard = new ArrayList<>();
-    private final ArrayList<String[]> profSchoolBoard = new ArrayList<>();
-    private final ArrayList<int[]> StudentsOnIslands = new ArrayList<>();
+    private int[] characterCards = new int[3];
+    private int[] characterCards_prices = new int[3];
+    private int[] coinsPlayers = new int[playerNumber];
+    private ArrayList<int[]> cloudTiles = new ArrayList<>();
+    private ArrayList<int[][]> assistantCard = new ArrayList<>();
+    private int[] lastPlayedAssistantCard = new int[4];
+    private ArrayList<int[]> entranceSchoolBoard = new ArrayList<>();
+    private ArrayList<String[]> towerSchoolBoard = new ArrayList<>();
+    private ArrayList<String[]> corridorSchoolBoard = new ArrayList<>();
+    private ArrayList<String[]> profSchoolBoard = new ArrayList<>();
+    private ArrayList<int[]> StudentsOnIslands = new ArrayList<>();
     private ArrayList<String[]> tower_island = new ArrayList<>();
-    private final int[] professor = new int[5];
+    private int[] professor = new int[5];
     private int positionMN;
     private int coinPile;
 

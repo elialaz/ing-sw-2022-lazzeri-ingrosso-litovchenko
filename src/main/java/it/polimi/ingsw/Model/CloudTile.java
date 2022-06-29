@@ -1,5 +1,7 @@
 package it.polimi.ingsw.Model;
 
+import java.util.Arrays;
+
 /**
  * CloudTile class, to manage the clouds
  * @author elia_laz
@@ -51,6 +53,14 @@ public class CloudTile {
      **/
     public int getNumStudents() {
         return numStudents;
+    }
+
+    /**
+     * Getter of the students
+     **/
+    public int[] getStudents2(){
+        int[] arr = students;
+        return arr;
     }
 }
 
