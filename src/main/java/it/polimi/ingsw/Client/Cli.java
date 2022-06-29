@@ -25,11 +25,12 @@ public class Cli implements EventReciver {
     private String nickname;
     private int playerNumber;
     private int gameID;
+    private int turn = 0;
     private String statusGameBoard;
     private int[] studentsToSchoolboard;
     private final ArrayList<int[]> studentsToIsland;
     private int moveMotherNature;
-    private int whichClodTile = -1;
+    private int whichClodTile;
     private String winner;
     private String toFind;
 
@@ -155,10 +156,12 @@ public class Cli implements EventReciver {
             System.out.println("You want to enable ExpertMode?: 1) Yes || 2) No ");
             selection = ReadIntInput(1, 2);
             expert = selection == 1;
-            System.out.println("You want to enable Chat? 1) Yes || 2) No ");
-            selection = ReadIntInput(1, 2);
-            System.out.println("waiting for players to join...");
-            chat = selection == 1;
+            if (playerNumber == 4) {
+                System.out.println("You want to enable Chat? 1) Yes || 2) No ");
+                selection = ReadIntInput(1, 2);
+                chat = selection == 1;
+            }
+            System.out.println("\nwaiting for players to join...");
             manager.notify("newGameSend");
         } else {
             System.out.println("Insert the ID of the Game you want to join: ");
@@ -505,34 +508,35 @@ public class Cli implements EventReciver {
      * Setter for the GameBoard status
      */
     public void setData(String input) {
-        for(int i=0; i<playerNumber; i++){
-            lastPlayedAssistantCard[i] = -1;
-        }
         statusGameBoard = input;
         cloudTiles.clear();
-        assistantCard.clear();
-        entranceSchoolBoard.clear();
-        towerSchoolBoard.clear();
-        corridorSchoolBoard.clear();
-        profSchoolBoard.clear();
+
         StudentsOnIslands.clear();
         tower_island.clear();
 
-        toFind = "playerNum";
-        String playerNum = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length(), statusGameBoard.indexOf("/", statusGameBoard.indexOf(toFind)));
-        playerNumber = Integer.parseInt(playerNum);
+        if (turn == 0) {
+            toFind = "playerNum";
+            String playerNum = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length(), statusGameBoard.indexOf("/", statusGameBoard.indexOf(toFind)));
+            playerNumber = Integer.parseInt(playerNum);
 
-        for (int id=0; id<playerNumber; id++) {
-            toFind = "gamer"+id+":";
-            String gamerRemains = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length(), statusGameBoard.indexOf("/", statusGameBoard.indexOf(toFind)));
-            players.add(gamerRemains);
+            for (int id = 0; id < playerNumber; id++) {
+                toFind = "gamer" + id + ":";
+                String gamerRemains = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length(), statusGameBoard.indexOf("/", statusGameBoard.indexOf(toFind)));
+                players.add(gamerRemains);
 
-            toFind = "coin";
-            String coinPlayer = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length(), statusGameBoard.indexOf("/", statusGameBoard.indexOf(toFind)));
-            coinsPlayers[id] = Integer.parseInt(coinPlayer);
+                toFind = "coin";
+                String coinPlayer = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length(), statusGameBoard.indexOf("/", statusGameBoard.indexOf(toFind)));
+                coinsPlayers[id] = Integer.parseInt(coinPlayer);
+            }
+            playerID = players.indexOf(getNickname());
         }
-        playerID = players.indexOf(getNickname());
+        turn++;
 
+
+        for(int i=0; i<playerNumber; i++){
+            lastPlayedAssistantCard[i] = 0;
+        }
+        assistantCard.clear();
         int[][] AssistantCards = new int[2][10];
         for (int id=0; id<playerNumber; id++) {
             toFind = "assistantCard" + id + ":";
@@ -557,6 +561,10 @@ public class Cli implements EventReciver {
             }
         }
 
+        entranceSchoolBoard.clear();
+        towerSchoolBoard.clear();
+        corridorSchoolBoard.clear();
+        profSchoolBoard.clear();
         for(int id=0; id<playerNumber; id++) {
             toFind = "schoolBoard" + id + ":";
             String schoolBoard_entrance = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length(), statusGameBoard.indexOf("]entranceEnd/", statusGameBoard.indexOf(toFind)));
@@ -624,6 +632,7 @@ public class Cli implements EventReciver {
         toFind = "coinPile:";
         String coinPiles = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length());
         coinPile = Integer.parseInt(coinPiles);
+
     }
 
     /**
@@ -703,7 +712,7 @@ public class Cli implements EventReciver {
         displayStudents(entranceSchoolBoard.get(playerID));
         System.out.println();
         String[] tempTower = towerSchoolBoard.get(playerID);
-        switch (tempTower[0]) {
+        switch (tempTower[1]) {
             case "WHITE":
                 System.out.println("Towers:" + CLIutils.ANSI_WHITE + tempTower[0] + CLIutils.TOWER + CLIutils.ANSI_RESET );
                 break;
