@@ -168,6 +168,7 @@ public class VirtualModel {
         }
         if(expert){
             expertCardId = new ArrayList<>();
+            expertCardStudents = new int[]{0, 0, 0, 0, 0};
             parsed2 = parsed[10].split("!");
             count = 0;
             expertCardId.add(Integer.parseInt(parsed2[count]));
