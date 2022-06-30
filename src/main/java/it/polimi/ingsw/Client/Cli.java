@@ -35,6 +35,22 @@ public class Cli implements EventReciver {
     private int[] studentsToSchoolboard;
     private int expertIDChosen;
 
+    //Expert character cards
+    private int Island_id1;
+    private int[] switchFromCard_id2;
+    private int[] switchFromEntrance_id2;
+    private int[] switchFromCorridor_id3;
+    private int[] switchFromEntrance_id3; //praticamente come studentsToSchoolboard
+    private int extraMotherNatureMove_id4;
+    private int colorNoInfluence_id5;
+    private boolean towerInfluence_id6;
+    private int id7;
+    private int extraStudentInfluence_id8;
+    private int id8;
+    private int id9;
+    private int id10;
+
+
     /**
      * Constructor of the Cli
      * @param manager EventManager for the Client
@@ -453,55 +469,186 @@ public class Cli implements EventReciver {
         }
     }
 
+    //TODO gestire eventuali errori di input/non esisteze
+    //id2, 11 e 12. non controlla che stia prendendo i colori esistenti di studenti dalla carta
+    //id3. non controlla che ci siano studenti nel corridoio
     public void chooseCharacterCard(int id) {
+        int[] students_entrance = model.getSchoolboardEntrance(nickname);
+        System.out.println();
         switch (id) {
             case 1:
                 //cost 3
-
+                System.out.print("Choose the Island that you want to influence: ");
+                Island_id1 = ReadIntInput(0,12);
+                model.addOneExpertCardUsed(id);
                 break;
             case 2:
                 //cost 1
-
+                switchFromCard_id2 = new int[]{0,0,0,0,0};
+                switchFromEntrance_id2 = new int[]{0,0,0,0,0};
+                int chosenStudent;
+                System.out.print("This card has the following students: ");
+                //TODO print the 6 students on this card
+                System.out.print("How many students you want to replace (1, 2 or 3): ");
+                int totake = ReadIntInput(1,3);
+                System.out.println("\nDecide which student to switch from card to entrance: 0) " + CLIutils.ANSI_GREEN + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 1) " + CLIutils.ANSI_RED + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 2) " + CLIutils.ANSI_YELLOW + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 3) " + CLIutils.ANSI_PINK + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 4) " + CLIutils.ANSI_BLUE + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
+                for (int i=0; i<totake; i++) {
+                    System.out.print("Student " + i + " from card, will be of color: ");
+                    switch (ReadIntInput(0,4)){
+                        case 0:
+                            switchFromCard_id2[0]++;
+                            break;
+                        case 1:
+                            switchFromCard_id2[1]++;
+                            break;
+                        case 2:
+                            switchFromCard_id2[2]++;
+                            break;
+                        case 3:
+                            switchFromCard_id2[3]++;
+                            break;
+                        case 4:
+                            switchFromCard_id2[4]++;
+                            break;
+                    }
+                }
+                System.out.print("\nWhich student from the entrance will you exchange them with: ");
+                for (int i=0; i<totake; i++) {
+                    System.out.print("Student " + i + " from entrance, will be of color: ");
+                    chosenStudent = ReadIntInput(0, 4) ;
+                    while (students_entrance[chosenStudent] == 0){
+                        System.out.println("What are you doing? You don't have these students in your entrance. Select another one.");
+                        chosenStudent = ReadIntInput(0, 4);
+                    }
+                    //aumento per avere un array di quali e quanti studenti sotrarre dall'entrata
+                    switchFromEntrance_id2[chosenStudent]++;
+                }
+                model.addOneExpertCardUsed(id);
                 break;
             case 3:
                 //cost 1
-
+                switchFromCorridor_id3 = new int[]{0,0,0,0,0};
+                switchFromEntrance_id3 = new int[]{0,0,0,0,0};
+                int corridor;
+                System.out.println("From which Dining Room you want to exchange: 0) " + CLIutils.ANSI_GREEN + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 1) " + CLIutils.ANSI_RED + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 2) " + CLIutils.ANSI_YELLOW + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 3) " + CLIutils.ANSI_PINK + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 4) " + CLIutils.ANSI_BLUE + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
+                for (int i=0; i<2; i++) {
+                    switch (ReadIntInput(0,4)){
+                        case 0:
+                            switchFromCorridor_id3[0]++;
+                            break;
+                        case 1:
+                            switchFromCorridor_id3[1]++;
+                            break;
+                        case 2:
+                            switchFromCorridor_id3[2]++;
+                            break;
+                        case 3:
+                            switchFromCorridor_id3[3]++;
+                            break;
+                        case 4:
+                            switchFromCorridor_id3[4]++;
+                            break;
+                    }
+                }
+                System.out.println("Which student you want to move from the entrance to the corridor: 0) " + CLIutils.ANSI_GREEN + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 1) " + CLIutils.ANSI_RED + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 2) " + CLIutils.ANSI_YELLOW + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 3) " + CLIutils.ANSI_PINK + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 4) " + CLIutils.ANSI_BLUE + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
+                for (int i=0; i<2; i++) {
+                    chosenStudent = ReadIntInput(0, 4) ;
+                    while (students_entrance[chosenStudent] == 0){
+                        System.out.println("What are you doing? You don't have these students in your entrance. Select another one.");
+                        chosenStudent = ReadIntInput(0, 4);
+                    }
+                    switchFromEntrance_id3[chosenStudent]++;
+                }
+                model.addOneExpertCardUsed(id);
                 break;
             case 4:
                 //cost 1
-
+                extraMotherNatureMove_id4 = 2;
+                model.addOneExpertCardUsed(id);
                 break;
             case 5:
                 //cost 3
-
+                System.out.println("Which color student will you choose: 0) " + CLIutils.ANSI_GREEN + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 1) " + CLIutils.ANSI_RED + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 2) " + CLIutils.ANSI_YELLOW + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 3) " + CLIutils.ANSI_PINK + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 4) " + CLIutils.ANSI_BLUE + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
+                colorNoInfluence_id5 = ReadIntInput(0,4);
+                model.addOneExpertCardUsed(id);
                 break;
             case 6:
                 //cost 3
-
+                towerInfluence_id6 = false;
+                model.addOneExpertCardUsed(id);
                 break;
             case 7:
                 //cost 2
 
+                model.addOneExpertCardUsed(id);
                 break;
             case 8:
                 //cost 2
-
+                extraStudentInfluence_id8 = 2;
+                model.addOneExpertCardUsed(id);
                 break;
             case 9:
                 //cost 2
 
+                model.addOneExpertCardUsed(id);
                 break;
             case 10:
                 //cost 3
 
+                model.addOneExpertCardUsed(id);
                 break;
             case 11:
                 //cost 2
-
+                System.out.print("This card has the following students: ");
+                //TODO print the 4 students on this card
+                System.out.println("Which student color will you move: 0) " + CLIutils.ANSI_GREEN + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 1) " + CLIutils.ANSI_RED + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 2) " + CLIutils.ANSI_YELLOW + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 3) " + CLIutils.ANSI_PINK + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 4) " + CLIutils.ANSI_BLUE + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
+                switch (ReadIntInput(0,4)){
+                    case 0:
+                        studentsToSchoolboard[0]++;
+                        break;
+                    case 1:
+                        studentsToSchoolboard[1]++;
+                        break;
+                    case 2:
+                        studentsToSchoolboard[2]++;
+                        break;
+                    case 3:
+                        studentsToSchoolboard[3]++;
+                        break;
+                    case 4:
+                        studentsToSchoolboard[4]++;
+                        break;
+                }
+                model.addOneExpertCardUsed(id);
                 break;
             case 12:
                 //cost 1
-
+                int[] students_isle = new int[]{0,0,0,0,0,0};
+                System.out.print("This card has the following students: ");
+                //TODO print the 4 students on this card
+                System.out.print("To which island (choose from 0 to 11): ");
+                int chosenIsland = ReadIntInput(0, 11);
+                students_isle[0] = chosenIsland;
+                System.out.println("Which student color will you move to the chosen island: 0) " + CLIutils.ANSI_GREEN + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 1) " + CLIutils.ANSI_RED + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 2) " + CLIutils.ANSI_YELLOW + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 3) " + CLIutils.ANSI_PINK + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 4) " + CLIutils.ANSI_BLUE + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
+                switch (ReadIntInput(0,4)){
+                    case 0:
+                        students_isle[1]++;
+                        break;
+                    case 1:
+                        students_isle[2]++;
+                        break;
+                    case 2:
+                        students_isle[3]++;
+                        break;
+                    case 3:
+                        students_isle[4]++;
+                        break;
+                    case 4:
+                        students_isle[5]++;
+                        break;
+                }
+                studentsToIsland.add(students_isle);
+                model.addOneExpertCardUsed(id);
                 break;
         }
     }
