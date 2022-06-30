@@ -272,7 +272,6 @@ public class Cli implements EventReciver {
         System.out.flush();
     }
 
-    //TODO aggiungere display deck e display cloudtile
     private void showGameBoard() {
         clearScreen();
         System.out.println("Your School Board: ");
@@ -308,7 +307,35 @@ public class Cli implements EventReciver {
                     break;
             }
         }
+        System.out.println();
+        boolean[] witch = new boolean[playerNumber];
+        for(int i=0; i<playerNumber; i++){
+            witch[i]=true;
+        }
+        boolean number = false;
+        for (int i = 0; i < model.getPlayerNum(); i++) {
+            int[] stud = model.getCloudTileStudents().get(i);
+            for (int j = 0; j < 5; j++) {
+                if(stud[j]!=0){
+                    number=true;
+                }
+            }
+            if(number){
+                witch[i]=false;
+                number=false;
+            }
+        }
+        for (int i = 0; i < model.getPlayerNum(); i++) {
+            if(!witch[i]){
+                System.out.print(" Cloud " + i + ": ");
+                displayStudents(model.getCloudTileStudents().get(i));
+            }
+            else{
+                System.out.print(" Cloud already taken ");
+            }
+        }
         if (model.isExpert()) {
+            System.out.println();
             System.out.print("\nCoins remaining on table: ");
             System.out.println(model.getCoinPile());
 
@@ -462,6 +489,7 @@ public class Cli implements EventReciver {
             }
         }
         System.out.println();
+
     }
 
     /**
@@ -651,17 +679,43 @@ public class Cli implements EventReciver {
         System.out.println("--------------------------------------------\n");
         System.out.print("Choose a cloud between those below:");
 
+        boolean[] witch = new boolean[playerNumber];
+        for(int i=0; i<playerNumber; i++){
+            witch[i]=true;
+        }
+        boolean number = false;
         for (int i = 0; i < model.getPlayerNum(); i++) {
-            System.out.print("\n"+ i + ") Cloud " + i + ": ");
-            displayStudents(model.getCloudTileStudents().get(i));
+            int[] stud = model.getCloudTileStudents().get(i);
+            for (int j = 0; j < 5; j++) {
+                if(stud[j]!=0){
+                    number=true;
+                }
+            }
+            if(number){
+                witch[i]=false;
+                number=false;
+            }
+        }
+        for (int i = 0; i < model.getPlayerNum(); i++) {
+            if(!witch[i]){
+                System.out.print("\n"+ i + ") Cloud " + i + ": ");
+                displayStudents(model.getCloudTileStudents().get(i));
+            }
+            else{
+                System.out.print("\n"+ i + ") Cloud already taken ");
+            }
         }
         System.out.println();
         System.out.println("Which cloud will you choose (from 0 to " + (playerNumber-1) + "): ");
         witchCloudTile = ReadIntInput(0, playerNumber-1);
+        while(witch[witchCloudTile]){
+            System.out.println("Cloud already taken chose a different one ");
+            System.out.println("Which cloud will you choose (from 0 to " + (playerNumber-1) + "): ");
+            witchCloudTile = ReadIntInput(0, playerNumber-1);
+        }
         manager.notify("actionPhase3Send");
     }
 
-    //TODO displayare meglio vittoria e sconfitta
     private void finish() {
         clearScreen();
         if(nickname.equals(winner)){
