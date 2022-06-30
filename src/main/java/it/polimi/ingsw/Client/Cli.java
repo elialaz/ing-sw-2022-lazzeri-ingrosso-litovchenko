@@ -33,6 +33,7 @@ public class Cli implements EventReciver {
     private int witchCloudTile;
     private ArrayList<int[]> studentsToIsland;
     private int[] studentsToSchoolboard;
+    private int expertIDChosen;
 
     /**
      * Constructor of the Cli
@@ -57,6 +58,7 @@ public class Cli implements EventReciver {
         manager.subscribe("retryNickname", this);
         manager.subscribe("waitAddPlayer", this);
         manager.subscribe("disconnection", this);
+        manager.subscribe("expertPlayedSend", this);
     }
 
     @Override
@@ -580,10 +582,13 @@ public class Cli implements EventReciver {
             int playOrNot = ReadIntInput(1,2);
             if (playOrNot == 1){
                 System.out.println("Remember that you had these ones (0, 1 and 2): ");
+                ArrayList<Integer> ex = model.getExpertCardId();
                 displayCharacterCard(model.getExpertCardId(), model.getExpertCardPrice());
                 System.out.println("Which one will you play 0, 1 or 2: ");
                 int id = ReadIntInput(0,2);
-                chooseCharacterCard(id);
+                chooseCharacterCard(ex.get(id));
+                expertIDChosen = ex.get(id);
+                manager.notify("expertPlayedSend");
             }
         }
     }
@@ -795,5 +800,9 @@ public class Cli implements EventReciver {
             System.out.println("You Lost. Game Over");
         }
         manager.notify("finishSend");
+    }
+
+    public int getExpertIDChosen() {
+        return expertIDChosen;
     }
 }

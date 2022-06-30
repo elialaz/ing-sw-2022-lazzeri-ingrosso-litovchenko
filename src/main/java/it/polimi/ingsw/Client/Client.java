@@ -235,6 +235,11 @@ public class Client implements EventReciver {
                     out.println("ack");
                 }
                 break;
+            case "expertPlayedSend":
+                synchronized (outputLock){
+                    //TODO expert send
+                }
+                break;
         }
     }
 

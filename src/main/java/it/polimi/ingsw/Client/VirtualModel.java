@@ -361,4 +361,8 @@ public class VirtualModel {
     public int getIslandNum() {
         return islandNum;
     }
+
+    public void addOneExpertCardUsed(int id){
+        expertCardPrice[id-1]++;
+    }
 }
