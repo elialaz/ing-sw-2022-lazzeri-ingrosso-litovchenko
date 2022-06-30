@@ -121,17 +121,11 @@ class ServerThread extends Thread{
                 System.out.println("Error during closing of the socket");
             }
             connected = false;
-
-            master.clientRemove(nickname);
             Thread.currentThread().interrupt();
-
-            server.onDisconnect(this);
         }
         else{
-            master.clientRemove(nickname);
+            server.onDisconnect(nickname, master);
             Thread.currentThread().interrupt();
-
-            server.onDisconnect(this);
         }
     }
 

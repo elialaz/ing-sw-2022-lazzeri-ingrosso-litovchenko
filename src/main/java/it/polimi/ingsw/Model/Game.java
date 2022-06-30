@@ -339,7 +339,6 @@ public class Game {
                 id = i;
             }
             else if(influence == temporaryInfluence){
-                notEven = false;
                 id = -2;
             }
         }

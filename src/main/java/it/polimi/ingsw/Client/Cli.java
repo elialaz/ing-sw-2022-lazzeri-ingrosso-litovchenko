@@ -501,6 +501,7 @@ public class Cli implements EventReciver {
         System.out.println("2. Play 1 assistant card of your choice, you currently have: ");
         int[][] AssistantCards = model.getDeck(nickname);
         int[] usable = new int[10];
+        int[] cardP = model.getAssistantsPlayedInTurn();
         while (k < 10) {
             if (AssistantCards[0][k] != -1 && AssistantCards[1][k] != -1) {
                 System.out.println(k + ") V:" + AssistantCards[0][k] + " - "+ CLIutils.ANSI_BRIGHT_YELLOW + CLIutils.MOTHER_NATURE + CLIutils.ANSI_RESET + ":" + AssistantCards[1][k]);
@@ -509,6 +510,11 @@ public class Cli implements EventReciver {
                 usable[k] = 0;
             }
             k++;
+        }
+        for(int c=0; c<4; c++){
+            if(cardP[c]!=-1){
+                System.out.println(c + " - "+ CLIutils.ANSI_BRIGHT_YELLOW + CLIutils.MOTHER_NATURE + CLIutils.ANSI_RESET + ":" + model.cardValueOf(c) + " played by " + model.getPlayedById(c));
+            }
         }
         System.out.println("\nWhich one will you play (choose between the ones above): ");
         cardPlayed = ReadIntInput(0, 9);
@@ -521,7 +527,6 @@ public class Cli implements EventReciver {
                 cardPlayed = ReadIntInput(0, 9);
             }
         }
-        int[] cardP = model.getAssistantsPlayedInTurn();
         boolean alread = false;
         for(int f=0; f<4; f++){
             if(cardP[f] == cardPlayed){
@@ -529,7 +534,8 @@ public class Cli implements EventReciver {
             }
         }
         while(alread) {
-            System.out.println("This card was already played in your turn. Choose another one to play.");
+            alread = false;
+            System.out.println("This card was already played in your turn by another player. Choose another one to play.");
             cardPlayed = ReadIntInput(0, 9);
             for(int f=0; f<4; f++){
                 if(cardP[f] == cardPlayed){
@@ -643,7 +649,7 @@ public class Cli implements EventReciver {
             displayStudents(model.getCloudTileStudents().get(i));
         }
         System.out.println();
-        System.out.println("Which cloud will you choose (from 1 to " + (playerNumber) + "): ");
+        System.out.println("Which cloud will you choose (from 0 to " + (playerNumber-1) + "): ");
         witchCloudTile = ReadIntInput(0, playerNumber-1);
         manager.notify("actionPhase3Send");
     }

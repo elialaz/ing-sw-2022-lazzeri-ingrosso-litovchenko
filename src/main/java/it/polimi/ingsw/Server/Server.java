@@ -13,7 +13,6 @@ public class Server {
     private ServerSocket serverSocket;
     private int port;
     private ArrayList<ConnectionHandler> game;
-    private final Map<String, ServerThread> clientStatus;
     private ArrayList<String> clientNickname;
     private final Object lock;
 
@@ -23,7 +22,6 @@ public class Server {
      **/
     public Server(int port){
         this.lock = new Object();
-        this.clientStatus = Collections.synchronizedMap(new HashMap<>());
         clientNickname = new ArrayList<>();
         try{
             this.port = port;
@@ -95,20 +93,21 @@ public class Server {
         return game.get(0);
     }
 
-    //TODO sistemare meglio con le disconnessioni
-    public void onDisconnect(ServerThread client) {
+    public void onDisconnect(String nickname, ConnectionHandler c) {
         synchronized (lock) {
-            String nickname = client.getNickname();
-
+            c.clientRemove(nickname);
             if (nickname != null) {
-                clientStatus.clear();
-                clientNickname.remove(client.getNickname());
+                clientNickname.remove(nickname);
             }
+            c.update("disconnect");
+            for (Pair p: c.getClient()) {
+                clientNickname.remove(p.getNickname());
+            }
+            deleteGame(c);
         }
     }
 
     public void addClient(String nickname, ServerThread client) {
-        clientStatus.put(nickname, client);
         clientNickname.add(nickname);
     }
 

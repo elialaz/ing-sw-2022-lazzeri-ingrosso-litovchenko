@@ -27,7 +27,7 @@ public class ConnectionHandler implements EventReciver {
     private Server server;
     private int actionType;
     private boolean start;
-    private final ArrayList<Pair> client;
+    private ArrayList<Pair> client;
     private String[] input;
     private final Object lock;
     private boolean boolUpdate;
@@ -208,9 +208,9 @@ public class ConnectionHandler implements EventReciver {
                 synchronized (lock){
                     for (Pair p: client) {
                         p.getClient().sendMessage("clientDisconnection");
+                        p.getClient().disconnect();
                     }
                 }
-                server.deleteGame(this);
                 break;
         }
     }
@@ -307,5 +307,9 @@ public class ConnectionHandler implements EventReciver {
                 }
                 break;
         }
+    }
+
+    public ArrayList<Pair> getClient() {
+        return client;
     }
 }
