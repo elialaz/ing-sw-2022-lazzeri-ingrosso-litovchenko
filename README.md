@@ -7,9 +7,9 @@ Eriantys Board Game is the final test of **"Software Engineering"**, course of *
 **Teacher** San Pietro Pierluigi
 
 ## The Team
-* [Elia Lazzeri](https://github.com/elialaz):
-* [Filiberto Ingrosso](https://github.com/filibertoingrosso):
-* [Litovchenko Nikita](https://github.com/litovn): 10656602
+* [Elia Lazzeri](https://github.com/elialaz) (10716571)
+* [Filiberto Ingrosso](https://github.com/filibertoingrosso) (10682019)
+* [Litovchenko Nikita](https://github.com/litovn) (10656602)
 
 ## Project specification
 The project consists of a Java version of the board game *Eriantys*, made by Cranio Creations.

@@ -34,6 +34,9 @@ public class Cli implements EventReciver {
     private ArrayList<int[]> studentsToIsland;
     private int[] studentsToSchoolboard;
 
+    private int[] playedInTurn = new int[] {-1,-1,-1,-1};
+    private int turnCount = 0;
+
     /**
      * Constructor of the Cli
      * @param manager EventManager for the Client
@@ -145,7 +148,7 @@ public class Cli implements EventReciver {
     }
 
     private void waitPlayer() {
-        System.out.println("Wait for other players: ");
+        System.out.print("\nWaiting for other players... ");
     }
 
     public int getCardPlayed() {
@@ -243,10 +246,6 @@ public class Cli implements EventReciver {
                 num = scan.nextInt();
                 if (num < min || num > max)
                     System.out.println(CLIutils.ANSI_BRIGHT_RED + "The input must be between " + min + " and " + max + CLIutils.ANSI_RESET);
-                else if (min == max){
-                    System.out.println(CLIutils.ANSI_BRIGHT_RED + "The input must be " + min + CLIutils.ANSI_RESET);
-                }
-
             } else
                 System.out.println("Invalid input, reinsert another chosen number.");
             scan.nextLine();
@@ -281,12 +280,13 @@ public class Cli implements EventReciver {
     private void showGameBoard() {
         clearScreen();
         System.out.println("Your School Board: ");
-        showSchoolBoard(model.getSchoolboardEntrance(nickname), model.getSchoolboardTower(nickname), model.getSchoolboardColorTower(nickname), model.getSchoolboardProfessor(nickname), model.getSchoolboardCorridor(nickname));
+        showSchoolBoard(model.getSchoolboardEntrance(nickname), model.getSchoolboardTower(nickname), model.getSchoolboardColorTower(nickname), model.getSchoolboardProfessor(nickname), model.getSchoolboardCorridor(nickname), nickname);
         System.out.println();
         System.out.println("Other School Board: ");
+        //TODO si legge sempre lo stesso user, gameboard però diverse
         for (String p: model.getPlayer()) {
             if(!p.equals(nickname)){
-                showSchoolBoard(model.getSchoolboardEntrance(p), model.getSchoolboardTower(p), model.getSchoolboardColorTower(p), model.getSchoolboardProfessor(p), model.getSchoolboardCorridor(p));
+                showSchoolBoard(model.getSchoolboardEntrance(p), model.getSchoolboardTower(p), model.getSchoolboardColorTower(p), model.getSchoolboardProfessor(p), model.getSchoolboardCorridor(p), nickname);
             }
         }
         System.out.println();
@@ -406,36 +406,36 @@ public class Cli implements EventReciver {
             System.out.print("towers: ");
             switch (towerColor.get(i)) {
                 case WHITE:
-                    System.out.println(CLIutils.ANSI_WHITE + tower.get(i) + CLIutils.TOWER + CLIutils.ANSI_RESET);
+                    System.out.print(CLIutils.ANSI_WHITE + tower.get(i) + CLIutils.TOWER + CLIutils.ANSI_RESET);
                     break;
                 case GRAY:
-                    System.out.println(CLIutils.ANSI_GRAY + tower.get(i) + CLIutils.TOWER + CLIutils.ANSI_RESET);
+                    System.out.print(CLIutils.ANSI_GRAY + tower.get(i) + CLIutils.TOWER + CLIutils.ANSI_RESET);
                     break;
                 case BLACK:
-                    System.out.println(CLIutils.ANSI_BRIGHT_BLACK + tower.get(i) + CLIutils.TOWER + CLIutils.ANSI_RESET);
+                    System.out.print(CLIutils.ANSI_BRIGHT_BLACK + tower.get(i) + CLIutils.TOWER + CLIutils.ANSI_RESET);
                     break;
                 case NOT:
-                    System.out.println("There aren't towers on this island");
+                    System.out.print("There aren't towers on this island");
                     break;
             }
             if(model.isExpert()){
                 islandEntryTile = model.getIslandNoEntryTile(i);
                 islandEntryTileNum = model.getIslandNoEntryTileNum(i);
                 if(islandEntryTile){
-                    System.out.print(" also " + islandEntryTileNum + " No entry Tile on the island");
+                    System.out.print(" > also " + islandEntryTileNum + " No entry Tile on the island");
                 }
             }
             if (i == model.getPositionMotherNature()){
-                System.out.print(" also "+ CLIutils.ANSI_BRIGHT_YELLOW + CLIutils.MOTHER_NATURE + CLIutils.ANSI_RESET);
+                System.out.print(" > also "+ CLIutils.ANSI_BRIGHT_YELLOW + CLIutils.MOTHER_NATURE + CLIutils.ANSI_RESET);
             }
         }
         System.out.println();
     }
 
-    private void showSchoolBoard(int[] schoolboardEntrance, int schoolboardTower, TowerColor schoolboardColorTower, boolean[] schoolboardProfessor, int[] schoolboardCorridor){
-        System.out.print("School Board of player '" + nickname + "', has these students (" + CLIutils.STUDENT + ") in its entrance: ");
+    //TODO SITEMARE LA P PER TUTTO I showSchoolBoard
+    private void showSchoolBoard(int[] schoolboardEntrance, int schoolboardTower, TowerColor schoolboardColorTower, boolean[] schoolboardProfessor, int[] schoolboardCorridor, String p){
+        System.out.print("School Board of player '" + p + "', has these students (" + CLIutils.STUDENT + ") in its entrance: ");
         displayStudents(schoolboardEntrance);
-        System.out.println();
         switch (schoolboardColorTower) {
             case WHITE:
                 System.out.println("Towers:" + CLIutils.ANSI_WHITE + schoolboardTower + CLIutils.TOWER + CLIutils.ANSI_RESET );
@@ -528,11 +528,22 @@ public class Cli implements EventReciver {
                 cardPlayed = ReadIntInput(0, 9);
             }
         }
+        /*
+        playedInTurn[turnCount] = cardPlayed;
+        while (turnCount != 0 && IntStream.of(playedInTurn).anyMatch(x -> x == cardPlayed)) {
+            System.out.println("This card was already played in your turn. Choose another one to play.");
+            cardPlayed = ReadIntInput(0, 9);
+        }
+        turnCount++;
+        */
         manager.notify("planningPhaseSend");
     }
 
     //TODO gestire expertmode ad inizio fase
     private void actionPhase1() {
+        turnCount = 0;
+        for (int i=0; i<4; i++)
+            playedInTurn[i] = -1;
         clearScreen();
         System.out.println("--------------------------------------------");
         System.out.println("-------------- ACTION PHASE 1 --------------");
@@ -548,7 +559,7 @@ public class Cli implements EventReciver {
         }
         System.out.println("to either your Dining Room or a Island.");
         System.out.println();
-        showSchoolBoard(model.getSchoolboardEntrance(nickname), model.getSchoolboardTower(nickname), model.getSchoolboardColorTower(nickname), model.getSchoolboardProfessor(nickname), model.getSchoolboardCorridor(nickname));
+        showSchoolBoard(model.getSchoolboardEntrance(nickname), model.getSchoolboardTower(nickname), model.getSchoolboardColorTower(nickname), model.getSchoolboardProfessor(nickname), model.getSchoolboardCorridor(nickname), nickname);
         showIslands();
         //choose if you want to move students into 1 or 2
         System.out.println("\nDecide which student to move: 0) " + CLIutils.ANSI_GREEN + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 1) " + CLIutils.ANSI_RED + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 2) " + CLIutils.ANSI_YELLOW + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 3) " + CLIutils.ANSI_PINK + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 4) " + CLIutils.ANSI_BLUE + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
@@ -607,7 +618,6 @@ public class Cli implements EventReciver {
     }
 
     //TODO gestire expertmode ad inizio fase
-    //TODO sistemare caso min = 1 e max = 1
     private void actionPhase2() {
         clearScreen();
         System.out.println("--------------------------------------------");
@@ -644,10 +654,10 @@ public class Cli implements EventReciver {
     private void finish() {
         clearScreen();
         if(nickname.equals(winner)){
-            System.out.println("You are the winner");
+            System.out.println("YOU'RE THE WINNER!");
         }
         else{
-            System.out.println("Sorry for this time you are not the winner");
+            System.out.println("You Lost. Game Over");
         }
         manager.notify("finishSend");
     }

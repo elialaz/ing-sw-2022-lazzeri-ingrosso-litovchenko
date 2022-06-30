@@ -10,6 +10,7 @@ public class VirtualModel {
     private ArrayList<String> player;
     private ArrayList<Integer> coinPlayer;
     private ArrayList<int[][]> deck;
+    private int[] assistantsPlayedInTurn;
     private ArrayList<Integer> lastCardUsed;
     private ArrayList<Integer> lastMotherNatureValueCard;
     private ArrayList<int[]> schoolboardEntrance;
@@ -334,4 +335,9 @@ public class VirtualModel {
     public int getPlayerNum() {
         return playerNum;
     }
+
+    public int[] getAssistantsPlayedInTurn() {
+        return assistantsPlayedInTurn;
+    }
+
 }
