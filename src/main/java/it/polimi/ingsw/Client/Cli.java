@@ -224,6 +224,7 @@ public class Cli implements EventReciver {
         } else {
             System.out.println("Insert the ID of the Game you want to join: ");
             gameId = ReadIntInput(1, 99999);
+            System.out.print("\nWaiting for other players... ");
             manager.notify("loadGameSend");
         }
     }
