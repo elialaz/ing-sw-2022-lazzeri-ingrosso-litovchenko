@@ -26,7 +26,7 @@ public class Cli implements EventReciver {
     private String nickname;
     private int playerNumber;
     private int gameId;
-    private int expert;
+    private boolean expert;
     private int chat;
     private int cardPlayed;
     private int moveMotherNature;
@@ -43,7 +43,7 @@ public class Cli implements EventReciver {
         this.manager = manager;
         connection = owner;
         scan = new Scanner(System.in);
-        expert = 0;
+        expert = false;
         chat = 0;
         studentsToIsland = new ArrayList<>();
         studentsToSchoolboard = new int[]{0, 0, 0, 0, 0};
@@ -135,7 +135,7 @@ public class Cli implements EventReciver {
         return gameId;
     }
 
-    public int isExpert() {
+    public boolean isExpert() {
         return expert;
     }
 
@@ -214,7 +214,7 @@ public class Cli implements EventReciver {
             gameId = ReadIntInput(1, 99999);
             System.out.println("You want to enable ExpertMode?: 1) Yes || 2) No ");
             selection = ReadIntInput(1, 2);
-            expert = selection-1;
+            expert = selection==1;
             if (playerNumber == 4) {
                 System.out.println("You want to enable Chat? 1) Yes || 2) No ");
                 selection = ReadIntInput(1, 2);
@@ -510,62 +510,63 @@ public class Cli implements EventReciver {
                 case 1:
                     //cost 3
                     System.out.println("> Choose and Island and resolve the island as if Mother Nature had ended her movement there. Mother Nature will still move and the Island where she ends her movement will also be resolved: ");
-                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i-1] + CLIutils.COIN + CLIutils.ANSI_RESET );
                     break;
                 case 2:
                     //cost 1
                     System.out.println("> You may take up to 3 students for this card and replace them with the same number of Students from your Entrance: ");
-                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i-1] + CLIutils.COIN + CLIutils.ANSI_RESET );
                     break;
                 case 3:
                     //cost 1
                     System.out.println("> You may exchange up to 2 Students between your Entrance and your Dining Room: ");
-                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i-1] + CLIutils.COIN + CLIutils.ANSI_RESET );
                     break;
                 case 4:
                     //cost 1
                     System.out.println("> You may move Mother Nature up to 2 additional Islands than is indicated by the Assistant card you've played: ");
-                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i-1] + CLIutils.COIN + CLIutils.ANSI_RESET );
                     break;
                 case 5:
                     //cost 3
                     System.out.println("> Choose a color of Student: during the influence calculation this turn, that color adds no influence: ");
-                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i-1] + CLIutils.COIN + CLIutils.ANSI_RESET );
                     break;
                 case 6:
                     //cost 3
                     System.out.println("> When resolving a Conquering on an Island, towers do not count towards influence: ");
-                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i-1] + CLIutils.COIN + CLIutils.ANSI_RESET );
                     break;
                 case 7:
                     //cost 2
                     System.out.println("> Place a No Entry tile on an Island of your choice. The first time Mother Nature ends her movement there, put the No Entry tile back onto this card DO NOT calculate influence on that Island, or place any Towers: ");
-                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i-1] + CLIutils.COIN + CLIutils.ANSI_RESET );
                     break;
                 case 8:
                     //cost 2
                     System.out.println("> During the influence calculation this turn, you count as having 2 more influence: ");
-                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i-1] + CLIutils.COIN + CLIutils.ANSI_RESET );
                     break;
+                    //TODO ProfessorControl sbagliato
                 case 9:
                     //cost 2
                     System.out.println("> During this turn, you take control of any number of Professors even if you have the same number of Students as the player who currently controls them: ");
-                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i-1] + CLIutils.COIN + CLIutils.ANSI_RESET );
                     break;
                 case 10:
                     //cost 3
                     System.out.println("> Choose a type of Student: every player (including yourself) must return 3 Students of that type from their Dining Room to the bag. If any player has fewer than 3 Students of that type, return as many students as they have: ");
-                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i-1] + CLIutils.COIN + CLIutils.ANSI_RESET );
                     break;
                 case 11:
                     //cost 2
                     System.out.println("> Take 1 Student from this card and place it in your Dining Room. Then, draw a new Student from the Bag and place it on this card: ");
-                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i-1] + CLIutils.COIN + CLIutils.ANSI_RESET );
                     break;
                 case 12:
                     //cost 1
                     System.out.println("> Take 1 Student from this card and place it on an Island of your choice. Then, draw a new Student from the Bag and place it on this card: ");
-                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i-1] + CLIutils.COIN + CLIutils.ANSI_RESET );
                     break;
             }
         }
