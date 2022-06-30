@@ -2,8 +2,6 @@ package it.polimi.ingsw.Model;
 
 import it.polimi.ingsw.Event.EventReciver;
 import it.polimi.ingsw.Exception.ToMuchPlayerExcetpion;
-//import it.polimi.ingsw.Server.Server;
-//import it.polimi.ingsw.Server.ServerEventManager;
 
 import java.util.*;
 
@@ -606,50 +604,105 @@ public class Game {
         return islandTile;
     }
 
-   @Override
+    @Override
     public String toString() {
-        String text = "updateGameBoard" + "/" + idGame + "/playerNum" + playerNum + "/";
-       int temp = 0;
-       for (Player p: gamer) {
-            text = text + "gamer"+temp+":" + p.getName() + "/";
-            text = text + "coin" + p.getCoin() + "/";
+        String text = "updateGameBoard" + "/" + idGame + "/" + playerNum + "/";
+        int temp = 0;
+        for (Player p: gamer) {
+            text = text + p.getName() + ":";
+            text = text + p.getCoin() + ":";
             temp++;
         }
+        text = text + "/";
         temp = 0;
         for (Deck d: assistantCard) {
-            text = text + "assistantCard"+temp+":" + Arrays.deepToString(d.getAssistantCardDeck()) + "/lastValue" + d.getLastCardValue() + "/";
+            text = text + matrixtoString(d.getAssistantCardDeck()) + ":" + d.getLastCardValue() + ":" + d.getLastMotherNatureValue() + "!";
             temp++;
         }
         temp = 0;
+        text = text + "/";
         for (SchoolBoard b: schoolboards) {
-            text = text + "schoolBoard"+temp+":" + Arrays.toString(b.getEntranceStudents()) + "entranceEnd/" + b.getTower() + "/" + b.getColor().toString() + "tower/corridor" + b.getCorridor(0) + "/" + b.getCorridor(1) + "/" + b.getCorridor(2) + "/" + b.getCorridor(3) + "/" + b.getCorridor(4) + "/prof" + b.isProfessor(0) + "/" + b.isProfessor(1) + "/" + b.isProfessor(2) + "/" + b.isProfessor(3) + "/" + b.isProfessor(4) + "end/";
+            text = text + arrayToString(b.getEntranceStudents()) + ":" + b.getTower() + ":" + b.getColor().toString() + ":" + b.getCorridor(0) + ":" + b.getCorridor(1) + ":" + b.getCorridor(2) + ":" + b.getCorridor(3) + ":" + b.getCorridor(4) + ":" + b.isProfessor(0) + ":" + b.isProfessor(1) + ":" + b.isProfessor(2) + ":" + b.isProfessor(3) + ":" + b.isProfessor(4) + "!";
             temp++;
         }
         temp = 0;
+        text = text + "/";
+        if(expertMode){
+            text = text + "1/";
+        }
+        else{
+            text = text + "0/";
+        }
         for (Island i: islandTile) {
-            text = text + "island"+temp+":" + Arrays.toString(i.getStudents()) + "studentsOnIsland/";
-            text = text + "tower:" + i.colorTower() + "/" + i.getTowerNum() + "endTower/";
+            text = text + arrayToString(i.getStudents()) + ":";
+            text = text + i.colorTower().toString() + ":" + i.getTowerNum() + ":";
             if(expertMode){
-                text = text + i.isEntryTileMotherNature() + "/" + i.getNoEntryTile() + "/";
+                text = text + i.isEntryTileMotherNature() + ":" + i.getNoEntryTile() + "!";
+            }
+            else{
+                text = text + "!";
             }
             temp++;
         }
         temp = 0;
+        text = text + "/";
         for (CloudTile c: cloudTiles) {
-            text = text + "cloudTile"+temp+":" +Arrays.toString(c.getStudents2()) + "endCloud/";
+            text = text + arrayToString(c.getStudents2()) + "!";
             temp++;
         }
-
+        text = text + "/";
         if(expertMode){
             for (SpecialCard s: expertCard) {
-                text = text + "expertCard:" + /*s.toString() + "/"+*/ s.getId() + "/";
-                text = text + "expertPrice" + /*s.toString() + "/"+*/ s.getPrice() + "/";
+                text = text + s.getId() + "!";
+            }
+            text = text + "/";
+        }
+        text = text + position.getPosition() + "/";
+        text = text + arrayToString(professor) + "/";
+        text = text + coinPile;
+        return text;
+    }
+
+    private String arrayToString(boolean[] input){
+        String uscita = "";
+        for(int i=0; i<input.length; i++){
+            if(i==(input.length-1)){
+                uscita = uscita + String.valueOf(input[i]);
+            }
+            else{
+                uscita = uscita + String.valueOf(input[i]) + ":";
             }
         }
-        text = text + "position:" + position.getPosition() + "/";
-        text = text + "professor:" + Arrays.toString(professor) + "/";
-        text = text + "coinPile:" + coinPile;
-        return text;
+        return uscita;
+    }
+
+    private String arrayToString(int[] input){
+        String uscita = "";
+        for(int i=0; i<input.length; i++){
+            if(i==(input.length-1)){
+                uscita = uscita + String.valueOf(input[i]);
+            }
+            else{
+                uscita = uscita + String.valueOf(input[i]) + ":";
+            }
+        }
+        return uscita;
+    }
+
+    private String matrixtoString(int[][] input){
+        String uscita = "";
+        for(int i=0; i<2; i++){
+            for(int j=0; j<10; j++){
+                if(j==9){
+                    uscita = uscita + String.valueOf(input[i][j]);
+                }
+                else{
+                    uscita = uscita + String.valueOf(input[i][j]) + "£";
+                }
+            }
+            uscita = uscita + "#";
+        }
+        return uscita;
     }
 }
 

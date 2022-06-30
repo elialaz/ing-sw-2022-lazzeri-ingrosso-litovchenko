@@ -30,6 +30,7 @@ public class ConnectionHandler implements EventReciver {
     private final ArrayList<Pair> client;
     private String[] input;
     private final Object lock;
+    private boolean boolUpdate;
 
     /**
      * Constructor of the ConnectionHandler
@@ -53,6 +54,7 @@ public class ConnectionHandler implements EventReciver {
         model = controller.getModel();
         gameManager = model.getManager();
         this.server = server;
+        boolUpdate = false;
 
         controlManager.subscribe("gamerPlanningTurnNotify", this);
         controlManager.subscribe("gamerActionTurnNotify", this);
@@ -68,7 +70,7 @@ public class ConnectionHandler implements EventReciver {
      * Getter of the Game ID
      * @return integer of the game id
      **/
-    public synchronized int getIdGame(){
+    public int getIdGame(){
         return idGame;
     }
 
@@ -85,6 +87,18 @@ public class ConnectionHandler implements EventReciver {
         catch(ToMuchPlayerExcetpion e){
             manager.notify("clientError");
         }
+    }
+
+    /**
+     * Service Method for removing a player to the current game
+     **/
+    public synchronized void clientRemove(String nickname){
+        for (Pair p: client) {
+            if(p.getNickname().equals(nickname)){
+                client.remove(p);
+            }
+        }
+        update("disconnect");
     }
 
     /**
@@ -115,11 +129,7 @@ public class ConnectionHandler implements EventReciver {
     public void update(String eventType) {
         switch (eventType){
             case "update":
-                synchronized (lock){
-                    for (Pair p: client) {
-                        p.getClient().sendMessage(model.toString());
-                    }
-                }
+                boolUpdate = true;
                 break;
             case "gamerPlanningTurnNotify":
                 actionType = 0;
@@ -137,6 +147,11 @@ public class ConnectionHandler implements EventReciver {
             case "gamerActionTurnNotify":
                 actionType = 1;
                 synchronized (lock){
+                    if(boolUpdate){
+                        for (Pair p: client) {
+                            p.getClient().sendMessage(model.toString());
+                        }
+                    }
                     for (Pair p: client) {
                         if(p.getNickname().equals(controller.getNextTurnPlayer())){
                             p.getClient().sendMessage("enable/actionPhase1");
@@ -147,6 +162,11 @@ public class ConnectionHandler implements EventReciver {
             case "movingMotherNatureGamerTurn":
                 actionType = 2;
                 synchronized (lock){
+                    if(boolUpdate){
+                        for (Pair p: client) {
+                            p.getClient().sendMessage(model.toString());
+                        }
+                    }
                     for (Pair p: client) {
                         if(p.getNickname().equals(controller.getNextTurnPlayer())){
                             p.getClient().sendMessage("enable/actionPhase2");
@@ -157,6 +177,11 @@ public class ConnectionHandler implements EventReciver {
             case "selectCloudTile":
                 actionType = 3;
                 synchronized (lock){
+                    if(boolUpdate){
+                        for (Pair p: client) {
+                            p.getClient().sendMessage(model.toString());
+                        }
+                    }
                     for (Pair p: client) {
                         if(p.getNickname().equals(controller.getNextTurnPlayer())){
                             p.getClient().sendMessage("enable/actionPhase3");
@@ -167,12 +192,25 @@ public class ConnectionHandler implements EventReciver {
             case "win":
                 actionType = 4;
                 synchronized (lock){
+                    if(boolUpdate){
+                        for (Pair p: client) {
+                            p.getClient().sendMessage(model.toString());
+                        }
+                    }
                     for (Pair p: client) {
                         if(p.getNickname().equals(controller.getNextTurnPlayer())){
                             p.getClient().sendMessage("enable/finish/" + controller.getNextTurnPlayer());
                         }
                     }
                 }
+                break;
+            case "disconnect":
+                synchronized (lock){
+                    for (Pair p: client) {
+                        p.getClient().sendMessage("clientDisconnection");
+                    }
+                }
+                server.deleteGame(this);
                 break;
         }
     }

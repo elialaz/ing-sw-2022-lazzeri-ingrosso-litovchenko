@@ -1,12 +1,6 @@
 package it.polimi.ingsw.Server;
 
-import it.polimi.ingsw.Client.ClientEventManager;
-import it.polimi.ingsw.Controller.ControlEventManager;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
@@ -20,6 +14,7 @@ public class Server {
     private int port;
     private ArrayList<ConnectionHandler> game;
     private final Map<String, ServerThread> clientStatus;
+    private ArrayList<String> clientNickname;
     private final Object lock;
 
     /**
@@ -29,6 +24,7 @@ public class Server {
     public Server(int port){
         this.lock = new Object();
         this.clientStatus = Collections.synchronizedMap(new HashMap<>());
+        clientNickname = new ArrayList<>();
         try{
             this.port = port;
             serverSocket = new ServerSocket(port);
@@ -99,36 +95,47 @@ public class Server {
         return game.get(0);
     }
 
+    //TODO sistemare meglio con le disconnessioni
     public void onDisconnect(ServerThread client) {
         synchronized (lock) {
             String nickname = client.getNickname();
 
             if (nickname != null) {
-                /*
-                boolean gameStarted = gameController.isGameStarted();
-                removeClient(nickname, !gameStarted); // enable lobby notifications only if the game didn't start yet.
-
-                if(gameController.getTurnController() != null &&
-                        !gameController.getTurnController().getNicknameQueue().contains(nickname)) {
-                    return;
-                }
-
-                // Resets server status only if the game was already started.
-                // Otherwise the server will wait for a new player to connect.
-                if (gameStarted) {
-                    gameController.broadcastDisconnectionMessage(nickname, " disconnected from the server. GAME ENDED.");
-
-                    gameController.endGame();
-                    clientHandlerMap.clear();
-                }
-
-                 */
+                clientStatus.clear();
+                clientNickname.remove(client.getNickname());
             }
         }
     }
 
     public void addClient(String nickname, ServerThread client) {
         clientStatus.put(nickname, client);
+        clientNickname.add(nickname);
+    }
+
+    public boolean verifyClient(String s){
+        for (String nick: clientNickname) {
+            if(nick.equals(s)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean verifyGameId(int id){
+        for (ConnectionHandler c: game) {
+            if(c.getIdGame()==id){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void deleteGame(ConnectionHandler connectionHandler) {
+        for (ConnectionHandler c: game) {
+            if(c.equals(connectionHandler)){
+                game.remove(c);
+            }
+        }
     }
 
     /**

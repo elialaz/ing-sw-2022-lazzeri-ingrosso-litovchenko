@@ -8,6 +8,7 @@ public class Deck {
     private final int[][] assistantCardDeck;
     private int lastCardValue;
     private int lastMotherNatureValue;
+    private boolean effect;
 
     /**
      * Constructor of the Deck
@@ -16,13 +17,14 @@ public class Deck {
         assistantCardDeck = new int[][]{{1,2,3,4,5,6,7,8,9,10},{1,1,2,2,3,3,4,4,5,5}};
         lastCardValue = -1;
         lastMotherNatureValue = -1;
+        effect = false;
     }
 
     /**
      * Service method that adds 2 move to the current used card
      **/
     public void setEffectMove(){
-        lastMotherNatureValue += 2;
+        effect = true;
     }
 
     /**
@@ -47,6 +49,10 @@ public class Deck {
      * Getter of last Mother Nature card value
      **/
     public int getLastMotherNatureValue() {
+        if(effect){
+            lastMotherNatureValue += 2;
+            effect = false;
+        }
         return lastMotherNatureValue;
     }
 
