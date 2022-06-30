@@ -16,7 +16,7 @@ class MotherNatureTest {
         int position = motherNature.getPosition();
         motherNature.move(5);
         if (position + 5 >= 12){
-            assertEquals(5-(12-position)-1, motherNature.getPosition());
+            assertEquals(5-(12-position), motherNature.getPosition());
         }
         else{
             assertEquals(position + 5, motherNature.getPosition());
