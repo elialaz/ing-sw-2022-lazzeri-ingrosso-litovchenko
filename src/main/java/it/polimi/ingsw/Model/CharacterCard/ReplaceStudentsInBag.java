@@ -24,6 +24,7 @@ public class ReplaceStudentsInBag extends SpecialCard {
      * @param students students that need to be replaced
      * @param bag bag where students were generated
      **/
+    @Override
     public void GetEffect(ArrayList<SchoolBoard> schoolBoards, int[] students, Bag bag) {
         for (SchoolBoard s: schoolBoards) {
             int i=s.removeFromCorridor(students);

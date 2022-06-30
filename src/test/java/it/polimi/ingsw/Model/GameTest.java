@@ -186,12 +186,6 @@ class GameTest {
     }
 
     @Test
-    void playEffect() {
-        ArrayList<SpecialCard> Cards = game.playEffect();
-        assertEquals(Cards, game.getExpertCard());
-    }
-
-    @Test
     void getExpertCard() {
         ArrayList<SpecialCard> Cards = game.getExpertCard();
         assertEquals(Cards, game.getExpertCard());

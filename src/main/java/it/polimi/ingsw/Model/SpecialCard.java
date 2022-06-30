@@ -15,14 +15,6 @@ public abstract class SpecialCard {
     private boolean neverUse;
 
     /**
-     * Service method for effect usage
-     * @param game the played game
-     * @param chosenIsland a choosen island
-     * */
-    public void GetEffect(Game game, ChosenIsland chosenIsland) {
-    }
-
-    /**
      * Service method for setup
      **/
     public void setup(int num){
@@ -45,6 +37,45 @@ public abstract class SpecialCard {
         price++;
     }
 
+    public void GetEffect(Game game, Island island) {
+
+    }
+
+    public void GetEffect(SchoolBoard schoolBoard, int[] studentsFromCart, int[] studentsFromEntrance) {
+
+    }
+
+    public void GetEffect(Deck deck){
+
+    }
+
+    public void GetEffect(int color, Island island) {
+
+    }
+
+    public void GetEffect(Island island) {
+    }
+
+    public void GetEffect(Game g, int playerId) {
+
+    }
+
+    public void GetEffect(Game g) {
+
+    }
+
+    public void GetEffect(ArrayList<SchoolBoard> schoolBoards, int[] students, Bag bag) {
+
+    }
+
+    public void GetEffect(SchoolBoard b, int[] chosenStudent, Bag bag) {
+
+    }
+
+    public void GetEffect(int[] chosenStudent, Island chosenIsland, Bag bag) {
+
+    }
+
     /**
      * Service method for new price set
      **/
@@ -64,6 +95,11 @@ public abstract class SpecialCard {
      **/
     public void setNeverUse() {
         neverUse=false;
+    }
+
+    public int[] getStudents() {
+        int[] prova = new int[]{0, 0, 0, 0, 0};
+        return prova;
     }
 
     /**

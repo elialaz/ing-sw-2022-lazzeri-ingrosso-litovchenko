@@ -8,6 +8,7 @@ import it.polimi.ingsw.Exception.PlayerNotexist;
 import it.polimi.ingsw.Exception.ToMuchPlayerExcetpion;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.ModelEventManager;
+import it.polimi.ingsw.Model.SpecialCard;
 
 import java.util.ArrayList;
 
@@ -212,9 +213,6 @@ public class ConnectionHandler implements EventReciver {
                     }
                 }
                 break;
-            case "expertCard":
-                //TODO da finire expertmode
-                break;
         }
     }
 
@@ -233,6 +231,102 @@ public class ConnectionHandler implements EventReciver {
     public void setStart(boolean start) {
         this.start = start;
         controlManager.notify("start");
+    }
+
+    public synchronized void expertPlay(String message, String nickname){
+        String[] parsed = message.split("/");
+        int id = Integer.parseInt(parsed[1]);
+        String[] parsed2;
+        int type;
+        int[] students;
+        ArrayList<SpecialCard> expertDeck = controller.getExpertCard();
+        SpecialCard chosed = null;
+        for (SpecialCard c: expertDeck) {
+            if(c.getId()==id){
+                chosed = c;
+            }
+        }
+        switch (id){
+            case 1:
+                assert chosed != null;
+                chosed.GetEffect(model, model.getIslandById(Integer.parseInt(parsed[2])));
+                break;
+            case 2:
+                int[] studentsFromCart = new int[5];
+                int[] studentsFromEntrance = new int[5];
+                parsed2 = parsed[3].split(":");
+                for(int i=0; i<5; i++){
+                    studentsFromCart[i] = Integer.parseInt(parsed2[i]);
+                }
+                parsed2 = parsed[4].split(":");
+                for(int i=0; i<5; i++){
+                    studentsFromEntrance[i] = Integer.parseInt(parsed2[i]);
+                }
+                assert chosed != null;
+                chosed.GetEffect(model.getSchoolBoards().get(Integer.parseInt(parsed[2])), studentsFromCart, studentsFromEntrance);
+                break;
+            case 3:
+                int[] studentsToDining = new int[5];
+                int[] studentsToEntrance = new int[5];
+                parsed2 = parsed[3].split(":");
+                for(int i=0; i<5; i++){
+                    studentsToEntrance[i] = Integer.parseInt(parsed2[i]);
+                }
+                parsed2 = parsed[4].split(":");
+                for(int i=0; i<5; i++){
+                    studentsToDining[i] = Integer.parseInt(parsed2[i]);
+                }
+                assert chosed != null;
+                chosed.GetEffect(model.getSchoolBoards().get(Integer.parseInt(parsed[2])), studentsToDining, studentsToEntrance);
+                break;
+            case 4:
+                assert chosed != null;
+                chosed.GetEffect(model.getDeck(Integer.parseInt(parsed[2])));
+                break;
+            case 5:
+                assert chosed != null;
+                chosed.GetEffect(Integer.parseInt(parsed[2]), model.getIslandById(Integer.parseInt(parsed[3])));
+                break;
+            case 6:
+                assert chosed != null;
+                chosed.GetEffect(model.getIslandById(Integer.parseInt(parsed[2])));
+                break;
+            case 7:
+                assert chosed != null;
+                chosed.GetEffect(model.getIslandById(Integer.parseInt(parsed[2])));
+                break;
+            case 8:
+                assert chosed != null;
+                chosed.GetEffect(model, Integer.parseInt(parsed[2]));
+                break;
+            case 9:
+                assert chosed != null;
+                chosed.GetEffect(model);
+                break;
+            case 10:
+                assert chosed != null;
+                type = Integer.parseInt(parsed[2]);
+                students = new int[]{0, 0, 0, 0, 0};
+                students[type] = 2;
+                chosed.GetEffect(model.getSchoolBoards(), students, model.getBag());
+                break;
+            case 11:
+                assert chosed != null;
+                type = Integer.parseInt(parsed[3]);
+                students = new int[]{0, 0, 0, 0, 0};
+                students[type] = 1;
+                chosed.GetEffect(model.getSchoolBoards().get(Integer.parseInt(parsed[2])), students, model.getBag());
+                break;
+            case 12:
+                assert chosed != null;
+                type = Integer.parseInt(parsed[3]);
+                students = new int[]{0, 0, 0, 0, 0};
+                students[type] = 1;
+                chosed.GetEffect(students, model.getIslandById(Integer.parseInt(parsed[2])), model.getBag());
+                break;
+        }
+        assert chosed != null;
+        model.removeCoin(chosed.getPrice(), nickname);
     }
 
     public synchronized void onMessageReceived(String message, String nickname){

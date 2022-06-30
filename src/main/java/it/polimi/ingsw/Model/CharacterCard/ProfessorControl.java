@@ -2,7 +2,6 @@ package it.polimi.ingsw.Model.CharacterCard;
 
 import it.polimi.ingsw.Model.*;
 
-//TODO rethink if the implementation is correct
 
 /**
  * During this turn, you take control of any number of Professors even if you have the same number of Students as the player who currently controls them
@@ -22,6 +21,7 @@ public class ProfessorControl extends SpecialCard {
      * Method that execute the effect
      * @param g game where apply the effect
      **/
+    @Override
     public void GetEffect(Game g) {
         g.setProfessorControl(true);
         if(isNeverUse()){

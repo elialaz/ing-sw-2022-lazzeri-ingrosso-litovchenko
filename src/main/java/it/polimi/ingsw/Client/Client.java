@@ -236,8 +236,8 @@ public class Client implements EventReciver {
                 }
                 break;
             case "expertPlayedSend":
-                synchronized (outputLock){
-                    //TODO expert send
+                synchronized(outputLock){
+                    out.println(userInterface.getSpecialCard());
                 }
                 break;
         }

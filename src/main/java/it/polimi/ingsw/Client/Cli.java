@@ -5,11 +5,7 @@ import it.polimi.ingsw.Event.EventReciver;
 import it.polimi.ingsw.Model.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
 import java.util.Scanner;
-import java.util.regex.Pattern;
-import java.util.stream.IntStream;
 
 /**
  * Main Class of the Client Connection
@@ -36,6 +32,8 @@ public class Cli implements EventReciver {
     private int expertIDChosen;
 
     //Expert character cards
+    private String expertMessage;
+    private boolean notPlayed;
     private int Island_id1;
     private int[] switchFromCard_id2;
     private int[] switchFromEntrance_id2;
@@ -64,6 +62,7 @@ public class Cli implements EventReciver {
         chat = 0;
         studentsToIsland = new ArrayList<>();
         studentsToSchoolboard = new int[]{0, 0, 0, 0, 0};
+        notPlayed = true;
         manager.subscribe("updateData", this);
         manager.subscribe("loginReceived", this);
         manager.subscribe("planningPhaseRecived", this);
@@ -363,7 +362,7 @@ public class Cli implements EventReciver {
     }
 
     /**
-      * Class to display all 12 island and what's on them
+      * Class to display all the island and what's on them
       */
     public void showIslands() {
         ArrayList<int[]> islandStud = model.getIslandStudents();
@@ -469,191 +468,266 @@ public class Cli implements EventReciver {
         }
     }
 
-    //TODO gestire eventuali errori di input/non esisteze
-    //id2, 11 e 12. non controlla che stia prendendo i colori esistenti di studenti dalla carta
-    //id3. non controlla che ci siano studenti nel corridoio
     public void chooseCharacterCard(int id) {
         int[] students_entrance = model.getSchoolboardEntrance(nickname);
+        int[] students_corridor = model.getSchoolboardCorridor(nickname);
+        expertMessage = "";
         System.out.println();
         switch (id) {
             case 1:
                 //cost 3
-                System.out.print("Choose the Island that you want to influence: ");
-                Island_id1 = ReadIntInput(0,12);
-                model.addOneExpertCardUsed(id);
+                if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[id-1]){
+                    System.out.print("Choose the Island that you want to influence: ");
+                    System.out.println("Choose the Island that you want to influence: (0 - " + model.getIslandNum() + ")");
+                    int chose = ReadIntInput(0, model.getIslandNum());
+                    while (chose < 0 || chose > model.getIslandNum()){
+                        System.out.println("What are you doing? There isn't this island. Select another one.");
+                        chose = ReadIntInput(0, model.getIslandNum());
+                    }
+                    model.addOneExpertCardUsed(id);
+                    expertMessage = "playExpert/1/" + chose;
+                    notPlayed = false;
+                }
+                else{
+                    System.out.print("You not have enough coin to play this card ");
+                }
                 break;
             case 2:
                 //cost 1
-                switchFromCard_id2 = new int[]{0,0,0,0,0};
-                switchFromEntrance_id2 = new int[]{0,0,0,0,0};
-                int chosenStudent;
-                System.out.print("This card has the following students: ");
-                //TODO print the 6 students on this card
-                System.out.print("How many students you want to replace (1, 2 or 3): ");
-                int totake = ReadIntInput(1,3);
-                System.out.println("\nDecide which student to switch from card to entrance: 0) " + CLIutils.ANSI_GREEN + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 1) " + CLIutils.ANSI_RED + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 2) " + CLIutils.ANSI_YELLOW + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 3) " + CLIutils.ANSI_PINK + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 4) " + CLIutils.ANSI_BLUE + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
-                for (int i=0; i<totake; i++) {
-                    System.out.print("Student " + i + " from card, will be of color: ");
-                    switch (ReadIntInput(0,4)){
-                        case 0:
-                            switchFromCard_id2[0]++;
-                            break;
-                        case 1:
-                            switchFromCard_id2[1]++;
-                            break;
-                        case 2:
-                            switchFromCard_id2[2]++;
-                            break;
-                        case 3:
-                            switchFromCard_id2[3]++;
-                            break;
-                        case 4:
-                            switchFromCard_id2[4]++;
-                            break;
+                if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[id-1]){
+                    switchFromCard_id2 = new int[]{0,0,0,0,0};
+                    switchFromEntrance_id2 = new int[]{0,0,0,0,0};
+                    int[] studentsCard = model.getStudentsExpertCard();
+                    int chosenStudent;
+                    System.out.print("This card has the following students: ");
+                    displayStudents(studentsCard);
+                    System.out.print("How many students you want to replace (1, 2 or 3): ");
+                    int totake = ReadIntInput(1,3);
+                    System.out.println("\nDecide which student to switch from card to entrance: 0) " + CLIutils.ANSI_GREEN + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 1) " + CLIutils.ANSI_RED + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 2) " + CLIutils.ANSI_YELLOW + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 3) " + CLIutils.ANSI_PINK + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 4) " + CLIutils.ANSI_BLUE + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
+                    for (int i=0; i<totake; i++) {
+                        System.out.print("Student " + (i+1) + " from card, will be of color: ");
+                        chosenStudent = ReadIntInput(0, 4) ;
+                        while (studentsCard[chosenStudent] == 0){
+                            System.out.println("What are you doing? You don't have these students in your entrance. Select another one.");
+                            chosenStudent = ReadIntInput(0, 4);
+                        }
+                        studentsCard[chosenStudent]--;
+                        switchFromCard_id2[chosenStudent]++;
                     }
-                }
-                System.out.print("\nWhich student from the entrance will you exchange them with: ");
-                for (int i=0; i<totake; i++) {
-                    System.out.print("Student " + i + " from entrance, will be of color: ");
-                    chosenStudent = ReadIntInput(0, 4) ;
-                    while (students_entrance[chosenStudent] == 0){
-                        System.out.println("What are you doing? You don't have these students in your entrance. Select another one.");
-                        chosenStudent = ReadIntInput(0, 4);
+                    showSchoolBoard(model.getSchoolboardEntrance(nickname), model.getSchoolboardTower(nickname), model.getSchoolboardColorTower(nickname), model.getSchoolboardProfessor(nickname), model.getSchoolboardCorridor(nickname), nickname);
+                    System.out.print("\nWhich student from the entrance will you exchange them with: ");
+                    for (int i=0; i<totake; i++) {
+                        System.out.print("Student " + (i+1) + " from entrance, will be of color: ");
+                        chosenStudent = ReadIntInput(0, 4) ;
+                        while (students_entrance[chosenStudent] == 0){
+                            System.out.println("What are you doing? You don't have these students in your entrance. Select another one.");
+                            chosenStudent = ReadIntInput(0, 4);
+                        }
+                        students_entrance[chosenStudent]--;
+                        switchFromEntrance_id2[chosenStudent]++;
                     }
-                    //aumento per avere un array di quali e quanti studenti sotrarre dall'entrata
-                    switchFromEntrance_id2[chosenStudent]++;
+                    model.addOneExpertCardUsed(id);
+                    expertMessage = "playExpert/2/" + model.playerId(nickname) + "/";
+                    for(int i=0; i<5; i++){
+                        expertMessage = expertMessage + switchFromCard_id2[i] + ":";
+                    }
+                    expertMessage = expertMessage + "/";
+                    for(int i=0; i<5; i++){
+                        expertMessage = expertMessage + switchFromEntrance_id2[i] + ":";
+                    }
+                    notPlayed = false;
                 }
-                model.addOneExpertCardUsed(id);
+                else{
+                    System.out.print("You not have enough coin to play this card ");
+                }
                 break;
             case 3:
                 //cost 1
-                switchFromCorridor_id3 = new int[]{0,0,0,0,0};
-                switchFromEntrance_id3 = new int[]{0,0,0,0,0};
-                int corridor;
-                System.out.println("From which Dining Room you want to exchange: 0) " + CLIutils.ANSI_GREEN + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 1) " + CLIutils.ANSI_RED + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 2) " + CLIutils.ANSI_YELLOW + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 3) " + CLIutils.ANSI_PINK + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 4) " + CLIutils.ANSI_BLUE + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
-                for (int i=0; i<2; i++) {
-                    switch (ReadIntInput(0,4)){
-                        case 0:
-                            switchFromCorridor_id3[0]++;
-                            break;
-                        case 1:
-                            switchFromCorridor_id3[1]++;
-                            break;
-                        case 2:
-                            switchFromCorridor_id3[2]++;
-                            break;
-                        case 3:
-                            switchFromCorridor_id3[3]++;
-                            break;
-                        case 4:
-                            switchFromCorridor_id3[4]++;
-                            break;
-                    }
-                }
-                System.out.println("Which student you want to move from the entrance to the corridor: 0) " + CLIutils.ANSI_GREEN + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 1) " + CLIutils.ANSI_RED + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 2) " + CLIutils.ANSI_YELLOW + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 3) " + CLIutils.ANSI_PINK + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 4) " + CLIutils.ANSI_BLUE + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
-                for (int i=0; i<2; i++) {
-                    chosenStudent = ReadIntInput(0, 4) ;
-                    while (students_entrance[chosenStudent] == 0){
-                        System.out.println("What are you doing? You don't have these students in your entrance. Select another one.");
+                if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[id-1]){
+                    switchFromCorridor_id3 = new int[]{0,0,0,0,0};
+                    switchFromEntrance_id3 = new int[]{0,0,0,0,0};
+                    int chosenStudent;
+                    showSchoolBoard(model.getSchoolboardEntrance(nickname), model.getSchoolboardTower(nickname), model.getSchoolboardColorTower(nickname), model.getSchoolboardProfessor(nickname), model.getSchoolboardCorridor(nickname), nickname);
+                    System.out.println("From which Dining Room you want to exchange: 0) " + CLIutils.ANSI_GREEN + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 1) " + CLIutils.ANSI_RED + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 2) " + CLIutils.ANSI_YELLOW + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 3) " + CLIutils.ANSI_PINK + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 4) " + CLIutils.ANSI_BLUE + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
+                    for (int i=0; i<2; i++) {
+                        System.out.print("Student " + (i+1) + " from corridor, will be of color: ");
                         chosenStudent = ReadIntInput(0, 4);
+                        while (students_corridor[chosenStudent] == 0){
+                            System.out.println("What are you doing? You don't have these students in your corridor. Select another one.");
+                            chosenStudent = ReadIntInput(0, 4);
+                        }
+                        students_corridor[chosenStudent]--;
+                        switchFromCorridor_id3[chosenStudent]++;
                     }
-                    switchFromEntrance_id3[chosenStudent]++;
+                    System.out.println("Which student you want to move from the entrance to the corridor: 0) " + CLIutils.ANSI_GREEN + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 1) " + CLIutils.ANSI_RED + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 2) " + CLIutils.ANSI_YELLOW + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 3) " + CLIutils.ANSI_PINK + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 4) " + CLIutils.ANSI_BLUE + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
+                    for (int i=0; i<2; i++) {
+                        System.out.print("Student " + (i+1) + " from entrance, will be of color: ");
+                        chosenStudent = ReadIntInput(0, 4);
+                        while (students_entrance[chosenStudent] == 0){
+                            System.out.println("What are you doing? You don't have these students in your entrance. Select another one.");
+                            chosenStudent = ReadIntInput(0, 4);
+                        }
+                        students_entrance[chosenStudent]--;
+                        switchFromEntrance_id3[chosenStudent]++;
+                    }
+                    model.addOneExpertCardUsed(id);
+                    expertMessage = "playExpert/3/" + model.playerId(nickname) + "/";
+                    for(int i=0; i<5; i++){
+                        expertMessage = expertMessage + switchFromCorridor_id3[i] + ":";
+                    }
+                    expertMessage = expertMessage + "/";
+                    for(int i=0; i<5; i++){
+                        expertMessage = expertMessage + switchFromEntrance_id3[i] + ":";
+                    }
+                    notPlayed = false;
                 }
-                model.addOneExpertCardUsed(id);
+                else{
+                    System.out.print("You not have enough coin to play this card ");
+                }
                 break;
             case 4:
                 //cost 1
-                extraMotherNatureMove_id4 = 2;
-                model.addOneExpertCardUsed(id);
+                if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[id-1]){
+                    model.addOneExpertCardUsed(id);
+                    expertMessage = "playExpert/4/" + model.playerId(nickname);
+                    notPlayed = false;
+                }
+                else{
+                    System.out.print("You not have enough coin to play this card ");
+                }
                 break;
             case 5:
                 //cost 3
-                System.out.println("Which color student will you choose: 0) " + CLIutils.ANSI_GREEN + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 1) " + CLIutils.ANSI_RED + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 2) " + CLIutils.ANSI_YELLOW + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 3) " + CLIutils.ANSI_PINK + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 4) " + CLIutils.ANSI_BLUE + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
-                colorNoInfluence_id5 = ReadIntInput(0,4);
-                model.addOneExpertCardUsed(id);
+                if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[id-1]){
+                    System.out.println("Which color student will you choose: 0) " + CLIutils.ANSI_GREEN + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 1) " + CLIutils.ANSI_RED + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 2) " + CLIutils.ANSI_YELLOW + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 3) " + CLIutils.ANSI_PINK + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 4) " + CLIutils.ANSI_BLUE + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
+                    colorNoInfluence_id5 = ReadIntInput(0,4);
+                    model.addOneExpertCardUsed(id);
+                    expertMessage = "playExpert/5/" + colorNoInfluence_id5 + "/" + model.playerId(nickname);
+                    notPlayed = false;
+                }
+                else{
+                    System.out.print("You not have enough coin to play this card ");
+                }
                 break;
             case 6:
                 //cost 3
-                towerInfluence_id6 = false;
-                model.addOneExpertCardUsed(id);
+                if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[id-1]){
+                    System.out.println("Which island will you choose: (0 - " + model.getIslandNum() + ")");
+                    int chose = ReadIntInput(0, model.getIslandNum());
+                    while (chose < 0 || chose > model.getIslandNum()){
+                        System.out.println("What are you doing? There isn't this island. Select another one.");
+                        chose = ReadIntInput(0, model.getIslandNum());
+                    }
+                    model.addOneExpertCardUsed(id);
+                    expertMessage = "playExpert/6/" + chose;
+                    notPlayed = false;
+                }
+                else{
+                    System.out.print("You not have enough coin to play this card ");
+                }
                 break;
             case 7:
                 //cost 2
-
+                if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[id-1]){
+                    System.out.println("Which island will you choose: (0 - " + model.getIslandNum() + ")");
+                    int chose = ReadIntInput(0, model.getIslandNum());
+                    while (chose < 0 || chose > model.getIslandNum()){
+                        System.out.println("What are you doing? There isn't this island. Select another one.");
+                        chose = ReadIntInput(0, model.getIslandNum());
+                    }
+                    model.addOneExpertCardUsed(id);
+                    expertMessage = "playExpert/7/" + chose;
+                    notPlayed = false;
+                }
+                else{
+                    System.out.print("You not have enough coin to play this card ");
+                }
                 model.addOneExpertCardUsed(id);
                 break;
             case 8:
                 //cost 2
-                extraStudentInfluence_id8 = 2;
-                model.addOneExpertCardUsed(id);
+                if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[id-1]){
+                    model.addOneExpertCardUsed(id);
+                    expertMessage = "playExpert/8/" + model.playerId(nickname);
+                    notPlayed = false;
+                }
+                else{
+                    System.out.print("You not have enough coin to play this card ");
+                }
                 break;
             case 9:
                 //cost 2
-
-                model.addOneExpertCardUsed(id);
+                if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[id-1]){
+                    model.addOneExpertCardUsed(id);
+                    expertMessage = "playExpert/9";
+                    notPlayed = false;
+                }
+                else{
+                    System.out.print("You not have enough coin to play this card ");
+                }
                 break;
             case 10:
                 //cost 3
-
-                model.addOneExpertCardUsed(id);
+                if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[id-1]){
+                    System.out.println("Which color student will you choose: 0) " + CLIutils.ANSI_GREEN + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 1) " + CLIutils.ANSI_RED + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 2) " + CLIutils.ANSI_YELLOW + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 3) " + CLIutils.ANSI_PINK + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 4) " + CLIutils.ANSI_BLUE + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
+                    int chose = ReadIntInput(0,4);
+                    model.addOneExpertCardUsed(id);
+                    expertMessage = "playExpert/10/" + chose;
+                    notPlayed = false;
+                }
+                else{
+                    System.out.print("You not have enough coin to play this card ");
+                }
                 break;
             case 11:
                 //cost 2
-                System.out.print("This card has the following students: ");
-                //TODO print the 4 students on this card
-                System.out.println("Which student color will you move: 0) " + CLIutils.ANSI_GREEN + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 1) " + CLIutils.ANSI_RED + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 2) " + CLIutils.ANSI_YELLOW + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 3) " + CLIutils.ANSI_PINK + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 4) " + CLIutils.ANSI_BLUE + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
-                switch (ReadIntInput(0,4)){
-                    case 0:
-                        studentsToSchoolboard[0]++;
-                        break;
-                    case 1:
-                        studentsToSchoolboard[1]++;
-                        break;
-                    case 2:
-                        studentsToSchoolboard[2]++;
-                        break;
-                    case 3:
-                        studentsToSchoolboard[3]++;
-                        break;
-                    case 4:
-                        studentsToSchoolboard[4]++;
-                        break;
+                if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[id-1]){
+                    System.out.print("This card has the following students: ");
+                    displayStudents(model.getStudentsExpertCard());
+                    System.out.println("Which student color will you move: 0) " + CLIutils.ANSI_GREEN + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 1) " + CLIutils.ANSI_RED + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 2) " + CLIutils.ANSI_YELLOW + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 3) " + CLIutils.ANSI_PINK + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 4) " + CLIutils.ANSI_BLUE + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
+                    int chose = ReadIntInput(0, 4);
+                    while (model.getStudentsExpertCard()[chose]==0){
+                        System.out.println("What are you doing? There isn't this students on the card. Select another one.");
+                        chose = ReadIntInput(0, 4);
+                    }
+                    model.addOneExpertCardUsed(id);
+                    expertMessage = "playExpert/11/" + model.playerId(nickname) + "/" + chose;
+                    notPlayed = false;
                 }
-                model.addOneExpertCardUsed(id);
+                else{
+                    System.out.print("You not have enough coin to play this card ");
+                }
                 break;
             case 12:
                 //cost 1
-                int[] students_isle = new int[]{0,0,0,0,0,0};
-                System.out.print("This card has the following students: ");
-                //TODO print the 4 students on this card
-                System.out.print("To which island (choose from 0 to 11): ");
-                int chosenIsland = ReadIntInput(0, 11);
-                students_isle[0] = chosenIsland;
-                System.out.println("Which student color will you move to the chosen island: 0) " + CLIutils.ANSI_GREEN + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 1) " + CLIutils.ANSI_RED + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 2) " + CLIutils.ANSI_YELLOW + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 3) " + CLIutils.ANSI_PINK + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 4) " + CLIutils.ANSI_BLUE + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
-                switch (ReadIntInput(0,4)){
-                    case 0:
-                        students_isle[1]++;
-                        break;
-                    case 1:
-                        students_isle[2]++;
-                        break;
-                    case 2:
-                        students_isle[3]++;
-                        break;
-                    case 3:
-                        students_isle[4]++;
-                        break;
-                    case 4:
-                        students_isle[5]++;
-                        break;
+                if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[id-1]){
+                    System.out.print("This card has the following students: ");
+                    displayStudents(model.getStudentsExpertCard());
+                    System.out.println("Which island will you choose: (0 - " + model.getIslandNum() + ")");
+                    int chose = ReadIntInput(0, model.getIslandNum());
+                    while (chose < 0 || chose > model.getIslandNum()){
+                        System.out.println("What are you doing? There isn't this island. Select another one.");
+                        chose = ReadIntInput(0, model.getIslandNum());
+                    }
+                    System.out.println("Which student color will you move to the chosen island: 0) " + CLIutils.ANSI_GREEN + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 1) " + CLIutils.ANSI_RED + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 2) " + CLIutils.ANSI_YELLOW + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 3) " + CLIutils.ANSI_PINK + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 4) " + CLIutils.ANSI_BLUE + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
+                    int chose2 = ReadIntInput(0, 4);
+                    while (model.getStudentsExpertCard()[chose2]==0){
+                        System.out.println("What are you doing? There isn't this students on the card. Select another one.");
+                        chose2 = ReadIntInput(0, 4);
+                    }
+                    model.addOneExpertCardUsed(id);
+                    expertMessage = "playExpert/12/" + chose + "/" + chose2;
+                    notPlayed = false;
                 }
-                studentsToIsland.add(students_isle);
-                model.addOneExpertCardUsed(id);
+                else{
+                    System.out.print("You not have enough coin to play this card ");
+                }
                 break;
         }
     }
 
     public void displayCharacterCard(ArrayList<Integer> characterCards, int[] characterCards_prices) {
+        System.out.println("\nYou have " + model.getCoinPlayer(nickname) + " Coin");
         System.out.println("\nThe following character cards are on the table, choose which one you want to play:");
         for (Integer i: characterCards){
             switch (i) {
@@ -698,7 +772,6 @@ public class Cli implements EventReciver {
                     System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i-1] + CLIutils.COIN + CLIutils.ANSI_RESET );
                     break;
                 case 9:
-                    //TODO ProfessorControl sbagliato
                     //cost 2
                     System.out.println("> During this turn, you take control of any number of Professors even if you have the same number of Students as the player who currently controls them: ");
                     System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i-1] + CLIutils.COIN + CLIutils.ANSI_RESET );
@@ -722,7 +795,6 @@ public class Cli implements EventReciver {
         }
     }
 
-    //TODO metodo presente all'inizio di tutte le fasi, gestire tutto da qui
     public void playCharacterCard() {
         if (model.isExpert()) {
             System.out.println("Do you want to play a character card?: 1) Yes || 2) No");
@@ -730,11 +802,13 @@ public class Cli implements EventReciver {
             if (playOrNot == 1){
                 System.out.println("Remember that you had these ones (0, 1 and 2): ");
                 ArrayList<Integer> ex = model.getExpertCardId();
-                displayCharacterCard(model.getExpertCardId(), model.getExpertCardPrice());
-                System.out.println("Which one will you play 0, 1 or 2: ");
-                int id = ReadIntInput(0,2);
-                chooseCharacterCard(ex.get(id));
-                expertIDChosen = ex.get(id);
+                do{
+                    displayCharacterCard(model.getExpertCardId(), model.getExpertCardPrice());
+                    System.out.println("Which one will you play 0, 1 or 2: ");
+                    int id = ReadIntInput(0,2);
+                    expertIDChosen = ex.get(id);
+                    chooseCharacterCard(ex.get(id));
+                }while (notPlayed);
                 manager.notify("expertPlayedSend");
             }
         }
@@ -951,5 +1025,9 @@ public class Cli implements EventReciver {
 
     public int getExpertIDChosen() {
         return expertIDChosen;
+    }
+
+    public String getSpecialCard() {
+        return expertMessage;
     }
 }

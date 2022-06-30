@@ -22,6 +22,7 @@ public class FromCartToEntrance extends SpecialCard {
     /**
      * Method that execute the effect
      **/
+    @Override
     public void GetEffect(SchoolBoard schoolBoard, int[] studentsFromCart, int[] studentsFromEntrance) {
         schoolBoard.removeEntrance(studentsFromEntrance);
         schoolBoard.moveToEntrance(studentsFromCart);
@@ -37,6 +38,7 @@ public class FromCartToEntrance extends SpecialCard {
      * Getter for the students on the card
      * @return students on the card
      **/
+    @Override
     public int[] getStudents() {
         return students;
     }

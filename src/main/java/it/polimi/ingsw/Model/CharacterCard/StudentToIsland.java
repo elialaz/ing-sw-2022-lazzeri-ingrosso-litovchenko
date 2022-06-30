@@ -25,6 +25,7 @@ public class StudentToIsland extends SpecialCard {
      * @param chosenIsland island where the students need to be placed
      * @param bag bag where students where generated
      **/
+    @Override
     public void GetEffect(int[] chosenStudent, Island chosenIsland, Bag bag) {
         chosenIsland.addStudents(chosenStudent);
         for(int i=0; i<5; i++){
@@ -44,6 +45,7 @@ public class StudentToIsland extends SpecialCard {
      * Getter for the students on the card
      * @return the students number on the cart
      **/
+    @Override
     public int[] getStudents() {
         return students;
     }

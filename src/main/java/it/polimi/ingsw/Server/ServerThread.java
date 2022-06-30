@@ -93,7 +93,9 @@ class ServerThread extends Thread{
                                 sendMessage("failed");
                             }
                         }
-                        //TODO aggiungere if expertmode
+                        else if(input[0].equals("playExpert")){
+                            master.expertPlay(message, nickname);
+                        }
                         else {
                             master.onMessageReceived(message, nickname);
                         }

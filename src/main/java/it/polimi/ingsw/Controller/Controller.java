@@ -6,6 +6,9 @@ import it.polimi.ingsw.Exception.PlayerNotexist;
 import it.polimi.ingsw.Exception.ToMuchPlayerExcetpion;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Island;
+import it.polimi.ingsw.Model.SpecialCard;
+
+import java.util.ArrayList;
 
 //TODO sistemare ultima condizione vittoria che non chiara e partite a 4 giocatori
 /**
@@ -193,5 +196,12 @@ public class Controller implements EventReciver {
      **/
     public Game getModel() {
         return model;
+    }
+
+    /**
+     * Getter of the Expert Card
+     **/
+    public ArrayList<SpecialCard> getExpertCard(){
+        return model.getExpertCard();
     }
 }

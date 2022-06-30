@@ -58,4 +58,12 @@ public class Player {
     public String getName(){
         return name;
     }
+
+    /**
+     * Remove coin to the player reserve
+     * @param number number of coin to be removed
+     **/
+    public void removeCoin(int number){
+        coin=coin-number;
+    }
 }

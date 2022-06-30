@@ -167,6 +167,7 @@ public class Game {
     /**
      * Service method professorControl effect
      **/
+    //TODO implements with check influence
     public void setProfessorControl(boolean professorControl) {
         this.professorControl = professorControl;
     }
@@ -429,16 +430,6 @@ public class Game {
     }
 
     /**
-     * Service method for playing the special card effect
-     * @return the expert card
-     **/
-    public ArrayList<SpecialCard> playEffect(){
-        manager.notify("update");
-        manager.notify("update");
-        return expertCard;
-    }
-
-    /**
      * Service method for getting the special card effect
      * @return the expert card
      **/
@@ -655,7 +646,12 @@ public class Game {
         text = text + "/";
         if(expertMode){
             for (SpecialCard s: expertCard) {
-                text = text + s.getId() + "!";
+                if(s.getId()==2 || s.getId()==12 || s.getId()==11){
+                    text = text + s.getId() + "!" + arrayToString(s.getStudents()) + "!";
+                }
+                else {
+                    text = text + s.getId() + "!";
+                }
             }
             text = text + "/";
         }
@@ -710,6 +706,18 @@ public class Game {
 
     public void resetCardLastTurn(){
         cardLastTurn = new int[]{-1, -1, -1, -1};
+    }
+
+    public void removeCoin(int number, String nickname){
+        for (Player p: gamer) {
+            if(p.getName().equals(nickname)){
+                p.removeCoin(number);
+            }
+        }
+    }
+
+    public Deck getDeck(int p) {
+        return assistantCard.get(p);
     }
 }
 

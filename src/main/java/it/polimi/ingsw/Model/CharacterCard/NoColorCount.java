@@ -19,6 +19,7 @@ public class NoColorCount extends SpecialCard {
     /**
      * Method that execute the effect
      **/
+    @Override
     public void GetEffect(int color, Island island) {
         island.setColorNotCount(color);
         if(isNeverUse()){

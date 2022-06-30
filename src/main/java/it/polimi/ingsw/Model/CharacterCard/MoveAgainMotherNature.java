@@ -19,6 +19,7 @@ public class MoveAgainMotherNature extends SpecialCard {
     /**
      * Method that execute the effect
      **/
+    @Override
     public void GetEffect(Deck deck) {
         deck.setEffectMove();
         if(isNeverUse()){

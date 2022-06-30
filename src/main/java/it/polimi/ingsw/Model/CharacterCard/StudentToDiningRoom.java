@@ -23,6 +23,7 @@ public class StudentToDiningRoom extends SpecialCard {
      * Getter for the students on the card
      * @return the students on the card
      **/
+    @Override
     public int[] getStudents() {
         return cardStudents;
     }
@@ -33,6 +34,7 @@ public class StudentToDiningRoom extends SpecialCard {
      * @param chosenStudent the students to move
      * @param bag bag where students where generated
      **/
+    @Override
     public void GetEffect(SchoolBoard b, int[] chosenStudent, Bag bag) {
         b.addCorridor(chosenStudent);
         for(int i=0; i<5; i++){

@@ -23,6 +23,7 @@ public class NoEntryTilesEffect extends SpecialCard {
      * Method that execute the effect
      * @param ChosenIsland island where the NoEntryTile need to be placed
      **/
+    @Override
     public void GetEffect(Island ChosenIsland) {
         if(numEntryTile>0) {
             ChosenIsland.setNoEntryTile();

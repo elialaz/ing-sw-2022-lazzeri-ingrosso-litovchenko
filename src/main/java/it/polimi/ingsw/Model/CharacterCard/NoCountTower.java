@@ -20,6 +20,7 @@ public class NoCountTower extends SpecialCard {
     /**
      * Method that execute the effect
      **/
+    @Override
     public void GetEffect(Island island) {
         island.setNoCountTower(true);
         if(isNeverUse()){

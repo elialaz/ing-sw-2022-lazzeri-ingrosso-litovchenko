@@ -21,6 +21,7 @@ public class PlusTwoEffect extends SpecialCard {
      * @param g game where the effect need to be applied
      * @param playerId id of the player
      **/
+    @Override
     public void GetEffect(Game g, int playerId) {
         g.setPlusTwoEffect(true);
         g.setPlusTwoEffectPlayer(playerId);
