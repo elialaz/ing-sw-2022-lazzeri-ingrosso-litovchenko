@@ -23,7 +23,7 @@ public class MotherNature {
      **/
     public void move(int island){
         if((position + island) >= 12){
-            position = island - (12 - position) - 1;
+            position = island - (12 - position);
         }
         else{
             position = position + island;

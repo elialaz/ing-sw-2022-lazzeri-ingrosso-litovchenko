@@ -24,6 +24,7 @@ public class Server {
     public Server(int port){
         this.lock = new Object();
         this.clientStatus = Collections.synchronizedMap(new HashMap<>());
+        clientNickname = new ArrayList<>();
         try{
             this.port = port;
             serverSocket = new ServerSocket(port);

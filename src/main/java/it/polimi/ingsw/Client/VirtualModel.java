@@ -11,6 +11,7 @@ public class VirtualModel {
     private ArrayList<Integer> coinPlayer;
     private ArrayList<int[][]> deck;
     private ArrayList<Integer> lastCardUsed;
+    private ArrayList<Integer> lastMotherNatureValueCard;
     private ArrayList<int[]> schoolboardEntrance;
     private ArrayList<Integer> schoolboardTower;
     private ArrayList<TowerColor> schoolboardColorTower;
@@ -27,6 +28,7 @@ public class VirtualModel {
     private int positionMotherNature;
     private boolean[] professorOnGameboard;
     private int coinPile;
+    private int[] expertCardPrice;
 
 
 
@@ -53,9 +55,10 @@ public class VirtualModel {
         parsed2 = parsed[4].split("!");
         deck = new ArrayList<>();
         lastCardUsed = new ArrayList<>();
+        lastMotherNatureValueCard = new ArrayList<>();
         count=0;
         while(count<playerNum){
-            String[] parsed3 = parsed2[count2].split(":");
+            String[] parsed3 = parsed2[count].split(":");
             String[] parsed4 = parsed3[0].split("#");
             String[] parsed5 = parsed4[0].split("£");
             int[][] AssistantCards = new int[2][10];
@@ -67,7 +70,8 @@ public class VirtualModel {
                 AssistantCards[1][j] = Integer.parseInt(parsed5[j]);
             }
             deck.add(AssistantCards);
-            lastCardUsed.add(Integer.parseInt(parsed3[2]));
+            lastCardUsed.add(Integer.parseInt(parsed3[1]));
+            lastMotherNatureValueCard.add(Integer.parseInt(parsed3[2]));
             count++;
         }
         parsed2 = parsed[5].split("!");
@@ -78,36 +82,36 @@ public class VirtualModel {
         schoolboardCorridor = new ArrayList<>();
         schoolboardProfessor = new ArrayList<>();
         while(count<playerNum){
-            String[] parsed3 = parsed2[count2].split(":");
+            String[] parsed3 = parsed2[count].split(":");
             int[] entrance = new int[]{0, 0, 0, 0, 0};
-            entrance[0] = Integer.parseInt(parsed3[17 * count]);
-            entrance[1] = Integer.parseInt(parsed3[1+17*count]);
-            entrance[2] = Integer.parseInt(parsed3[2+17*count]);
-            entrance[3] = Integer.parseInt(parsed3[3+17*count]);
-            entrance[4] = Integer.parseInt(parsed3[4+17*count]);
+            entrance[0] = Integer.parseInt(parsed3[0]);
+            entrance[1] = Integer.parseInt(parsed3[1]);
+            entrance[2] = Integer.parseInt(parsed3[2]);
+            entrance[3] = Integer.parseInt(parsed3[3]);
+            entrance[4] = Integer.parseInt(parsed3[4]);
             schoolboardEntrance.add(entrance);
-            schoolboardTower.add(Integer.parseInt(parsed3[5+17*count]));
-            if(parsed3[6+17*count].equals("WHITE")){
+            schoolboardTower.add(Integer.parseInt(parsed3[5]));
+            if(parsed3[6].equals("WHITE")){
                 schoolboardColorTower.add(TowerColor.WHITE);
-            } else if (parsed3[6+17*count].equals("GRAY")) {
+            } else if (parsed3[6].equals("GRAY")) {
                 schoolboardColorTower.add(TowerColor.GRAY);
             }
             else {
                 schoolboardColorTower.add(TowerColor.BLACK);
             }
             int[] corridor = new int[]{0, 0, 0, 0, 0};
-            corridor[0] = Integer.parseInt(parsed3[7+17*count]);
-            corridor[1] = Integer.parseInt(parsed3[8+17*count]);
-            corridor[2] = Integer.parseInt(parsed3[9+17*count]);
-            corridor[3] = Integer.parseInt(parsed3[10+17*count]);
-            corridor[4] = Integer.parseInt(parsed3[11+17*count]);
+            corridor[0] = Integer.parseInt(parsed3[7]);
+            corridor[1] = Integer.parseInt(parsed3[8]);
+            corridor[2] = Integer.parseInt(parsed3[9]);
+            corridor[3] = Integer.parseInt(parsed3[10]);
+            corridor[4] = Integer.parseInt(parsed3[11]);
             schoolboardCorridor.add(corridor);
             boolean[] professor = new boolean[]{false, false, false, false, false};
-            professor[0] = Boolean.parseBoolean(parsed3[12+17*count]);
-            professor[1] = Boolean.parseBoolean(parsed3[13+17*count]);
-            professor[2] = Boolean.parseBoolean(parsed3[14+17*count]);
-            professor[3] = Boolean.parseBoolean(parsed3[15+17*count]);
-            professor[4] = Boolean.parseBoolean(parsed3[16+17*count]);
+            professor[0] = Boolean.parseBoolean(parsed3[12]);
+            professor[1] = Boolean.parseBoolean(parsed3[13]);
+            professor[2] = Boolean.parseBoolean(parsed3[14]);
+            professor[3] = Boolean.parseBoolean(parsed3[15]);
+            professor[4] = Boolean.parseBoolean(parsed3[16]);
             schoolboardProfessor.add(professor);
             count++;
         }
@@ -119,48 +123,44 @@ public class VirtualModel {
         islandNoEntryTile = new ArrayList<>();
         islandNoEntryTileNum = new ArrayList<>();
         count=0;
-        int cont2=7;
-        if(expert){
-            cont2=9;
-        }
-        while(count<playerNum){
-            String[] parsed3 = parsed2[count2].split(":");
+        while(count<12){
+            String[] parsed3 = parsed2[count].split(":");
             int[] students = new int[]{0, 0, 0, 0, 0};
-            students[0] = Integer.parseInt(parsed3[cont2 * count]);
-            students[1] = Integer.parseInt(parsed3[1+cont2*count]);
-            students[2] = Integer.parseInt(parsed3[2+cont2*count]);
-            students[3] = Integer.parseInt(parsed3[3+cont2*count]);
-            students[4] = Integer.parseInt(parsed3[4+cont2*count]);
+            students[0] = Integer.parseInt(parsed3[0]);
+            students[1] = Integer.parseInt(parsed3[1]);
+            students[2] = Integer.parseInt(parsed3[2]);
+            students[3] = Integer.parseInt(parsed3[3]);
+            students[4] = Integer.parseInt(parsed3[4]);
             islandStudents.add(students);
-            if(parsed3[5+cont2*count].equals("WHITE")){
+            if(parsed3[5].equals("WHITE")){
                 islandColor.add(TowerColor.WHITE);
-            } else if (parsed3[5+cont2*count].equals("GRAY")) {
+            } else if (parsed3[5].equals("GRAY")) {
                 islandColor.add(TowerColor.GRAY);
             }
-            else if(parsed3[5+cont2*count].equals("BLACK")){
+            else if(parsed3[5].equals("BLACK")){
                 islandColor.add(TowerColor.BLACK);
             }
             else {
                 islandColor.add(TowerColor.NOT);
             }
-            islandTowerNum.add(Integer.parseInt(parsed3[6+cont2*count]));
+            islandTowerNum.add(Integer.parseInt(parsed3[6]));
             if(expert){
-                islandNoEntryTile.add(Boolean.parseBoolean(parsed3[7+cont2*count]));
-                islandNoEntryTileNum.add(Integer.parseInt(parsed3[8+cont2*count]));
+                islandNoEntryTile.add(Boolean.parseBoolean(parsed3[7]));
+                islandNoEntryTileNum.add(Integer.parseInt(parsed3[8]));
             }
             count++;
         }
-        parsed2 = parsed[5].split("!");
+        parsed2 = parsed[8].split("!");
         cloudTileStudents = new ArrayList<>();
         count=0;
         while(count<playerNum){
-            String[] parsed3 = parsed2[8].split(":");
+            String[] parsed3 = parsed2[count].split(":");
             int[] students = new int[]{0, 0, 0, 0, 0};
-            students[0] = Integer.parseInt(parsed3[cont2 * count]);
-            students[1] = Integer.parseInt(parsed3[1+cont2*count]);
-            students[2] = Integer.parseInt(parsed3[2+cont2*count]);
-            students[3] = Integer.parseInt(parsed3[3+cont2*count]);
-            students[4] = Integer.parseInt(parsed3[4+cont2*count]);
+            students[0] = Integer.parseInt(parsed3[0]);
+            students[1] = Integer.parseInt(parsed3[1]);
+            students[2] = Integer.parseInt(parsed3[2]);
+            students[3] = Integer.parseInt(parsed3[3]);
+            students[4] = Integer.parseInt(parsed3[4]);
             count++;
         }
         if(expert){
@@ -186,42 +186,87 @@ public class VirtualModel {
             }
             coinPile = Integer.parseInt(parsed[11]);
         }
+        expertCardPrice = new int[]{3, 1, 1, 1, 3, 3, 2, 2, 2, 3, 2, 1};
     }
 
     public ArrayList<String> getPlayer() {
         return player;
     }
 
-    public ArrayList<Integer> getCoinPlayer() {
-        return coinPlayer;
+    public int getCoinPlayer(String p) {
+        for(int i=0; i<playerNum; i++){
+            if(player.get(i).equals(p)){
+                return coinPlayer.get(i);
+            }
+        }
+        return -1;
     }
 
-    public ArrayList<int[][]> getDeck() {
-        return deck;
+    public int[][] getDeck(String p) {
+        int[][] playerDeck = new int[][]{};
+        for(int i=0; i<playerNum; i++){
+            if(player.get(i).equals(p)){
+                playerDeck = deck.get(i);
+            }
+        }
+        return playerDeck;
     }
 
-    public ArrayList<Integer> getLastCardUsed() {
-        return lastCardUsed;
+    public Integer getLastCardUsed(String p) {
+        for(int i=0; i<playerNum; i++){
+            if(player.get(i).equals(p)){
+                return lastCardUsed.get(i);
+            }
+        }
+        return -1;
     }
 
-    public ArrayList<int[]> getSchoolboardEntrance() {
-        return schoolboardEntrance;
+    public int[] getSchoolboardEntrance(String p) {
+        int[] entrance = new int[]{};
+        for(int i=0; i<playerNum; i++){
+            if(player.get(i).equals(p)){
+                entrance = schoolboardEntrance.get(i);
+            }
+        }
+        return entrance;
     }
 
-    public ArrayList<Integer> getSchoolboardTower() {
-        return schoolboardTower;
+    public int getSchoolboardTower(String p) {
+        for(int i=0; i<playerNum; i++){
+            if(player.get(i).equals(p)){
+                return schoolboardTower.get(i);
+            }
+        }
+        return -1;
     }
 
-    public ArrayList<TowerColor> getSchoolboardColorTower() {
-        return schoolboardColorTower;
+    public TowerColor getSchoolboardColorTower(String p) {
+        for(int i=0; i<playerNum; i++){
+            if(player.get(i).equals(p)){
+                return schoolboardColorTower.get(i);
+            }
+        }
+        return TowerColor.NOT;
     }
 
-    public ArrayList<int[]> getSchoolboardCorridor() {
-        return schoolboardCorridor;
+    public int[] getSchoolboardCorridor(String p) {
+        int[] corridor = new int[]{};
+        for(int i=0; i<playerNum; i++){
+            if(player.get(i).equals(p)){
+                corridor = schoolboardCorridor.get(i);
+            }
+        }
+        return corridor;
     }
 
-    public ArrayList<boolean[]> getSchoolboardProfessor() {
-        return schoolboardProfessor;
+    public boolean[] getSchoolboardProfessor(String p) {
+        boolean[] prof = new boolean[]{};
+        for(int i=0; i<playerNum; i++){
+            if(player.get(i).equals(p)){
+                prof = schoolboardProfessor.get(i);
+            }
+        }
+        return prof;
     }
 
     public boolean isExpert() {
@@ -240,12 +285,12 @@ public class VirtualModel {
         return islandTowerNum;
     }
 
-    public ArrayList<Boolean> getIslandNoEntryTile() {
-        return islandNoEntryTile;
+    public boolean getIslandNoEntryTile(int i) {
+        return islandNoEntryTile.get(i);
     }
 
-    public ArrayList<Integer> getIslandNoEntryTileNum() {
-        return islandNoEntryTileNum;
+    public int getIslandNoEntryTileNum(int i) {
+        return islandNoEntryTileNum.get(i);
     }
 
     public ArrayList<int[]> getCloudTileStudents() {
@@ -270,5 +315,18 @@ public class VirtualModel {
 
     public int getGameId() {
         return gameId;
+    }
+
+    public int[] getExpertCardPrice() {
+        return expertCardPrice;
+    }
+
+    public int getLastCardMotherNature(String p) {
+        for(int i=0; i<playerNum; i++){
+            if(player.get(i).equals(p)){
+                return lastMotherNatureValueCard.get(i);
+            }
+        }
+        return -1;
     }
 }

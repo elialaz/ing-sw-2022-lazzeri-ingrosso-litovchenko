@@ -99,10 +99,15 @@ class ServerThread extends Thread{
                     }
                 }
             }
-        } catch (Exception e) {
+        }
+        catch (NullPointerException e) {
+            System.out.println("Client " + nickname + " Disconnected");
+        }
+        catch (Exception e) {
             System.out.println("Error during receive of the data");
         }
         connected = false;
+        disconnect();
         socket.close();
     }
 

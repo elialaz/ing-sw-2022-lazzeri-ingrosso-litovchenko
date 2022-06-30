@@ -59,11 +59,12 @@ public class Cli implements EventReciver {
         manager.subscribe("disconnection", this);
     }
 
+    //TODO
     @Override
     public void update(String eventType) {
         switch (eventType) {
             case "updateData":
-                statusGameBoard();
+                showGameBoard();
                 break;
             case "loginReceived":
                 menuStartGame();
@@ -115,24 +116,10 @@ public class Cli implements EventReciver {
      * Service metod for setting a new nickname
      **/
     public void retryNickname() {
+        System.out.println("An already connected player as this nickname please select a new one");
         System.out.println("Select your unique Nickname: ");
         nickname = ReadStringInput();
         manager.notify("loginSend");
-    }
-
-    /**
-      * Reads a String inserted by the user. An empty string is not accepted.
-      * @return str of type String
-      **/
-    public String ReadStringInput() {
-        String str;
-        do {
-            System.out.print("> ");
-            str = scan.nextLine();
-            if (str.equals(""))
-                System.out.println(CLIutils.ANSI_BRIGHT_RED + "Empty string is not valid. Write something." + CLIutils.ANSI_RESET);
-        } while (str.equals(""));
-        return str;
     }
 
     public String getNickname() {
@@ -196,6 +183,7 @@ public class Cli implements EventReciver {
      **/
     public void login() {
         int serverPort;
+        clearScreen();
         System.out.println(CLIutils.ERIANTYS);
         System.out.println(CLIutils.AUTHORS);
         System.out.println();
@@ -205,6 +193,38 @@ public class Cli implements EventReciver {
         System.out.println("Select your unique Nickname: ");
         nickname = ReadStringInput();
         manager.notify("loginSend");
+    }
+
+    /**
+     * Service function to display the menu of the start game
+     **/
+    public void menuStartGame() {
+        int selection;
+        clearScreen();
+        System.out.println(CLIutils.ERIANTYS);
+        System.out.println(CLIutils.AUTHORS);
+        System.out.println();
+        System.out.println("Choose a game option: 1) New Game || 2) Load Game");
+        selection = ReadIntInput(1, 2);
+        if (selection == 1) {
+            System.out.println("Select number of player (from 2 to 4): ");
+            playerNumber = ReadIntInput(2, 4);
+            System.out.println("Create a Game ID: ");
+            gameId = ReadIntInput(1, 99999);
+            System.out.println("You want to enable ExpertMode?: 1) Yes || 2) No ");
+            selection = ReadIntInput(1, 2);
+            expert = selection-1;
+            if (playerNumber == 4) {
+                System.out.println("You want to enable Chat? 1) Yes || 2) No ");
+                selection = ReadIntInput(1, 2);
+                chat = selection-1;
+            }
+            manager.notify("newGameSend");
+        } else {
+            System.out.println("Insert the ID of the Game you want to join: ");
+            gameId = ReadIntInput(1, 99999);
+            manager.notify("loadGameSend");
+        }
     }
 
     /**
@@ -233,43 +253,398 @@ public class Cli implements EventReciver {
     }
 
     /**
-      * Service function to display the menu of the start game
-      **/
-    public void menuStartGame() {
-        int selection;
-        System.out.println(CLIutils.ERIANTYS);
-        System.out.println(CLIutils.AUTHORS);
+     * Reads a String inserted by the user. An empty string is not accepted.
+     * @return str of type String
+     **/
+    public String ReadStringInput() {
+        String str;
+        do {
+            System.out.print("> ");
+            str = scan.nextLine();
+            if (str.equals(""))
+                System.out.println(CLIutils.ANSI_BRIGHT_RED + "Empty string is not valid. Write something." + CLIutils.ANSI_RESET);
+        } while (str.equals(""));
+        return str;
+    }
+
+    /**
+    * Service function to clear the screen
+     */
+    public static void clearScreen() {
+        System.out.println("\033[H\033[2J");
+        System.out.flush();
+    }
+
+    //TODO aggiungere display deck
+    private void showGameBoard() {
+        clearScreen();
+        System.out.println("Your School Board: ");
+        showSchoolBoard(model.getSchoolboardEntrance(nickname), model.getSchoolboardTower(nickname), model.getSchoolboardColorTower(nickname), model.getSchoolboardProfessor(nickname), model.getSchoolboardCorridor(nickname));
         System.out.println();
-        System.out.println("Choose a game option: 1) New Game || 2) Load Game");
-        selection = ReadIntInput(1, 2);
-        if (selection == 1) {
-            System.out.println("Select number of player (from 2 to 4): ");
-            playerNumber = ReadIntInput(2, 4);
-            System.out.println("Create a Game ID: ");
-            gameId = ReadIntInput(1, 99999);
-            System.out.println("You want to enable ExpertMode?: 1) Yes || 2) No ");
-            selection = ReadIntInput(1, 2);
-            expert = selection-1;
-            if (playerNumber == 4) {
-                System.out.println("You want to enable Chat? 1) Yes || 2) No ");
-                selection = ReadIntInput(1, 2);
-                chat = selection-1;
+        System.out.println("Other School Board: ");
+        for (String p: model.getPlayer()) {
+            if(!p.equals(nickname)){
+                showSchoolBoard(model.getSchoolboardEntrance(p), model.getSchoolboardTower(p), model.getSchoolboardColorTower(p), model.getSchoolboardProfessor(p), model.getSchoolboardCorridor(p));
             }
-            manager.notify("newGameSend");
-        } else {
-            System.out.println("Insert the ID of the Game you want to join: ");
-            gameId = ReadIntInput(1, 99999);
-            manager.notify("loadGameSend");
+        }
+        System.out.println();
+        System.out.print("Current islands are: ");
+        showIslands();
+        System.out.println("\nProfessors remaining on Gameboard: ");
+        boolean[] professor = model.getProfessorOnGameboard();
+        for (int i=0; i<5; i++){
+            switch (i) {
+                case 0:
+                    System.out.print(CLIutils.ANSI_GREEN + professor[i] + CLIutils.PROF + CLIutils.ANSI_RESET + ", ");
+                    break;
+                case 1:
+                    System.out.print(CLIutils.ANSI_RED + professor[i] + CLIutils.PROF + CLIutils.ANSI_RESET + ", ");
+                    break;
+                case 2:
+                    System.out.print(CLIutils.ANSI_YELLOW + professor[i] + CLIutils.PROF + CLIutils.ANSI_RESET + ", ");
+                    break;
+                case 3:
+                    System.out.print(CLIutils.ANSI_PINK + professor[i] + CLIutils.PROF + CLIutils.ANSI_RESET + ", ");
+                    break;
+                case 4:
+                    System.out.println(CLIutils.ANSI_BLUE + professor[i] + CLIutils.PROF + CLIutils.ANSI_RESET + ".");
+                    break;
+            }
+        }
+        if (model.isExpert()) {
+            System.out.print("\nCoins remaining on table: ");
+            System.out.println(model.getCoinPile());
+
+            System.out.println("\nThese character cards are on the table: ");
+            ArrayList<Integer> characterCards = model.getExpertCardId();
+            int[] characterCards_prices = model.getExpertCardPrice();
+            for (Integer i: characterCards){
+                switch (i) {
+                    case 1:
+                        //cost 3
+                        System.out.println("> Choose and Island and resolve the island as if Mother Nature had ended her movement there. Mother Nature will still move and the Island where she ends her movement will also be resolved: ");
+                        System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                        break;
+                    case 2:
+                        //cost 1
+                        System.out.println("> You may take up to 3 students for this card and replace them with the same number of Students from your Entrance: ");
+                        System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                        break;
+                    case 3:
+                        //cost 1
+                        System.out.println("> You may exchange up to 2 Students between your Entrance and your Dining Room: ");
+                        System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                        break;
+                    case 4:
+                        //cost 1
+                        System.out.println("> You may move Mother Nature up to 2 additional Islands than is indicated by the Assistant card you've played: ");
+                        System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                        break;
+                    case 5:
+                        //cost 3
+                        System.out.println("> Choose a color of Student: during the influence calculation this turn, that color adds no influence: ");
+                        System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                        break;
+                    case 6:
+                        //cost 3
+                        System.out.println("> When resolving a Conquering on an Island, towers do not count towards influence: ");
+                        System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                        break;
+                    case 7:
+                        //cost 2
+                        System.out.println("> Place a No Entry tile on an Island of your choice. The first time Mother Nature ends her movement there, put the No Entry tile back onto this card DO NOT calculate influence on that Island, or place any Towers: ");
+                        System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                        break;
+                    case 8:
+                        //cost 2
+                        System.out.println("> During the influence calculation this turn, you count as having 2 more influence: ");
+                        System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                        break;
+                    case 9:
+                        //TODO check ProfessorControl.java
+                        //cost 2
+                        System.out.println("> During this turn, you take control of any number of Professors even if you have the same number of Students as the player who currently controls them: ");
+                        System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                        break;
+                    case 10:
+                        //cost 3
+                        System.out.println("> Choose a type of Student: every player (including yourself) must return 3 Students of that type from their Dining Room to the bag. If any player has fewer than 3 Students of that type, return as many students as they have: ");
+                        System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                        break;
+                    case 11:
+                        //cost 2
+                        System.out.println("> Take 1 Student from this card and place it in your Dining Room. Then, draw a new Student from the Bag and place it on this card: ");
+                        System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                        break;
+                    case 12:
+                        //cost 1
+                        System.out.println("> Take 1 Student from this card and place it on an Island of your choice. Then, draw a new Student from the Bag and place it on this card: ");
+                        System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                        break;
+                }
+            }
+        }
+        System.out.println();
+    }
+
+    /**
+      * Class to display all 12 island and what's on them
+      */
+    public void showIslands() {
+        ArrayList<int[]> islandStud = model.getIslandStudents();
+        ArrayList<Integer> tower = model.getIslandTowerNum();
+        ArrayList<TowerColor> towerColor = model.getIslandColor();
+        boolean islandEntryTile;
+        int islandEntryTileNum;
+        for (int i = 0; i < 12; i++) {
+            int[] students = islandStud.get(i);
+            System.out.print("\nIsland "+ i +" has ");
+            System.out.print("students: ");
+            displayStudents(students);
+            System.out.print("towers: ");
+            switch (towerColor.get(i)) {
+                case WHITE:
+                    System.out.println(CLIutils.ANSI_WHITE + tower.get(i) + CLIutils.TOWER + CLIutils.ANSI_RESET);
+                    break;
+                case GRAY:
+                    System.out.println(CLIutils.ANSI_GRAY + tower.get(i) + CLIutils.TOWER + CLIutils.ANSI_RESET);
+                    break;
+                case BLACK:
+                    System.out.println(CLIutils.ANSI_BRIGHT_BLACK + tower.get(i) + CLIutils.TOWER + CLIutils.ANSI_RESET);
+                    break;
+                case NOT:
+                    System.out.println("There aren't towers on this island");
+                    break;
+            }
+            if(model.isExpert()){
+                islandEntryTile = model.getIslandNoEntryTile(i);
+                islandEntryTileNum = model.getIslandNoEntryTileNum(i);
+                if(islandEntryTile){
+                    System.out.print(" also " + islandEntryTileNum + " No entry Tile on the island");
+                }
+            }
+            if (i == model.getPositionMotherNature()){
+                System.out.print(" also "+ CLIutils.ANSI_BRIGHT_YELLOW + CLIutils.MOTHER_NATURE + CLIutils.ANSI_RESET);
+            }
+        }
+        System.out.println();
+    }
+
+    private void showSchoolBoard(int[] schoolboardEntrance, int schoolboardTower, TowerColor schoolboardColorTower, boolean[] schoolboardProfessor, int[] schoolboardCorridor){
+        System.out.print("School Board of player '" + nickname + "', has these students (" + CLIutils.STUDENT + ") in its entrance: ");
+        displayStudents(schoolboardEntrance);
+        System.out.println();
+        switch (schoolboardColorTower) {
+            case WHITE:
+                System.out.println("Towers:" + CLIutils.ANSI_WHITE + schoolboardTower + CLIutils.TOWER + CLIutils.ANSI_RESET );
+                break;
+            case BLACK:
+                System.out.println("Towers:" + CLIutils.ANSI_BLACK + schoolboardTower + CLIutils.TOWER + CLIutils.ANSI_RESET );
+                break;
+            case GRAY:
+                System.out.println("Towers:" + CLIutils.ANSI_GRAY + schoolboardTower + CLIutils.TOWER + CLIutils.ANSI_RESET );
+                break;
+        }
+        for (int i = 0; i < 5; i++) {
+            switch (i) {
+                case 0:
+                    System.out.println("... Corridor" + i + ") Green corridor: " + CLIutils.ANSI_GREEN + schoolboardCorridor[0] + CLIutils.STUDENT + CLIutils.ANSI_RESET + " and with Professor = " + schoolboardProfessor[0]);
+                    break;
+                case 1:
+                    System.out.println("... Corridor" + i + ") Red corridor: " + CLIutils.ANSI_RED + schoolboardCorridor[1] + CLIutils.STUDENT + CLIutils.ANSI_RESET + " and with Professor = " + schoolboardProfessor[1]);
+                    break;
+                case 2:
+                    System.out.println("... Corridor" + i + ") Yellow corridor: " + CLIutils.ANSI_YELLOW + schoolboardCorridor[2] + CLIutils.STUDENT + CLIutils.ANSI_RESET + " and with Professor = " + schoolboardProfessor[2]);
+                    break;
+                case 3:
+                    System.out.println("... Corridor" + i + ") Pink corridor: " + CLIutils.ANSI_PINK + schoolboardCorridor[3] + CLIutils.STUDENT + CLIutils.ANSI_RESET + " and with Professor = " + schoolboardProfessor[3]);
+                    break;
+                case 4:
+                    System.out.println("... Corridor" + i + ") Blue corridor: " + CLIutils.ANSI_BLUE + schoolboardCorridor[4] + CLIutils.STUDENT + CLIutils.ANSI_RESET + " and with Professor = " + schoolboardProfessor[4]);
+                    break;
+            }
+        }
+        System.out.println();
+    }
+
+    /**
+      * Class to display students with color and icon
+      * @param student array int of students
+      */
+    public void displayStudents(int[] student) {
+        for (int j = 0; j < 5; j++) {
+            switch (j) {
+                case 0:
+                    System.out.print(CLIutils.ANSI_GREEN + student[j] + CLIutils.STUDENT + CLIutils.ANSI_RESET + ", ");
+                    break;
+                case 1:
+                    System.out.print(CLIutils.ANSI_RED + student[j] + CLIutils.STUDENT + CLIutils.ANSI_RESET + ", ");
+                    break;
+                case 2:
+                    System.out.print(CLIutils.ANSI_YELLOW + student[j] + CLIutils.STUDENT + CLIutils.ANSI_RESET + ", ");
+                    break;
+                case 3:
+                    System.out.print(CLIutils.ANSI_PINK + student[j] + CLIutils.STUDENT + CLIutils.ANSI_RESET + ", ");
+                    break;
+                case 4:
+                    System.out.print(CLIutils.ANSI_BLUE + student[j] + CLIutils.STUDENT + CLIutils.ANSI_RESET + ". ");
+                    break;
+            }
         }
     }
 
-    //TODO
+    //TODO gestire expertmode ad inizio fase
+    //TODO sistemare gioco carte uguali
+    public void planningPhase() {
+        int k = 0;
+        clearScreen();
+        System.out.println("--------------------------------------------");
+        System.out.println("-------------- PLANNING PHASE --------------");
+        System.out.println("--------------------------------------------\n");
+        System.out.println("1. The " + playerNumber + " clouds, have been filled.\n");
+
+        System.out.println("2. Play 1 assistant card of your choice, you currently have: ");
+        int[][] AssistantCards = model.getDeck(nickname);
+        int[] usable = new int[10];
+        while (k < 10) {
+            if (AssistantCards[0][k] != -1 && AssistantCards[1][k] != -1) {
+                System.out.println(k + ") V:" + AssistantCards[0][k] + " - "+ CLIutils.ANSI_BRIGHT_YELLOW + CLIutils.MOTHER_NATURE + CLIutils.ANSI_RESET + ":" + AssistantCards[1][k]);
+                usable[k] = 1;
+            } else {
+                usable[k] = 0;
+            }
+            k++;
+        }
+        System.out.println("\nWhich one will you play (choose between the ones above): ");
+        cardPlayed = ReadIntInput(0, 9);
+        while (usable[cardPlayed] == 0) {
+            if (usable[cardPlayed] == 0) {
+                System.out.println("This card does not exist, please choose another one: ");
+                cardPlayed = ReadIntInput(0, 9);
+            } else {
+                System.out.println("This card was already played in your turn, choose another one: ");
+                cardPlayed = ReadIntInput(0, 9);
+            }
+        }
+        manager.notify("planningPhaseSend");
+    }
+
+    //TODO gestire expertmode ad inizio fase
+    private void actionPhase1() {
+        clearScreen();
+        System.out.println("--------------------------------------------");
+        System.out.println("-------------- ACTION PHASE 1 --------------");
+        System.out.println("--------------------------------------------\n");
+
+        int studentsToMove, chosenStudent, chosenIsland, action1;
+        if (playerNumber == 3) {
+            System.out.print("1. Move 4 students ");
+            studentsToMove = 4;
+        } else {
+            System.out.print("1. Move 3 students ");
+            studentsToMove = 3;
+        }
+        System.out.println("to either your Dining Room or a Island.");
+        System.out.println();
+        showSchoolBoard(model.getSchoolboardEntrance(nickname), model.getSchoolboardTower(nickname), model.getSchoolboardColorTower(nickname), model.getSchoolboardProfessor(nickname), model.getSchoolboardCorridor(nickname));
+        showIslands();
+        //choose if you want to move students into 1 or 2
+        System.out.println("\nDecide which student to move: 0) " + CLIutils.ANSI_GREEN + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 1) " + CLIutils.ANSI_RED + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 2) " + CLIutils.ANSI_YELLOW + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 3) " + CLIutils.ANSI_PINK + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 4) " + CLIutils.ANSI_BLUE + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
+        System.out.println("Decide where to move students: 1) Dining Room || 2) Island\n");
+        int[] students_entrance = model.getSchoolboardEntrance(nickname);
+        studentsToSchoolboard = new int[]{0, 0, 0, 0, 0};
+        studentsToIsland = new ArrayList<>();
+        for (int j = 0; j < studentsToMove; j++) {
+            int[] students_isle = new int[] {0,0,0,0,0,0};
+            System.out.print("Move student: ");
+            chosenStudent = ReadIntInput(0, 4) ;
+            while (students_entrance[chosenStudent] == 0){
+                System.out.println("What are you doing? You don't have these students in your entrance. Select another one.");
+                chosenStudent = ReadIntInput(0, 4);
+            }
+            System.out.print("to: ");
+            action1 = ReadIntInput(1, 2);
+            switch (action1) {
+                case 1:
+                    studentsToSchoolboard[chosenStudent]++;
+                    students_entrance[chosenStudent]--;
+                    break;
+                case 2:
+                    if(studentsToIsland.size()==0){
+                        students_isle[chosenStudent+1]++;
+                        students_entrance[chosenStudent]--;
+                        System.out.print("To which island (choose from 0 to 11): ");
+                        chosenIsland = ReadIntInput(0, 11);
+                        students_isle[0] = chosenIsland;
+                        studentsToIsland.add(students_isle);
+                    }
+                    else{
+                        boolean trovato = false;
+                        students_isle[chosenStudent+1]++;
+                        students_entrance[chosenStudent]--;
+                        System.out.print("To which island (choose from 0 to 11): ");
+                        chosenIsland = ReadIntInput(0, 11);
+                        for (int[] s: studentsToIsland) {
+                            if(s[0]==chosenIsland){
+                                for(int l=1; l<6; l++){
+                                    s[l]+=students_isle[l];
+                                }
+                                trovato = true;
+                            }
+                        }
+                        if(!trovato){
+                            students_isle[0] = chosenIsland;
+                            studentsToIsland.add(students_isle);
+                        }
+                    }
+                    break;
+            }
+            System.out.println();
+        }
+        manager.notify("actionPhase1Send");
+    }
+
+    //TODO gestire expertmode ad inizio fase
+    private void actionPhase2() {
+        clearScreen();
+        System.out.println("--------------------------------------------");
+        System.out.println("-------------- ACTION PHASE 2 --------------");
+        System.out.println("--------------------------------------------\n");
+        showIslands();
+        System.out.println("\nMother Nature ("+ CLIutils.MOTHER_NATURE +") is currently on island "+ model.getPositionMotherNature() +"");
+        System.out.println("Because of the Assistant Card you previously played, you can move the "+ CLIutils.ANSI_BRIGHT_YELLOW + CLIutils.MOTHER_NATURE + CLIutils.ANSI_RESET +" up to a max of "+ model.getLastCardMotherNature(nickname) +" islands.");
+        System.out.print("How many islands you want to move "+ CLIutils.ANSI_BRIGHT_YELLOW + CLIutils.MOTHER_NATURE + CLIutils.ANSI_RESET +" to: ");
+        moveMotherNature = ReadIntInput(1, model.getLastCardMotherNature(nickname));
+        manager.notify("actionPhase2Send");
+    }
+
+    //TODO gestire expertmode ad inizio fase
+    private void actionPhase3() {
+        witchCloudTile = -1;
+        clearScreen();
+        System.out.println("--------------------------------------------");
+        System.out.println("-------------- ACTION PHASE 3 --------------");
+        System.out.println("--------------------------------------------\n");
+        System.out.print("Choose a cloud between those below:");
+
+        for (int i = 0; i < playerNumber; i++) {
+            System.out.print("\n"+ i + ") Cloud " + i+1 + ": ");
+            displayStudents(model.getCloudTileStudents().get(i));
+        }
+        System.out.println();
+        System.out.println("Which cloud will you choose (from 1 to " + (playerNumber) + "): ");
+        witchCloudTile = ReadIntInput(1, playerNumber)-1;
+        manager.notify("actionPhase3Send");
+    }
+
+    //TODO displayare meglio vittoria e sconfitta
     private void finish() {
+        clearScreen();
         if(nickname.equals(winner)){
-            //TODO display scritta vittoria
+            System.out.println("You are the winner");
         }
         else{
-            //TODO display scritta sconfitta
+            System.out.println("Sorry for this time you are not the winner");
         }
         manager.notify("finishSend");
     }
@@ -278,11 +653,7 @@ public class Cli implements EventReciver {
 /*
 
 ///**
-//     * Service function to clear the screen
-//     */
-//public static void clearScreen() {
-//    System.out.println("\033[H\033[2J");
-//    System.out.flush();
+//
 //}
 //
 //
@@ -290,269 +661,14 @@ public class Cli implements EventReciver {
 //
 //
 //
-//    //TODO
-//    private void actionPhase3() {
-//        int[] cloud;
-//        clearScreen();
-//        System.out.println("--------------------------------------------");
-//        System.out.println("-------------- ACTION PHASE 3 --------------");
-//        System.out.println("--------------------------------------------\n");
-//        System.out.print("Choose a cloud between those below:");
 //
-//        for (int i = 0; i < playerNumber; i++) {
-//            cloud = cloudTiles.get(i);
-//            System.out.print("\n"+ i + ") Cloud " + i+1 + ": ");
-//            displayStudents(cloud);
-//        }
 //
-//        if (whichClodTile != -1)
-//            cloudTiles.remove(whichClodTile);
-//        System.out.println();
-//        System.out.println("Which cloud will you choose (from 0 to " + (playerNumber-1) + "): ");
-//        whichClodTile = ReadIntInput(0, playerNumber-1);
-//        manager.notify("actionPhase3Send");
-//    }
 //
-//    //TODO
-//    private void actionPhase2() {
-//        int[][] AssistantCard = new int[][]{{1,2,3,4,5,6,7,8,9,10},{1,1,2,2,3,3,4,4,5,5}};
-//        clearScreen();
-//        System.out.println("--------------------------------------------");
-//        System.out.println("-------------- ACTION PHASE 2 --------------");
-//        System.out.println("--------------------------------------------\n");
-//        toFind = "position:";
-//        String MotherNaturePosition = statusGameBoard.substring(statusGameBoard.indexOf(toFind) + toFind.length(), statusGameBoard.indexOf("/", statusGameBoard.indexOf(toFind)));
-//        showIslands();
-//        System.out.println("\nMother Nature ("+ CLIutils.MOTHER_NATURE +") is currently on island "+ MotherNaturePosition+"");
-//        System.out.println("Because of the Assistant Card you previously played, you can move the "+ CLIutils.ANSI_BRIGHT_YELLOW + CLIutils.MOTHER_NATURE + CLIutils.ANSI_RESET +" up to a max of "+ AssistantCard[1][cardPlayed] +" islands.");
-//        System.out.print("How many islands you want to move "+ CLIutils.ANSI_BRIGHT_YELLOW + CLIutils.MOTHER_NATURE + CLIutils.ANSI_RESET +" to: ");
-//        moveMotherNature = ReadIntInput(1,AssistantCard[1][cardPlayed]);
-//        manager.notify("actionPhase2Send");
-//    }
 //
-//    //TODO
-//    //TODO students to island arrayList sfanculato per quello model si rompe
-//    private void actionPhase1() {
-//        clearScreen();
-//        System.out.println("--------------------------------------------");
-//        System.out.println("-------------- ACTION PHASE 1 --------------");
-//        System.out.println("--------------------------------------------\n");
 //
-//        int studentsToMove, chosenStudent, chosenIsland, action1;
-//        if (playerNumber == 3) {
-//            System.out.print("1. Move 4 students ");
-//            studentsToMove = 4;
-//        } else {
-//            System.out.print("1. Move 3 students ");
-//            studentsToMove = 3;
-//        }
-//        System.out.println("to either your Dining Room or a Island.");
-//        System.out.println();
-//        showSchoolBoard(playerID);
-//        showIslands();
-//        //choose if you want to move students into 1 or 2
-//        System.out.println("\nDecide which student to move: 0) " + CLIutils.ANSI_GREEN + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 1) " + CLIutils.ANSI_RED + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 2) " + CLIutils.ANSI_YELLOW + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 3) " + CLIutils.ANSI_PINK + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 4) " + CLIutils.ANSI_BLUE + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
-//        System.out.println("Decide where to move students: 1) Dining Room || 2) Island\n");
-//        int[] students_entrance = entranceSchoolBoard.get(playerID);
-//        studentsToSchoolboard = new int[]{0, 0, 0, 0, 0};
-//        for (int j = 0; j < studentsToMove; j++) {
-//            int[] students_isle = new int[] {0,0,0,0,0,0};
-//            System.out.print("Move student: ");
-//            chosenStudent = ReadIntInput(0, 4) ;
-//            while (students_entrance[chosenStudent] == 0){
-//                System.out.println("What are you doing? You don't have these students in your entrance. Select another one.");
-//                chosenStudent = ReadIntInput(0, 4);
-//            }
-//            System.out.print("to: ");
-//            action1 = ReadIntInput(1, 2);
-//            switch (action1) {
-//                case 1:
-//                    studentsToSchoolboard[chosenStudent]++;
-//                    students_entrance[chosenStudent]--;
-//                    break;
-//                case 2:
-//                    if(studentsToIsland.size()==0){
-//                        students_isle[chosenStudent+1]++;
-//                        students_entrance[chosenStudent]--;
-//                        System.out.print("To which island (choose from 0 to 11): ");
-//                        chosenIsland = ReadIntInput(0, 11);
-//                        students_isle[0] = chosenIsland;
-//                        studentsToIsland.add(students_isle);
-//                    }
-//                    else{
-//                        boolean trovato = false;
-//                        students_isle[chosenStudent+1]++;
-//                        students_entrance[chosenStudent]--;
-//                        System.out.print("To which island (choose from 0 to 11): ");
-//                        chosenIsland = ReadIntInput(0, 11);
-//                        for (int[] s: studentsToIsland) {
-//                            if(s[0]==chosenIsland){
-//                                for(int l=1; l<6; l++){
-//                                    s[l]+=students_isle[l];
-//                                }
-//                                trovato = true;
-//                            }
-//                        }
-//                        if(!trovato){
-//                            students_isle[0] = chosenIsland;
-//                            studentsToIsland.add(students_isle);
-//                        }
-//                    }
-//                    break;
-//            }
-//            System.out.println();
-//        }
 //
-//        for (int i=0; i<5; i++) {
-//            if (studentsToSchoolboard[i] == 3 || studentsToSchoolboard[i] == 6 || studentsToSchoolboard[i] == 9) {
-//                coinsPlayers[playerID]++;
-//            }
-//        }
-//        manager.notify("actionPhase1Send");
-//    }
 //
-//    //TODO gestire expertmode
-//    //TODO sistemare card last played sempre un + 1
-//    public void planningPhase() {
-//        int k = 0;
-//        clearScreen();
-//        System.out.println("--------------------------------------------");
-//        System.out.println("-------------- PLANNING PHASE --------------");
-//        System.out.println("--------------------------------------------\n");
-//        System.out.println("1. The " + playerNumber + " clouds, have been filled.\n");
 //
-//        System.out.println("2. Play 1 assistant card of your choice, you currently have: ");
-//        int[][] AssistantCards = assistantCard.get(playerID);
-//        int[] usable = new int[10];
-//        while (k < 10) {
-//            if (AssistantCards[0][k] != -1 && AssistantCards[1][k] != -1) {
-//                System.out.println(k + ") V:" + AssistantCards[0][k] + " - "+ CLIutils.ANSI_BRIGHT_YELLOW + CLIutils.MOTHER_NATURE + CLIutils.ANSI_RESET + ":" + AssistantCards[1][k]);
-//                usable[k] = 1;
-//            } else {
-//                usable[k] = 0;
-//            }
-//            k++;
-//        }
-//        System.out.println("\nWhich one will you play (choose between the ones above): ");
-//        cardPlayed = ReadIntInput(0, 9);
-//        while (usable[cardPlayed] == 0 || IntStream.of(lastPlayedAssistantCard).anyMatch(x -> x == cardPlayed)) {
-//            if (usable[cardPlayed] == 0) {
-//                System.out.println("This card does not exist, please choose another one: ");
-//                cardPlayed = ReadIntInput(0, 9);
-//            } else {
-//                System.out.println("This card was already played in your turn, choose another one: ");
-//                cardPlayed = ReadIntInput(0, 9);
-//            }
-//        }
-//        manager.notify("planningPhaseSend");
-//    }
-//
-//    private void statusGameBoard() {
-//        clearScreen();
-//        System.out.println("Your School Board: ");
-//        showSchoolBoard(playerID);
-//        System.out.println();
-//        System.out.println("Other School Board: ");
-//        for(int i=0; i<playerNumber; i++){
-//            if(playerID!=i)
-//                showSchoolBoard(i);
-//        }
-//        System.out.println();
-//        System.out.print("Current islands are: ");
-//        showIslands();
-//        System.out.println("\nProfessors remaining: ");
-//        for (int i=0; i<5; i++){
-//            switch (i) {
-//                case 0:
-//                    System.out.print(CLIutils.ANSI_GREEN + professor[i] + CLIutils.PROF + CLIutils.ANSI_RESET + ", ");
-//                    break;
-//                case 1:
-//                    System.out.print(CLIutils.ANSI_RED + professor[i] + CLIutils.PROF + CLIutils.ANSI_RESET + ", ");
-//                    break;
-//                case 2:
-//                    System.out.print(CLIutils.ANSI_YELLOW + professor[i] + CLIutils.PROF + CLIutils.ANSI_RESET + ", ");
-//                    break;
-//                case 3:
-//                    System.out.print(CLIutils.ANSI_PINK + professor[i] + CLIutils.PROF + CLIutils.ANSI_RESET + ", ");
-//                    break;
-//                case 4:
-//                    System.out.println(CLIutils.ANSI_BLUE + professor[i] + CLIutils.PROF + CLIutils.ANSI_RESET + ".");
-//                    break;
-//            }
-//        }
-//        if (expert) {
-//            System.out.print("\nCoins remaining on table: ");
-//            System.out.println(coinPile);
-//
-//            System.out.println("\nThese character cards are on the table: ");
-//            for (int i=0; i<3; i++) {
-//                switch (characterCards[i]) {
-//                    case 1:
-//                        //cost 3
-//                        System.out.println("> Choose and Island and resolve the island as if Mother Nature had ended her movement there. Mother Nature will still move and the Island where she ends her movement will also be resolved: ");
-//                        System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
-//                        break;
-//                    case 2:
-//                        //cost 1
-//                        System.out.println("> You may take up to 3 students for this card and replace them with the same number of Students from your Entrance: ");
-//                        System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
-//                        break;
-//                    case 3:
-//                        //cost 1
-//                        System.out.println("> You may exchange up to 2 Students between your Entrance and your Dining Room: ");
-//                        System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
-//                        break;
-//                    case 4:
-//                        //cost 1
-//                        System.out.println("> You may move Mother Nature up to 2 additional Islands than is indicated by the Assistant card you've played: ");
-//                        System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
-//                        break;
-//                    case 5:
-//                        //cost 3
-//                        System.out.println("> Choose a color of Student: during the influence calculation this turn, that color adds no influence: ");
-//                        System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
-//                        break;
-//                    case 6:
-//                        //cost 3
-//                        System.out.println("> When resolving a Conquering on an Island, towers do not count towards influence: ");
-//                        System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
-//                        break;
-//                    case 7:
-//                        //cost 2
-//                        System.out.println("> Place a No Entry tile on an Island of your choice. The first time Mother Nature ends her movement there, put the No Entry tile back onto this card DO NOT calculate influence on that Island, or place any Towers: ");
-//                        System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
-//                        break;
-//                    case 8:
-//                        //cost 2
-//                        System.out.println("> During the influence calculation this turn, you count as having 2 more influence: ");
-//                        System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
-//                        break;
-//                    case 9:
-//                        //TODO check ProfessorControl.java
-//                        //cost 2
-//                        System.out.println("> During this turn, you take control of any number of Professors even if you have the same number of Students as the player who currently controls them: ");
-//                        System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
-//                        break;
-//                    case 10:
-//                        //cost 3
-//                        System.out.println("> Choose a type of Student: every player (including yourself) must return 3 Students of that type from their Dining Room to the bag. If any player has fewer than 3 Students of that type, return as many students as they have: ");
-//                        System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
-//                        break;
-//                    case 11:
-//                        //cost 2
-//                        System.out.println("> Take 1 Student from this card and place it in your Dining Room. Then, draw a new Student from the Bag and place it on this card: ");
-//                        System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
-//                        break;
-//                    case 12:
-//                        //cost 1
-//                        System.out.println("> Take 1 Student from this card and place it on an Island of your choice. Then, draw a new Student from the Bag and place it on this card: ");
-//                        System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
-//                        break;
-//                }
-//            }
-//        }
-//        System.out.println();
-//    }
 //
 //
 //    /**
@@ -569,101 +685,7 @@ public class Cli implements EventReciver {
 //        return studentsToSchoolboard;
 //    }
 //
-//    /**
-//     * Class to display students with color and icon
-//     * @param student array int of students
-//     */
-//    public void displayStudents(int[] student) {
-//        for (int j = 0; j < 5; j++) {
-//            switch (j) {
-//                case 0:
-//                    System.out.print(CLIutils.ANSI_GREEN + student[j] + CLIutils.STUDENT + CLIutils.ANSI_RESET + ", ");
-//                    break;
-//                case 1:
-//                    System.out.print(CLIutils.ANSI_RED + student[j] + CLIutils.STUDENT + CLIutils.ANSI_RESET + ", ");
-//                    break;
-//                case 2:
-//                    System.out.print(CLIutils.ANSI_YELLOW + student[j] + CLIutils.STUDENT + CLIutils.ANSI_RESET + ", ");
-//                    break;
-//                case 3:
-//                    System.out.print(CLIutils.ANSI_PINK + student[j] + CLIutils.STUDENT + CLIutils.ANSI_RESET + ", ");
-//                    break;
-//                case 4:
-//                    System.out.print(CLIutils.ANSI_BLUE + student[j] + CLIutils.STUDENT + CLIutils.ANSI_RESET + ". ");
-//                    break;
-//            }
-//        }
-//    }
 //
-//    /**
-//     * Class to display a schoolBoard
-//     * @param playerID in representing the player you want to show the schoolBoard of
-//     */
-//    public void showSchoolBoard(int playerID) {
-//        System.out.print("School Board of player '" + players.get(playerID) + "', has these students (" + CLIutils.STUDENT + ") in its entrance: ");
-//        displayStudents(entranceSchoolBoard.get(playerID));
-//        System.out.println();
-//        String[] tempTower = towerSchoolBoard.get(playerID);
-//        switch (tempTower[1]) {
-//            case "WHITE":
-//                System.out.println("Towers:" + CLIutils.ANSI_WHITE + tempTower[0] + CLIutils.TOWER + CLIutils.ANSI_RESET );
-//                break;
-//            case "BLACK":
-//                System.out.println("Towers:" + CLIutils.ANSI_BLACK + tempTower[0] + CLIutils.TOWER + CLIutils.ANSI_RESET );
-//                break;
-//            case "GRAY":
-//                System.out.println("Towers:" + CLIutils.ANSI_GRAY + tempTower[0] + CLIutils.TOWER + CLIutils.ANSI_RESET );
-//                break;
-//        }
-//        String[] corridor = corridorSchoolBoard.get(playerID);
-//        String[] professor = profSchoolBoard.get(playerID);
-//        for (int i = 0; i < 5; i++) {
-//            switch (i) {
-//                case 0:
-//                    System.out.println("... Corridor" + i + ") Green corridor: " + CLIutils.ANSI_GREEN + Integer.parseInt(corridor[0]) + CLIutils.STUDENT + CLIutils.ANSI_RESET + " and with Professor = " + professor[0]);
-//                    break;
-//                case 1:
-//                    System.out.println("... Corridor" + i + ") Red corridor: " + CLIutils.ANSI_RED + Integer.parseInt(corridor[1]) + CLIutils.STUDENT + CLIutils.ANSI_RESET + " and with Professor = " + professor[1]);
-//                    break;
-//                case 2:
-//                    System.out.println("... Corridor" + i + ") Yellow corridor: " + CLIutils.ANSI_YELLOW + Integer.parseInt(corridor[2]) + CLIutils.STUDENT + CLIutils.ANSI_RESET + " and with Professor = " + professor[2]);
-//                    break;
-//                case 3:
-//                    System.out.println("... Corridor" + i + ") Pink corridor: " + CLIutils.ANSI_PINK + Integer.parseInt(corridor[3]) + CLIutils.STUDENT + CLIutils.ANSI_RESET + " and with Professor = " + professor[3]);
-//                    break;
-//                case 4:
-//                    System.out.println("... Corridor" + i + ") Blue corridor: " + CLIutils.ANSI_BLUE + Integer.parseInt(corridor[4]) + CLIutils.STUDENT + CLIutils.ANSI_RESET + " and with Professor = " + professor[4]);
-//                    break;
-//            }
-//        }
-//        System.out.println();
-//    }
 //
-//    /**
-//     * Class to display all 12 island and what's on them
-//     */
-//    public void showIslands() {
-//        for (int i = 0; i < 12; i++) {
-//            int[] students = StudentsOnIslands.get(i);
-//            String[] towers = tower_island.get(i);
-//            System.out.print("\nIsland "+ i +" has ");
-//            System.out.print("students: ");
-//            displayStudents(students);
-//            System.out.print("towers: ");
-//            switch (towers[0]) {
-//                case "WHITE":
-//                    System.out.println(CLIutils.ANSI_WHITE + towers[1] + CLIutils.TOWER + CLIutils.ANSI_RESET);
-//                    break;
-//                case "GRAY":
-//                    System.out.println(CLIutils.ANSI_GRAY + towers[1] + CLIutils.TOWER + CLIutils.ANSI_RESET);
-//                    break;
-//                case "BLACK":
-//                    System.out.println(CLIutils.ANSI_BRIGHT_BLACK + towers[1] + CLIutils.TOWER + CLIutils.ANSI_RESET);
-//                    break;
-//            }
-//            if (i == positionMN){
-//                System.out.print(" also "+ CLIutils.ANSI_BRIGHT_YELLOW + CLIutils.MOTHER_NATURE + CLIutils.ANSI_RESET);
-//            }
-//        }
-//        System.out.println();
-//    }
+//
+//
