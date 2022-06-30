@@ -338,75 +338,7 @@ public class Cli implements EventReciver {
             System.out.println();
             System.out.print("\nCoins remaining on table: ");
             System.out.println(model.getCoinPile());
-
-            System.out.println("\nThese character cards are on the table: ");
-            ArrayList<Integer> characterCards = model.getExpertCardId();
-            int[] characterCards_prices = model.getExpertCardPrice();
-            for (Integer i: characterCards){
-                switch (i) {
-                    case 1:
-                        //cost 3
-                        System.out.println("> Choose and Island and resolve the island as if Mother Nature had ended her movement there. Mother Nature will still move and the Island where she ends her movement will also be resolved: ");
-                        System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
-                        break;
-                    case 2:
-                        //cost 1
-                        System.out.println("> You may take up to 3 students for this card and replace them with the same number of Students from your Entrance: ");
-                        System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
-                        break;
-                    case 3:
-                        //cost 1
-                        System.out.println("> You may exchange up to 2 Students between your Entrance and your Dining Room: ");
-                        System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
-                        break;
-                    case 4:
-                        //cost 1
-                        System.out.println("> You may move Mother Nature up to 2 additional Islands than is indicated by the Assistant card you've played: ");
-                        System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
-                        break;
-                    case 5:
-                        //cost 3
-                        System.out.println("> Choose a color of Student: during the influence calculation this turn, that color adds no influence: ");
-                        System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
-                        break;
-                    case 6:
-                        //cost 3
-                        System.out.println("> When resolving a Conquering on an Island, towers do not count towards influence: ");
-                        System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
-                        break;
-                    case 7:
-                        //cost 2
-                        System.out.println("> Place a No Entry tile on an Island of your choice. The first time Mother Nature ends her movement there, put the No Entry tile back onto this card DO NOT calculate influence on that Island, or place any Towers: ");
-                        System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
-                        break;
-                    case 8:
-                        //cost 2
-                        System.out.println("> During the influence calculation this turn, you count as having 2 more influence: ");
-                        System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
-                        break;
-                    case 9:
-                        //TODO check ProfessorControl.java
-                        //cost 2
-                        System.out.println("> During this turn, you take control of any number of Professors even if you have the same number of Students as the player who currently controls them: ");
-                        System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
-                        break;
-                    case 10:
-                        //cost 3
-                        System.out.println("> Choose a type of Student: every player (including yourself) must return 3 Students of that type from their Dining Room to the bag. If any player has fewer than 3 Students of that type, return as many students as they have: ");
-                        System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
-                        break;
-                    case 11:
-                        //cost 2
-                        System.out.println("> Take 1 Student from this card and place it in your Dining Room. Then, draw a new Student from the Bag and place it on this card: ");
-                        System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
-                        break;
-                    case 12:
-                        //cost 1
-                        System.out.println("> Take 1 Student from this card and place it on an Island of your choice. Then, draw a new Student from the Bag and place it on this card: ");
-                        System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
-                        break;
-                }
-            }
+            displayCharacterCard(model.getExpertCardId(), model.getExpertCardPrice());
         }
         System.out.println();
     }
@@ -518,7 +450,143 @@ public class Cli implements EventReciver {
         }
     }
 
-    //TODO gestire expertmode ad inizio fase
+    public void chooseCharacterCard(int id) {
+        switch (id) {
+            case 1:
+                //cost 3
+
+                break;
+            case 2:
+                //cost 1
+
+                break;
+            case 3:
+                //cost 1
+
+                break;
+            case 4:
+                //cost 1
+
+                break;
+            case 5:
+                //cost 3
+
+                break;
+            case 6:
+                //cost 3
+
+                break;
+            case 7:
+                //cost 2
+
+                break;
+            case 8:
+                //cost 2
+
+                break;
+            case 9:
+                //cost 2
+
+                break;
+            case 10:
+                //cost 3
+
+                break;
+            case 11:
+                //cost 2
+
+                break;
+            case 12:
+                //cost 1
+
+                break;
+        }
+    }
+
+    public void displayCharacterCard(ArrayList<Integer> characterCards, int[] characterCards_prices) {
+        System.out.println("\nThe following character cards are on the table, choose which one you want to play:");
+        for (Integer i: characterCards){
+            switch (i) {
+                case 1:
+                    //cost 3
+                    System.out.println("> Choose and Island and resolve the island as if Mother Nature had ended her movement there. Mother Nature will still move and the Island where she ends her movement will also be resolved: ");
+                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                    break;
+                case 2:
+                    //cost 1
+                    System.out.println("> You may take up to 3 students for this card and replace them with the same number of Students from your Entrance: ");
+                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                    break;
+                case 3:
+                    //cost 1
+                    System.out.println("> You may exchange up to 2 Students between your Entrance and your Dining Room: ");
+                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                    break;
+                case 4:
+                    //cost 1
+                    System.out.println("> You may move Mother Nature up to 2 additional Islands than is indicated by the Assistant card you've played: ");
+                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                    break;
+                case 5:
+                    //cost 3
+                    System.out.println("> Choose a color of Student: during the influence calculation this turn, that color adds no influence: ");
+                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                    break;
+                case 6:
+                    //cost 3
+                    System.out.println("> When resolving a Conquering on an Island, towers do not count towards influence: ");
+                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                    break;
+                case 7:
+                    //cost 2
+                    System.out.println("> Place a No Entry tile on an Island of your choice. The first time Mother Nature ends her movement there, put the No Entry tile back onto this card DO NOT calculate influence on that Island, or place any Towers: ");
+                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                    break;
+                case 8:
+                    //cost 2
+                    System.out.println("> During the influence calculation this turn, you count as having 2 more influence: ");
+                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                    break;
+                case 9:
+                    //cost 2
+                    System.out.println("> During this turn, you take control of any number of Professors even if you have the same number of Students as the player who currently controls them: ");
+                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                    break;
+                case 10:
+                    //cost 3
+                    System.out.println("> Choose a type of Student: every player (including yourself) must return 3 Students of that type from their Dining Room to the bag. If any player has fewer than 3 Students of that type, return as many students as they have: ");
+                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                    break;
+                case 11:
+                    //cost 2
+                    System.out.println("> Take 1 Student from this card and place it in your Dining Room. Then, draw a new Student from the Bag and place it on this card: ");
+                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                    break;
+                case 12:
+                    //cost 1
+                    System.out.println("> Take 1 Student from this card and place it on an Island of your choice. Then, draw a new Student from the Bag and place it on this card: ");
+                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                    break;
+            }
+        }
+    }
+
+    //TODO metodo presente all'inizio di tutte le fasi, gestire tutto da qui
+    public void playCharacterCard() {
+        if (model.isExpert()) {
+            System.out.println("Do you want to play a character card?: 1) Yes || 2) No");
+            int playOrNot = ReadIntInput(1,2);
+            if (playOrNot == 1){
+                System.out.println("Remember that you had these ones (0, 1 and 2): ");
+                displayCharacterCard(model.getExpertCardId(), model.getExpertCardPrice());
+                System.out.println("Which one will you play 0, 1 or 2: ");
+                int id = ReadIntInput(0,2);
+                chooseCharacterCard(id);
+            }
+        }
+    }
+
+
     public void planningPhase() {
         int k = 0;
         clearScreen();
@@ -526,8 +594,8 @@ public class Cli implements EventReciver {
         System.out.println("-------------- PLANNING PHASE --------------");
         System.out.println("--------------------------------------------\n");
         System.out.println("1. The " + playerNumber + " clouds, have been filled.\n");
-
-        System.out.println("2. Play 1 assistant card of your choice, you currently have: ");
+        playCharacterCard();
+        System.out.println("\n2. Play 1 assistant card of your choice, you currently have: ");
         int[][] AssistantCards = model.getDeck(nickname);
         int[] usable = new int[10];
         int[] cardP = model.getAssistantsPlayedInTurn();
@@ -581,12 +649,12 @@ public class Cli implements EventReciver {
         manager.notify("planningPhaseSend");
     }
 
-    //TODO gestire expertmode ad inizio fase
     private void actionPhase1() {
         clearScreen();
         System.out.println("--------------------------------------------");
         System.out.println("-------------- ACTION PHASE 1 --------------");
         System.out.println("--------------------------------------------\n");
+        playCharacterCard();
 
         int studentsToMove, chosenStudent, chosenIsland, action1;
         if (playerNumber == 3) {
@@ -656,12 +724,12 @@ public class Cli implements EventReciver {
         manager.notify("actionPhase1Send");
     }
 
-    //TODO gestire expertmode ad inizio fase
     private void actionPhase2() {
         clearScreen();
         System.out.println("--------------------------------------------");
         System.out.println("-------------- ACTION PHASE 2 --------------");
         System.out.println("--------------------------------------------\n");
+        playCharacterCard();
         showIslands();
         System.out.println("\nMother Nature ("+ CLIutils.MOTHER_NATURE +") is currently on island "+ model.getPositionMotherNature() +"");
         System.out.println("Because of the Assistant Card you previously played, you can move the "+ CLIutils.ANSI_BRIGHT_YELLOW + CLIutils.MOTHER_NATURE + CLIutils.ANSI_RESET +" up to a max of "+ model.getLastCardMotherNature(nickname) +" islands.");
@@ -670,13 +738,13 @@ public class Cli implements EventReciver {
         manager.notify("actionPhase2Send");
     }
 
-    //TODO gestire expertmode ad inizio fase
     private void actionPhase3() {
         witchCloudTile = -1;
         clearScreen();
         System.out.println("--------------------------------------------");
         System.out.println("-------------- ACTION PHASE 3 --------------");
         System.out.println("--------------------------------------------\n");
+        playCharacterCard();
         System.out.print("Choose a cloud between those below:");
 
         boolean[] witch = new boolean[playerNumber];
