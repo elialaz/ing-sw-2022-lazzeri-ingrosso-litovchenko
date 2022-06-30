@@ -265,7 +265,7 @@ public class Client implements EventReciver {
      */
     public static void main(String[] args) throws InterruptedException {
 
-        String serverIP = "93.55.224.14";
+        String serverIP = "localhost";
         int serverPort = 21000;
 
         ClientEventManager prova = ClientEventManager.createClientEventManager();
