@@ -111,6 +111,7 @@ class ServerThread extends Thread{
         socket.close();
     }
 
+    //TODO rivedere disconnessione
     public void disconnect() {
         if(connected) {
             try {

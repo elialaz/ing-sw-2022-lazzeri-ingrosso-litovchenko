@@ -391,9 +391,10 @@ public class Cli implements EventReciver {
         ArrayList<int[]> islandStud = model.getIslandStudents();
         ArrayList<Integer> tower = model.getIslandTowerNum();
         ArrayList<TowerColor> towerColor = model.getIslandColor();
+        int isNum = model.getIslandNum();
         boolean islandEntryTile;
         int islandEntryTileNum;
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < isNum; i++) {
             int[] students = islandStud.get(i);
             System.out.print("\nIsland "+ i +" has ");
             System.out.print("students: ");
@@ -519,7 +520,7 @@ public class Cli implements EventReciver {
         }
         for(int c=0; c<4; c++){
             if(cardP[c]!=-1){
-                System.out.println(cardP[c]+ " ");
+                System.out.println(cardP[c] + " - "+ CLIutils.ANSI_BRIGHT_YELLOW + CLIutils.MOTHER_NATURE + CLIutils.ANSI_RESET + ":" + model.cardValueOf(cardP[c]) + " played by " + model.getPlayedById(c));
             }
         }
         System.out.println("\nWhich one will you play (choose between the ones above): ");

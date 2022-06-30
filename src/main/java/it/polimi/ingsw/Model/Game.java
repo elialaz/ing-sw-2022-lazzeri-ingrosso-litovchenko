@@ -635,6 +635,7 @@ public class Game {
         else{
             text = text + "0/";
         }
+        text = text + islandTile.size() + "/";
         for (Island i: islandTile) {
             text = text + arrayToString(i.getStudents()) + ":";
             text = text + i.colorTower().toString() + ":" + i.getTowerNum() + ":";

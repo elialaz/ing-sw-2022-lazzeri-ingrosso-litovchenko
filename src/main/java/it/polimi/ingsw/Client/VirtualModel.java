@@ -19,6 +19,7 @@ public class VirtualModel {
     private ArrayList<int[]> schoolboardCorridor;
     private ArrayList<boolean[]> schoolboardProfessor;
     private boolean expert;
+    private int islandNum;
     private ArrayList<int[]> islandStudents;
     private ArrayList<TowerColor> islandColor;
     private ArrayList<Integer> islandTowerNum;
@@ -30,9 +31,6 @@ public class VirtualModel {
     private boolean[] professorOnGameboard;
     private int coinPile;
     private int[] expertCardPrice;
-
-
-
 
     /**
      * Constructor of the VirtualModel and parser of the data
@@ -117,14 +115,15 @@ public class VirtualModel {
             count++;
         }
         expert = Integer.parseInt(parsed[6]) != 0;
-        parsed2 = parsed[7].split("!");
+        islandNum = Integer.parseInt(parsed[7]);
+        parsed2 = parsed[8].split("!");
         islandStudents = new ArrayList<>();
         islandColor = new ArrayList<>();
         islandTowerNum = new ArrayList<>();
         islandNoEntryTile = new ArrayList<>();
         islandNoEntryTileNum = new ArrayList<>();
         count=0;
-        while(count<12){
+        while(count<islandNum){
             String[] parsed3 = parsed2[count].split(":");
             int[] students = new int[]{0, 0, 0, 0, 0};
             students[0] = Integer.parseInt(parsed3[0]);
@@ -151,7 +150,7 @@ public class VirtualModel {
             }
             count++;
         }
-        parsed2 = parsed[8].split("!");
+        parsed2 = parsed[9].split("!");
         cloudTileStudents = new ArrayList<>();
         count=0;
         while(count<playerNum){
@@ -167,10 +166,24 @@ public class VirtualModel {
         }
         if(expert){
             expertCardId = new ArrayList<>();
-            parsed2 = parsed[9].split("!");
+            parsed2 = parsed[10].split("!");
             expertCardId.add(Integer.parseInt(parsed2[0]));
             expertCardId.add(Integer.parseInt(parsed2[1]));
             expertCardId.add(Integer.parseInt(parsed2[2]));
+            positionMotherNature = Integer.parseInt(parsed[11]);
+            professorOnGameboard = new boolean[]{true, true, true, true, true};
+            parsed2 = parsed[12].split(":");
+            for(int i=0; i<5; i++){
+                professorOnGameboard[i] = Boolean.parseBoolean(parsed2[i]);
+            }
+            coinPile = Integer.parseInt(parsed[13]);
+            assistantsPlayedInTurn = new int[]{-1, -1, -1, -1};
+            parsed2 = parsed[14].split(":");
+            for(int i=0; i<4; i++){
+                assistantsPlayedInTurn[i] = Integer.parseInt(parsed2[i]);
+            }
+        }
+        else{
             positionMotherNature = Integer.parseInt(parsed[10]);
             professorOnGameboard = new boolean[]{true, true, true, true, true};
             parsed2 = parsed[11].split(":");
@@ -180,20 +193,6 @@ public class VirtualModel {
             coinPile = Integer.parseInt(parsed[12]);
             assistantsPlayedInTurn = new int[]{-1, -1, -1, -1};
             parsed2 = parsed[13].split(":");
-            for(int i=0; i<4; i++){
-                assistantsPlayedInTurn[i] = Integer.parseInt(parsed2[i]);
-            }
-        }
-        else{
-            positionMotherNature = Integer.parseInt(parsed[9]);
-            professorOnGameboard = new boolean[]{true, true, true, true, true};
-            parsed2 = parsed[10].split(":");
-            for(int i=0; i<5; i++){
-                professorOnGameboard[i] = Boolean.parseBoolean(parsed2[i]);
-            }
-            coinPile = Integer.parseInt(parsed[11]);
-            assistantsPlayedInTurn = new int[]{-1, -1, -1, -1};
-            parsed2 = parsed[12].split(":");
             for(int i=0; i<4; i++){
                 assistantsPlayedInTurn[i] = Integer.parseInt(parsed2[i]);
             }
@@ -356,6 +355,10 @@ public class VirtualModel {
 
     public int cardValueOf(int c){
         int[][] card = new int[][]{{1,2,3,4,5,6,7,8,9,10},{1,1,2,2,3,3,4,4,5,5}};
-        return card[1][c];
+        return card[0][c];
+    }
+
+    public int getIslandNum() {
+        return islandNum;
     }
 }

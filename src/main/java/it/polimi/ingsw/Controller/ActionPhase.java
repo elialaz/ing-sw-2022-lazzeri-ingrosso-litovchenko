@@ -32,6 +32,7 @@ public class ActionPhase {
      * Service method for the set up of the action phase
      **/
     public void setup(){
+        playerPlayed = 0;
         playerOrder = model.getPlanningPhaseOrder();
         controller.setNextPlayerTurn(model.getGamerbyid(playerOrder.get(playerPlayed)));
         controller.setNextMove(5);
