@@ -153,7 +153,7 @@ public class Island {
     }
 
     /**
-     * Service method to set the noCountTower effect
+     * Service method to set the noCountColor effect
      * @param colorNotCount number of towers
      **/
     public void setColorNotCount(int colorNotCount) {
@@ -161,7 +161,7 @@ public class Island {
     }
 
     /**
-     * Service method to get the noCountTower effect
+     * Service method to get the noCountColor effect
      * @return int of colors not to count
      **/
     public int getColorNotCount() {

@@ -251,7 +251,7 @@ public class Game {
     public void checkProfessorInfluence(SchoolBoard schoolBoard){
         for (SchoolBoard s: schoolboards) {
             for(int i=0; i<5; i++){
-                if(((s.getCorridor(i) < schoolBoard.getCorridor(i)) || (s.getCorridor(i) == schoolBoard.getCorridor(i)) && professorControl) && s.isProfessor(i)){
+                if(((s.getCorridor(i) < schoolBoard.getCorridor(i)) || (s.getCorridor(i) == schoolBoard.getCorridor(i)) && professorControl) && s.isProfessor(i) && !s.equals(schoolBoard)){
                     s.setProfessor(i, false);
                     schoolBoard.setProfessor(i, true);
                 }
@@ -326,7 +326,7 @@ public class Game {
                         temporaryInfluence += studentsOnIsland[j];
                     }
                 }
-                if(island.getColorNotCount()!=j){
+                if(island.getColorNotCount()==j){
                     island.setColorNotCount(-1);
                 }
             }
@@ -334,11 +334,11 @@ public class Game {
                 temporaryInfluence += 2;
                 this.setPlusTwoEffect(false);
             }
-            if(influence < temporaryInfluence){
+            if(influence < temporaryInfluence && temporaryInfluence!=0){
                 influence = temporaryInfluence;
                 id = i;
             }
-            else if(influence == temporaryInfluence){
+            else if(influence == temporaryInfluence && influence!=0){
                 id = -2;
             }
         }

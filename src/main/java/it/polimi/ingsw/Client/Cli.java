@@ -1029,8 +1029,17 @@ public class Cli implements EventReciver {
         }
         else{
             System.out.println("You Lost. Game Over");
+            update("loginReceived");
         }
         manager.notify("finishSend");
+        System.out.println("1 for new Game, 2 for exit");
+        int chose = ReadIntInput(1, 2);
+        if(chose==1){
+            update("loginReceived");
+        }
+        else{
+            System.exit(1);
+        }
     }
 
     public int getExpertIDChosen() {

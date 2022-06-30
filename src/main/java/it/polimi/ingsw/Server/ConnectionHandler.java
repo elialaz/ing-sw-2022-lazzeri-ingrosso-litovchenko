@@ -394,7 +394,7 @@ public class ConnectionHandler implements EventReciver {
             case 4:
                 input = message.split("/");
                 if(input[0].equals("ack")){
-                    //TODO disconnesione
+                    server.deleteGame(this);
                 }
                 else{
                     controlManager.notify("win");
