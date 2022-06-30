@@ -511,9 +511,15 @@ public class Cli implements EventReciver {
             }
             k++;
         }
+
+        System.out.print("Cards played in this turn: ");
+
+        if (cardP[0] == -1){
+            System.out.println("none");
+        }
         for(int c=0; c<4; c++){
             if(cardP[c]!=-1){
-                System.out.println(c + " - "+ CLIutils.ANSI_BRIGHT_YELLOW + CLIutils.MOTHER_NATURE + CLIutils.ANSI_RESET + ":" + model.cardValueOf(c) + " played by " + model.getPlayedById(c));
+                System.out.println(cardP[c]+ " ");
             }
         }
         System.out.println("\nWhich one will you play (choose between the ones above): ");
