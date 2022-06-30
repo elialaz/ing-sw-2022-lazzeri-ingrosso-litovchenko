@@ -30,16 +30,16 @@ class ControllerTest {
         control.update("nextmove");
         control.setNextPlayerTurn("Panzerotto");
         try {
-            control.playAssistantCard(7);
+            control.playAssistantCard(2);
         } catch (PlayerNotexist e) {}
         control.setNextPlayerTurn("jeff");
         try {
-            control.playAssistantCard(2);
+            control.playAssistantCard(8);
         } catch (PlayerNotexist e) {}
 
-        /*control.setNextMove(2);
-        control.update("nextmove");
-        control.update("nextmove"); // 3*/
+        //control.setNextMove(2);
+        //control.update("nextmove");
+        control.update("nextmove"); // 3
 
         try {
             control.moveStudentsToIsland(new int[] {1,0,0,0,0}, 5);
@@ -142,10 +142,12 @@ class ControllerTest {
     @Test
     void getManager() {
         ControlEventManager ctrlManager = control.getManager();
+        assertNotNull(ctrlManager);
     }
 
     @Test
     void getModel() {
         Game model = control.getModel();
+        assertNotNull(model);
     }
 }

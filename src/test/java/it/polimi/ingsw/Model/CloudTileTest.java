@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CloudTileTest {
-    private Bag bag;
-    private CloudTile cloudTile;
+    private Bag bag = new Bag(10);
+    private CloudTile cloudTile = new CloudTile(3);
 
 
     /**
@@ -14,8 +14,6 @@ class CloudTileTest {
      **/
     @Test
     void getStudents() {
-        Bag bag = new Bag(5);
-        cloudTile = new CloudTile(3);
         cloudTile.setStudents(bag);
         int [] startStudentOnIt = cloudTile.getStudents();
         int sum = 0;
@@ -31,8 +29,6 @@ class CloudTileTest {
      **/
     @Test
     void setStudents() {
-        bag = new Bag(10);
-        cloudTile = new CloudTile(3);
         cloudTile.setStudents(bag);
         assertFalse(cloudTile.isWithoutPhase());
         assertEquals(3, cloudTile.getNumStudents());
@@ -46,5 +42,11 @@ class CloudTileTest {
         cloudTile = new CloudTile(3);
         cloudTile.getStudents();
         assertTrue(cloudTile.isWithoutPhase());
+    }
+
+    @Test
+    void getStudents2(){
+        cloudTile.setStudents(bag);
+        assertArrayEquals(cloudTile.getStudents2(), cloudTile.getStudents());
     }
 }
