@@ -330,4 +330,8 @@ public class VirtualModel {
         }
         return -1;
     }
+
+    public int getPlayerNum() {
+        return playerNum;
+    }
 }

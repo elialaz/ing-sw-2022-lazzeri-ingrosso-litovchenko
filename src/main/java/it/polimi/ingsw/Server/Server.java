@@ -95,30 +95,14 @@ public class Server {
         return game.get(0);
     }
 
+    //TODO sistemare meglio con le disconnessioni
     public void onDisconnect(ServerThread client) {
         synchronized (lock) {
             String nickname = client.getNickname();
 
             if (nickname != null) {
-                /*
-                boolean gameStarted = gameController.isGameStarted();
-                removeClient(nickname, !gameStarted); // enable lobby notifications only if the game didn't start yet.
-
-                if(gameController.getTurnController() != null &&
-                        !gameController.getTurnController().getNicknameQueue().contains(nickname)) {
-                    return;
-                }
-
-                // Resets server status only if the game was already started.
-                // Otherwise the server will wait for a new player to connect.
-                if (gameStarted) {
-                    gameController.broadcastDisconnectionMessage(nickname, " disconnected from the server. GAME ENDED.");
-
-                    gameController.endGame();
-                    clientHandlerMap.clear();
-                }
-
-                 */
+                clientStatus.clear();
+                clientNickname.remove(client.getNickname());
             }
         }
     }

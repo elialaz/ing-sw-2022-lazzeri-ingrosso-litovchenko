@@ -64,6 +64,8 @@ public class Cli implements EventReciver {
     public void update(String eventType) {
         switch (eventType) {
             case "updateData":
+                playerNumber = model.getPlayerNum();
+
                 showGameBoard();
                 break;
             case "loginReceived":
@@ -628,13 +630,13 @@ public class Cli implements EventReciver {
         System.out.println("--------------------------------------------\n");
         System.out.print("Choose a cloud between those below:");
 
-        for (int i = 0; i < playerNumber; i++) {
-            System.out.print("\n"+ i + ") Cloud " + i+1 + ": ");
+        for (int i = 0; i < model.getPlayerNum(); i++) {
+            System.out.print("\n"+ i + ") Cloud " + i + ": ");
             displayStudents(model.getCloudTileStudents().get(i));
         }
         System.out.println();
         System.out.println("Which cloud will you choose (from 1 to " + (playerNumber) + "): ");
-        witchCloudTile = ReadIntInput(1, playerNumber)-1;
+        witchCloudTile = ReadIntInput(0, playerNumber-1);
         manager.notify("actionPhase3Send");
     }
 
