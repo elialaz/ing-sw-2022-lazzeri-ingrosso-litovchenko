@@ -27,6 +27,7 @@ public class Game {
     private boolean plusTwoEffect;
     private int plusTwoEffectPlayer;
     private boolean expertMode;
+    private int[] cardLastTurn;
 
     /**
      * Constructor of the Model
@@ -45,6 +46,7 @@ public class Game {
 
         gamer.add(new Player(firstPlayer, 0, 1));
         assistantCard.add(new Deck());
+        cardLastTurn = new int[]{-1, -1, -1, -1};
         coinPile--;
 
         //setup of the game parameters
@@ -205,6 +207,7 @@ public class Game {
      **/
     public void playCard(int playerId, int card){
         assistantCard.get(playerId).playCard(card);
+        cardLastTurn[playerId]=card;
         manager.notify("update");
     }
 
@@ -660,6 +663,7 @@ public class Game {
         text = text + position.getPosition() + "/";
         text = text + arrayToString(professor) + "/";
         text = text + coinPile;
+        text = text + "/" + arrayToString(cardLastTurn);
         return text;
     }
 
@@ -703,6 +707,10 @@ public class Game {
             uscita = uscita + "#";
         }
         return uscita;
+    }
+
+    public void resetCardLastTurn(){
+        cardLastTurn = new int[]{-1, -1, -1, -1};
     }
 }
 

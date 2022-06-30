@@ -34,9 +34,6 @@ public class Cli implements EventReciver {
     private ArrayList<int[]> studentsToIsland;
     private int[] studentsToSchoolboard;
 
-    private int[] playedInTurn = new int[] {-1,-1,-1,-1};
-    private int turnCount = 0;
-
     /**
      * Constructor of the Cli
      * @param manager EventManager for the Client
@@ -62,7 +59,6 @@ public class Cli implements EventReciver {
         manager.subscribe("disconnection", this);
     }
 
-    //TODO
     @Override
     public void update(String eventType) {
         switch (eventType) {
@@ -283,10 +279,9 @@ public class Cli implements EventReciver {
         showSchoolBoard(model.getSchoolboardEntrance(nickname), model.getSchoolboardTower(nickname), model.getSchoolboardColorTower(nickname), model.getSchoolboardProfessor(nickname), model.getSchoolboardCorridor(nickname), nickname);
         System.out.println();
         System.out.println("Other School Board: ");
-        //TODO si legge sempre lo stesso user, gameboard però diverse
         for (String p: model.getPlayer()) {
             if(!p.equals(nickname)){
-                showSchoolBoard(model.getSchoolboardEntrance(p), model.getSchoolboardTower(p), model.getSchoolboardColorTower(p), model.getSchoolboardProfessor(p), model.getSchoolboardCorridor(p), nickname);
+                showSchoolBoard(model.getSchoolboardEntrance(p), model.getSchoolboardTower(p), model.getSchoolboardColorTower(p), model.getSchoolboardProfessor(p), model.getSchoolboardCorridor(p), p);
             }
         }
         System.out.println();
@@ -432,7 +427,6 @@ public class Cli implements EventReciver {
         System.out.println();
     }
 
-    //TODO SITEMARE LA P PER TUTTO I showSchoolBoard
     private void showSchoolBoard(int[] schoolboardEntrance, int schoolboardTower, TowerColor schoolboardColorTower, boolean[] schoolboardProfessor, int[] schoolboardCorridor, String p){
         System.out.print("School Board of player '" + p + "', has these students (" + CLIutils.STUDENT + ") in its entrance: ");
         displayStudents(schoolboardEntrance);
@@ -496,7 +490,6 @@ public class Cli implements EventReciver {
     }
 
     //TODO gestire expertmode ad inizio fase
-    //TODO sistemare gioco carte uguali
     public void planningPhase() {
         int k = 0;
         clearScreen();
@@ -524,26 +517,31 @@ public class Cli implements EventReciver {
                 System.out.println("This card does not exist, please choose another one: ");
                 cardPlayed = ReadIntInput(0, 9);
             } else {
-                System.out.println("This card was already played in your turn, choose another one: ");
+                System.out.println("This card was already played by your in your past turn, choose another one: ");
                 cardPlayed = ReadIntInput(0, 9);
             }
         }
-        /*
-        playedInTurn[turnCount] = cardPlayed;
-        while (turnCount != 0 && IntStream.of(playedInTurn).anyMatch(x -> x == cardPlayed)) {
+        int[] cardP = model.getAssistantsPlayedInTurn();
+        boolean alread = false;
+        for(int f=0; f<4; f++){
+            if(cardP[f] == cardPlayed){
+                alread = true;
+            }
+        }
+        while(alread) {
             System.out.println("This card was already played in your turn. Choose another one to play.");
             cardPlayed = ReadIntInput(0, 9);
+            for(int f=0; f<4; f++){
+                if(cardP[f] == cardPlayed){
+                    alread = true;
+                }
+            }
         }
-        turnCount++;
-        */
         manager.notify("planningPhaseSend");
     }
 
     //TODO gestire expertmode ad inizio fase
     private void actionPhase1() {
-        turnCount = 0;
-        for (int i=0; i<4; i++)
-            playedInTurn[i] = -1;
         clearScreen();
         System.out.println("--------------------------------------------");
         System.out.println("-------------- ACTION PHASE 1 --------------");
@@ -662,43 +660,3 @@ public class Cli implements EventReciver {
         manager.notify("finishSend");
     }
 }
-
-/*
-
-///**
-//
-//}
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//    /**
-//     * Getter of the students moved to an island
-//     */
-//    public ArrayList<int[]> getStudentsToIsland() {
-//        return studentsToIsland;
-//    }
-//
-//    /**
-//     * Getter of the students moved to a corridor
-//     */
-//    public int[] getStudentsToSchoolboard() {
-//        return studentsToSchoolboard;
-//    }
-//
-//
-//
-//
-//

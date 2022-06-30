@@ -178,6 +178,11 @@ public class VirtualModel {
                 professorOnGameboard[i] = Boolean.parseBoolean(parsed2[i]);
             }
             coinPile = Integer.parseInt(parsed[12]);
+            assistantsPlayedInTurn = new int[]{-1, -1, -1, -1};
+            parsed2 = parsed[13].split(":");
+            for(int i=0; i<4; i++){
+                assistantsPlayedInTurn[i] = Integer.parseInt(parsed2[i]);
+            }
         }
         else{
             positionMotherNature = Integer.parseInt(parsed[9]);
@@ -187,6 +192,11 @@ public class VirtualModel {
                 professorOnGameboard[i] = Boolean.parseBoolean(parsed2[i]);
             }
             coinPile = Integer.parseInt(parsed[11]);
+            assistantsPlayedInTurn = new int[]{-1, -1, -1, -1};
+            parsed2 = parsed[12].split(":");
+            for(int i=0; i<4; i++){
+                assistantsPlayedInTurn[i] = Integer.parseInt(parsed2[i]);
+            }
         }
         expertCardPrice = new int[]{3, 1, 1, 1, 3, 3, 2, 2, 2, 3, 2, 1};
     }

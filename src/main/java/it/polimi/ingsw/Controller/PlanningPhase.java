@@ -16,6 +16,7 @@ public class PlanningPhase{
     private int playerPlayed;
     private final Controller controller;
     private ArrayList<Integer> playerOrder;
+    private boolean first;
 
     /**
      * Constructor of the PlanningPhase
@@ -31,6 +32,7 @@ public class PlanningPhase{
         this.playerNum = playerNum;
         playerPlayed = 0;
         this.controller = controller;
+        first = true;
     }
 
     /**
@@ -38,10 +40,15 @@ public class PlanningPhase{
      **/
     public void startGame(){
         controller.setNextPlayerTurn(model.getGamerbyid(playerPlayed));
+        if(first){
+            model.resetCardLastTurn();
+            first = false;
+        }
         playerPlayed++;
         if(playerPlayed==playerNum){
             playerPlayed = 0;
             controller.setNextMove(3);
+            first = true;
         }
         manager.notify("gamerPlanningTurnNotify");
     }
@@ -50,6 +57,10 @@ public class PlanningPhase{
      * Service method to select the next player to do a planning move
      **/
     public void planningMove(){
+        if(first){
+            model.resetCardLastTurn();
+            first = false;
+        }
         if(playerPlayed == 0){
             model.updateCloudTile();
             playerOrder = model.getPlanningPhaseOrder();
@@ -59,6 +70,7 @@ public class PlanningPhase{
         if(playerPlayed==playerNum){
             playerPlayed = 0;
             controller.setNextMove(3);
+            first = true;
         }
         manager.notify("gamerPlanningTurnNotify");
     }

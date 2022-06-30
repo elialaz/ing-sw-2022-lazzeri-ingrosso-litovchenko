@@ -238,6 +238,7 @@ public class ConnectionHandler implements EventReciver {
                 input = message.split("/");
                 try {
                     controller.playAssistantCard(Integer.parseInt(input[0]));
+
                 }
                 catch (PlayerNotexist e){
                     System.out.println("Error Playing the Assistant Card");
