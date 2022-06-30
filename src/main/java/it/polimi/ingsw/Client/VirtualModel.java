@@ -396,7 +396,7 @@ public class VirtualModel {
 
     public int cardValueOf(int c){
         int[][] card = new int[][]{{1,2,3,4,5,6,7,8,9,10},{1,1,2,2,3,3,4,4,5,5}};
-        return card[0][c];
+        return card[1][c];
     }
 
     public int getIslandNum() {

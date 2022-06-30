@@ -795,6 +795,7 @@ public class Cli implements EventReciver {
         }
     }
 
+    //TODO manca verifica precondizioni
     public void playCharacterCard() {
         if (model.isExpert()) {
             System.out.println("Do you want to play a character card?: 1) Yes || 2) No");
@@ -805,11 +806,20 @@ public class Cli implements EventReciver {
                 do{
                     displayCharacterCard(model.getExpertCardId(), model.getExpertCardPrice());
                     System.out.println("Which one will you play 0, 1 or 2: ");
-                    int id = ReadIntInput(0,2);
-                    expertIDChosen = ex.get(id);
-                    chooseCharacterCard(ex.get(id));
+                    System.out.println("Chose 3 for exit ");
+                    int id = ReadIntInput(0,3);
+                    if(id!=3){
+                        expertIDChosen = ex.get(id);
+                        chooseCharacterCard(ex.get(id));
+                    }
+                    else{
+                        notPlayed=true;
+                        break;
+                    }
                 }while (notPlayed);
-                manager.notify("expertPlayedSend");
+                if(!notPlayed){
+                    manager.notify("expertPlayedSend");
+                }
             }
         }
     }
