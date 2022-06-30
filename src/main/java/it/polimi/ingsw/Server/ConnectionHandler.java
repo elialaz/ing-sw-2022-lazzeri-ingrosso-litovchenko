@@ -212,6 +212,9 @@ public class ConnectionHandler implements EventReciver {
                     }
                 }
                 break;
+            case "expertCard":
+                //TODO da finire expertmode
+                break;
         }
     }
 
@@ -250,7 +253,6 @@ public class ConnectionHandler implements EventReciver {
                 int[] studentsToIsland = new int[]{0, 0, 0, 0, 0};
                 int[] studentsToSchoolBoard = new int[]{0, 0, 0, 0, 0};
                 int island;
-                //TODO inserire if per gioca carte esperto
                 String[] firstMove = input[0].split("!");
                 for (int i = 0; i < 5; i++) {
                     studentsToSchoolBoard[i] = Integer.parseInt(firstMove[i]);
@@ -283,7 +285,6 @@ public class ConnectionHandler implements EventReciver {
                 break;
             case 2:
                 input = message.split("/");
-                //TODO inserire if per gioca carte esperto
                 try {
                     controller.moveMotherNature(Integer.parseInt(input[0]));
                 } catch (MoveNotAllowed e) {
@@ -293,7 +294,6 @@ public class ConnectionHandler implements EventReciver {
                 break;
             case 3:
                 input = message.split("/");
-                //TODO inserire if per gioca carte esperto
                 controller.takeCloudTile(Integer.parseInt(input[0]));
                 controlManager.notify("nextmove");
                 break;

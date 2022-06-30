@@ -283,7 +283,6 @@ public class Game {
      * Service method for check control over island
      * @param island island where Control need to be checked
      **/
-    //TODO rivedere poiche da torre su isole che non dovrebbe
     public void checkControl(Island island){
         int playerId = this.checkInfluence(island);
         if(island.checkNotTower() && playerId != -1 && playerId != -2){

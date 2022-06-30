@@ -93,6 +93,7 @@ class ServerThread extends Thread{
                                 sendMessage("failed");
                             }
                         }
+                        //TODO aggiungere if expertmode
                         else {
                             master.onMessageReceived(message, nickname);
                         }
@@ -140,105 +141,3 @@ class ServerThread extends Thread{
         return nickname;
     }
 }
-
-/*
-
-try{
-            while(setup){
-                line=is.readLine();
-                String[] parsed = line.split("/");
-                switch (parsed[0]){
-                    case "login":
-                        os.println("loginSuccess");
-                        break;
-                    case "newGame":
-                        clientManager = ClientEventManager.createClientEventManager();
-                        clientManager.subscribe("clientSend", this);
-                        clientManager.subscribe("updateGameBoard", this);
-                        nickname = parsed[1];
-                        master = server.startGame(eventManager, clientManager, parsed[1], Integer.parseInt(parsed[2]), Integer.parseInt(parsed[3]), Boolean.parseBoolean(parsed[4]), Boolean.parseBoolean(parsed[5]));
-                        controller = master.getController();
-                        nextMove = controller.getManager();
-                        setup=false;
-                        break;
-                    case "loadGame":
-                        boolean response = server.loadGame(parsed[1], Integer.parseInt(parsed[2]));
-                        if (response) {
-                            master = server.getMaster(Integer.parseInt(parsed[2]));
-                            controller = master.getController();
-                            nextMove = controller.getManager();
-                            setup=false;
-                            os.println("success");
-                            if(master.getExpectedGamer()== master.getActualGamer()){
-                                master.setStart(true);
-                            }
-                        }
-                        else{
-                            os.println("failed");
-                        }
-                        break;
-                }
-            }
-            while(!Thread.currentThread().isInterrupted()) {
-                if (send && master.isStart()) {
-                    send=false;
-                    String[] parsed;
-                    switch (master.getActionType()) {
-                        case 0:
-                            os.println("enable/planningPhase");
-                            line = is.readLine();
-                            parsed = line.split("/");
-                            controller.playAssistantCard(Integer.parseInt(parsed[0]));
-                            nextMove.notify("nextmove");
-                            break;
-                        case 1:
-                            os.println("enable/actionPhase1");
-                            line = is.readLine();
-                            parsed = line.split("/");
-                            int[] studentsToIsland = new int[5];
-                            int[] studentsToSchoolBoard = new int[5];
-                            //TODO inserire if per gioca carte esperto
-                            String[] firstMove = parsed[0].split("!");
-                            for (int i = 0; i < 5; i++) {
-                                studentsToIsland[i] = Integer.parseInt(firstMove[i]);
-                            }
-                            String[] secondMove = parsed[1].split("!");
-                            for (int i = 0; i < 5; i++) {
-                                studentsToSchoolBoard[i] = Integer.parseInt(secondMove[i]);
-                            }
-                            int island = Integer.parseInt(parsed[2]);
-                            controller.moveStudentsToIsland(studentsToIsland, island);
-                            controller.moveStudentsToSchoolboard(studentsToSchoolBoard);
-                            nextMove.notify("nextmove");
-                            break;
-                        case 2:
-                            os.println("enable/actionPhase2");
-                            line = is.readLine();
-                            parsed = line.split("/");
-                            //TODO inserire if per gioca carte esperto
-                            controller.moveMotherNature(Integer.parseInt(parsed[0]));
-                            nextMove.notify("nextmove");
-                            break;
-                        case 3:
-                            os.println("enable/actionPhase3");
-                            line = is.readLine();
-                            parsed = line.split("/");
-                            //TODO inserire if per gioca carte esperto
-                            controller.takeCloudTile(Integer.parseInt(parsed[0]));
-                            nextMove.notify("nextmove");
-                            break;
-                        case 4:
-                            os.println("enable/finish");
-                            game = false;
-                            break;
-                    }
-                }
-            }
-            os.println(controller.getNextTurnPlayer());
-            os.println("finish");
-        }
-        catch (Exception e) {
-            System.out.println("IO Error/ Client terminated abruptly");
-            eventManager.notify("clientError");
-        }
- */
