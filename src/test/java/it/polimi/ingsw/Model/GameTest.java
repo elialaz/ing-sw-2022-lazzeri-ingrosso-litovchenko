@@ -105,31 +105,34 @@ class GameTest {
     }
 
     @Test
-    void moveMotherNature() {
-
-    }
-
-    @Test
-    void checkControl() {
+    void checkInfluence() {
         try {
             game.addPlayer("kyle");
         } catch (ToMuchPlayerExcetpion e) {}
-        game.setProfessorControl(true);
-        game.moveStudentsToSchoolBoard(new int[] {2,1,0,2,0}, 0);
-        game.moveStudentsToIsland(new int[] {1,0,1,1,0}, 0, game.getIslandById(5) );
-        game.moveStudentsToSchoolBoard(new int[] {0,0,3,2,2},1);
-        game.checkControl(game.getIslandById(5));
-        assertEquals(1, game.getIslandById(5).getTowerNum());
-        game.checkControl(game.getIslandById(5));
+        game.moveStudentsToSchoolBoard(new int[] {0,1,2,0,0}, 0);
+        game.moveStudentsToSchoolBoard(new int[] {1,1,0,0,0},1);
+
+        assertEquals(1, game.checkInfluence(new Island(new int[]{1,0,0,0,0},0 )));
     }
 
     @Test
-    void checks() {
+    void checkControl(){
         try {
             game.addPlayer("kyle");
         } catch (ToMuchPlayerExcetpion e) {}
-        game.setProfessorControl(true);
-        game.setPlusTwoEffect(true);
+        game.moveStudentsToSchoolBoard(new int[] {0,1,2,0,0}, 0);
+        game.moveStudentsToSchoolBoard(new int[] {1,1,0,0,0},1);
+        game.checkControl(game.getIslandById(4));
+        assertEquals(1, game.getIslandById(4).getTowerNum());
+    }
+
+    @Test
+    void checkProfessorInfluence() {
+        try {
+            game.addPlayer("kyle");
+        } catch (ToMuchPlayerExcetpion e) {}
+        game.setProfessorControl(false);
+        game.setPlusTwoEffect(false);
         game.setPlusTwoEffectPlayer(0);
         game.moveStudentsToSchoolBoard(new int[] {2,1,0,2,0}, 0);
         game.moveStudentsToIsland(new int[] {1,0,1,1,0}, 0, game.getIslandById(5) );
@@ -140,7 +143,6 @@ class GameTest {
         assertFalse(game.getSchoolBoards().get(0).isProfessor(2));
         assertTrue(game.getSchoolBoards().get(0).isProfessor(3));
         assertFalse(game.getSchoolBoards().get(0).isProfessor(4));
-        assertEquals(0, game.checkInfluence(game.getIslandById(5)));
     }
 
     @Test
