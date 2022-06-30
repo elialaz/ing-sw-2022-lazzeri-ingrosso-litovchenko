@@ -112,22 +112,27 @@ public class Client implements EventReciver {
                 catch(IOException e){
                     System.out.println("Error: "+ e);
                 }
-                synchronized (outputLock){
-                    out.println("login/" + userInterface.getNickname());
-                }
                 try{
-                    synchronized (inputLock){
-                        input = in.readLine();
+                    synchronized (outputLock){
+                        out.println("login/" + userInterface.getNickname());
+                    }
+                    try{
+                        synchronized (inputLock){
+                            input = in.readLine();
+                        }
+                    }
+                    catch(IOException e){
+                        System.out.println("Errore nella lettura dalla socket: "+ e);
+                    }
+                    if(!input.equals("loginSuccess")){
+                        manager.notify("retryNickname");
+                    }
+                    else{
+                        manager.notify("loginReceived");
                     }
                 }
-                catch(IOException e){
-                    System.out.println("Errore nella chiusura della socket: "+ e);
-                }
-                if(!input.equals("loginSuccess")){
-                    manager.notify("retryNickname");
-                }
-                else{
-                    manager.notify("loginReceived");
+                catch (Exception e){
+                    userInterface.login();
                 }
                 break;
             case "newGameSend":
