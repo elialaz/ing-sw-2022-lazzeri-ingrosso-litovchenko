@@ -127,6 +127,12 @@ class ServerThread extends Thread{
 
             server.onDisconnect(this);
         }
+        else{
+            master.clientRemove(nickname);
+            Thread.currentThread().interrupt();
+
+            server.onDisconnect(this);
+        }
     }
 
     public void sendMessage(String message) {
