@@ -547,8 +547,8 @@ public class Cli implements EventReciver {
                     System.out.println("> During the influence calculation this turn, you count as having 2 more influence: ");
                     System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i-1] + CLIutils.COIN + CLIutils.ANSI_RESET );
                     break;
-                    //TODO ProfessorControl sbagliato
                 case 9:
+                    //TODO ProfessorControl sbagliato
                     //cost 2
                     System.out.println("> During this turn, you take control of any number of Professors even if you have the same number of Students as the player who currently controls them: ");
                     System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i-1] + CLIutils.COIN + CLIutils.ANSI_RESET );
