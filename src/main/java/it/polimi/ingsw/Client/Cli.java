@@ -275,7 +275,7 @@ public class Cli implements EventReciver {
         System.out.flush();
     }
 
-    //TODO aggiungere display deck
+    //TODO aggiungere display deck e display cloudtile
     private void showGameBoard() {
         clearScreen();
         System.out.println("Your School Board: ");
@@ -605,6 +605,7 @@ public class Cli implements EventReciver {
     }
 
     //TODO gestire expertmode ad inizio fase
+    //TODO sistemare caso min = 1 e max = 1
     private void actionPhase2() {
         clearScreen();
         System.out.println("--------------------------------------------");

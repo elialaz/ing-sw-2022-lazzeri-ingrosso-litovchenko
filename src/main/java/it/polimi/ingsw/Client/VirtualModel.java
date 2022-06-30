@@ -162,6 +162,7 @@ public class VirtualModel {
             students[3] = Integer.parseInt(parsed3[3]);
             students[4] = Integer.parseInt(parsed3[4]);
             count++;
+            cloudTileStudents.add(students);
         }
         if(expert){
             expertCardId = new ArrayList<>();
