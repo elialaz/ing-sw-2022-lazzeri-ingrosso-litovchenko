@@ -4,7 +4,7 @@
 
 Eriantys Board Game is the final test of **"Software Engineering"**, course of **"Computer Science and Engineering"** held at Polytechnic University of Milan (2021/2022).
 
-**Teacher** San Pietro Pierluigi
+**Teacher:** San Pietro Pierluigi
 
 ## The Team
 * [Elia Lazzeri](https://github.com/elialaz) (10716571)
@@ -18,7 +18,7 @@ You can find the full game rules [here](https://www.craniocreations.it/wp-conten
 
 The final version includes:
 * Initial UML diagram;
-* Final UML diagram, generated from the code by automated tools;
+* Final UML diagram, generated from the code by the IntelliJ diagrams tool;
 * Working game implementation, which has to be rules compliant;
 * Source code of the implementation;
 * Source code of unity tests.
@@ -29,7 +29,7 @@ The final version includes:
 | Basic rules |                                                                                  [✅](https://github.com/elialaz/ing-sw-2022-lazzeri-ingrosso-litovchenko/tree/main/src/main/java/it/polimi/ingsw/Model)                                                                                   |
 | Complete rules |                                                                                  [✅](https://github.com/elialaz/ing-sw-2022-lazzeri-ingrosso-litovchenko/tree/main/src/main/java/it/polimi/ingsw/Model)                                                                                   |
 | Socket |                                                                                  [✅](https://github.com/elialaz/ing-sw-2022-lazzeri-ingrosso-litovchenko/tree/main/src/main/java/it/polimi/ingsw/Server)                                                                                  |
-| GUI |                                                                                                                                          [⚠️]()                                                                                                                                           |
+| GUI |                                                                                                                                          [⛔️]()                                                                                                                                           |
 | CLI |                                                                             [✅️](https://github.com/elialaz/ing-sw-2022-lazzeri-ingrosso-litovchenko/tree/main/src/main/java/it/polimi/ingsw/Client/View/cli)                                                                              |
 | All charachter cards |                                                                           [✅](https://github.com/elialaz/ing-sw-2022-lazzeri-ingrosso-litovchenko/tree/main/src/main/java/it/polimi/ingsw/Model/CharacterCard)                                                                            |
 | 4 player game |                                                                                  [✅️](https://github.com/elialaz/ing-sw-2022-lazzeri-ingrosso-litovchenko/tree/main/src/main/java/it/polimi/ingsw/Model)                                                                                  |
@@ -77,8 +77,11 @@ mvn clean package
 7. A new folder called "target" will be created in the project home directory, inside it you will find the jar file, which already includes the project dependencies
 8. Open a terminal and go to the project target directory and execute these command:
 ```bash
-java -jar original-PSP23-1.0-SNAPSHOT.jar //to start the server
-java -jar PSP23-1.0-SNAPSHOT.jar //to start the client
+//to start the server
+java -jar original-PSP23-1.0-SNAPSHOT.jar 
+
+//to start the client
+java -jar PSP23-1.0-SNAPSHOT.jar 
 ```
 In order to play, you'll have to launch at least one server and two clients.
 
