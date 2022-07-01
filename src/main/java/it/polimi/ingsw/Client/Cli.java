@@ -468,7 +468,7 @@ public class Cli implements EventReciver {
         }
     }
 
-    public void chooseCharacterCard(int id) {
+    public void chooseCharacterCard(int id, int input) {
         int[] students_entrance = model.getSchoolboardEntrance(nickname);
         int[] students_corridor = model.getSchoolboardCorridor(nickname);
         expertMessage = "";
@@ -497,7 +497,7 @@ public class Cli implements EventReciver {
                 if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[id-1]){
                     switchFromCard_id2 = new int[]{0,0,0,0,0};
                     switchFromEntrance_id2 = new int[]{0,0,0,0,0};
-                    int[] studentsCard = model.getStudentsExpertCard();
+                    int[] studentsCard = model.getStudentsExpertCard(input);
                     int chosenStudent;
                     System.out.print("This card has the following students: ");
                     displayStudents(studentsCard);
@@ -683,10 +683,10 @@ public class Cli implements EventReciver {
                 //cost 2
                 if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[id-1]){
                     System.out.print("This card has the following students: ");
-                    displayStudents(model.getStudentsExpertCard());
+                    displayStudents(model.getStudentsExpertCard(input));
                     System.out.println("Which student color will you move: 0) " + CLIutils.ANSI_GREEN + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 1) " + CLIutils.ANSI_RED + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 2) " + CLIutils.ANSI_YELLOW + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 3) " + CLIutils.ANSI_PINK + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 4) " + CLIutils.ANSI_BLUE + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
                     int chose = ReadIntInput(0, 4);
-                    while (model.getStudentsExpertCard()[chose]==0){
+                    while (model.getStudentsExpertCard(input)[chose]==0){
                         System.out.println("What are you doing? There isn't this students on the card. Select another one.");
                         chose = ReadIntInput(0, 4);
                     }
@@ -702,7 +702,7 @@ public class Cli implements EventReciver {
                 //cost 1
                 if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[id-1]){
                     System.out.print("This card has the following students: ");
-                    displayStudents(model.getStudentsExpertCard());
+                    displayStudents(model.getStudentsExpertCard(input));
                     System.out.println("Which island will you choose: (0 - " + model.getIslandNum() + ")");
                     int chose = ReadIntInput(0, model.getIslandNum());
                     while (chose < 0 || chose > model.getIslandNum()){
@@ -711,7 +711,7 @@ public class Cli implements EventReciver {
                     }
                     System.out.println("Which student color will you move to the chosen island: 0) " + CLIutils.ANSI_GREEN + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 1) " + CLIutils.ANSI_RED + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 2) " + CLIutils.ANSI_YELLOW + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 3) " + CLIutils.ANSI_PINK + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 4) " + CLIutils.ANSI_BLUE + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
                     int chose2 = ReadIntInput(0, 4);
-                    while (model.getStudentsExpertCard()[chose2]==0){
+                    while (model.getStudentsExpertCard(input)[chose2]==0){
                         System.out.println("What are you doing? There isn't this students on the card. Select another one.");
                         chose2 = ReadIntInput(0, 4);
                     }
@@ -810,7 +810,7 @@ public class Cli implements EventReciver {
                     int id = ReadIntInput(0,3);
                     if(id!=3){
                         expertIDChosen = ex.get(id);
-                        chooseCharacterCard(ex.get(id));
+                        chooseCharacterCard(ex.get(id), id);
                     }
                     else{
                         notPlayed=true;

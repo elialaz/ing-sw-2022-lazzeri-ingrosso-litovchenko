@@ -32,7 +32,7 @@ public class VirtualModel {
     private int coinPile;
     private int[] expertCardPrice;
     private boolean[] expertCardPriceCheck;
-    private int[] expertCardStudents;
+    private ArrayList<int[]> expertCardStudents;
 
     /**
      * Constructor of the VirtualModel and parser of the data
@@ -168,7 +168,8 @@ public class VirtualModel {
         }
         if(expert){
             expertCardId = new ArrayList<>();
-            expertCardStudents = new int[]{0, 0, 0, 0, 0};
+            expertCardStudents = new ArrayList<>();
+            int[] temp = new int[]{0, 0, 0, 0, 0};
             parsed2 = parsed[10].split("!");
             count = 0;
             expertCardId.add(Integer.parseInt(parsed2[count]));
@@ -176,30 +177,35 @@ public class VirtualModel {
                 count++;
                 String[] parsed3 = parsed2[count].split(":");
                 for(int i=0; i<5; i++){
-                    expertCardStudents[i] = Integer.parseInt(parsed3[i]);
+                    temp[i] = Integer.parseInt(parsed3[i]);
                 }
+                expertCardStudents.add(temp);
             }
             else{
                 count++;
+                expertCardStudents.add(new int[]{0, 0, 0, 0, 0});
             }
             expertCardId.add(Integer.parseInt(parsed2[count]));
             if(Integer.parseInt(parsed2[count])==2 || Integer.parseInt(parsed2[count])==11 || Integer.parseInt(parsed2[count])==12){
                 count++;
                 String[] parsed3 = parsed2[count].split(":");
                 for(int i=0; i<5; i++){
-                    expertCardStudents[i] = Integer.parseInt(parsed3[i]);
+                    temp[i] = Integer.parseInt(parsed3[i]);
                 }
+                expertCardStudents.add(temp);
             }
             else{
                 count++;
+                expertCardStudents.add(new int[]{0, 0, 0, 0, 0});
             }
             expertCardId.add(Integer.parseInt(parsed2[count]));
             if(Integer.parseInt(parsed2[count])==2 || Integer.parseInt(parsed2[count])==11 || Integer.parseInt(parsed2[count])==12){
                 count++;
                 String[] parsed3 = parsed2[count].split(":");
                 for(int i=0; i<5; i++){
-                    expertCardStudents[i] = Integer.parseInt(parsed3[i]);
+                    temp[i] = Integer.parseInt(parsed3[i]);
                 }
+                expertCardStudents.add(temp);
             }
             positionMotherNature = Integer.parseInt(parsed[11]);
             professorOnGameboard = new boolean[]{true, true, true, true, true};
@@ -410,7 +416,7 @@ public class VirtualModel {
         }
     }
 
-    public int[] getStudentsExpertCard(){
-        return expertCardStudents;
+    public int[] getStudentsExpertCard(int id){
+        return expertCardStudents.get(id);
     }
 }
