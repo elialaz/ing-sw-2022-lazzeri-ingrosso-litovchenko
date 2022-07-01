@@ -56,11 +56,33 @@ All tests in model and controller has a classes' coverage at 100%.
 |:-----------------------|:--------------------|:------------------------------------:|
 | Controller | ActionPhase         | 20/20 (100%)
 | Controller | ControlEventManager | 11/11 (100%)
-| Controller | Controller          | 52/55 (94%)
+| Controller | Controller          | 52/55 (92%)
 | Controller | EndPhase            | 8/11 (72%)
-| Controller | PlanningPhase       | 22/22 (100%)
-| Model | Global Package      | 635/683 (92%)
+| Controller | PlanningPhase       | 31/31 (100%)
+| Model | Global Package      | 635/673 (94%)
 
+
+## Compile and Run
+To run the tests and compile the software:
+
+1. Install [Java SE 11](https://docs.oracle.com/en/java/javase/11/);
+2. Install [Maven](https://maven.apache.org/install.html);
+3. Clone this repo;
+5. Unzip the .zip file;
+6. Open a terminal, navigate to the folder and compile sources of the package by typing:
+```bash
+cd /path/to/project/home/directory
+mvn clean package
+```
+7. A new folder called "target" will be created in the project home directory, inside it you will find the jar file, which already includes the project dependencies
+8. Open a terminal and go to the project target directory and execute these command:
+```bash
+java -jar original-PSP23-1.0-SNAPSHOT.jar //to start the server
+java -jar PSP23-1.0-SNAPSHOT.jar //to start the client
+```
+In order to play, you'll have to launch at least one server and two clients.
+
+In order to play multiplayer from different locations port forwarding is needed.
 
 ## Software used
 
