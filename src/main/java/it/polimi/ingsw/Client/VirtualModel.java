@@ -180,6 +180,7 @@ public class VirtualModel {
                     temp[i] = Integer.parseInt(parsed3[i]);
                 }
                 expertCardStudents.add(temp);
+                count++;
             }
             else{
                 count++;
@@ -193,6 +194,7 @@ public class VirtualModel {
                     temp[i] = Integer.parseInt(parsed3[i]);
                 }
                 expertCardStudents.add(temp);
+                count++;
             }
             else{
                 count++;
@@ -206,6 +208,7 @@ public class VirtualModel {
                     temp[i] = Integer.parseInt(parsed3[i]);
                 }
                 expertCardStudents.add(temp);
+                count++;
             }
             else{
                 expertCardStudents.add(new int[]{0, 0, 0, 0, 0});
