@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class IslandTest {
     private final MotherNature motherNature = new MotherNature();
-    private ArrayList<Island> archipelago;
+    private ArrayList<Island> archipelago = Island.tableIslandConstructor(motherNature);
 
     @Test
     void startStudents(){

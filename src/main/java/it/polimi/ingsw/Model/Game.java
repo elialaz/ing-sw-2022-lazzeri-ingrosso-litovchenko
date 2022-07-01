@@ -719,6 +719,38 @@ public class Game {
     public Deck getDeck(int p) {
         return assistantCard.get(p);
     }
+
+    public int getIdGame() {
+        return idGame;
+    }
+
+    public ArrayList<Deck> getAssistantCard() {
+        return assistantCard;
+    }
+
+    public boolean isExpertMode() {
+        return expertMode;
+    }
+
+    public MotherNature getPosition() {
+        return position;
+    }
+
+    public boolean[] getProfessor() {
+        return professor;
+    }
+
+    public int getCoinPile() {
+        return coinPile;
+    }
+
+    public int[] getCardLastTurn() {
+        return cardLastTurn;
+    }
+
+    public int getPlayerNum() {
+        return playerNum;
+    }
 }
 
 

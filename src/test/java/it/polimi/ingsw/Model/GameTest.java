@@ -244,4 +244,112 @@ class GameTest {
     void getManager(){
        assertNotNull(game.getManager());
     }
+
+    @Test
+    void toStringTest(){
+        String text = "updateGameBoard" + "/" + game.getIdGame() + "/" + game.getPlayerNum() + "/";
+        int temp = 0;
+        for (Player p: game.getGamer()) {
+            text = text + p.getName() + ":";
+            text = text + p.getCoin() + ":";
+            temp++;
+        }
+        text = text + "/";
+        temp = 0;
+        for (Deck d: game.getAssistantCard()) {
+            text = text + matrixtoString(d.getAssistantCardDeck()) + ":" + d.getLastCardValue() + ":" + d.getLastMotherNatureValue() + "!";
+            temp++;
+        }
+        temp = 0;
+        text = text + "/";
+        for (SchoolBoard b: game.getSchoolBoards()) {
+            text = text + arrayToString(b.getEntranceStudents()) + ":" + b.getTower() + ":" + b.getColor().toString() + ":" + b.getCorridor(0) + ":" + b.getCorridor(1) + ":" + b.getCorridor(2) + ":" + b.getCorridor(3) + ":" + b.getCorridor(4) + ":" + b.isProfessor(0) + ":" + b.isProfessor(1) + ":" + b.isProfessor(2) + ":" + b.isProfessor(3) + ":" + b.isProfessor(4) + "!";
+            temp++;
+        }
+        temp = 0;
+        text = text + "/";
+        if(game.isExpertMode()){
+            text = text + "1/";
+        }
+        else{
+            text = text + "0/";
+        }
+        text = text + game.getIslandTile().size() + "/";
+        for (Island i: game.getIslandTile()) {
+            text = text + arrayToString(i.getStudents()) + ":";
+            text = text + i.colorTower().toString() + ":" + i.getTowerNum() + ":";
+            if(game.isExpertMode()){
+                text = text + i.isEntryTileMotherNature() + ":" + i.getNoEntryTile() + "!";
+            }
+            else{
+                text = text + "!";
+            }
+            temp++;
+        }
+        temp = 0;
+        text = text + "/";
+        for (CloudTile c: game.getCloudTiles()) {
+            text = text + arrayToString(c.getStudents2()) + "!";
+            temp++;
+        }
+        text = text + "/";
+        if(game.isExpertMode()){
+            for (SpecialCard s: game.getExpertCard()) {
+                if(s.getId()==2 || s.getId()==12 || s.getId()==11){
+                    text = text + s.getId() + "!" + arrayToString(s.getStudents()) + "!";
+                }
+                else {
+                    text = text + s.getId() + "!";
+                }
+            }
+            text = text + "/";
+        }
+        text = text + game.getPosition().getPosition() + "/";
+        text = text + arrayToString(game.getProfessor()) + "/";
+        text = text + game.getCoinPile();
+        text = text + "/" + arrayToString(game.getCardLastTurn());
+        assertEquals(text, game.toString());
+    }
+
+    private String arrayToString(boolean[] input){
+        String uscita = "";
+        for(int i=0; i<input.length; i++){
+            if(i==(input.length-1)){
+                uscita = uscita + String.valueOf(input[i]);
+            }
+            else{
+                uscita = uscita + String.valueOf(input[i]) + ":";
+            }
+        }
+        return uscita;
+    }
+
+    private String arrayToString(int[] input){
+        String uscita = "";
+        for(int i=0; i<input.length; i++){
+            if(i==(input.length-1)){
+                uscita = uscita + String.valueOf(input[i]);
+            }
+            else{
+                uscita = uscita + String.valueOf(input[i]) + ":";
+            }
+        }
+        return uscita;
+    }
+
+    private String matrixtoString(int[][] input){
+        String uscita = "";
+        for(int i=0; i<2; i++){
+            for(int j=0; j<10; j++){
+                if(j==9){
+                    uscita = uscita + String.valueOf(input[i][j]);
+                }
+                else{
+                    uscita = uscita + String.valueOf(input[i][j]) + "£";
+                }
+            }
+            uscita = uscita + "#";
+        }
+        return uscita;
+    }
 }
