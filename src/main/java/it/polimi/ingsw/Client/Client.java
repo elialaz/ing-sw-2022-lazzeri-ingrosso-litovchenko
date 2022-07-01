@@ -46,6 +46,7 @@ public class Client implements EventReciver {
         manager.subscribe("actionPhase2Send", this);
         manager.subscribe("actionPhase3Send", this);
         manager.subscribe("finishSend", this);
+        manager.subscribe("expertPlayedSend", this);
         userInterface = new Cli(manager, this);
         game = true;
         userInterface.login();

@@ -181,8 +181,7 @@ public class VirtualModel {
                 }
                 expertCardStudents.add(temp);
                 count++;
-            }
-            else{
+            } else{
                 count++;
                 expertCardStudents.add(new int[]{0, 0, 0, 0, 0});
             }
@@ -195,8 +194,7 @@ public class VirtualModel {
                 }
                 expertCardStudents.add(temp);
                 count++;
-            }
-            else{
+            } else{
                 count++;
                 expertCardStudents.add(new int[]{0, 0, 0, 0, 0});
             }
@@ -209,8 +207,7 @@ public class VirtualModel {
                 }
                 expertCardStudents.add(temp);
                 count++;
-            }
-            else{
+            } else{
                 expertCardStudents.add(new int[]{0, 0, 0, 0, 0});
             }
             positionMotherNature = Integer.parseInt(parsed[11]);

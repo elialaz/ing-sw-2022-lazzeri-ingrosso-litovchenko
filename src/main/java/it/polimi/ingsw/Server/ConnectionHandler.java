@@ -245,9 +245,10 @@ public class ConnectionHandler implements EventReciver {
                 chosed = c;
             }
         }
+        assert chosed != null;
+        int coin = chosed.getPrice();
         switch (id){
             case 1:
-                assert chosed != null;
                 chosed.GetEffect(model, model.getIslandById(Integer.parseInt(parsed[2])));
                 break;
             case 2:
@@ -261,7 +262,6 @@ public class ConnectionHandler implements EventReciver {
                 for(int i=0; i<5; i++){
                     studentsFromEntrance[i] = Integer.parseInt(parsed2[i]);
                 }
-                assert chosed != null;
                 chosed.GetEffect(model.getSchoolBoards().get(Integer.parseInt(parsed[2])), studentsFromCart, studentsFromEntrance);
                 break;
             case 3:
@@ -275,57 +275,44 @@ public class ConnectionHandler implements EventReciver {
                 for(int i=0; i<5; i++){
                     studentsToDining[i] = Integer.parseInt(parsed2[i]);
                 }
-                assert chosed != null;
                 chosed.GetEffect(model.getSchoolBoards().get(Integer.parseInt(parsed[2])), studentsToDining, studentsToEntrance);
                 break;
             case 4:
-                assert chosed != null;
                 chosed.GetEffect(model.getDeck(Integer.parseInt(parsed[2])));
                 break;
             case 5:
-                assert chosed != null;
                 chosed.GetEffect(Integer.parseInt(parsed[2]), model.getIslandById(Integer.parseInt(parsed[3])));
                 break;
             case 6:
-                assert chosed != null;
-                chosed.GetEffect(model.getIslandById(Integer.parseInt(parsed[2])));
-                break;
             case 7:
-                assert chosed != null;
                 chosed.GetEffect(model.getIslandById(Integer.parseInt(parsed[2])));
                 break;
             case 8:
-                assert chosed != null;
                 chosed.GetEffect(model, Integer.parseInt(parsed[2]));
                 break;
             case 9:
-                assert chosed != null;
                 chosed.GetEffect(model);
                 break;
             case 10:
-                assert chosed != null;
                 type = Integer.parseInt(parsed[2]);
                 students = new int[]{0, 0, 0, 0, 0};
                 students[type] = 2;
                 chosed.GetEffect(model.getSchoolBoards(), students, model.getBag());
                 break;
             case 11:
-                assert chosed != null;
                 type = Integer.parseInt(parsed[3]);
                 students = new int[]{0, 0, 0, 0, 0};
                 students[type] = 1;
                 chosed.GetEffect(model.getSchoolBoards().get(Integer.parseInt(parsed[2])), students, model.getBag());
                 break;
             case 12:
-                assert chosed != null;
                 type = Integer.parseInt(parsed[3]);
                 students = new int[]{0, 0, 0, 0, 0};
                 students[type] = 1;
                 chosed.GetEffect(students, model.getIslandById(Integer.parseInt(parsed[2])), model.getBag());
                 break;
         }
-        assert chosed != null;
-        model.removeCoin(chosed.getPrice(), nickname);
+        model.removeCoin(coin, nickname);
     }
 
     public synchronized void onMessageReceived(String message, String nickname){
