@@ -306,7 +306,6 @@ public class Game {
      * Service method for checking influence
      * @param island island where the method need to chek influence
      **/
-    //TODO aggiunto professorcontrol
     public int checkInfluence(Island island){
         int influence = 0;
         int id = -1;
@@ -750,6 +749,43 @@ public class Game {
 
     public int getPlayerNum() {
         return playerNum;
+    }
+
+    public boolean checkCardNumber() {
+        boolean check = true;
+        for (Deck d: assistantCard) {
+            for(int i=0; i<d.getAssistantCardDeck()[0].length; i++){
+                if(d.getAssistantCardDeck()[0][i]!=-1){
+                    check = false;
+                }
+            }
+            if(check){
+                return check;
+            }
+            check = false;
+        }
+        return check;
+    }
+
+    public String checkMuchTower() {
+        int high=100;
+        String name = "";
+        int professor = -1;
+        for (SchoolBoard s: schoolboards) {
+            if(s.getTower() < high){
+                high = s.getTower();
+                name = s.getPlayer().getName();
+                professor = s.getProfessor();
+            }
+            if(high == s.getTower()){
+                if(s.getProfessor() > professor){
+                    high = s.getTower();
+                    name = s.getPlayer().getName();
+                    professor = s.getProfessor();
+                }
+            }
+        }
+        return name;
     }
 }
 

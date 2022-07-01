@@ -26,7 +26,6 @@ public class EndPhase{
     /**
      * Service method for check if the current game as ended
      **/
-    //TODO aggiungere condizione caso in cui 0 carte giocabili o 0 studenti e parita
     public void checkWin(){
         if(controller.isWinPhase()){
             manager.notify("win");
@@ -34,6 +33,10 @@ public class EndPhase{
         else{
             if(model.islandNUm() == 3){
                 controller.setNextPlayerTurn(model.checkTowerNum());
+                manager.notify("win");
+            }
+            if(model.checkCardNumber()){
+                controller.setNextPlayerTurn(model.checkMuchTower());
                 manager.notify("win");
             }
             else {

@@ -74,4 +74,8 @@ public class Bag {
             }
         }
     }
+
+    public int getMaxNum() {
+        return maxNum;
+    }
 }
