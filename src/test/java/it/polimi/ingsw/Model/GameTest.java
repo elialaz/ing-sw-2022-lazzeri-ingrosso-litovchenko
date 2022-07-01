@@ -120,10 +120,17 @@ class GameTest {
         try {
             game.addPlayer("kyle");
         } catch (ToMuchPlayerExcetpion e) {}
+        Island island = new Island(new int[]{1,0,0,0,0}, 0);
+        Island nextIsland = new Island(new int[]{0,1,0,0,0}, 0);
         game.moveStudentsToSchoolBoard(new int[] {0,1,2,0,0}, 0);
         game.moveStudentsToSchoolBoard(new int[] {1,1,0,0,0},1);
-        game.checkControl(game.getIslandById(4));
-        assertEquals(1, game.getIslandById(4).getTowerNum());
+        game.checkControl(island);
+        assertEquals(1, island.getTowerNum());
+        assertEquals(TowerColor.WHITE, island.colorTower());
+        game.checkControl(nextIsland);
+        assertEquals(1, nextIsland.getTowerNum());
+        assertEquals(TowerColor.BLACK, nextIsland.colorTower());
+        game.checkControl(nextIsland);
     }
 
     @Test

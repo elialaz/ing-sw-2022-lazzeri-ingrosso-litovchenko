@@ -314,13 +314,12 @@ public class Game {
         int[] studentsOnIsland = island.getStudents();
         for (int i=0; i<playerNum && notEven; i++) {
             int temporaryInfluence = 0;
-            for(int j=0; j<5; j++){
-                if(!island.isNoCountTower()){
-                    if(island.colorTower().equals(schoolboards.get(i).getColor())){
-                        temporaryInfluence += island.getTowerNum();
-                        island.setNoCountTower(false);
-                    }
+            if(!island.isNoCountTower()) {
+                if (island.colorTower().equals(schoolboards.get(i).getColor())) {
+                    temporaryInfluence += island.getTowerNum();
                 }
+            }
+            for(int j=0; j<5; j++){
                 if(schoolboards.get(i).isProfessor(j) && island.getColorNotCount()!=j){
                     if(studentsOnIsland[j]!=0){
                         temporaryInfluence += studentsOnIsland[j];
@@ -342,6 +341,7 @@ public class Game {
                 id = -2;
             }
         }
+        island.setNoCountTower(false);
         return id;
     }
 

@@ -53,4 +53,11 @@ class PlayerTest {
         player = new Player("Nikita", 1, 1);
         assertEquals("Nikita", player.getName());
     }
+
+    @Test
+    void removeCoin1(){
+        player = new Player("Filiberto", 3, 5);
+        player.removeCoin(3);
+        assertEquals(2, player.getCoin());
+    }
 }
