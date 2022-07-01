@@ -207,6 +207,9 @@ public class VirtualModel {
                 }
                 expertCardStudents.add(temp);
             }
+            else{
+                expertCardStudents.add(new int[]{0, 0, 0, 0, 0});
+            }
             positionMotherNature = Integer.parseInt(parsed[11]);
             professorOnGameboard = new boolean[]{true, true, true, true, true};
             parsed2 = parsed[12].split(":");
