@@ -928,7 +928,7 @@ public class Cli implements EventReciver {
                     if(studentsToIsland.size()==0){
                         students_isle[chosenStudent+1]++;
                         students_entrance[chosenStudent]--;
-                        System.out.print("To which island (choose from 0 to 11): ");
+                        System.out.print("To which island (choose from 0 to " + model.getIslandNum() + "): ");
                         chosenIsland = ReadIntInput(0, 11);
                         students_isle[0] = chosenIsland;
                         studentsToIsland.add(students_isle);
@@ -937,7 +937,7 @@ public class Cli implements EventReciver {
                         boolean trovato = false;
                         students_isle[chosenStudent+1]++;
                         students_entrance[chosenStudent]--;
-                        System.out.print("To which island (choose from 0 to 11): ");
+                        System.out.print("To which island (choose from 0 to " + model.getIslandNum() + "): ");
                         chosenIsland = ReadIntInput(0, 11);
                         for (int[] s: studentsToIsland) {
                             if(s[0]==chosenIsland){

@@ -482,7 +482,7 @@ public class Game {
         value.add(assistantCard.get(0).getLastCardValue());
         for(int i=1; i<gamer.size(); i++){
             inserted=false;
-            for(int j=0; j<i; j++){
+            for(int j=0; j<(order.size()) && !inserted; j++){
                 if(assistantCard.get(i).getLastCardValue() < value.get(j)){
                     value.add(j, assistantCard.get(i).getLastCardValue());
                     order.add(j, i);
