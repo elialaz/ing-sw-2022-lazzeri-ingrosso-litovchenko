@@ -168,9 +168,11 @@ public class Client implements EventReciver {
                     System.out.println("Errore nella chiusura della socket: "+ e);
                 }
                 if (input.equals("success")){
+                    manager.notify("waitAddPlayer");
                     new Thread(this::connectionHandler).start();
                 }
                 else{
+                    manager.notify("errorLoading");
                     manager.notify("loginReceived");
                 }
                 break;

@@ -66,6 +66,7 @@ public class Cli implements EventReciver {
         manager.subscribe("waitAddPlayer", this);
         manager.subscribe("disconnection", this);
         manager.subscribe("expertPlayedSend", this);
+        manager.subscribe("errorLoading", this);
     }
 
     @Override
@@ -73,7 +74,6 @@ public class Cli implements EventReciver {
         switch (eventType) {
             case "updateData":
                 playerNumber = model.getPlayerNum();
-
                 showGameBoard();
                 break;
             case "loginReceived":
@@ -103,7 +103,13 @@ public class Cli implements EventReciver {
             case "disconnection":
                 disconnection();
                 break;
+            case "errorLoading":
+                errorLoading();
         }
+    }
+
+    private void errorLoading() {
+        System.out.println("This game is full of player or not exist. Please select another option");
     }
 
     /**
@@ -233,7 +239,6 @@ public class Cli implements EventReciver {
         } else {
             System.out.println("Insert the ID of the Game you want to join: ");
             gameId = ReadIntInput(1, 99999);
-            System.out.print("\nWaiting for other players... ");
             manager.notify("loadGameSend");
         }
     }

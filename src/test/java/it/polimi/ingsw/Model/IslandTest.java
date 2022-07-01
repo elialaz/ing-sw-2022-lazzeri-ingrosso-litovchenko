@@ -14,7 +14,7 @@ class IslandTest {
     @Test
     void startStudents(){
         int startPos = motherNature.getPosition();
-        motherNature.move(6);
+        motherNature.move(6, archipelago);
         int startPos2 = motherNature.getPosition();
         archipelago = Island.tableIslandConstructor(motherNature);
         int sum = 0;

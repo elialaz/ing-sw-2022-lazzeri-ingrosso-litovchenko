@@ -269,7 +269,7 @@ public class Game {
      * @param move move forward of this number of island
      **/
     public void moveMotherNature(int move){
-        position.move(move);
+        position.move(move, islandTile);
         if(islandTile.get(position.getPosition()).isEntryTileMotherNature()){
             islandTile.get(position.getPosition()).noEntryTileMotherNature();
         }
@@ -423,6 +423,7 @@ public class Game {
                 }
                 if(unionBefore){
                     islandTile.remove(idBefore);
+                    position.move(-1, islandTile);
                 }
             }
             manager.notify("update");

@@ -19,6 +19,7 @@ class ServerThread extends Thread{
     private String nickname;
     private final Object inputLock;
     private final Object outputLock;
+    private boolean disconnection;
 
 
     /**
@@ -33,6 +34,7 @@ class ServerThread extends Thread{
         this.eventManager = eventManager;
         this.inputLock = new Object();
         this.outputLock = new Object();
+        disconnection = false;
         try{
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             out = new PrintWriter(s.getOutputStream(), true);
@@ -128,8 +130,10 @@ class ServerThread extends Thread{
             Thread.currentThread().interrupt();
         }
         else{
-            server.onDisconnect(nickname, master);
-            Thread.currentThread().interrupt();
+            if(!disconnection){
+                Thread.currentThread().interrupt();
+                server.onDisconnect(nickname, master);
+            }
         }
     }
 

@@ -209,7 +209,6 @@ public class ConnectionHandler implements EventReciver {
                 synchronized (lock){
                     for (Pair p: client) {
                         p.getClient().sendMessage("clientDisconnection");
-                        p.getClient().disconnect();
                     }
                 }
                 break;

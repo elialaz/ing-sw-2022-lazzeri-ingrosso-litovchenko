@@ -99,11 +99,7 @@ public class Server {
             if (nickname != null) {
                 clientNickname.remove(nickname);
             }
-            c.update("disconnect");
-            for (Pair p: c.getClient()) {
-                clientNickname.remove(p.getNickname());
-            }
-            deleteGame(c);
+            game.remove(c);
         }
     }
 
@@ -129,10 +125,12 @@ public class Server {
         return true;
     }
 
-    public void deleteGame(ConnectionHandler connectionHandler) {
-        for (ConnectionHandler c: game) {
-            if(c.equals(connectionHandler)){
-                game.remove(c);
+    public synchronized void deleteGame(ConnectionHandler connectionHandler) {
+        synchronized (lock){
+            for (ConnectionHandler c: game) {
+                if(c.equals(connectionHandler)){
+                    game.remove(c);
+                }
             }
         }
     }
