@@ -56,10 +56,10 @@ All tests in model and controller has a classes' coverage at 100%.
 |:-----------------------|:--------------------|:------------------------------------:|
 | Controller | ActionPhase         | 20/20 (100%)
 | Controller | ControlEventManager | 11/11 (100%)
-| Controller | Controller          | 52/55 (92%)
-| Controller | EndPhase            | 8/11 (72%)
+| Controller | Controller          | 52/55 (94%)
+| Controller | EndPhase            | 9/14 (64%)
 | Controller | PlanningPhase       | 31/31 (100%)
-| Model | Global Package      | 635/673 (94%)
+| Model | Global Package      | 644/709 (90%)
 
 
 ## Compile and Run
