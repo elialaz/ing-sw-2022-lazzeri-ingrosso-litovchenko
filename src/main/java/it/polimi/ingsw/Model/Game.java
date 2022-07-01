@@ -167,7 +167,6 @@ public class Game {
     /**
      * Service method professorControl effect
      **/
-    //TODO implements with check influence
     public void setProfessorControl(boolean professorControl) {
         this.professorControl = professorControl;
     }
@@ -307,12 +306,12 @@ public class Game {
      * Service method for checking influence
      * @param island island where the method need to chek influence
      **/
+    //TODO aggiunto professorcontrol
     public int checkInfluence(Island island){
         int influence = 0;
-        boolean notEven = true;
         int id = -1;
         int[] studentsOnIsland = island.getStudents();
-        for (int i=0; i<playerNum && notEven; i++) {
+        for (int i = 0; i<playerNum; i++) {
             int temporaryInfluence = 0;
             if(!island.isNoCountTower()) {
                 if (island.colorTower().equals(schoolboards.get(i).getColor())) {
@@ -320,7 +319,7 @@ public class Game {
                 }
             }
             for(int j=0; j<5; j++){
-                if(schoolboards.get(i).isProfessor(j) && island.getColorNotCount()!=j){
+                if((schoolboards.get(i).isProfessor(j) || professorControl) && island.getColorNotCount()!=j){
                     if(studentsOnIsland[j]!=0){
                         temporaryInfluence += studentsOnIsland[j];
                     }
