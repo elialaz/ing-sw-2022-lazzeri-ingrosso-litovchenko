@@ -411,7 +411,7 @@ public class VirtualModel {
 
     public void addOneExpertCardUsed(int id){
         if(!expertCardPriceCheck[id]){
-            expertCardPrice[id-1]++;
+            expertCardPrice[id]++;
             expertCardPriceCheck[id]=true;
         }
     }

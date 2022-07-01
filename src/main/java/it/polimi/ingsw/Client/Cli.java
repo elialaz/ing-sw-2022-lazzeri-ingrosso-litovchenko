@@ -34,19 +34,11 @@ public class Cli implements EventReciver {
     //Expert character cards
     private String expertMessage;
     private boolean notPlayed;
-    private int Island_id1;
     private int[] switchFromCard_id2;
     private int[] switchFromEntrance_id2;
     private int[] switchFromCorridor_id3;
-    private int[] switchFromEntrance_id3; //praticamente come studentsToSchoolboard
-    private int extraMotherNatureMove_id4;
+    private int[] switchFromEntrance_id3;
     private int colorNoInfluence_id5;
-    private boolean towerInfluence_id6;
-    private int id7;
-    private int extraStudentInfluence_id8;
-    private int id8;
-    private int id9;
-    private int id10;
 
 
     /**
@@ -484,7 +476,7 @@ public class Cli implements EventReciver {
                         System.out.println("What are you doing? There isn't this island. Select another one.");
                         chose = ReadIntInput(0, model.getIslandNum());
                     }
-                    model.addOneExpertCardUsed(id);
+                    model.addOneExpertCardUsed(id-1);
                     expertMessage = "playExpert/1/" + chose;
                     notPlayed = false;
                 }
@@ -526,7 +518,7 @@ public class Cli implements EventReciver {
                         students_entrance[chosenStudent]--;
                         switchFromEntrance_id2[chosenStudent]++;
                     }
-                    model.addOneExpertCardUsed(id);
+                    model.addOneExpertCardUsed(id-1);
                     expertMessage = "playExpert/2/" + model.playerId(nickname) + "/";
                     for(int i=0; i<5; i++){
                         expertMessage = expertMessage + switchFromCard_id2[i] + ":";
@@ -570,7 +562,7 @@ public class Cli implements EventReciver {
                         students_entrance[chosenStudent]--;
                         switchFromEntrance_id3[chosenStudent]++;
                     }
-                    model.addOneExpertCardUsed(id);
+                    model.addOneExpertCardUsed(id-1);
                     expertMessage = "playExpert/3/" + model.playerId(nickname) + "/";
                     for(int i=0; i<5; i++){
                         expertMessage = expertMessage + switchFromCorridor_id3[i] + ":";
@@ -588,7 +580,7 @@ public class Cli implements EventReciver {
             case 4:
                 //cost 1
                 if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[id-1]){
-                    model.addOneExpertCardUsed(id);
+                    model.addOneExpertCardUsed(id-1);
                     expertMessage = "playExpert/4/" + model.playerId(nickname);
                     notPlayed = false;
                 }
@@ -601,7 +593,7 @@ public class Cli implements EventReciver {
                 if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[id-1]){
                     System.out.println("Which color student will you choose: 0) " + CLIutils.ANSI_GREEN + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 1) " + CLIutils.ANSI_RED + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 2) " + CLIutils.ANSI_YELLOW + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 3) " + CLIutils.ANSI_PINK + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 4) " + CLIutils.ANSI_BLUE + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
                     colorNoInfluence_id5 = ReadIntInput(0,4);
-                    model.addOneExpertCardUsed(id);
+                    model.addOneExpertCardUsed(id-1);
                     expertMessage = "playExpert/5/" + colorNoInfluence_id5 + "/" + model.playerId(nickname);
                     notPlayed = false;
                 }
@@ -618,7 +610,7 @@ public class Cli implements EventReciver {
                         System.out.println("What are you doing? There isn't this island. Select another one.");
                         chose = ReadIntInput(0, model.getIslandNum());
                     }
-                    model.addOneExpertCardUsed(id);
+                    model.addOneExpertCardUsed(id-1);
                     expertMessage = "playExpert/6/" + chose;
                     notPlayed = false;
                 }
@@ -635,19 +627,19 @@ public class Cli implements EventReciver {
                         System.out.println("What are you doing? There isn't this island. Select another one.");
                         chose = ReadIntInput(0, model.getIslandNum());
                     }
-                    model.addOneExpertCardUsed(id);
+                    model.addOneExpertCardUsed(id-1);
                     expertMessage = "playExpert/7/" + chose;
                     notPlayed = false;
                 }
                 else{
                     System.out.print("You not have enough coin to play this card ");
                 }
-                model.addOneExpertCardUsed(id);
+                model.addOneExpertCardUsed(id-1);
                 break;
             case 8:
                 //cost 2
                 if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[id-1]){
-                    model.addOneExpertCardUsed(id);
+                    model.addOneExpertCardUsed(id-1);
                     expertMessage = "playExpert/8/" + model.playerId(nickname);
                     notPlayed = false;
                 }
@@ -658,7 +650,7 @@ public class Cli implements EventReciver {
             case 9:
                 //cost 2
                 if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[id-1]){
-                    model.addOneExpertCardUsed(id);
+                    model.addOneExpertCardUsed(id-1);
                     expertMessage = "playExpert/9";
                     notPlayed = false;
                 }
@@ -671,7 +663,7 @@ public class Cli implements EventReciver {
                 if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[id-1]){
                     System.out.println("Which color student will you choose: 0) " + CLIutils.ANSI_GREEN + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 1) " + CLIutils.ANSI_RED + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 2) " + CLIutils.ANSI_YELLOW + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 3) " + CLIutils.ANSI_PINK + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 4) " + CLIutils.ANSI_BLUE + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
                     int chose = ReadIntInput(0,4);
-                    model.addOneExpertCardUsed(id);
+                    model.addOneExpertCardUsed(id-1);
                     expertMessage = "playExpert/10/" + chose;
                     notPlayed = false;
                 }
@@ -690,7 +682,7 @@ public class Cli implements EventReciver {
                         System.out.println("What are you doing? There isn't this students on the card. Select another one.");
                         chose = ReadIntInput(0, 4);
                     }
-                    model.addOneExpertCardUsed(id);
+                    model.addOneExpertCardUsed(id-1);
                     expertMessage = "playExpert/11/" + model.playerId(nickname) + "/" + chose;
                     notPlayed = false;
                 }
@@ -715,7 +707,7 @@ public class Cli implements EventReciver {
                         System.out.println("What are you doing? There isn't this students on the card. Select another one.");
                         chose2 = ReadIntInput(0, 4);
                     }
-                    model.addOneExpertCardUsed(id);
+                    model.addOneExpertCardUsed(id-1);
                     expertMessage = "playExpert/12/" + chose + "/" + chose2;
                     notPlayed = false;
                 }
@@ -847,7 +839,7 @@ public class Cli implements EventReciver {
             k++;
         }
 
-        System.out.print("Cards played in this turn: ");
+        System.out.println("\nCards played in this turn: ");
 
         if (cardP[0] == -1){
             System.out.println("none");
