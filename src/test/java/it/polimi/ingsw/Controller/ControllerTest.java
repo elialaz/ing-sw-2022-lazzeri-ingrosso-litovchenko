@@ -1,8 +1,8 @@
 package it.polimi.ingsw.Controller;
 
 import it.polimi.ingsw.Exception.MoveNotAllowed;
-import it.polimi.ingsw.Exception.PlayerNotexist;
-import it.polimi.ingsw.Exception.ToMuchPlayerExcetpion;
+import it.polimi.ingsw.Exception.PlayerNotExist;
+import it.polimi.ingsw.Exception.ToMuchPlayerException;
 import it.polimi.ingsw.Model.Game;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +16,7 @@ class ControllerTest {
     void addPlayer() {
         try {
             control.addPlayer("X");
-        } catch (ToMuchPlayerExcetpion e) {
+        } catch (ToMuchPlayerException e) {
         }
     }
 
@@ -25,17 +25,17 @@ class ControllerTest {
         //fare tutte le azioni tra fasi
         try {
             control.addPlayer("jeff");
-        } catch (ToMuchPlayerExcetpion e) {}
+        } catch (ToMuchPlayerException e) {}
         control.update("start");
         control.update("nextmove");
         control.setNextPlayerTurn("Panzerotto");
         try {
             control.playAssistantCard(2);
-        } catch (PlayerNotexist e) {}
+        } catch (PlayerNotExist e) {}
         control.setNextPlayerTurn("jeff");
         try {
             control.playAssistantCard(8);
-        } catch (PlayerNotexist e) {}
+        } catch (PlayerNotExist e) {}
 
         //control.setNextMove(2);
         //control.update("nextmove");
@@ -44,7 +44,7 @@ class ControllerTest {
         try {
             control.moveStudentsToIsland(new int[] {1,0,0,0,0}, 5);
             control.moveStudentsToSchoolboard(new int[] {2,0,0,0,0});
-        } catch (PlayerNotexist e) {}
+        } catch (PlayerNotExist e) {}
 
         /*control.setNextMove(4);
         control.update("nextmove"); // 4*/
@@ -60,7 +60,7 @@ class ControllerTest {
         try {
             control.moveStudentsToIsland(new int[] {0,0,0,0,0}, 3);
             control.moveStudentsToSchoolboard(new int[] {1,1,1,0,0});
-        } catch (PlayerNotexist e) {}
+        } catch (PlayerNotExist e) {}
         control.update("nextmove"); // 4
         try {
             control.moveMotherNature(5);
@@ -94,7 +94,7 @@ class ControllerTest {
         try {
             control.addPlayer("Gio");
             control.playAssistantCard(1);
-        } catch (PlayerNotexist | ToMuchPlayerExcetpion e) {
+        } catch (PlayerNotExist | ToMuchPlayerException e) {
         }
     }
 
@@ -102,7 +102,7 @@ class ControllerTest {
     void moveStudentsToIsland() {
         try {
             control.moveStudentsToIsland(new int[]{1, 2, 0, 0, 0}, 2);
-        } catch (PlayerNotexist e) {
+        } catch (PlayerNotExist e) {
         }
     }
 
@@ -110,7 +110,7 @@ class ControllerTest {
     void moveStudentsToSchoolboard() {
         try {
             control.moveStudentsToSchoolboard(new int[]{1, 2, 0, 0, 0});
-        } catch (PlayerNotexist e) {
+        } catch (PlayerNotExist e) {
         }
     }
 
@@ -121,7 +121,7 @@ class ControllerTest {
             control.playAssistantCard(5);
             control.setNextPlayerTurn("Gio");
             control.moveMotherNature(2);
-        } catch (MoveNotAllowed | ToMuchPlayerExcetpion | PlayerNotexist e) {
+        } catch (MoveNotAllowed | ToMuchPlayerException | PlayerNotExist e) {
         }
     }
 
@@ -130,7 +130,7 @@ class ControllerTest {
         try {
             control.addPlayer("X");
             control.takeCloudTile(1);
-        } catch (ToMuchPlayerExcetpion e) {
+        } catch (ToMuchPlayerException e) {
         }
     }
 

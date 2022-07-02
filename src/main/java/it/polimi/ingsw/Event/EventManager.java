@@ -5,7 +5,7 @@ package it.polimi.ingsw.Event;
  * @author elia_laz
  **/
 public interface EventManager {
-    public void subscribe(String eventType, EventReciver listener);
+    public void subscribe(String eventType, EventReceiver listener);
 
     public void notify(String eventType);
 }

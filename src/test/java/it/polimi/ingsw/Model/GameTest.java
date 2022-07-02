@@ -2,7 +2,7 @@ package it.polimi.ingsw.Model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import it.polimi.ingsw.Exception.ToMuchPlayerExcetpion;
+import it.polimi.ingsw.Exception.ToMuchPlayerException;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ class GameTest {
    void addPlayer() {
        try {
            game.addPlayer("Gio");
-       } catch (ToMuchPlayerExcetpion e) {
+       } catch (ToMuchPlayerException e) {
        }
    }
 
@@ -108,7 +108,7 @@ class GameTest {
     void checkInfluence() {
         try {
             game.addPlayer("kyle");
-        } catch (ToMuchPlayerExcetpion e) {}
+        } catch (ToMuchPlayerException e) {}
         game.moveStudentsToSchoolBoard(new int[] {0,1,2,0,0}, 0);
         game.moveStudentsToSchoolBoard(new int[] {1,1,0,0,0},1);
 
@@ -119,7 +119,7 @@ class GameTest {
     void checkControl(){
         try {
             game.addPlayer("kyle");
-        } catch (ToMuchPlayerExcetpion e) {}
+        } catch (ToMuchPlayerException e) {}
         Island island = new Island(new int[]{1,0,0,0,0}, 0);
         Island nextIsland = new Island(new int[]{0,1,0,0,0}, 0);
         game.moveStudentsToSchoolBoard(new int[] {0,1,2,0,0}, 0);
@@ -137,7 +137,7 @@ class GameTest {
     void checkProfessorInfluence() {
         try {
             game.addPlayer("kyle");
-        } catch (ToMuchPlayerExcetpion e) {}
+        } catch (ToMuchPlayerException e) {}
         game.setProfessorControl(false);
         game.setPlusTwoEffect(false);
         game.setPlusTwoEffectPlayer(0);
@@ -156,7 +156,7 @@ class GameTest {
     void checkUnion() {
         try {
             game.addPlayer("kyle");
-        } catch (ToMuchPlayerExcetpion e) {}
+        } catch (ToMuchPlayerException e) {}
         game.getIslandTile().get(2).setTower(1, game.getSchoolBoards().get(0).getColor());
         game.getIslandTile().get(3).setTower(1, game.getSchoolBoards().get(0).getColor());
         game.getIslandTile().get(4).setTower(1, game.getSchoolBoards().get(0).getColor());
@@ -169,7 +169,7 @@ class GameTest {
     void checkUnionFirst() {
         try {
             game.addPlayer("kyle");
-        } catch (ToMuchPlayerExcetpion e) {}
+        } catch (ToMuchPlayerException e) {}
         game.getIslandTile().get(11).setTower(1,game.getSchoolBoards().get(0).getColor());
         game.getIslandTile().get(0).setTower(1, game.getSchoolBoards().get(0).getColor());
         game.getIslandTile().get(1).setTower(0, game.getSchoolBoards().get(1).getColor());
@@ -183,7 +183,7 @@ class GameTest {
     void checkUnionLast() {
         try {
             game.addPlayer("kyle");
-        } catch (ToMuchPlayerExcetpion e) {}
+        } catch (ToMuchPlayerException e) {}
         game.getIslandTile().get(10).setTower(1, game.getSchoolBoards().get(1).getColor());
         game.getIslandTile().get(11).setTower(1, game.getSchoolBoards().get(0).getColor());
         game.getIslandTile().get(0).setTower(1, game.getSchoolBoards().get(0).getColor());
@@ -199,15 +199,15 @@ class GameTest {
     }
 
     @Test
-    void getGamerbyid() {
+    void getGamerById() {
         ArrayList<Player> gamers = game.getGamer();
-        assertEquals("elvis", game.getGamerbyid(0));
+        assertEquals("elvis", game.getGamerById(0));
     }
 
     @Test
-    void getGamerIdbynickname() {
+    void getGamerIdByNickname() {
         ArrayList<Player> gamers = game.getGamer();
-        assertEquals(0, game.getGamerIdbynickname("elvis"));
+        assertEquals(0, game.getGamerIdByNickname("elvis"));
     }
 
     @Test
@@ -231,7 +231,7 @@ class GameTest {
     void checkTowerNum(){
         try {
             game.addPlayer("shelby");
-        } catch (ToMuchPlayerExcetpion e) {}
+        } catch (ToMuchPlayerException e) {}
         game.getIslandTile().get(3).setTower(2, game.getSchoolBoards().get(0).getColor());
         game.getIslandTile().get(7).setTower(1, game.getSchoolBoards().get(0).getColor());
         game.getSchoolBoards().get(0).removeTower(3);
@@ -257,7 +257,7 @@ class GameTest {
         text = text + "/";
         temp = 0;
         for (Deck d: game.getAssistantCard()) {
-            text = text + matrixtoString(d.getAssistantCardDeck()) + ":" + d.getLastCardValue() + ":" + d.getLastMotherNatureValue() + "!";
+            text = text + matrixToString(d.getAssistantCardDeck()) + ":" + d.getLastCardValue() + ":" + d.getLastMotherNatureValue() + "!";
             temp++;
         }
         temp = 0;
@@ -312,44 +312,44 @@ class GameTest {
     }
 
     private String arrayToString(boolean[] input){
-        String uscita = "";
+        String exit = "";
         for(int i=0; i<input.length; i++){
             if(i==(input.length-1)){
-                uscita = uscita + String.valueOf(input[i]);
+                exit = exit + String.valueOf(input[i]);
             }
             else{
-                uscita = uscita + String.valueOf(input[i]) + ":";
+                exit = exit + String.valueOf(input[i]) + ":";
             }
         }
-        return uscita;
+        return exit;
     }
 
     private String arrayToString(int[] input){
-        String uscita = "";
+        String exit = "";
         for(int i=0; i<input.length; i++){
             if(i==(input.length-1)){
-                uscita = uscita + String.valueOf(input[i]);
+                exit = exit + String.valueOf(input[i]);
             }
             else{
-                uscita = uscita + String.valueOf(input[i]) + ":";
+                exit = exit + String.valueOf(input[i]) + ":";
             }
         }
-        return uscita;
+        return exit;
     }
 
-    private String matrixtoString(int[][] input){
-        String uscita = "";
+    private String matrixToString(int[][] input){
+        String exit = "";
         for(int i=0; i<2; i++){
             for(int j=0; j<10; j++){
                 if(j==9){
-                    uscita = uscita + String.valueOf(input[i][j]);
+                    exit = exit + String.valueOf(input[i][j]);
                 }
                 else{
-                    uscita = uscita + String.valueOf(input[i][j]) + "£";
+                    exit = exit + String.valueOf(input[i][j]) + "£";
                 }
             }
-            uscita = uscita + "#";
+            exit = exit + "#";
         }
-        return uscita;
+        return exit;
     }
 }

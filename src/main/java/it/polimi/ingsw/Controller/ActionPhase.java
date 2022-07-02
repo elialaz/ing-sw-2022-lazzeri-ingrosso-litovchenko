@@ -34,7 +34,7 @@ public class ActionPhase {
     public void setup(){
         playerPlayed = 0;
         playerOrder = model.getPlanningPhaseOrder();
-        controller.setNextPlayerTurn(model.getGamerbyid(playerOrder.get(playerPlayed)));
+        controller.setNextPlayerTurn(model.getGamerById(playerOrder.get(playerPlayed)));
         controller.setNextMove(5);
         manager.notify("gamerActionTurnNotify");
     }
@@ -43,7 +43,7 @@ public class ActionPhase {
      * Service method for the first part of the action phase turn
      **/
     public void studentsMovePhase(){
-        controller.setNextPlayerTurn(model.getGamerbyid(playerOrder.get(playerPlayed)));
+        controller.setNextPlayerTurn(model.getGamerById(playerOrder.get(playerPlayed)));
         controller.setNextMove(5);
         manager.notify("gamerActionTurnNotify");
     }

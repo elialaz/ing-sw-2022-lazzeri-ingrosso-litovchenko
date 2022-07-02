@@ -1,9 +1,9 @@
 package it.polimi.ingsw.Controller;
 
-import it.polimi.ingsw.Event.EventReciver;
+import it.polimi.ingsw.Event.EventReceiver;
 import it.polimi.ingsw.Exception.MoveNotAllowed;
-import it.polimi.ingsw.Exception.PlayerNotexist;
-import it.polimi.ingsw.Exception.ToMuchPlayerExcetpion;
+import it.polimi.ingsw.Exception.PlayerNotExist;
+import it.polimi.ingsw.Exception.ToMuchPlayerException;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.Island;
 import it.polimi.ingsw.Model.SpecialCard;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * Main Class of the Controller, one for each game
  * @author elia_laz
  **/
-public class Controller implements EventReciver {
+public class Controller implements EventReceiver {
     private final int idGame;
     private final int playerNum;
     private final Game model;
@@ -53,7 +53,7 @@ public class Controller implements EventReciver {
      * Service method to add more player to the current game session
      * @param player player to be added to the game
      **/
-    public void addPlayer(String player) throws ToMuchPlayerExcetpion {
+    public void addPlayer(String player) throws ToMuchPlayerException {
         model.addPlayer(player);
     }
 
@@ -121,10 +121,10 @@ public class Controller implements EventReciver {
      * Service Method to play an assistant Card
      * @param card card to be played
      **/
-    public void playAssistantCard(int card) throws PlayerNotexist{
-        int id = model.getGamerIdbynickname(nextTurnPlayer);
+    public void playAssistantCard(int card) throws PlayerNotExist {
+        int id = model.getGamerIdByNickname(nextTurnPlayer);
         if(id == -1){
-            throw new PlayerNotexist();
+            throw new PlayerNotExist();
         }
         else{
             model.playCard(id, card);
@@ -136,8 +136,8 @@ public class Controller implements EventReciver {
      * @param students students array
      * @param islandNum island Number
      **/
-    public void moveStudentsToIsland(int[] students, int islandNum) throws PlayerNotexist{
-        int id = model.getGamerIdbynickname(nextTurnPlayer);
+    public void moveStudentsToIsland(int[] students, int islandNum) throws PlayerNotExist {
+        int id = model.getGamerIdByNickname(nextTurnPlayer);
         Island island = model.getIslandById(islandNum);
         model.moveStudentsToIsland(students, id, island);
     }
@@ -146,8 +146,8 @@ public class Controller implements EventReciver {
      * Service Method to move Students to SchoolBoard
      * @param students students array
      **/
-    public void moveStudentsToSchoolboard(int[] students) throws PlayerNotexist{
-        int id = model.getGamerIdbynickname(nextTurnPlayer);
+    public void moveStudentsToSchoolboard(int[] students) throws PlayerNotExist {
+        int id = model.getGamerIdByNickname(nextTurnPlayer);
         model.moveStudentsToSchoolBoard(students, id);
     }
 
@@ -156,12 +156,12 @@ public class Controller implements EventReciver {
      * @param num number of island to move
      **/
     public void moveMotherNature(int num) throws MoveNotAllowed{
-        if (model.getLastCardMovementAllowed(model.getGamerIdbynickname(nextTurnPlayer)) < num){
+        if (model.getLastCardMovementAllowed(model.getGamerIdByNickname(nextTurnPlayer)) < num){
             throw new MoveNotAllowed();
         }
         else{
             model.moveMotherNature(num);
-            if(model.isFinishTower(model.getGamerIdbynickname(nextTurnPlayer))){
+            if(model.isFinishTower(model.getGamerIdByNickname(nextTurnPlayer))){
                 this.setNextMove(7);
                 winPhase = true;
             }
@@ -173,7 +173,7 @@ public class Controller implements EventReciver {
      * @param num id of the cloud tile to be taken
      **/
     public void takeCloudTile(int num){
-        int id = model.getGamerIdbynickname(nextTurnPlayer);
+        int id = model.getGamerIdByNickname(nextTurnPlayer);
         model.takeCloudTile(id, num);
     }
 

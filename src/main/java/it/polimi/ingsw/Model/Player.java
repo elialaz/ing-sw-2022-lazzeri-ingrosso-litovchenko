@@ -3,7 +3,7 @@ package it.polimi.ingsw.Model;
 
 /**
  * Player Class, one for each player
- * @author elia_laz
+ * @author elia_laz, filibertoingrosso
  **/
 public class Player {
     private final int playerId;
@@ -14,6 +14,7 @@ public class Player {
      * Constructor of Player
      * @param player player name
      * @param id id of the player
+     * @param coin num of coin
      **/
     public Player(String player, int id, int coin) {
         name = player;
@@ -37,7 +38,7 @@ public class Player {
     }
 
     /**
-     * Remove one coin to the player reserve
+     * Remove one coin from the player reserve
      **/
     public void removeCoin(){
         coin--;

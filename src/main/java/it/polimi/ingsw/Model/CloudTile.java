@@ -50,6 +50,7 @@ public class CloudTile {
 
     /**
      * Getter of the number of students
+     * @return num of students on cloudTile
      **/
     public int getNumStudents() {
         return numStudents;
@@ -57,6 +58,7 @@ public class CloudTile {
 
     /**
      * Getter of the students
+     * @return students on cloudTile
      **/
     public int[] getStudents2(){
         int[] arr = students;

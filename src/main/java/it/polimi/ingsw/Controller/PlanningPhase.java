@@ -39,7 +39,7 @@ public class PlanningPhase{
      * Service method to start the current game session
      **/
     public void startGame(){
-        controller.setNextPlayerTurn(model.getGamerbyid(playerPlayed));
+        controller.setNextPlayerTurn(model.getGamerById(playerPlayed));
         if(first){
             model.resetCardLastTurn();
             first = false;
@@ -65,7 +65,7 @@ public class PlanningPhase{
             model.updateCloudTile();
             playerOrder = model.getPlanningPhaseOrder();
         }
-        controller.setNextPlayerTurn(model.getGamerbyid(playerOrder.get(playerPlayed)));
+        controller.setNextPlayerTurn(model.getGamerById(playerOrder.get(playerPlayed)));
         playerPlayed++;
         if(playerPlayed==playerNum){
             playerPlayed = 0;

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Client;
 
 import it.polimi.ingsw.Event.EventManager;
-import it.polimi.ingsw.Event.EventReciver;
+import it.polimi.ingsw.Event.EventReceiver;
 
 import java.util.*;
 
@@ -12,7 +12,7 @@ import java.util.*;
  **/
 public class ClientEventManager implements EventManager {
 
-    private Map<String, List<EventReciver>> listeners = new HashMap<>();
+    private Map<String, List<EventReceiver>> listeners = new HashMap<>();
 
     /**
      * Constructor
@@ -32,24 +32,24 @@ public class ClientEventManager implements EventManager {
     }
 
     /**
-     * Adding EventReciver instance to the subscriber List
+     * Adding EventReceiver instance to the subscriber List
      * @param eventType Event that the Client are interested in
      * @param listener Client that are interested in a some particular Event
      **/
     @Override
-    public synchronized void subscribe(String eventType, EventReciver listener) {
-        List<EventReciver> users = listeners.get(eventType);
+    public synchronized void subscribe(String eventType, EventReceiver listener) {
+        List<EventReceiver> users = listeners.get(eventType);
         users.add(listener);
     }
 
     /**
-     * Notify to some particular EventReciver that something is happened
+     * Notify to some particular EventReceiver that something is happened
      * @param eventType Client type to notify some event
      **/
     @Override
     public void notify(String eventType) {
-        List<EventReciver> users = listeners.get(eventType);
-        for (EventReciver listener : users) {
+        List<EventReceiver> users = listeners.get(eventType);
+        for (EventReceiver listener : users) {
             listener.update(eventType);
         }
     }

@@ -13,7 +13,7 @@ public class SchoolBoard {
     private Player player;
 
     /**
-     * Constructor 1, of the SchoolBoard
+     * Constructor 1 of the SchoolBoard
      * @param color color of the tower in the schoolBoard
      * @param numTower number of the tower in the schoolBoard
      * @param entrance students in the entrance
@@ -27,7 +27,8 @@ public class SchoolBoard {
     }
 
     /**
-     * Constructor 2, of the SchoolBoard
+     * Constructor 2 of the SchoolBoard
+     * @param entrance students in the entrance
      **/
     public SchoolBoard(int[] entrance){
         corridor = new int[]{0,0,0,0,0};
@@ -35,7 +36,7 @@ public class SchoolBoard {
     }
 
     /**
-     * Service method that move the students to the corrispeCtive corridor
+     * Service method that move the students to the correct corridor
      * @param toSchoolBoard students moved from entrance to corridor
      **/
     public void moveCorridor(int[] toSchoolBoard) {
@@ -51,7 +52,7 @@ public class SchoolBoard {
     }
 
     /**
-     * Service method to add students to  corridor
+     * Service method to add students to corridor
      * @param chosenStudents students moved to corridor
      **/
     public void addCorridor(int[] chosenStudents) {
@@ -67,7 +68,7 @@ public class SchoolBoard {
     }
 
     /**
-     * Service method that set the player that own this schoolBoard
+     * Service method that set the player who own this schoolBoard
      * @param player player that own this schoolBoard
      **/
     public void setPlayer(Player player) {
@@ -76,6 +77,7 @@ public class SchoolBoard {
 
     /**
      * getter of player
+     * @return player selected
      **/
     public Player getPlayer(){ return player; }
 
@@ -111,6 +113,7 @@ public class SchoolBoard {
     /**
      * Service method that return true if the SchoolBoard has the Professor
      * @param index moved from entrance to corridor
+     * @return boolean true if there is the professor at index
      **/
     public boolean isProfessor(int index) {
         return professor[index];
@@ -154,6 +157,7 @@ public class SchoolBoard {
     /**
      * Service method that remove students from corridor
      * @param students students need to be removed
+     * @return num of students removed
      **/
     public int removeFromCorridor(int[] students) {
         for(int i =0; i < 5; i++){
@@ -170,7 +174,8 @@ public class SchoolBoard {
     }
 
     /**
-     * Getter of the Tower variable
+     * Getter of the tower variable
+     * @return num of towers
      **/
     public int getTower() {
         return tower;
@@ -178,6 +183,7 @@ public class SchoolBoard {
 
     /**
      * Getter of the professor number
+     * @return num of professor on schoolBoard
      **/
     public int getProfessor() {
         int count=0;
@@ -191,6 +197,7 @@ public class SchoolBoard {
 
     /**
      * Getter of entrance students
+     * @return array of students in the entrance
      **/
     public int[] getEntranceStudents() {
         return entrance;

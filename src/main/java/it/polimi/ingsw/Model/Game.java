@@ -1,13 +1,13 @@
 package it.polimi.ingsw.Model;
 
-import it.polimi.ingsw.Event.EventReciver;
-import it.polimi.ingsw.Exception.ToMuchPlayerExcetpion;
+import it.polimi.ingsw.Event.EventReceiver;
+import it.polimi.ingsw.Exception.ToMuchPlayerException;
 
 import java.util.*;
 
 /**
  * Main Class of the model, all the interaction from the controller is made with method here
- * @author elia_laz
+ * @author elia_laz, filibertoingrosso
  **/
 public class Game {
     private final int idGame;
@@ -18,7 +18,7 @@ public class Game {
     private Bag bag;
     private ArrayList<SpecialCard> expertCard;
     private ArrayList<Deck> assistantCard;
-    private ArrayList<SchoolBoard> schoolboards;
+    private ArrayList<SchoolBoard> schoolBoards;
     private MotherNature position;
     private ModelEventManager manager;
     private boolean[] professor;
@@ -41,7 +41,7 @@ public class Game {
         manager =  ModelEventManager.createModelEventManager();
         gamer = new ArrayList<Player>();
         assistantCard = new ArrayList<Deck>();
-        schoolboards = new ArrayList<SchoolBoard>();
+        schoolBoards = new ArrayList<SchoolBoard>();
         coinPile = 20;
 
         gamer.add(new Player(firstPlayer, 0, 1));
@@ -74,21 +74,21 @@ public class Game {
         for (CloudTile c: cloudTiles) {
             c.setStudents(bag);
         }
-        schoolboards.get(0).setPlayer(gamer.get(0));
+        schoolBoards.get(0).setPlayer(gamer.get(0));
     }
 
     /**
      * Service method to add the remaining Players to the Game
      * @param playerName name of the player to be added to the current Game
-     * @throws ToMuchPlayerExcetpion when playerNum is equal to gamer lenght
+     * @throws ToMuchPlayerException when playerNum is greater than gamer length
      **/
-    public void addPlayer(String playerName) throws ToMuchPlayerExcetpion {
+    public void addPlayer(String playerName) throws ToMuchPlayerException {
         if (gamer.size() > playerNum){
-            throw new ToMuchPlayerExcetpion();
+            throw new ToMuchPlayerException();
         }
         else{
             gamer.add(new Player(playerName, gamer.size(), 1));
-            schoolboards.get(gamer.size()-1).setPlayer(gamer.get(gamer.size()-1));
+            schoolBoards.get(gamer.size()-1).setPlayer(gamer.get(gamer.size()-1));
             assistantCard.add(new Deck());
             coinPile--;
             manager.notify("playerJoin");
@@ -99,19 +99,19 @@ public class Game {
     }
 
     /**
-     * Service method set up the model for 2 player Game
+     * Service method to set up the model for 2 player Game
      **/
     private void setupTwo(){
         cloudTiles = new ArrayList<CloudTile>();
         cloudTiles.add(new CloudTile(3));
         cloudTiles.add(new CloudTile(3));
 
-        schoolboards.add(new SchoolBoard(TowerColor.BLACK, 8, bag.getStudents(7)));
-        schoolboards.add(new SchoolBoard(TowerColor.WHITE, 8, bag.getStudents(7)));
+        schoolBoards.add(new SchoolBoard(TowerColor.BLACK, 8, bag.getStudents(7)));
+        schoolBoards.add(new SchoolBoard(TowerColor.WHITE, 8, bag.getStudents(7)));
     }
 
     /**
-     * Service method setup the model for 3 player Game
+     * Service method to set up the model for 3 player Game
      **/
     private void setupTree() {
         cloudTiles = new ArrayList<CloudTile>();
@@ -119,13 +119,13 @@ public class Game {
         cloudTiles.add(new CloudTile(4));
         cloudTiles.add(new CloudTile(4));
 
-        schoolboards.add(new SchoolBoard(TowerColor.BLACK, 6, bag.getStudents(9)));
-        schoolboards.add(new SchoolBoard(TowerColor.WHITE, 6, bag.getStudents(9)));
-        schoolboards.add(new SchoolBoard(TowerColor.GRAY, 6, bag.getStudents(9)));
+        schoolBoards.add(new SchoolBoard(TowerColor.BLACK, 6, bag.getStudents(9)));
+        schoolBoards.add(new SchoolBoard(TowerColor.WHITE, 6, bag.getStudents(9)));
+        schoolBoards.add(new SchoolBoard(TowerColor.GRAY, 6, bag.getStudents(9)));
     }
 
     /**
-     * Service method setup the model for 4 player Game
+     * Service method to set up the model for 4 player Game
      **/
     private void setupFour() {
         cloudTiles = new ArrayList<CloudTile>();
@@ -134,26 +134,29 @@ public class Game {
         cloudTiles.add(new CloudTile(3));
         cloudTiles.add(new CloudTile(3));
 
-        schoolboards.add(new SchoolBoard(TowerColor.BLACK, 6, bag.getStudents(7)));
-        schoolboards.add(new SchoolBoard(bag.getStudents(7)));
-        schoolboards.add(new SchoolBoard(TowerColor.WHITE, 6, bag.getStudents(7)));
-        schoolboards.add(new SchoolBoard(bag.getStudents(7)));
+        schoolBoards.add(new SchoolBoard(TowerColor.BLACK, 6, bag.getStudents(7)));
+        schoolBoards.add(new SchoolBoard(bag.getStudents(7)));
+        schoolBoards.add(new SchoolBoard(TowerColor.WHITE, 6, bag.getStudents(7)));
+        schoolBoards.add(new SchoolBoard(bag.getStudents(7)));
     }
 
     /**
      * Service method plusTwoEffect effect
+     * @param plusTwoEffectPlayer represent the player who has activated the plusTwoEffect
      **/
     public void setPlusTwoEffectPlayer(int plusTwoEffectPlayer) {
         this.plusTwoEffectPlayer = plusTwoEffectPlayer;
     }
 
     /**
-     * Service method to know which player want to use the effect
+     * Service method to know which player want to use the plusTwoEffect
+     * @return player who has activated the plusTwoEffect
      **/
     public int getPlusTwoEffectPlayer() { return this.plusTwoEffectPlayer; }
 
     /**
-     * Service method plusTwoEffect effect
+     * Service method to set plusTwoEffect effect
+     * @param plusTwoEffect boolean that set the plusTwoEffect
      **/
     public void setPlusTwoEffect(boolean plusTwoEffect) {
         this.plusTwoEffect = plusTwoEffect;
@@ -161,11 +164,13 @@ public class Game {
 
     /**
      * Service method to check plusTwoEffect
+     * @return boolean that represents if plusTwoEffect is active
      **/
     public boolean isPlusTwoEffect() { return plusTwoEffect; }
 
     /**
-     * Service method professorControl effect
+     * Service method to set professorControl effect
+     * @param professorControl boolean that set the professorControlEffect
      **/
     public void setProfessorControl(boolean professorControl) {
         this.professorControl = professorControl;
@@ -173,6 +178,7 @@ public class Game {
 
     /**
      * Service method to check professorControl effect
+     * @return boolean that represents if professorControlEffect is active
      **/
     public boolean isProfessorControl() { return professorControl; }
 
@@ -190,11 +196,13 @@ public class Game {
 
     /**
      * Service method for CloudTile to bring the students on the Schoolboard
+     * @param idPlayer id of player who chose the cloudTile
+     * @param indexCloudTile id of cloudTile chosen
      **/
     public void takeCloudTile(int idPlayer, int indexCloudTile){
         for (int i=0; i<gamer.size(); i++) {
             if(gamer.get(i).getId() == idPlayer){
-                schoolboards.get(i).moveToEntrance(cloudTiles.get(indexCloudTile).getStudents());
+                schoolBoards.get(i).moveToEntrance(cloudTiles.get(indexCloudTile).getStudents());
             }
         }
         manager.notify("update");
@@ -202,7 +210,7 @@ public class Game {
 
     /**
      * Service method for play a Card
-     * @param playerId Player id that play the card
+     * @param playerId id of th player who plays the card
      * @param card card that be played by the player
      **/
     public void playCard(int playerId, int card){
@@ -214,13 +222,13 @@ public class Game {
     /**
      * Service method for moving students from schoolboard entrance to schoolboard corridor
      * @param toSchoolBoard students moving to SchoolBoard
-     * @param idPlayer id of the Player that make the move
+     * @param idPlayer id of the Player who makes the move
      **/
     public void moveStudentsToSchoolBoard(int[] toSchoolBoard, int idPlayer){
         for (int i=0; i<gamer.size(); i++) {
             if(gamer.get(i).getId() == idPlayer){
-                schoolboards.get(i).moveCorridor(toSchoolBoard);
-                this.checkProfessorInfluence(schoolboards.get(i));
+                schoolBoards.get(i).moveCorridor(toSchoolBoard);
+                this.checkProfessorInfluence(schoolBoards.get(i));
             }
         }
         manager.notify("update");
@@ -229,13 +237,13 @@ public class Game {
     /**
      * Service method for moving students from schoolboard entrance to island
      * @param students students moving from entrance
-     * @param idPlayer id of the Player that make the move
-     * @param island island where player move the students
+     * @param idPlayer id of the Player who makes the move
+     * @param island island where player moves the students
      **/
     public void moveStudentsToIsland(int[] students, int idPlayer, Island island){
         for (int i=0; i<gamer.size(); i++) {
             if(gamer.get(i).getId() == idPlayer){
-                schoolboards.get(i).removeEntrance(students);
+                schoolBoards.get(i).removeEntrance(students);
                 island.addStudents(students);
             }
         }
@@ -248,7 +256,7 @@ public class Game {
      * @param schoolBoard schoolboard where the influence over professor need to be checked
      **/
     public void checkProfessorInfluence(SchoolBoard schoolBoard){
-        for (SchoolBoard s: schoolboards) {
+        for (SchoolBoard s: schoolBoards) {
             for(int i=0; i<5; i++){
                 if(((s.getCorridor(i) < schoolBoard.getCorridor(i)) || (s.getCorridor(i) == schoolBoard.getCorridor(i)) && professorControl) && s.isProfessor(i) && !s.equals(schoolBoard)){
                     s.setProfessor(i, false);
@@ -286,18 +294,18 @@ public class Game {
     public void checkControl(Island island){
         int playerId = this.checkInfluence(island);
         if(island.checkNotTower() && playerId != -1 && playerId != -2){
-            schoolboards.get(playerId).removeTower(1);
-            island.setTower(1, schoolboards.get(playerId).getColor());
+            schoolBoards.get(playerId).removeTower(1);
+            island.setTower(1, schoolBoards.get(playerId).getColor());
             manager.notify("update");
         }
         else if(!island.checkNotTower() && playerId != -1 && playerId != -2){
-            for (SchoolBoard s: schoolboards) {
+            for (SchoolBoard s: schoolBoards) {
                 if(s.getColor().equals(island.colorTower())){
                     s.addTower(island.getTowerNum());
                 }
             }
-            schoolboards.get(playerId).removeTower(island.getTowerNum());
-            island.setTower(island.getTowerNum(), schoolboards.get(playerId).getColor());
+            schoolBoards.get(playerId).removeTower(island.getTowerNum());
+            island.setTower(island.getTowerNum(), schoolBoards.get(playerId).getColor());
             manager.notify("update");
         }
     }
@@ -305,6 +313,7 @@ public class Game {
     /**
      * Service method for checking influence
      * @param island island where the method need to chek influence
+     * @return id of player who has greater influence on that island
      **/
     public int checkInfluence(Island island){
         int influence = 0;
@@ -313,12 +322,12 @@ public class Game {
         for (int i = 0; i<playerNum; i++) {
             int temporaryInfluence = 0;
             if(!island.isNoCountTower()) {
-                if (island.colorTower().equals(schoolboards.get(i).getColor())) {
+                if (island.colorTower().equals(schoolBoards.get(i).getColor())) {
                     temporaryInfluence += island.getTowerNum();
                 }
             }
             for(int j=0; j<5; j++){
-                if((schoolboards.get(i).isProfessor(j) || professorControl) && island.getColorNotCount()!=j){
+                if((schoolBoards.get(i).isProfessor(j) || professorControl) && island.getColorNotCount()!=j){
                     if(studentsOnIsland[j]!=0){
                         temporaryInfluence += studentsOnIsland[j];
                     }
@@ -430,7 +439,7 @@ public class Game {
 
     /**
      * Service method for getting the special card effect
-     * @return the expert card
+     * @return the expert cards
      **/
     public ArrayList<SpecialCard> getExpertCard(){
         return expertCard;
@@ -441,16 +450,16 @@ public class Game {
      * @param subscriber listener for the events
      * @param events event type
      **/
-    public void eventSubscribe(EventReciver subscriber, String events) {
+    public void eventSubscribe(EventReceiver subscriber, String events) {
         manager.subscribe(events, subscriber);
     }
 
     /**
-     * Getter of the player nikname
+     * Getter of the player nickname
      * @param id number of the player in the arraylist
      * @return String nickname of the player selected
      **/
-    public String getGamerbyid(int id) {
+    public String getGamerById(int id) {
         return gamer.get(id).getName();
     }
 
@@ -459,7 +468,7 @@ public class Game {
      * @param nickname nickname of the player to get the id
      * @return int id of the player selected
      **/
-    public int getGamerIdbynickname(String nickname){
+    public int getGamerIdByNickname(String nickname){
         for (Player p: gamer) {
             if(p.getName().equals(nickname)){
                 return p.getId();
@@ -497,14 +506,14 @@ public class Game {
 
     /**
      * Service Method to get the Island by the id
-     * @return and Island
+     * @return Island selected
      **/
     public Island getIslandById(int id){
         return islandTile.get(id);
     }
 
     /**
-     * Service Method to get last used card value by a player
+     * Service Method to get last card used value by a player
      * @param id id of the player
      * @return int movement allowed
      **/
@@ -515,50 +524,53 @@ public class Game {
     /**
      * Service Method to get value of the last used card by a player
      * @param id id of the player
-     * @return int last card used value
+     * @return last card used value
      **/
     public int getLastCardValue(int id) {
         return assistantCard.get(id).getLastCardValue();
     }
 
     /**
-     * Service Method to check if the player as ended is tower
+     * Service Method to check if the player has ended his towers
      * @param id id of the player
+     * @return boolean that represents if he really finishes his towers
      **/
     public boolean isFinishTower(int id) {
-        return (schoolboards.get(id).getTower() == 0);
+        return (schoolBoards.get(id).getTower() == 0);
     }
 
     /**
      * Service Method to check island number
+     * @return num of island
      **/
     public int islandNUm() {
         return islandTile.size();
     }
 
     /**
-     * Service Method to check which player get the big number of tower on the gameboard
+     * Service Method to check which player get the big number of tower on the gameBoard
      * @return nickname of the player
      **/
     public String checkTowerNum() {
         int id = 0;
-        int num = schoolboards.get(0).getTower();
-        for(int i=1; i< schoolboards.size(); i++){
-            if(schoolboards.get(i).getTower() > num){
-                num = schoolboards.get(i).getTower();
+        int num = schoolBoards.get(0).getTower();
+        for(int i = 1; i< schoolBoards.size(); i++){
+            if(schoolBoards.get(i).getTower() > num){
+                num = schoolBoards.get(i).getTower();
                 id = i;
             }
-            if(schoolboards.get(i).getTower() == num){
-                if(schoolboards.get(i).getProfessor() > schoolboards.get(id).getProfessor()){
+            if(schoolBoards.get(i).getTower() == num){
+                if(schoolBoards.get(i).getProfessor() > schoolBoards.get(id).getProfessor()){
                     id = i;
                 }
             }
         }
-        return this.getGamerbyid(id);
+        return this.getGamerById(id);
     }
 
     /**
      * Getter of bag
+     * @return bag of current game
      **/
     public Bag getBag() {
         return bag;
@@ -566,16 +578,19 @@ public class Game {
 
     /**
      * Getter of schoolBoards
+     * @return array of player's schoolBoards
      **/
-    public ArrayList<SchoolBoard> getSchoolBoards() { return schoolboards; }
+    public ArrayList<SchoolBoard> getSchoolBoards() { return schoolBoards; }
 
     /**
      * Getter of the ModelManager
+     * @return ModelEventManager
      **/
     public ModelEventManager getManager() { return manager; }
 
     /**
      * Getter of gamers
+     * @return array of players who are playing this game
      **/
     public ArrayList<Player> getGamer() {
         return gamer;
@@ -583,6 +598,7 @@ public class Game {
 
     /**
      * Getter of cloudTiles
+     * @return array of cloudTile
      **/
     public ArrayList<CloudTile> getCloudTiles() {
         return cloudTiles;
@@ -590,6 +606,7 @@ public class Game {
 
     /**
      * Getter of islandTiles
+     * @return array of island
      **/
     public ArrayList<Island> getIslandTile() {
         return islandTile;
@@ -607,12 +624,12 @@ public class Game {
         text = text + "/";
         temp = 0;
         for (Deck d: assistantCard) {
-            text = text + matrixtoString(d.getAssistantCardDeck()) + ":" + d.getLastCardValue() + ":" + d.getLastMotherNatureValue() + "!";
+            text = text + matrixToString(d.getAssistantCardDeck()) + ":" + d.getLastCardValue() + ":" + d.getLastMotherNatureValue() + "!";
             temp++;
         }
         temp = 0;
         text = text + "/";
-        for (SchoolBoard b: schoolboards) {
+        for (SchoolBoard b: schoolBoards) {
             text = text + arrayToString(b.getEntranceStudents()) + ":" + b.getTower() + ":" + b.getColor().toString() + ":" + b.getCorridor(0) + ":" + b.getCorridor(1) + ":" + b.getCorridor(2) + ":" + b.getCorridor(3) + ":" + b.getCorridor(4) + ":" + b.isProfessor(0) + ":" + b.isProfessor(1) + ":" + b.isProfessor(2) + ":" + b.isProfessor(3) + ":" + b.isProfessor(4) + "!";
             temp++;
         }
@@ -661,52 +678,75 @@ public class Game {
         return text;
     }
 
+    /**
+     * Service method to convert an array to a string
+     * @param input boolean array that need to be converted
+     * @return string converted
+     **/
     private String arrayToString(boolean[] input){
-        String uscita = "";
+        String exit = "";
         for(int i=0; i<input.length; i++){
             if(i==(input.length-1)){
-                uscita = uscita + String.valueOf(input[i]);
+                exit = exit + String.valueOf(input[i]);
             }
             else{
-                uscita = uscita + String.valueOf(input[i]) + ":";
+                exit = exit + String.valueOf(input[i]) + ":";
             }
         }
-        return uscita;
+        return exit;
     }
 
+    /**
+     * Service method to convert an array to a string
+     * @param input array that need to be converted
+     * @return string converted
+     **/
     private String arrayToString(int[] input){
-        String uscita = "";
+        String exit = "";
         for(int i=0; i<input.length; i++){
             if(i==(input.length-1)){
-                uscita = uscita + String.valueOf(input[i]);
+                exit = exit + String.valueOf(input[i]);
             }
             else{
-                uscita = uscita + String.valueOf(input[i]) + ":";
+                exit = exit + String.valueOf(input[i]) + ":";
             }
         }
-        return uscita;
+        return exit;
     }
 
-    private String matrixtoString(int[][] input){
-        String uscita = "";
+    /**
+     * Service method to convert a matrix to a string
+     * @param input matrix that need to be converted
+     * @return string converted
+     **/
+    private String matrixToString(int[][] input){
+        String exit = "";
         for(int i=0; i<2; i++){
             for(int j=0; j<10; j++){
                 if(j==9){
-                    uscita = uscita + String.valueOf(input[i][j]);
+                    exit = exit + String.valueOf(input[i][j]);
                 }
                 else{
-                    uscita = uscita + String.valueOf(input[i][j]) + "£";
+                    exit = exit + String.valueOf(input[i][j]) + "£";
                 }
             }
-            uscita = uscita + "#";
+            exit = exit + "#";
         }
-        return uscita;
+        return exit;
     }
 
+    /**
+     * Service method to reset card
+     **/
     public void resetCardLastTurn(){
         cardLastTurn = new int[]{-1, -1, -1, -1};
     }
 
+    /**
+     * Service method to remove coin from players
+     * @param number num of coin that need to be removed
+     * @param nickname nickname of the player from whom remove coins
+     **/
     public void removeCoin(int number, String nickname){
         for (Player p: gamer) {
             if(p.getName().equals(nickname)){
@@ -715,42 +755,83 @@ public class Game {
         }
     }
 
+    /**
+     * Service method to get deck
+     * @param p id of player
+     * @return deck of player p
+     **/
     public Deck getDeck(int p) {
         return assistantCard.get(p);
     }
 
+    /**
+     * Getter of id game
+     * @return id game
+     **/
     public int getIdGame() {
         return idGame;
     }
 
+    /**
+     * Getter of the deck of all players
+     * @return array of all decks
+     **/
     public ArrayList<Deck> getAssistantCard() {
         return assistantCard;
     }
 
+    /**
+     * Service method to know if this game is playing in expert mode
+     * @return boolean that represents expert mode
+     **/
     public boolean isExpertMode() {
         return expertMode;
     }
 
+    /**
+     * Getter of mother nature position
+     * @return int represent pos of mother nature
+     **/
     public MotherNature getPosition() {
         return position;
     }
 
+    /**
+     * Getter of professors
+     * @return boolean array that represents if professor of each color is present or not
+     **/
     public boolean[] getProfessor() {
         return professor;
     }
 
+    /**
+     * Getter of coin pile
+     * @return number of coin
+     **/
     public int getCoinPile() {
         return coinPile;
     }
 
+    /**
+     * Getter of cards played on last turn
+     * @return array of cards
+     **/
     public int[] getCardLastTurn() {
         return cardLastTurn;
     }
 
+    /**
+     * Getter of num of player
+     * @return num of player who are playing the current game
+     **/
     public int getPlayerNum() {
         return playerNum;
     }
 
+    /**
+     * Service method to check if card number is valid
+     * @return boolean that represents if card is valid or not
+     **/
     public boolean checkCardNumber() {
         boolean check = true;
         for (Deck d: assistantCard) {
@@ -767,11 +848,15 @@ public class Game {
         return check;
     }
 
+    /**
+     * Service method to check which player has much tower
+     * @return name of that player
+     **/
     public String checkMuchTower() {
         int high=100;
         String name = "";
         int professor = -1;
-        for (SchoolBoard s: schoolboards) {
+        for (SchoolBoard s: schoolBoards) {
             if(s.getTower() < high){
                 high = s.getTower();
                 name = s.getPlayer().getName();

@@ -2,10 +2,10 @@ package it.polimi.ingsw.Server;
 
 import it.polimi.ingsw.Controller.ControlEventManager;
 import it.polimi.ingsw.Controller.Controller;
-import it.polimi.ingsw.Event.EventReciver;
+import it.polimi.ingsw.Event.EventReceiver;
 import it.polimi.ingsw.Exception.MoveNotAllowed;
-import it.polimi.ingsw.Exception.PlayerNotexist;
-import it.polimi.ingsw.Exception.ToMuchPlayerExcetpion;
+import it.polimi.ingsw.Exception.PlayerNotExist;
+import it.polimi.ingsw.Exception.ToMuchPlayerException;
 import it.polimi.ingsw.Model.Game;
 import it.polimi.ingsw.Model.ModelEventManager;
 import it.polimi.ingsw.Model.SpecialCard;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * Connection Handler for managing Client
  * @author filibertoingrosso, elia_laz, litovn
  **/
-public class ConnectionHandler implements EventReciver {
+public class ConnectionHandler implements EventReceiver {
     private int idGame;
     private int actualGamer;
     private int expectedGamer;
@@ -85,7 +85,7 @@ public class ConnectionHandler implements EventReciver {
             this.client.add(new Pair(nickname, client));
             actualGamer++;
         }
-        catch(ToMuchPlayerExcetpion e){
+        catch(ToMuchPlayerException e){
             manager.notify("clientError");
         }
     }
@@ -323,7 +323,7 @@ public class ConnectionHandler implements EventReciver {
                     controller.playAssistantCard(Integer.parseInt(input[0]));
 
                 }
-                catch (PlayerNotexist e){
+                catch (PlayerNotExist e){
                     System.out.println("Error Playing the Assistant Card");
                 }
                 controlManager.notify("nextmove");
@@ -340,7 +340,7 @@ public class ConnectionHandler implements EventReciver {
                 try {
                     controller.moveStudentsToSchoolboard(studentsToSchoolBoard);
                 }
-                catch (PlayerNotexist e){
+                catch (PlayerNotExist e){
                     System.out.println("Error Moving the students to schoolboard");
                 }
                 String[] secondMove = input[2].split("!");
@@ -355,7 +355,7 @@ public class ConnectionHandler implements EventReciver {
                         try {
                             controller.moveStudentsToIsland(studentsToIsland, witchIsland);
                         }
-                        catch (PlayerNotexist e){
+                        catch (PlayerNotExist e){
                             System.out.println("Error Moving the students to island");
                         }
                         c = c + 6;

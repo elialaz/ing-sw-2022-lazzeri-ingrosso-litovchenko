@@ -21,12 +21,13 @@ public class FromEntranceToDiningRoom extends SpecialCard {
     /**
      * Method that execute the effect
      * @param schoolBoard schoolBoard of player who has activated the effect
-     * @param studentsToDining students to move to diningRoom
+     * @param studentsFromCard students to move to diningRoom
      * @param studentsToEntrance students to move to entrance
      **/
-    public void GetEffect(SchoolBoard schoolBoard, int[] studentsToDining, int[] studentsToEntrance) {
+    @Override
+    public void GetEffect(SchoolBoard schoolBoard, int[] studentsFromCard, int[] studentsToEntrance) {
         schoolBoard.removeFromCorridor(studentsToEntrance);
-        schoolBoard.moveCorridor(studentsToDining);
+        schoolBoard.moveCorridor(studentsFromCard);
         schoolBoard.moveToEntrance(studentsToEntrance);
         if(isNeverUse()){
             setNeverUse();

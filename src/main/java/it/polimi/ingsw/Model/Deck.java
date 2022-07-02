@@ -40,13 +40,15 @@ public class Deck {
 
     /**
      * Getter of last used card value
+     * @return value of last card played
      **/
     public int getLastCardValue() {
         return lastCardValue;
     }
 
     /**
-     * Getter of last Mother Nature card value
+     * Getter of last mother nature card value
+     * @return mother nature value of last card played
      **/
     public int getLastMotherNatureValue() {
         if(effect){
@@ -57,7 +59,8 @@ public class Deck {
     }
 
     /**
-     * Getter of assistants Card Deck
+     * Getter of assistants Card deck
+     * @return assistant card deck
      **/
     public int[][] getAssistantCardDeck() {
         return assistantCardDeck;

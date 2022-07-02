@@ -17,6 +17,7 @@ public class Island {
     /**
      * Constructor of the Island class
      * @param students students array of the new initialized island
+     * @param towerNum num of towers
      **/
     public Island(int[] students, int towerNum){
         this.students = students.clone();
@@ -52,7 +53,7 @@ public class Island {
 
     /**
      * Service method that add students to island
-     * @param students students array of the new initialized island
+     * @param students students array to add to island
      **/
     public void addStudents(int[] students){
         for(int i=0; i<5; i++){
@@ -75,7 +76,7 @@ public class Island {
     }
 
     /**
-     * Service method toe check the tower color
+     * Service method to check the tower color
      * @return tower color
      **/
     public TowerColor colorTower(){
@@ -93,7 +94,7 @@ public class Island {
     }
 
     /**
-     * Service method to get the tower to on island
+     * Service method to get the number of towers on an island
      * @return int number of towers
      **/
     public int getTowerNum(){
@@ -124,7 +125,7 @@ public class Island {
 
     /**
      * Service method to check effect noEntryTile
-     * @return boolean is there's an entry tile
+     * @return boolean if there's an entry tile
      **/
     public boolean isEntryTileMotherNature(){
         return noEntryTile!=0;
@@ -138,7 +139,7 @@ public class Island {
 
     /**
      * Service method to set the noCountTower effect
-     * @param noCountTower boolean passed
+     * @param noCountTower boolean to set noCountTowerEffect
      **/
     public void setNoCountTower(boolean noCountTower) {
         this.noCountTower = noCountTower;
@@ -146,7 +147,7 @@ public class Island {
 
     /**
      * Service method to check the noCountTower effect
-     * @return boolean is there are no towers
+     * @return boolean that represents if noCountTowerEffect is applied
      **/
     public boolean isNoCountTower() {
         return noCountTower;
@@ -154,7 +155,7 @@ public class Island {
 
     /**
      * Service method to set the noCountColor effect
-     * @param colorNotCount number of towers
+     * @param colorNotCount int of colors not to count
      **/
     public void setColorNotCount(int colorNotCount) {
         this.colorNotCount = colorNotCount;

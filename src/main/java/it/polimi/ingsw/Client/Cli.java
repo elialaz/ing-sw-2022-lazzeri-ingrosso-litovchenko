@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Client;
 
 import it.polimi.ingsw.Client.View.cli.CLIutils;
-import it.polimi.ingsw.Event.EventReciver;
+import it.polimi.ingsw.Event.EventReceiver;
 import it.polimi.ingsw.Model.*;
 
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import java.util.Scanner;
  * Main Class of the Client Connection
  * @author  litovn, elia_laz
  **/
-public class Cli implements EventReciver {
+public class Cli implements EventReceiver {
     private final ClientEventManager manager;
     private final Client connection;
     private final Scanner scan;

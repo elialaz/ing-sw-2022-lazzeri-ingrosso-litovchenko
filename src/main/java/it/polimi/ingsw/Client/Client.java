@@ -1,5 +1,5 @@
 package it.polimi.ingsw.Client;
-import it.polimi.ingsw.Event.EventReciver;
+import it.polimi.ingsw.Event.EventReceiver;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * Main Class of the Client Connection
  * @author filibertoingrosso, elia_laz, litovn
  **/
-public class Client implements EventReciver {
+public class Client implements EventReceiver {
     private int serverPort;
     private String serverIP;
     private Socket socket;

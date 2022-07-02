@@ -21,6 +21,7 @@ public class MotherNature {
     /**
      * Move MotherNature to another position
      * @param island Number of Island to move forward
+     * @param p array of all island
      **/
     public void move(int island, ArrayList<Island> p){
         if((position + island) >= p.size()){
@@ -48,8 +49,8 @@ public class MotherNature {
     }
 
     /**
-     * Get MotherNature current island position
-     * @return integer number, position of MotherNature
+     * Getter of MotherNature current island position
+     * @return int number that represents the position of MotherNature
      **/
     public int getPosition() {
         return position;

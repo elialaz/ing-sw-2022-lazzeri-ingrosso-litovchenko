@@ -63,8 +63,7 @@ public class Bag {
     }
 
     /**
-     * Students insertion
-     * @author elia_laz
+     * Students insertion in bag
      * @param students Students that need to be reinserted inside the Bag
      **/
     public void addStudents(int[] students){
@@ -75,6 +74,10 @@ public class Bag {
         }
     }
 
+    /**
+     * getter of maxNum
+     * @return num of max students that could be generated
+     **/
     public int getMaxNum() {
         return maxNum;
     }
