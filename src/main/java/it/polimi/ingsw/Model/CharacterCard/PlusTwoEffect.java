@@ -3,11 +3,12 @@ package it.polimi.ingsw.Model.CharacterCard;
 import it.polimi.ingsw.Model.*;
 
 /**
- * During the influence calculation this turn, you count as having 2 more influence
- * @author elia_laz
+ * During the influence calculation this turn, your count has having 2 more points
+ * @author elia_laz, filibertoingrosso
  **/
 public class PlusTwoEffect extends SpecialCard {
     private final int id;
+
     /**
      * Constructor
      **/
@@ -19,7 +20,7 @@ public class PlusTwoEffect extends SpecialCard {
     /**
      * Method that execute the effect
      * @param g game where the effect need to be applied
-     * @param playerId id of the player
+     * @param playerId id of the player who has activated the effect
      **/
     @Override
     public void GetEffect(Game g, int playerId) {
@@ -33,6 +34,7 @@ public class PlusTwoEffect extends SpecialCard {
 
     /**
      * Getter of CardId
+     * @return id of the card
      **/
     public int getId(){
         return id;

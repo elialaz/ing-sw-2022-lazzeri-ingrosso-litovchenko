@@ -5,10 +5,11 @@ import it.polimi.ingsw.Model.*;
 
 /**
  * During this turn, you take control of any number of Professors even if you have the same number of Students as the player who currently controls them
- * @author elia_laz
+ * @author elia_laz, filibertoingrosso
  **/
 public class ProfessorControl extends SpecialCard {
     private final int id;
+
     /**
      * Constructor
      **/
@@ -32,6 +33,7 @@ public class ProfessorControl extends SpecialCard {
 
     /**
      * Getter of CardId
+     * @return id of the card
      **/
     public int getId(){
         return id;

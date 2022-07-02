@@ -4,7 +4,7 @@ import it.polimi.ingsw.Model.*;
 
 /**
  * When resolving a Conquering on an Island, towers do not count towards influence
- * @author elia_laz
+ * @author elia_laz, filibertoingrosso
  **/
 public class NoCountTower extends SpecialCard {
     private final int id;
@@ -19,6 +19,7 @@ public class NoCountTower extends SpecialCard {
 
     /**
      * Method that execute the effect
+     * @param island island where influence need to be calculated
      **/
     @Override
     public void GetEffect(Island island) {
@@ -31,6 +32,7 @@ public class NoCountTower extends SpecialCard {
 
     /**
      * Getter of CardId
+     * @return id of the card
      **/
     public int getId() {
         return id;

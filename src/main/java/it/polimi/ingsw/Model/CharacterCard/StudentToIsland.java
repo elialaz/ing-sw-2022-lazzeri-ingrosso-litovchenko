@@ -4,7 +4,7 @@ import it.polimi.ingsw.Model.*;
 
 /**
  * Take 1 Student from this card and place it on an Island of your choice. Then, draw a new Student from the Bag and place it on this card
- * @author elia_laz
+ * @author elia_laz, filibertoingrosso
  **/
 public class StudentToIsland extends SpecialCard {
     private final int[] students;
@@ -21,9 +21,9 @@ public class StudentToIsland extends SpecialCard {
 
     /**
      * Method that execute the effect
-     * @param chosenStudent stedents that the player choose
+     * @param chosenStudent students that the player chose
      * @param chosenIsland island where the students need to be placed
-     * @param bag bag where students where generated
+     * @param bag bag where students are generated
      **/
     @Override
     public void GetEffect(int[] chosenStudent, Island chosenIsland, Bag bag) {
@@ -52,6 +52,7 @@ public class StudentToIsland extends SpecialCard {
 
     /**
      * Getter of CardId
+     * @return id of the card
      **/
     public int getId(){
         return id;

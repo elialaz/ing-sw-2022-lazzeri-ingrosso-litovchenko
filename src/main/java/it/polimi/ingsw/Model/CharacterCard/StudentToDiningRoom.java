@@ -4,7 +4,7 @@ import it.polimi.ingsw.Model.*;
 
 /**
  * Take 1 Student from this card and place it in your Dining Room. Then, draw a new Student from the Bag and place it on this card
- * @author elia_laz
+ * @author elia_laz, filibertoingrosso
  **/
 public class StudentToDiningRoom extends SpecialCard {
     private final int[] cardStudents;
@@ -32,7 +32,7 @@ public class StudentToDiningRoom extends SpecialCard {
      * Method that execute the effect
      * @param b schoolBoard on the effect need to be applied
      * @param chosenStudent the students to move
-     * @param bag bag where students where generated
+     * @param bag bag where students are generated
      **/
     @Override
     public void GetEffect(SchoolBoard b, int[] chosenStudent, Bag bag) {
@@ -52,6 +52,7 @@ public class StudentToDiningRoom extends SpecialCard {
 
     /**
      * Getter of CardId
+     * @return id of the card
      **/
     public int getId(){
         return id;

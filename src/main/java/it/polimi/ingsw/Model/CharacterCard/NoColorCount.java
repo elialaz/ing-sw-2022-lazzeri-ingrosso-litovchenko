@@ -4,10 +4,11 @@ import it.polimi.ingsw.Model.*;
 
 /**
  * Choose a color of Student: during the influence calculation this turn, that color adds no influence
- * @author elia_laz
+ * @author elia_laz, filibertoingrosso
  **/
 public class NoColorCount extends SpecialCard {
     private final int id;
+
     /**
      * Constructor
      **/
@@ -18,6 +19,8 @@ public class NoColorCount extends SpecialCard {
 
     /**
      * Method that execute the effect
+     * @param color color chosen by the player who has activated the effect
+     * @param island island where influence need to be calculated
      **/
     @Override
     public void GetEffect(int color, Island island) {
@@ -30,6 +33,7 @@ public class NoColorCount extends SpecialCard {
 
     /**
      * Getter of CardId
+     * @return id of the card
      **/
     public int getId(){
         return id;

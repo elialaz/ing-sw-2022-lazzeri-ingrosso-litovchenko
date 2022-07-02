@@ -3,17 +3,17 @@ package it.polimi.ingsw.Model.CharacterCard;
 import it.polimi.ingsw.Model.*;
 
 /**
- * You may take up to 3 students for this card and replace them with the same number of Students form your Entrance
- * @author elia_laz
+ * You may take up to 3 students from this card and replace them with the same number of Students form your Entrance
+ * @author elia_laz,  filibertoingrosso
  **/
-public class FromCartToEntrance extends SpecialCard {
+public class FromCardToEntrance extends SpecialCard {
     private final int[] students;
     private final int id;
 
     /**
      * Constructor
      **/
-    public FromCartToEntrance(Bag bag){
+    public FromCardToEntrance(Bag bag){
         id = 2;
         students = bag.getStudents(6);
         setup(1);
@@ -23,10 +23,10 @@ public class FromCartToEntrance extends SpecialCard {
      * Method that execute the effect
      **/
     @Override
-    public void GetEffect(SchoolBoard schoolBoard, int[] studentsFromCart, int[] studentsFromEntrance) {
+    public void GetEffect(SchoolBoard schoolBoard, int[] studentsFromCard, int[] studentsFromEntrance) {
         schoolBoard.removeEntrance(studentsFromEntrance);
-        schoolBoard.moveToEntrance(studentsFromCart);
-        this.removeStudents(studentsFromCart);
+        schoolBoard.moveToEntrance(studentsFromCard);
+        this.removeStudents(studentsFromCard);
         this.addStudents(studentsFromEntrance);
         if(isNeverUse()){
             setNeverUse();
@@ -45,6 +45,7 @@ public class FromCartToEntrance extends SpecialCard {
 
     /**
      * Add students on the card
+     * @param stud students to add on card
      **/
     private void addStudents(int[] stud) {
         for(int i=0; i<5; i++){
@@ -54,6 +55,7 @@ public class FromCartToEntrance extends SpecialCard {
 
     /**
      * Remove students from the card
+     * @param stud students to remove from card
      **/
     private void removeStudents(int[] stud) {
         for(int i=0; i<5; i++){
@@ -63,6 +65,7 @@ public class FromCartToEntrance extends SpecialCard {
 
     /**
      * Getter of CardId
+     * @return id of the card
      **/
     public int getId(){
         return id;

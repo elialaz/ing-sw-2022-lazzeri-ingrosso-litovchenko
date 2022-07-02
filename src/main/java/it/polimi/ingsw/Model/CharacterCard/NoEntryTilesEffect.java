@@ -4,7 +4,7 @@ import it.polimi.ingsw.Model.*;
 
 /**
  * Place a No Entry tile on an Island of your choice. The first time Mother Nature ends her movement there, put the No Entry tile back onto this card DO NOT calculate influence on that Island, or place any Towers
- * @author elia_laz
+ * @author elia_laz, filibertoingrosso
  **/
 public class NoEntryTilesEffect extends SpecialCard {
     int numEntryTile;
@@ -45,6 +45,7 @@ public class NoEntryTilesEffect extends SpecialCard {
 
     /**
      * Getter of CardId
+     * @return id of the card
      **/
     public int getId(){
         return id;
