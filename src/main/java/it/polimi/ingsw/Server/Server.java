@@ -65,15 +65,15 @@ public class Server {
 
     /**
      * Service Method for loading a Game
-     * @param nikname EventManager for the server
+     * @param nickname EventManager for the server
      **/
-    public synchronized boolean loadGame(String nikname, int idGame, ServerThread client) {
+    public synchronized boolean loadGame(String nickname, int idGame, ServerThread client) {
         for (ConnectionHandler c: game) {
             if (c.getIdGame() == idGame){
                 if(c.getActualGamer() == c.getExpectedGamer()){
                     return false;
                 }
-                c.clientAdd(nikname, client);
+                c.clientAdd(nickname, client);
                 return true;
             }
         }

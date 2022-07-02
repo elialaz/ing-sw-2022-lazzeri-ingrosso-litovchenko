@@ -5,8 +5,14 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Testing class for NoColorCount
+ **/
 class NoColorCountTest {
 
+    /**
+     * Control if this effect is applied in a correct way
+     **/
     @Test
     void getEffect() {
         NoColorCount noColorCount = new NoColorCount();
@@ -16,6 +22,9 @@ class NoColorCountTest {
         assertEquals(1, island.getColorNotCount());
     }
 
+    /**
+     * Control if this method return the correct value of card id
+     **/
     @Test
     void getCardId(){
         NoColorCount noColorCount = new NoColorCount();

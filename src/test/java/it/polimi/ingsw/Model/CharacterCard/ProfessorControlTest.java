@@ -5,8 +5,14 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Testing class for ProfessorControl
+ **/
 class ProfessorControlTest {
 
+    /**
+     * Control if this effect is applied in a correct way
+     **/
     @Test
     void getEffect() {
         ProfessorControl professorControl = new ProfessorControl();
@@ -15,6 +21,9 @@ class ProfessorControlTest {
         assertTrue(game.isProfessorControl());
     }
 
+    /**
+     * Control if this method return the correct value of card id
+     **/
     @Test
     void getCardId(){
         ProfessorControl professorControl = new ProfessorControl();

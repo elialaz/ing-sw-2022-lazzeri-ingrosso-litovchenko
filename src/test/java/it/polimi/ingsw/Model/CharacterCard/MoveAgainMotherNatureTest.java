@@ -5,8 +5,14 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Testing class for MoveAgainMotherNature
+ **/
 class MoveAgainMotherNatureTest {
 
+    /**
+     * Control if this effect is applied in a correct way
+     **/
     @Test
     void getEffect() {
         Deck deck = new Deck();
@@ -17,6 +23,9 @@ class MoveAgainMotherNatureTest {
         assertEquals(deck.getLastMotherNatureValue(), moveBeforeEffect+2);
     }
 
+    /**
+     * Control if this method return the correct value of card id
+     **/
     @Test
     void getCardId(){
         MoveAgainMotherNature motherNature = new MoveAgainMotherNature();

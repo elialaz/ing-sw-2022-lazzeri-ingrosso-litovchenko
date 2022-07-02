@@ -4,8 +4,14 @@ import it.polimi.ingsw.Model.SchoolBoard;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Testing class for FromEntranceToDiningRoom
+ **/
 class FromEntranceToDiningRoomTest {
 
+    /**
+     * Control if this effect is applied in a correct way
+     **/
     @Test
     void getEffect() {
         FromEntranceToDiningRoom fromEntranceToDiningRoom= new FromEntranceToDiningRoom();
@@ -18,6 +24,9 @@ class FromEntranceToDiningRoomTest {
         assertArrayEquals(new int[]{1,2,0,1,0}, schoolBoard.getEntranceStudents());
     }
 
+    /**
+     * Control if this method return the correct value of card id
+     **/
     @Test
     void getCardId(){
         FromEntranceToDiningRoom fromEntranceToDiningRoom = new FromEntranceToDiningRoom();

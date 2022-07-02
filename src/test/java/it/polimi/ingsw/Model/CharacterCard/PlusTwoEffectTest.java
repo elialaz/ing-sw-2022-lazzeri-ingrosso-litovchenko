@@ -5,8 +5,14 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Testing class for PlusTwoEffect
+ **/
 class PlusTwoEffectTest {
 
+    /**
+     * Control if this effect is applied in a correct way
+     **/
     @Test
     void getEffect() {
         PlusTwoEffect plusTwoEffect = new PlusTwoEffect();
@@ -17,6 +23,9 @@ class PlusTwoEffectTest {
         assertEquals(2, game.getPlusTwoEffectPlayer());
     }
 
+    /**
+     * Control if this method return the correct value of card id
+     **/
     @Test
     void getCardId(){
         PlusTwoEffect plusTwoEffect = new PlusTwoEffect();

@@ -1,16 +1,20 @@
 package it.polimi.ingsw.Model;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import it.polimi.ingsw.Exception.ToMuchPlayerException;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 
+/**
+ * Testing class for Game
+ **/
 class GameTest {
    private final Game game = new Game(2, "elvis", 56, true);
    private CloudTile cloud = new CloudTile(4);
 
+   /**
+    * control if a player is added correctly in current game
+    **/
    @Test
    void addPlayer() {
        try {
@@ -19,42 +23,63 @@ class GameTest {
        }
    }
 
+    /**
+     * control if PlusTwoEffectPlayer is set correctly
+     **/
     @Test
     void setPlusTwoEffectPlayer() {
         game.setPlusTwoEffectPlayer(1);
         assertEquals(1,game.getPlusTwoEffectPlayer());
     }
 
+    /**
+     * control if getPlusTwoEffectPlayer return the correct player who really set the effect
+     **/
     @Test
     void getPlusTwoEffectPlayer() {
         game.setPlusTwoEffectPlayer(2);
         assertEquals(2,game.getPlusTwoEffectPlayer());
     }
 
+    /**
+     * control if PlusTwoEffect is set correctly by a player
+     **/
     @Test
     void setPlusTwoEffect() {
         game.setPlusTwoEffect(true);
         assertTrue(game.isPlusTwoEffect());
     }
 
+    /**
+     * control if PlusTwoEffect is active or not
+     **/
     @Test
     void isPlusTwoEffect() {
         game.setPlusTwoEffect(true);
         assertTrue(game.isPlusTwoEffect());
     }
 
+    /**
+     * control if ProfessorControl is set correctly
+     **/
     @Test
     void setProfessorControl() {
         game.setProfessorControl(true);
         assertTrue(game.isProfessorControl());
     }
 
+    /**
+     * control if ProfessorControl is active or not
+     **/
     @Test
     void isProfessorControl() {
         game.setProfessorControl(true);
         assertTrue(game.isProfessorControl());
     }
 
+    /**
+     * control if a cloudTile is updated in a correct way
+     **/
     @Test
     void UpdateCloudTile() {
         cloud = new CloudTile(4);
@@ -64,6 +89,9 @@ class GameTest {
         assertFalse(cloudTiles.get(0).isWithoutPhase());
     }
 
+    /**
+     * control if a player select and take correctly a cloudTile
+     **/
     @Test
     void TakeCloudTile() {
         ArrayList<SchoolBoard> schoolEntrance = game.getSchoolBoards();
@@ -76,13 +104,18 @@ class GameTest {
         assertEquals(10, totEntrance);
     }
 
+    /**
+     * control if a player plays correctly assistant card
+     **/
     @Test
     void PlayCard() {
         game.playCard(0,7);
         assertEquals(4, game.getLastCardMovementAllowed(0));
     }
 
-
+    /**
+     * control if schoolboard is update correctly after movement of students
+     **/
     @Test
     void MoveStudentsToSchoolBoard() {
         SchoolBoard schoolBoard = game.getSchoolBoards().get(0);
@@ -93,6 +126,9 @@ class GameTest {
         }
     }
 
+    /**
+     * control if schoolboard and island are update correctly after movement of students
+     **/
     @Test
     void moveStudentsToIsland() {
         int[] init = game.getSchoolBoards().get(0).getEntranceStudents();
@@ -104,6 +140,9 @@ class GameTest {
         assertArrayEquals(init, game.getSchoolBoards().get(0).getEntranceStudents());
     }
 
+    /**
+     * control if checkInfluence return the id of the player who really has greater influence on island where mother nature is
+     **/
     @Test
     void checkInfluence() {
         try {
@@ -115,6 +154,9 @@ class GameTest {
         assertEquals(1, game.checkInfluence(new Island(new int[]{1,0,0,0,0},0 )));
     }
 
+    /**
+     * control if island towers are updated in correct way after the count of influence
+     **/
     @Test
     void checkControl(){
         try {
@@ -133,6 +175,9 @@ class GameTest {
         game.checkControl(nextIsland);
     }
 
+    /**
+     * control if the correct player has control on each professor
+     **/
     @Test
     void checkProfessorInfluence() {
         try {
@@ -152,6 +197,9 @@ class GameTest {
         assertFalse(game.getSchoolBoards().get(0).isProfessor(4));
     }
 
+    /**
+     * control if two or more island are united in correct way
+     **/
     @Test
     void checkUnion() {
         try {
@@ -165,6 +213,9 @@ class GameTest {
         assertEquals(10, game.getIslandTile().size());
     }
 
+    /**
+     * control of a specific condition of checkUnion (first island to unify)
+     **/
     @Test
     void checkUnionFirst() {
         try {
@@ -179,6 +230,9 @@ class GameTest {
 
     }
 
+    /**
+     * control of a specific condition of checkUnion (last island to unify)
+     **/
     @Test
     void checkUnionLast() {
         try {
@@ -192,41 +246,61 @@ class GameTest {
         assertEquals(11, game.getIslandTile().size());
     }
 
+    /**
+     * control if this method return correctly the expert cards
+     **/
     @Test
     void getExpertCard() {
         ArrayList<SpecialCard> Cards = game.getExpertCard();
         assertEquals(Cards, game.getExpertCard());
     }
 
+    /**
+     * control if this method return the correct id
+     **/
     @Test
     void getGamerById() {
         ArrayList<Player> gamers = game.getGamer();
         assertEquals("elvis", game.getGamerById(0));
     }
 
+    /**
+     * control if this method return the correct nickname
+     **/
     @Test
     void getGamerIdByNickname() {
         ArrayList<Player> gamers = game.getGamer();
         assertEquals(0, game.getGamerIdByNickname("elvis"));
     }
 
+    /**
+     * control if this method return the correct island
+     **/
     @Test
     void getIslandById() {
         ArrayList<Island> islandTiles = game.getIslandTile();
         assertEquals(game.getIslandTile().get(5), game.getIslandById(5));
     }
 
-
+    /**
+     * control if this method return correct boolean value about the fact that a player has finished his towers
+     **/
     @Test
     void isFinishTower() {
         assertFalse(game.isFinishTower(1));
     }
 
+    /**
+     * control if this method return the correct num of island
+     **/
     @Test
-    void islandNUm() {
+    void islandNum() {
         assertEquals(12, game.islandNUm());
     }
 
+    /**
+     * control if this method return the correct nickname of player who has more tower on gameBoard
+     **/
     @Test
     void checkTowerNum(){
         try {
@@ -240,11 +314,17 @@ class GameTest {
         assertEquals("shelby", game.checkTowerNum());
     }
 
+    /**
+     * control if this method return not null
+     **/
     @Test
     void getManager(){
        assertNotNull(game.getManager());
     }
 
+    /**
+     * control if this method return the correct strings
+     **/
     @Test
     void toStringTest(){
         String text = "updateGameBoard" + "/" + game.getIdGame() + "/" + game.getPlayerNum() + "/";
@@ -324,6 +404,9 @@ class GameTest {
         return exit;
     }
 
+    /**
+     * control if this method has converted correctly array to string
+     **/
     private String arrayToString(int[] input){
         String exit = "";
         for(int i=0; i<input.length; i++){
@@ -337,6 +420,9 @@ class GameTest {
         return exit;
     }
 
+    /**
+     * control if this method has converted correctly matrix to string
+     **/
     private String matrixToString(int[][] input){
         String exit = "";
         for(int i=0; i<2; i++){

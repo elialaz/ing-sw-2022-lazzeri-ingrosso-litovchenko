@@ -4,11 +4,14 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Testing class for SchoolBoard
+ **/
 class SchoolBoardTest {
     private SchoolBoard schoolBoard;
 
     /**
-     * Control that this method moves students from entrance to corridor in a correct way
+     * Control if this method moves students from entrance to corridor in a correct way
      **/
     @Test
     void moveCorridor() {
@@ -21,6 +24,9 @@ class SchoolBoardTest {
         }
     }
 
+    /**
+     * Control if this method moves students to corridor in a correct way
+     **/
     @Test
     void addCorridor(){
         int [] entranceStudents = new int []{ 2, 1, 3, 0, 1};
@@ -32,6 +38,9 @@ class SchoolBoardTest {
         }
     }
 
+    /**
+     * Control if this method set correctly the owner of a schoolBoard
+     **/
     @Test
     void setPlayer(){
         Player player = new Player("sam", 1, 0 );
@@ -42,7 +51,7 @@ class SchoolBoardTest {
     }
 
     /**
-     * Control that this method return the correct num of student on the selected corridor
+     * Control if this method return the correct num of student on the selected corridor
      **/
     @Test
     void moveToEntrance() {
@@ -105,6 +114,9 @@ class SchoolBoardTest {
             assertFalse(schoolBoard.isProfessor(1));
     }
 
+    /**
+     * Control if this method remove towers from schoolBoard in a right way
+     **/
     @Test
     void removeTower(){
         schoolBoard = new SchoolBoard(TowerColor.BLACK,6, new int[] { 1,0,3,3,0 });
@@ -112,6 +124,9 @@ class SchoolBoardTest {
         assertEquals(4, schoolBoard.getTower());
     }
 
+    /**
+     * Control if this method add towers from schoolBoard in a right way
+     **/
     @Test
     void addTower(){
         schoolBoard = new SchoolBoard(TowerColor.BLACK,6, new int[] { 1,0,3,3,0 });
@@ -120,12 +135,18 @@ class SchoolBoardTest {
         assertEquals(5, schoolBoard.getTower());
     }
 
+    /**
+     * Control if this method return the correct color of towers of a selected schoolBoard
+     **/
     @Test
     void getColor(){
         schoolBoard = new SchoolBoard(TowerColor.WHITE,8, new int[] { 1,0,3,3,0 });
         assertEquals(TowerColor.WHITE, schoolBoard.getColor());
     }
 
+    /**
+     * Control if this method return the correct num of towers on a schoolBoard
+     **/
     @Test
     void getTower(){
         schoolBoard = new SchoolBoard(TowerColor.WHITE,8, new int[] { 1,0,3,3,0 });
@@ -133,6 +154,9 @@ class SchoolBoardTest {
         assertEquals(7, schoolBoard.getTower());
     }
 
+    /**
+     * Control if this method remove students from corridor in a correct way
+     **/
     @Test
     void removeFromCorridor(){
         schoolBoard = new SchoolBoard(new int []{ 2, 1, 3, 0, 1});
@@ -142,6 +166,9 @@ class SchoolBoardTest {
         assertEquals(-1, schoolBoard.removeFromCorridor(removeStudents));
     }
 
+    /**
+     * Control if this method return the correct num of professor controlled in a selected schoolBoard
+     **/
     @Test
     void getProfessor(){
         schoolBoard = new SchoolBoard(TowerColor.BLACK , 6, new int[] { 1,0,3,3,0 } );
@@ -150,6 +177,9 @@ class SchoolBoardTest {
         assertEquals(2, schoolBoard.getProfessor());
     }
 
+    /**
+     * Control that this method return entrance students of schoolBoard in a right way
+     **/
     @Test
     void getEntranceStudents(){
         schoolBoard = new SchoolBoard(TowerColor.BLACK , 6, new int[] { 1,0,3,3,0 } );

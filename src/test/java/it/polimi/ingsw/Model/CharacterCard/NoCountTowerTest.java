@@ -5,8 +5,14 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Testing class for NoCountTower
+ **/
 class NoCountTowerTest {
 
+    /**
+     * Control if this effect is applied in a correct way
+     **/
     @Test
     void getEffect() {
         NoCountTower noCountTower = new NoCountTower();
@@ -15,6 +21,9 @@ class NoCountTowerTest {
         assertTrue(island.isNoCountTower());
     }
 
+    /**
+     * Control if this method return the correct value of card id
+     **/
     @Test
     void getCardId(){
         NoCountTower noCountTower = new NoCountTower();

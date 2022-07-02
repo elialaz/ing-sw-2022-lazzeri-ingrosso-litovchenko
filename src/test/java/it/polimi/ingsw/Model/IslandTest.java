@@ -1,16 +1,19 @@
 package it.polimi.ingsw.Model;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Testing class for Island
+ **/
 class IslandTest {
     private final MotherNature motherNature = new MotherNature();
     private ArrayList<Island> archipelago = Island.tableIslandConstructor(motherNature);
 
+    /**
+     * control if initial students on each island are correct
+     **/
     @Test
     void startStudents(){
         int startPos = motherNature.getPosition();
@@ -33,6 +36,9 @@ class IslandTest {
         }
     }
 
+    /**
+     * control if this method add correctly students to island
+     **/
     @Test
     void addStudents() {
         archipelago = Island.tableIslandConstructor(motherNature);
@@ -47,6 +53,9 @@ class IslandTest {
         }
     }
 
+    /**
+     * control if this method return true if there are no towers on an island, otherwise false
+     **/
     @Test
     void checkNotTower() {
         archipelago = Island.tableIslandConstructor(motherNature);
@@ -54,6 +63,9 @@ class IslandTest {
         assertFalse(archipelago.get(7).checkNotTower());
     }
 
+    /**
+     * control if this return the correct color of tower on island
+     **/
     @Test
     void colorTower() {
         archipelago = Island.tableIslandConstructor(motherNature);
@@ -61,6 +73,9 @@ class IslandTest {
         assertEquals(TowerColor.GRAY, archipelago.get(11).colorTower());
     }
 
+    /**
+     * control if this method set correctly towers on island
+     **/
     @Test
     void setTower() {
         archipelago = Island.tableIslandConstructor(motherNature);
@@ -68,6 +83,9 @@ class IslandTest {
         assertEquals(2,archipelago.get(1).getTowerNum());
     }
 
+    /**
+     * control if this method return the correct num of tower on an island
+     **/
     @Test
     void getTowerNum() {
         archipelago = Island.tableIslandConstructor(motherNature);
@@ -75,6 +93,9 @@ class IslandTest {
         assertEquals(2,archipelago.get(3).getTowerNum());
     }
 
+    /**
+     * control if this method return correctly the array of students on island
+     **/
     @Test
     void getStudents() {
         archipelago = Island.tableIslandConstructor(motherNature);
@@ -90,6 +111,9 @@ class IslandTest {
         }
     }
 
+    /**
+     * control if this method set correctly NoEntryTile on an island
+     **/
     @Test
     void setNoEntryTile() {
         archipelago = Island.tableIslandConstructor(motherNature);
@@ -98,6 +122,9 @@ class IslandTest {
         assertEquals(2, archipelago.get(8).getNoEntryTile());
     }
 
+    /**
+     * control if this method remove correctly NoEntryTiles
+     **/
     @Test
     void noEntryTileMotherNature() {
         archipelago = Island.tableIslandConstructor(motherNature);
@@ -107,6 +134,9 @@ class IslandTest {
         assertEquals(1, archipelago.get(11).getNoEntryTile());
     }
 
+    /**
+     * control if this method return true if there is a NoEntryTile on an island
+     **/
     @Test
     void isEntryTileMotherNature() {
         archipelago = Island.tableIslandConstructor(motherNature);
@@ -114,6 +144,9 @@ class IslandTest {
         assertTrue(archipelago.get(3).isEntryTileMotherNature());
     }
 
+    /**
+     * control if this method set correctly the effect NoCountTower
+     **/
     @Test
     void setNoCountTower() {
         archipelago = Island.tableIslandConstructor(motherNature);
@@ -121,6 +154,9 @@ class IslandTest {
         assertTrue(archipelago.get(6).isNoCountTower());
     }
 
+    /**
+     * control if this method return false if NoCountTower is not active, otherwise true
+     **/
     @Test
     void isNoCountTower() {
         archipelago = Island.tableIslandConstructor(motherNature);
@@ -128,6 +164,9 @@ class IslandTest {
         assertFalse(archipelago.get(9).isNoCountTower());
     }
 
+    /**
+     * control if this method set correctly the effect NoClorCount
+     **/
     @Test
     void setColorNotCount() {
         archipelago = Island.tableIslandConstructor(motherNature);
@@ -135,6 +174,9 @@ class IslandTest {
         assertEquals(3, archipelago.get(2).getColorNotCount());
     }
 
+    /**
+     * control if this method return the correct color chosen
+     **/
     @Test
     void getColorNotCount() {
         archipelago = Island.tableIslandConstructor(motherNature);

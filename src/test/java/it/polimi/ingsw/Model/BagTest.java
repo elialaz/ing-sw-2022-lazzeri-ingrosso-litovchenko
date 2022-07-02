@@ -4,6 +4,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Testing class for Bag
+ **/
 class BagTest {
     private Bag bag = new Bag(10);
     int[] StudentsGenerated;
@@ -43,5 +46,13 @@ class BagTest {
         for (int i=0; i<5; i++){
             assertEquals(StudentsGenerated[i]-ReinsertStudent[i], StudentsGenerated[i]-ReinsertStudent[i]);
         }
+    }
+
+    /**
+     * Control if this effect return the correct num of max student that could be extracted
+     **/
+    @Test
+    void getMaxNum(){
+        assertEquals(10, bag.getMaxNum());
     }
 }

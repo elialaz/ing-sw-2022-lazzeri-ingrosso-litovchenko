@@ -4,6 +4,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Testing class for Player
+ **/
 class PlayerTest {
     private Player player;
 
@@ -37,7 +40,7 @@ class PlayerTest {
     }
 
     /**
-     * control if this method return correct num of coin
+     * control if this method return the correct num of coin of a player
      **/
     @Test
     void getCoin() {
@@ -54,6 +57,9 @@ class PlayerTest {
         assertEquals("Nikita", player.getName());
     }
 
+    /**
+     * control if this method remove correct num of coin
+     **/
     @Test
     void removeCoin1(){
         player = new Player("Filiberto", 3, 5);

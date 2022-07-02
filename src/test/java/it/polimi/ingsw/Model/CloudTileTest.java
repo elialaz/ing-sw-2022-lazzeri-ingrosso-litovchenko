@@ -4,13 +4,16 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Testing class for CloudTile
+ **/
 class CloudTileTest {
     private Bag bag = new Bag(10);
     private CloudTile cloudTile = new CloudTile(3);
 
 
     /**
-     * control if a player take students from a cloud tile and if it results empty
+     * control if a player take students correctly from a cloud tile and if it results empty
      **/
     @Test
     void getStudents() {
@@ -38,12 +41,15 @@ class CloudTileTest {
      * control if a cloud tile is empty or not
      **/
     @Test
-    void isWhitoutPhase() {
+    void isWithoutPhase() {
         cloudTile = new CloudTile(3);
         cloudTile.getStudents();
         assertTrue(cloudTile.isWithoutPhase());
     }
 
+    /**
+     * control if a player take students correctly
+     **/
     @Test
     void getStudents2(){
         cloudTile.setStudents(bag);

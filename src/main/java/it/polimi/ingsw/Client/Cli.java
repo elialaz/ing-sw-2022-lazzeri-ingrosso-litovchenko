@@ -44,7 +44,7 @@ public class Cli implements EventReceiver {
     /**
      * Constructor of the Cli
      * @param manager EventManager for the Client
-     * @param owner   ConnectionHandler of the Client
+     * @param owner ConnectionHandler of the Client
      **/
     public Cli(ClientEventManager manager, Client owner) {
         this.manager = manager;
