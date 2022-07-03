@@ -1,7 +1,5 @@
 package it.polimi.ingsw.Client.View.cli;
 
-import java.util.InputMismatchException;
-import java.util.Scanner;
 
 /**
  * Class containing all the utilities needed to create a visual CLI
@@ -24,21 +22,9 @@ public class CLIutils {
     //ANSI background color
     public static final String ANSI_BRIGHT_BLACK = "\u001B[30;1m";
     public static final String ANSI_BRIGHT_RED = "\u001B[31;1m";
-    public static final String ANSI_BRIGHT_GREEN = "\u001B[32;1m";
     public static final String ANSI_BRIGHT_YELLOW = "\u001B[33;1m";
-    public static final String ANSI_BRIGHT_BLUE = "\u001B[34;1m";
-    public static final String ANSI_BRIGHT_PURPLE = "\u001B[35;1m";
-    public static final String ANSI_BRIGHT_CYAN = "\u001B[36m;1";
-    public static final String ANSI_BRIGHT_WHITE = "\u001B[37m:1";
 
     //Symbols
-    public static final String VERT_DIVIDER = "⎪";
-    public static final String BOTTOM_LEFT_CORNER = "⌊";
-    public static final String BOTTOM_RIGHT_CORNER = "⌋";
-    public static final String TOP_LEFT_CORNER = "⌈";
-    public static final String TOP_RIGHT_CORNER = "⌉";
-    public static final String HOR_DIVIDER = "—";
-
     public static final String STUDENT = "\u2A37"; // ⊛
     public static final String PROF = "\u272A"; // ✪
     public static final String MOTHER_NATURE = "\u15F0"; // ᗰ

@@ -849,7 +849,7 @@ public class Game {
     }
 
     /**
-     * Service method to check which player has much tower
+     * Service method to check which player has the most towers
      * @return name of that player
      **/
     public String checkMuchTower() {
@@ -872,6 +872,23 @@ public class Game {
         }
         return name;
     }
+
+    /**
+     * Service method to check in the bad has students in it
+     * @return boolean
+     */
+    public boolean checkEmptyBag() {
+        boolean empty = false;
+        int[] noStudents = bag.getStudents(1);
+        for (int i=0; i<5; i++) {
+            if (noStudents[i] != 0) {
+                empty = true;
+                break;
+            }
+        }
+        return empty;
+    }
+
 }
 
 

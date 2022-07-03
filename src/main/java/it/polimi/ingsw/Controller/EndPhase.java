@@ -34,6 +34,10 @@ public class EndPhase{
                 controller.setNextPlayerTurn(model.checkTowerNum());
                 manager.notify("win");
             }
+            if(model.checkEmptyBag()){
+                controller.setNextPlayerTurn(model.checkMuchTower());
+                manager.notify("win");
+            }
             if(model.checkCardNumber()){
                 controller.setNextPlayerTurn(model.checkMuchTower());
                 manager.notify("win");
