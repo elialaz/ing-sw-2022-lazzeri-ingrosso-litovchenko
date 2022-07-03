@@ -21,8 +21,8 @@ public class FromEntranceToDiningRoom extends SpecialCard {
     /**
      * Method that execute the effect
      * @param schoolBoard schoolBoard of player who has activated the effect
-     * @param studentsFromCard students to move to diningRoom
-     * @param studentsToEntrance students to move to entrance
+     * @param studentsFromCard students to move from entrance to diningRoom
+     * @param studentsToEntrance students to move from diningRoom to entrance
      **/
     @Override
     public void GetEffect(SchoolBoard schoolBoard, int[] studentsFromCard, int[] studentsToEntrance) {

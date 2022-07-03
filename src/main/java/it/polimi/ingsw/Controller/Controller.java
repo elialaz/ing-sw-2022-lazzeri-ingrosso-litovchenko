@@ -51,7 +51,7 @@ public class Controller implements EventReceiver {
 
     /**
      * Service method to add more player to the current game session
-     * @param player player to be added to the game
+     * @param player nickname of player to be added to the game
      **/
     public void addPlayer(String player) throws ToMuchPlayerException {
         model.addPlayer(player);
@@ -178,7 +178,8 @@ public class Controller implements EventReceiver {
     }
 
     /**
-     * Getter of WinPhase
+     * Service method to check if a player is in WinPhase
+     * @return boolean value: true if a player is in WinPhase, otherwise false
      **/
     public boolean isWinPhase() {
         return winPhase;
@@ -186,6 +187,7 @@ public class Controller implements EventReceiver {
 
     /**
      * Getter of the EventManager
+     * @return current EventManager
      **/
     public ControlEventManager getManager() {
         return manager;
@@ -193,6 +195,7 @@ public class Controller implements EventReceiver {
 
     /**
      * Getter of the Model
+     * @return current game
      **/
     public Game getModel() {
         return model;
@@ -200,6 +203,7 @@ public class Controller implements EventReceiver {
 
     /**
      * Getter of the Expert Card
+     * @return array of ExpertCard
      **/
     public ArrayList<SpecialCard> getExpertCard(){
         return model.getExpertCard();

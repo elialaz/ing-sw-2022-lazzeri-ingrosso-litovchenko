@@ -29,7 +29,7 @@ public class ActionPhase {
     }
 
     /**
-     * Service method for the set up of the action phase
+     * Service method for the setup of the action phase
      **/
     public void setup(){
         playerPlayed = 0;

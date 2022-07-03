@@ -43,7 +43,7 @@ public class ControlEventManager implements EventManager {
     }
 
     /**
-     * Notify to some particular EventReceiver that something is appened
+     * Notify to some particular EventReceiver that something is happened
      * @param eventType Client type to notify some event
      **/
     @Override

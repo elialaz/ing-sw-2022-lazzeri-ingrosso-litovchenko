@@ -16,6 +16,7 @@ public abstract class SpecialCard {
 
     /**
      * Service method for setup
+     * @param num start cost of card
      **/
     public void setup(int num){
         price = num;
@@ -25,6 +26,7 @@ public abstract class SpecialCard {
 
     /**
      * Getter of card price
+     * @return card cost
      **/
     public int getPrice(){
         return price;
@@ -39,6 +41,8 @@ public abstract class SpecialCard {
 
     /**
      * Service method to get effect of first card
+     * @param game game where the effect need to be applied
+     * @param island island on where the influence need to be calculated
      **/
     public void GetEffect(Game game, Island island) {
 
@@ -46,6 +50,9 @@ public abstract class SpecialCard {
 
     /**
      * Service method to get effect of second and third card
+     * @param schoolBoard selected schoolboard
+     * @param studentsFromCard students to move from card/entrance to entrance/diningRoom
+     * @param studentsFromEntrance students to move from entrance/diningRoom to card/entrance
      **/
     public void GetEffect(SchoolBoard schoolBoard, int[] studentsFromCard, int[] studentsFromEntrance) {
 
@@ -53,6 +60,7 @@ public abstract class SpecialCard {
 
     /**
      * Service method to get effect of fourth card
+     * @param deck deck of the player who has activated the effect
      **/
     public void GetEffect(Deck deck){
 
@@ -60,6 +68,8 @@ public abstract class SpecialCard {
 
     /**
      * Service method to get effect of fifth card
+     * @param color color chosen by the player who has activated the effect
+     * @param island island where influence need to be calculated
      **/
     public void GetEffect(int color, Island island) {
 
@@ -67,12 +77,15 @@ public abstract class SpecialCard {
 
     /**
      * Service method to get effect of sixth and seventh card
+     * @param island selected island
      **/
     public void GetEffect(Island island) {
     }
 
     /**
      * Service method to get effect of eighth card
+     * @param g game where the effect need to be applied
+     * @param playerId id of the player who has activated the effect
      **/
     public void GetEffect(Game g, int playerId) {
 
@@ -80,6 +93,7 @@ public abstract class SpecialCard {
 
     /**
      * Service method to get effect of ninth card
+     * @param g game where apply the effect
      **/
     public void GetEffect(Game g) {
 
@@ -87,6 +101,9 @@ public abstract class SpecialCard {
 
     /**
      * Service method to get effect of tenth card
+     * @param schoolBoards schoolBoard list of players
+     * @param students students that need to be replaced in bag
+     * @param bag bag where students are generated
      **/
     public void GetEffect(ArrayList<SchoolBoard> schoolBoards, int[] students, Bag bag) {
 
@@ -94,6 +111,9 @@ public abstract class SpecialCard {
 
     /**
      * Service method to get effect of eleventh card
+     * @param b schoolBoard on the effect need to be applied
+     * @param chosenStudent the students to move
+     * @param bag bag where students are generated
      **/
     public void GetEffect(SchoolBoard b, int[] chosenStudent, Bag bag) {
 
@@ -101,6 +121,9 @@ public abstract class SpecialCard {
 
     /**
      * Service method to get effect of twelfth card
+     * @param chosenStudent students that the player chose
+     * @param chosenIsland island where the students need to be placed
+     * @param bag bag where students are generated
      **/
     public void GetEffect(int[] chosenStudent, Island chosenIsland, Bag bag) {
 
@@ -108,6 +131,7 @@ public abstract class SpecialCard {
 
     /**
      * Getter of card id
+     * @return id of the card
      **/
     public int getId(){
         return id;
@@ -115,6 +139,7 @@ public abstract class SpecialCard {
 
     /**
      * Getter method for neverUse
+     * @return boolean that represents if card is already used
      **/
     public boolean isNeverUse() {
         return neverUse;
@@ -129,6 +154,7 @@ public abstract class SpecialCard {
 
     /**
      * Service method to get students on card
+     * @return array of students on card
      **/
     public int[] getStudents() {
         return new int[]{0, 0, 0, 0, 0};
@@ -136,6 +162,7 @@ public abstract class SpecialCard {
 
     /**
      * Factory Constructor for CharacterCard Array random selected
+     * @return array of character card casually created
      **/
     static public ArrayList<SpecialCard> getCharacter(Bag bag){
         ArrayList<SpecialCard> selector = new ArrayList<SpecialCard>();

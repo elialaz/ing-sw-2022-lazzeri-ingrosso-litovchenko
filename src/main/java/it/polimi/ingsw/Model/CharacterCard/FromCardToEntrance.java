@@ -3,8 +3,8 @@ package it.polimi.ingsw.Model.CharacterCard;
 import it.polimi.ingsw.Model.*;
 
 /**
- * You may take up to 3 students from this card and replace them with the same number of Students form your Entrance
- * @author elia_laz,  filibertoingrosso
+ * You may take up to 3 students from this card and replace them with the same number of Students from your Entrance
+ * @author elia_laz, filibertoingrosso
  **/
 public class FromCardToEntrance extends SpecialCard {
     private final int[] students;
@@ -21,6 +21,9 @@ public class FromCardToEntrance extends SpecialCard {
 
     /**
      * Method that execute the effect
+     * @param schoolBoard schoolBoard of player who has activated the effect
+     * @param studentsFromCard students to move from card to entrance
+     * @param studentsFromEntrance students to move from entrance to card
      **/
     @Override
     public void GetEffect(SchoolBoard schoolBoard, int[] studentsFromCard, int[] studentsFromEntrance) {

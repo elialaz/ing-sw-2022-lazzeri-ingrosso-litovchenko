@@ -77,7 +77,8 @@ public class ConnectionHandler implements EventReceiver {
 
     /**
      * Service Method for adding a player to the current game
-     * @param
+     * @param nickname nickname of player to add
+     * @param client new client
      **/
     public synchronized void clientAdd(String nickname, ServerThread client){
         try {
@@ -92,6 +93,7 @@ public class ConnectionHandler implements EventReceiver {
 
     /**
      * Service Method for removing a player to the current game
+     * @param nickname nickname of player to remove
      **/
     public synchronized void clientRemove(String nickname){
         for (Pair p: client) {

@@ -1,5 +1,4 @@
 package it.polimi.ingsw.Controller;
-
 import it.polimi.ingsw.Model.Game;
 
 /**
@@ -24,7 +23,7 @@ public class EndPhase{
     }
 
     /**
-     * Service method for check if the current game as ended
+     * Service method for check if the current game is ended
      **/
     public void checkWin(){
         if(controller.isWinPhase()){
