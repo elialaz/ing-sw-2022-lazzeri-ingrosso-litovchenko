@@ -877,6 +877,26 @@ public class Cli implements EventReceiver {
                     System.out.println("Which one will you play 0, 1 or 2: ");
                     System.out.println("Chose 3 for exit ");
                     int id = ReadIntInput(0,3);
+                    switch (ex.get(id)){
+                        case 3:
+                            break;
+                        case 4:
+                            break;
+                        case 5:
+                            break;
+                        case 6:
+                            break;
+                        case 7:
+                            break;
+                        case 8:
+                            break;
+                        case 9:
+                            break;
+                        case 10:
+                            break;
+                        case 12:
+                            break;
+                    }
                     if(id!=3){
                         expertIDChosen = ex.get(id);
                         chooseCharacterCard(ex.get(id), id);
