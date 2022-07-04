@@ -880,11 +880,11 @@ public class Game {
      * @return boolean
      */
     public boolean checkEmptyBag() {
-        boolean empty = false;
+        boolean empty = true;
         int[] noStudents = bag.getStudents(1);
         for (int i=0; i<5; i++) {
             if (noStudents[i] != 0) {
-                empty = true;
+                empty = false;
                 bag.addStudents(noStudents);
                 break;
             }
