@@ -38,6 +38,7 @@ public class Cli implements EventReceiver {
     private int[] switchFromEntrance_id2;
     private int[] switchFromCorridor_id3;
     private int[] switchFromEntrance_id3;
+    private boolean motherPlusTwo_id4 = false;
     private int colorNoInfluence_id5;
 
 
@@ -652,6 +653,7 @@ public class Cli implements EventReceiver {
                     model.addOneExpertCardUsed(id-1);
                     expertMessage = "playExpert/4/" + model.playerId(nickname);
                     notPlayed = false;
+                    motherPlusTwo_id4 = true;
                 }
                 else{
                     System.out.print("You not have enough coin to play this card ");
@@ -711,6 +713,7 @@ public class Cli implements EventReceiver {
                     model.addOneExpertCardUsed(id-1);
                     expertMessage = "playExpert/8/" + model.playerId(nickname);
                     notPlayed = false;
+
                 }
                 else{
                     System.out.print("You not have enough coin to play this card ");
@@ -878,21 +881,54 @@ public class Cli implements EventReceiver {
                     System.out.println("Chose 3 for exit ");
                     int id = ReadIntInput(0,3);
                     switch (ex.get(id)){
+                        case 1:
+                            break;
+                        case 2:
+                            break;
                         case 3:
+                            int[] students_corridor = model.getSchoolboardCorridor(nickname);
+                            int tot = 0;
+                            for (int i=0; i<5; i++){
+                                if(students_corridor[i] != 0){
+                                    tot += 1;
+                                }
+                            }
+                            if (tot < 2){
+                                System.out.println("You don't have at least two students in the Dining Room, to play this card");
+                                id = 3;
+                            }
                             break;
                         case 4:
+                            int[][] AssistantCards = model.getDeck(nickname);
+                            if (AssistantCards[0].length >= 10){
+                                System.out.println("To activate this effect you have to play an Assistant Card");
+                                id = 3;
+                            }
                             break;
                         case 5:
                             break;
                         case 6:
+                            ArrayList<Integer> tower = model.getIslandTowerNum();
+                            if (tower.isEmpty()){
+                                System.out.println("To activate this effect you should have at least a tower on an island");
+                                id = 3;
+                            }
                             break;
                         case 7:
                             break;
                         case 8:
+                            ArrayList<Integer> towers = model.getIslandTowerNum();
+                            if (towers.isEmpty()){
+                                System.out.println("To activate this effect you should have at least some influence on an island");
+                                id = 3;
+                            }
                             break;
                         case 9:
+
                             break;
                         case 10:
+                            break;
+                        case 11:
                             break;
                         case 12:
                             break;
@@ -1069,7 +1105,11 @@ public class Cli implements EventReceiver {
         System.out.println("\nMother Nature ("+ CLIutils.MOTHER_NATURE +") is currently on island "+ model.getPositionMotherNature() +"");
         System.out.println("Because of the Assistant Card you previously played, you can move the "+ CLIutils.ANSI_BRIGHT_YELLOW + CLIutils.MOTHER_NATURE + CLIutils.ANSI_RESET +" up to a max of "+ model.getLastCardMotherNature(nickname) +" islands.");
         System.out.print("How many islands you want to move "+ CLIutils.ANSI_BRIGHT_YELLOW + CLIutils.MOTHER_NATURE + CLIutils.ANSI_RESET +" to: ");
-        moveMotherNature = ReadIntInput(1, model.getLastCardMotherNature(nickname));
+        if (motherPlusTwo_id4) {
+            moveMotherNature = ReadIntInput(1, model.getLastCardMotherNature(nickname)+2);
+        } else {
+            moveMotherNature = ReadIntInput(1, model.getLastCardMotherNature(nickname));
+        }
         manager.notify("actionPhase2Send");
     }
 

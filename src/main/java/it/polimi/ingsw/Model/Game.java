@@ -885,6 +885,7 @@ public class Game {
         for (int i=0; i<5; i++) {
             if (noStudents[i] != 0) {
                 empty = true;
+                bag.addStudents(noStudents);
                 break;
             }
         }
