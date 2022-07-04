@@ -31,7 +31,7 @@ public class Island {
     /**
      * Public Constructor of all the Islands
      * @param position position of motherNature
-     * @return an ArrayList<Island> of all the island correctly initialized based on motherNature position
+     * @return an ArrayList<> of all the island correctly initialized based on motherNature position
      **/
     static public ArrayList<Island> tableIslandConstructor(MotherNature position){
         ArrayList<Island> archipelago = new ArrayList<>();
@@ -104,6 +104,7 @@ public class Island {
     /**
      * Service method to get the number of students on an island
      * @param index color of the students
+     * @return num student of that corridor
      **/
     public int getStudents(int index){
         return students[index];

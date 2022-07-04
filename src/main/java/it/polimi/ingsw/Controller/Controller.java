@@ -52,6 +52,7 @@ public class Controller implements EventReceiver {
     /**
      * Service method to add more player to the current game session
      * @param player nickname of player to be added to the game
+     * @throws ToMuchPlayerException
      **/
     public void addPlayer(String player) throws ToMuchPlayerException {
         model.addPlayer(player);
@@ -105,6 +106,7 @@ public class Controller implements EventReceiver {
 
     /**
      * Getter of the nextTurnPlayer
+     * @return nickname of next turn player
      **/
     public String getNextTurnPlayer() {
         return nextTurnPlayer;
@@ -112,6 +114,7 @@ public class Controller implements EventReceiver {
 
     /**
      * Setter of the nextMove
+     * @param nextMove next move to set
      **/
     public void setNextMove(int nextMove) {
         this.nextMove = nextMove;
@@ -120,6 +123,7 @@ public class Controller implements EventReceiver {
     /**
      * Service Method to play an assistant Card
      * @param card card to be played
+     * @throws PlayerNotExist
      **/
     public void playAssistantCard(int card) throws PlayerNotExist {
         int id = model.getGamerIdByNickname(nextTurnPlayer);
@@ -135,6 +139,7 @@ public class Controller implements EventReceiver {
      * Service Method to move Students to Island
      * @param students students array
      * @param islandNum island Number
+     * @throws PlayerNotExist
      **/
     public void moveStudentsToIsland(int[] students, int islandNum) throws PlayerNotExist {
         int id = model.getGamerIdByNickname(nextTurnPlayer);
@@ -145,6 +150,7 @@ public class Controller implements EventReceiver {
     /**
      * Service Method to move Students to SchoolBoard
      * @param students students array
+     * @throws PlayerNotExist
      **/
     public void moveStudentsToSchoolboard(int[] students) throws PlayerNotExist {
         int id = model.getGamerIdByNickname(nextTurnPlayer);
@@ -154,6 +160,7 @@ public class Controller implements EventReceiver {
     /**
      * Service Method to move Mother Nature
      * @param num number of island to move
+     * @throws MoveNotAllowed
      **/
     public void moveMotherNature(int num) throws MoveNotAllowed{
         if (model.getLastCardMovementAllowed(model.getGamerIdByNickname(nextTurnPlayer)) < num){

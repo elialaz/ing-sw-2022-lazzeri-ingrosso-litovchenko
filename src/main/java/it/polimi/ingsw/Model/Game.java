@@ -34,6 +34,7 @@ public class Game {
      * @param playerNum Number of Players attended to play this Game
      * @param firstPlayer Name of the player creating this Game
      * @param idGame id number of the current Game session
+     * @param expert boolean value that represent if this game is in expert mode
      **/
     public Game(int playerNum, String firstPlayer, int idGame, boolean expert){
         this.idGame = idGame;
@@ -506,6 +507,7 @@ public class Game {
 
     /**
      * Service Method to get the Island by the id
+     * @param id id of the island
      * @return Island selected
      **/
     public Island getIslandById(int id){

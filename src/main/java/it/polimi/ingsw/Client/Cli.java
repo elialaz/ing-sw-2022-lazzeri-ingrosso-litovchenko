@@ -789,6 +789,8 @@ public class Cli implements EventReceiver {
 
     /**
      * Service method to show character cards casually selected
+     * @param characterCards expert cards casually selected
+     * @param characterCards_prices price of expert cards casually selected
      */
     public void displayCharacterCard(ArrayList<Integer> characterCards, int[] characterCards_prices) {
         System.out.println("\nYou have " + model.getCoinPlayer(nickname) + " Coin");

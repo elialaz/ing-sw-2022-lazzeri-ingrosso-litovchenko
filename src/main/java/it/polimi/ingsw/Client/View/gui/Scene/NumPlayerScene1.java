@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Client.View.gui.Scene;
 
-public class NumPlayerScene {
+public class NumPlayerScene1 {
     private int minPlayers;
     private int maxPlayers;
 

@@ -12,6 +12,7 @@ public class FromCardToEntrance extends SpecialCard {
 
     /**
      * Constructor
+     * @param bag bag of current game
      **/
     public FromCardToEntrance(Bag bag){
         id = 2;

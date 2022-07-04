@@ -268,7 +268,8 @@ public class Client implements EventReceiver {
 
     /**
      * The Main Class of the Client.
-     * @param args of type String[], the standard java main parameter
+     * @param args of type String[], the standard java main paramete
+     * @throws InterruptedException
      */
     public static void main(String[] args) throws InterruptedException {
 
