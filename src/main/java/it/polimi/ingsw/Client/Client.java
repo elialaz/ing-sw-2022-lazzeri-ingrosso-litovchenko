@@ -101,6 +101,10 @@ public class Client implements EventReceiver {
         }
     }
 
+    /**
+     * Service Method to update a client
+     * @param eventType string that represent the event just happened after which client must be update
+     **/
     @Override
     public void update(String eventType) {
         switch (eventType){

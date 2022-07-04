@@ -241,6 +241,10 @@ public class VirtualModel {
         expertCardPriceCheck = new boolean[]{false, false, false, false, false, false, false, false, false, false, false, false};
     }
 
+    /**
+     * Getter of players of the game
+     * @return array of nickname of players
+     **/
     public ArrayList<String> getPlayer() {
         return player;
     }
@@ -254,6 +258,11 @@ public class VirtualModel {
         return -1;
     }
 
+    /**
+     * Getter of the deck
+     * @param p nickname of selected player
+     * @return matrix that represent the deck of player p
+     **/
     public int[][] getDeck(String p) {
         int[][] playerDeck = new int[][]{};
         for(int i=0; i<playerNum; i++){
@@ -264,6 +273,11 @@ public class VirtualModel {
         return playerDeck;
     }
 
+    /**
+     * Getter of last card used value
+     * @param p nickname of selected player
+     * @return Integer value of last card played by p
+     **/
     public Integer getLastCardUsed(String p) {
         for(int i=0; i<playerNum; i++){
             if(player.get(i).equals(p)){
@@ -273,6 +287,11 @@ public class VirtualModel {
         return -1;
     }
 
+    /**
+     * Getter of students in schoolBoard entrance
+     * @param p nickname of selected player
+     * @return array of students in entrance
+     **/
     public int[] getSchoolboardEntrance(String p) {
         int[] entrance = new int[]{};
         for(int i=0; i<playerNum; i++){
@@ -283,6 +302,11 @@ public class VirtualModel {
         return entrance;
     }
 
+    /**
+     * Getter of towers num on schoolBoard owned by a selected player
+     * @param p nickname of selected player
+     * @return num of towers on schoolBoard owned by p
+     **/
     public int getSchoolboardTower(String p) {
         for(int i=0; i<playerNum; i++){
             if(player.get(i).equals(p)){
@@ -292,6 +316,11 @@ public class VirtualModel {
         return -1;
     }
 
+    /**
+     * Getter of towers Color
+     * @param p nickname of selected player
+     * @return value of towers color
+     **/
     public TowerColor getSchoolboardColorTower(String p) {
         for(int i=0; i<playerNum; i++){
             if(player.get(i).equals(p)){
@@ -301,6 +330,11 @@ public class VirtualModel {
         return TowerColor.NOT;
     }
 
+    /**
+     * Getter of students in corridor
+     * @param p nickname of selected player
+     * @return array of students in each corridor of p
+     **/
     public int[] getSchoolboardCorridor(String p) {
         int[] corridor = new int[]{};
         for(int i=0; i<playerNum; i++){
@@ -311,6 +345,11 @@ public class VirtualModel {
         return corridor;
     }
 
+    /**
+     * Getter of professor on schoolBoard of selected player
+     * @param p nickname of selected player
+     * @return boolean array that represent if a professor is present or not in each corridor
+     **/
     public boolean[] getSchoolboardProfessor(String p) {
         boolean[] prof = new boolean[]{};
         for(int i=0; i<playerNum; i++){
@@ -321,6 +360,11 @@ public class VirtualModel {
         return prof;
     }
 
+    /**
+     * Getter of id of player
+     * @param p nickname of selected player
+     * @return id of selected player p
+     **/
     public int playerId(String p){
         for(int i=0; i<playerNum; i++){
             if(player.get(i).equals(p)){
@@ -330,26 +374,52 @@ public class VirtualModel {
         return -1;
     }
 
+    /**
+     * Service method to know if the game is in expert mode
+     * @return boolean value
+     **/
     public boolean isExpert() {
         return expert;
     }
 
+    /**
+     * Getter of students on islands
+     * @return arrayList of students on islands
+     **/
     public ArrayList<int[]> getIslandStudents() {
         return islandStudents;
     }
 
+    /**
+     * Getter of towers color on islands
+     * @return arrayList of towers color on islands
+     **/
     public ArrayList<TowerColor> getIslandColor() {
         return islandColor;
     }
 
+    /**
+     * Getter of num of towers on islands
+     * @return arrayList of num of towers on each island
+     **/
     public ArrayList<Integer> getIslandTowerNum() {
         return islandTowerNum;
     }
 
+    /**
+     * Service method used to know if there is a NoEntryTile on an island
+     * @param i id of island
+     * @return boolean value
+     **/
     public boolean getIslandNoEntryTile(int i) {
         return islandNoEntryTile.get(i);
     }
 
+    /**
+     * Getter of num of NoEntryTile on an island
+     * @param i id of island
+     * @return num of NoEntryTile on island i
+     **/
     public int getIslandNoEntryTileNum(int i) {
         return islandNoEntryTileNum.get(i);
     }
@@ -358,30 +428,59 @@ public class VirtualModel {
         return cloudTileStudents;
     }
 
+    /**
+     * Getter of expert cards' id casually selected
+     * @return arrayList of id of the character cards
+     **/
     public ArrayList<Integer> getExpertCardId() {
         return expertCardId;
     }
 
+    /**
+     * Getter of mother nature position
+     * @return position of mother nature
+     **/
     public int getPositionMotherNature() {
         return positionMotherNature;
     }
 
-    public boolean[] getProfessorOnGameboard() {
+    /**
+     * Getter of professor on GameBoard
+     * @return boolean array with professor value
+     **/
+    public boolean[] getProfessorOnGameBoard() {
         return professorOnGameboard;
     }
 
+    /**
+     * Getter of coin pile
+     * @return num of coin in coin pile
+     **/
     public int getCoinPile() {
         return coinPile;
     }
 
+    /**
+     * Getter of game id
+     * @return id of the game
+     **/
     public int getGameId() {
         return gameId;
     }
 
+    /**
+     * Getter of price of character cards
+     * @return array of price of each character card  casually selected
+     **/
     public int[] getExpertCardPrice() {
         return expertCardPrice;
     }
 
+    /**
+     * Getter of mother nature value of last card used
+     * @param p nickname of player who has played last card
+     * @return mother nature value of last card used by p
+     **/
     public int getLastCardMotherNature(String p) {
         for(int i=0; i<playerNum; i++){
             if(player.get(i).equals(p)){
@@ -391,27 +490,53 @@ public class VirtualModel {
         return -1;
     }
 
+    /**
+     * Getter of num of players in game
+     * @return value that represent num of players in the current game
+     **/
     public int getPlayerNum() {
         return playerNum;
     }
 
+    /**
+     * Getter of assistant cards played in this turn
+     * @return array of assistant cards just played
+     **/
     public int[] getAssistantsPlayedInTurn() {
         return assistantsPlayedInTurn;
     }
 
+    /**
+     * Getter of nickname of selected player
+     * @param p id of selected player
+     * @return nickname of the player who has id p
+     **/
     public String getPlayedById(int p){
         return player.get(p);
     }
 
+    /**
+     * Service method to know mother nature value
+     * @param c value of card
+     * @return mother nature value of card
+     **/
     public int cardValueOf(int c){
         int[][] card = new int[][]{{1,2,3,4,5,6,7,8,9,10},{1,1,2,2,3,3,4,4,5,5}};
         return card[1][c];
     }
 
+    /**
+     * Getter of num of islands
+     * @return new num of islands
+     **/
     public int getIslandNum() {
         return islandNum;
     }
 
+    /**
+     * Service method to increase the price of a character card after the first activation
+     * @param id id of expert card selected
+     **/
     public void addOneExpertCardUsed(int id){
         if(!expertCardPriceCheck[id]){
             expertCardPrice[id]++;
@@ -419,6 +544,11 @@ public class VirtualModel {
         }
     }
 
+    /**
+     * Getter of students on expert cards
+     * @param id num of students
+     * @return array of students present on card selected
+     **/
     public int[] getStudentsExpertCard(int id){
         return expertCardStudents.get(id);
     }

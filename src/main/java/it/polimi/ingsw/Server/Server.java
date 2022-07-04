@@ -56,9 +56,16 @@ public class Server {
     /**
      * Creator of a new ConnectionHandler for a new Game
      * @param eventManager EventManager for the server
+     * @param nickname nickname of player who wants to connect
+     * @param client new client who wants to establish connection
+     * @param playerNum num of player of game
+     * @param idGame id of the game
+     * @param expertMode boolean that represent if the game will be in expert mode or not
+     * @param chatEnable boolean that represent if the game will be with chat or not
+     * @return ConnectionHandler for a new game
      **/
-    public synchronized ConnectionHandler startGame(ServerEventManager eventManager, String nikname, ServerThread client, int playerNum, int idGame, boolean expertMode, boolean chatEnable){
-        ConnectionHandler nuova = new ConnectionHandler(eventManager, nikname, client, playerNum, idGame, expertMode, chatEnable, this);
+    public synchronized ConnectionHandler startGame(ServerEventManager eventManager, String nickname, ServerThread client, int playerNum, int idGame, boolean expertMode, boolean chatEnable){
+        ConnectionHandler nuova = new ConnectionHandler(eventManager, nickname, client, playerNum, idGame, expertMode, chatEnable, this);
         game.add(nuova);
         return nuova;
     }
@@ -66,6 +73,9 @@ public class Server {
     /**
      * Service Method for loading a Game
      * @param nickname EventManager for the server
+     * @param idGame game id
+     * @param client new client
+     * @return boolean for loading game
      **/
     public synchronized boolean loadGame(String nickname, int idGame, ServerThread client) {
         for (ConnectionHandler c: game) {
@@ -83,6 +93,7 @@ public class Server {
     /**
      * Service Method for getting the client game manager
      * @param idGame id of the game
+     * @return ConnectionHandler
      **/
     public synchronized ConnectionHandler getMaster(int idGame) {
         for (ConnectionHandler c: game) {
@@ -93,6 +104,11 @@ public class Server {
         return game.get(0);
     }
 
+    /**
+     * Service Method to manage disconnections
+     * @param nickname nickname of disconnected player
+     * @param c ConnectionHandler of current game
+     **/
     public void onDisconnect(String nickname, ConnectionHandler c) {
         synchronized (lock) {
             c.clientRemove(nickname);
@@ -103,10 +119,20 @@ public class Server {
         }
     }
 
+    /**
+     * Service Method to add a client
+     * @param nickname nickname of the new player
+     * @param client new client server
+     **/
     public void addClient(String nickname, ServerThread client) {
         clientNickname.add(nickname);
     }
 
+    /**
+     * Service Method to verify a client
+     * @param s client nickname
+     * @return boolean value that represents if client is verified correctly or not
+     **/
     public boolean verifyClient(String s){
         for (String nick: clientNickname) {
             if(nick.equals(s)){
@@ -116,6 +142,11 @@ public class Server {
         return true;
     }
 
+    /**
+     * Service Method to verify the game id
+     * @param id game id
+     * @return boolean value that represents if game id is verified correctly or not
+     **/
     public boolean verifyGameId(int id){
         for (ConnectionHandler c: game) {
             if(c.getIdGame()==id){
@@ -125,6 +156,10 @@ public class Server {
         return true;
     }
 
+    /**
+     * Service Method to delete a game
+     * @param connectionHandler connectionHandler of game that need to be deleted
+     **/
     public synchronized void deleteGame(ConnectionHandler connectionHandler) {
         synchronized (lock){
             for (ConnectionHandler c: game) {
@@ -137,6 +172,7 @@ public class Server {
 
     /**
      * Main for launch the Server
+     * @param args of type String[], the standard java main parameter
      **/
     public static void main(String[] args){
         int serverPort;

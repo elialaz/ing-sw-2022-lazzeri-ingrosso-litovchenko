@@ -17,6 +17,7 @@ public class ServerEventManager implements EventManager {
 
     /**
      * Constructor of class ServerEventManager
+     * @param operations list of strings accepted
      **/
     private ServerEventManager(String... operations) {
         for (String operation : operations) {
@@ -35,7 +36,7 @@ public class ServerEventManager implements EventManager {
     /**
      * Adding EventReceiver instance to the subscriber List
      * @param eventType Event that the Client are interested in
-     * @param listener Client that are interested in a some particular Event
+     * @param listener Clients that are interested in some particular Events
      **/
     @Override
     public void subscribe(String eventType, EventReceiver listener) {
@@ -44,7 +45,7 @@ public class ServerEventManager implements EventManager {
     }
 
     /**
-     * Notify to some particular EventReceiver that something is appended
+     * Notify to some particular EventReceivers that something is appended
      * @param eventType Client type to notify some event
      **/
     @Override

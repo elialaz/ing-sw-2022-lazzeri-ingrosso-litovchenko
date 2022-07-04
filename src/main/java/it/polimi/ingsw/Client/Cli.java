@@ -69,6 +69,10 @@ public class Cli implements EventReceiver {
         manager.subscribe("errorLoading", this);
     }
 
+    /**
+     * Service method to update
+     * @param eventType string of event just happened after which game need an update
+     **/
     @Override
     public void update(String eventType) {
         switch (eventType) {
@@ -108,6 +112,9 @@ public class Cli implements EventReceiver {
         }
     }
 
+    /**
+     * Service method to report an error during loading of the game
+     **/
     private void errorLoading() {
         System.out.println("This game is full of player or not exist. Please select another option");
     }
@@ -129,7 +136,7 @@ public class Cli implements EventReceiver {
     }
 
     /**
-     * Service metod for setting a new nickname
+     * Service method for setting a new nickname
      **/
     public void retryNickname() {
         System.out.println("An already connected player as this nickname please select a new one");
@@ -138,42 +145,80 @@ public class Cli implements EventReceiver {
         manager.notify("loginSend");
     }
 
+    /**
+     * Getter of nickname
+     * @return string of nickname
+     **/
     public String getNickname() {
         return nickname;
     }
 
+    /**
+     * Getter of num of players in game
+     * @return int value that represent num of players in the current game
+     **/
     public int getPlayerNumber(){
         return playerNumber;
     }
 
+    /**
+     * Getter of game id
+     * @return id of the game
+     **/
     public int getGameID() {
         return gameId;
     }
 
+    /**
+     * Service method to know if the game is in expert mode
+     * @return boolean value
+     **/
     public boolean isExpert() {
         return expert;
     }
 
+    /**
+     * Service method to know if the game is with chat
+     * @return boolean value
+     **/
     public int isChat() {
         return chat;
     }
 
+    /**
+     * Service method that print a string that inform the player that he has to attend others to start the game
+     **/
     private void waitPlayer() {
         System.out.print("\nWaiting for other players... ");
     }
 
+    /**
+     * Getter of card played value
+     * @return int value of card played
+     **/
     public int getCardPlayed() {
         return cardPlayed;
     }
 
+    /**
+     * Getter of card played mother nature value
+     * @return int value of card played mother nature
+     **/
     public int getMoveMotherNature() {
         return moveMotherNature;
     }
 
+    /**
+     * Getter of cloudTile just chosen
+     * @return int value of cloudTile
+     **/
     public int getWhichClodTile() {
         return witchCloudTile;
     }
 
+    /**
+     * Service method that print a string that inform the player that others are disconnected
+     **/
     private void disconnection() {
         System.out.println("One or more player disconnected, the current game end");
         System.out.println("1 for main Menu, 2 for quit");
@@ -186,16 +231,24 @@ public class Cli implements EventReceiver {
         }
     }
 
+    /**
+     * Getter of students that need to be moved to schoolBoard
+     * @return array of students
+     **/
     public int[] getStudentsToSchoolboard() {
         return studentsToSchoolboard;
     }
 
+    /**
+     * Getter of students that need to be moved to island
+     * @return array of students
+     **/
     public ArrayList<int[]> getStudentsToIsland() {
         return studentsToIsland;
     }
 
     /**
-     * Login class, to pass the connection port and choosen nickname
+     * Login class, to pass the connection port and chosen nickname
      **/
     public void login() {
         int serverPort;
@@ -244,7 +297,7 @@ public class Cli implements EventReceiver {
     }
 
     /**
-      * Reads a Integer inserted by the user which has to be between a min and a max.
+      * Reads an Integer inserted by the user which has to be between a min and a max.
       * @param min of type int
       * @param max of type int
       * @return num of type int
@@ -280,13 +333,16 @@ public class Cli implements EventReceiver {
     }
 
     /**
-    * Service function to clear the screen
+     * Service function to clear the screen
      */
     public static void clearScreen() {
         System.out.println("\033[H\033[2J");
         System.out.flush();
     }
 
+    /**
+     * Service method used to show the gameBoard
+     */
     private void showGameBoard() {
         clearScreen();
         System.out.println("Your School Board: ");
@@ -302,7 +358,7 @@ public class Cli implements EventReceiver {
         System.out.print("Current islands are: ");
         showIslands();
         System.out.println("\nProfessors remaining on Gameboard: ");
-        boolean[] professor = model.getProfessorOnGameboard();
+        boolean[] professor = model.getProfessorOnGameBoard();
         for (int i=0; i<5; i++){
             switch (i) {
                 case 0:
@@ -402,6 +458,9 @@ public class Cli implements EventReceiver {
         System.out.println();
     }
 
+    /**
+     * Service method used to display schoolBoards
+     */
     private void showSchoolBoard(int[] schoolboardEntrance, int schoolboardTower, TowerColor schoolboardColorTower, boolean[] schoolboardProfessor, int[] schoolboardCorridor, String p){
         System.out.print("School Board of player '" + p + "', has these students (" + CLIutils.STUDENT + ") in its entrance: ");
         displayStudents(schoolboardEntrance);
@@ -465,6 +524,11 @@ public class Cli implements EventReceiver {
         }
     }
 
+    /**
+     * Service method to manage character cards and their effects
+     * @param id id of card
+     * @param input num of students on cards that have students on themselves
+     */
     public void chooseCharacterCard(int id, int input) {
         int[] students_entrance = model.getSchoolboardEntrance(nickname);
         int[] students_corridor = model.getSchoolboardCorridor(nickname);
@@ -723,6 +787,9 @@ public class Cli implements EventReceiver {
         }
     }
 
+    /**
+     * Service method to show character cards casually selected
+     */
     public void displayCharacterCard(ArrayList<Integer> characterCards, int[] characterCards_prices) {
         System.out.println("\nYou have " + model.getCoinPlayer(nickname) + " Coin");
         System.out.println("\nThe following character cards are on the table, choose which one you want to play:");
@@ -793,6 +860,9 @@ public class Cli implements EventReceiver {
     }
 
     //TODO manca verifica precondizioni
+    /**
+     * Service method to play a character card
+     */
     public void playCharacterCard() {
         if (model.isExpert()) {
             System.out.println("Do you want to play a character card?: 1) Yes || 2) No");
@@ -821,7 +891,9 @@ public class Cli implements EventReceiver {
         }
     }
 
-
+    /**
+     * Service method to show and manage the planning phase os each player
+     */
     public void planningPhase() {
         int k = 0;
         clearScreen();
@@ -884,6 +956,9 @@ public class Cli implements EventReceiver {
         manager.notify("planningPhaseSend");
     }
 
+    /**
+     * Service method to show and manage the action phase 1 of each player
+     */
     private void actionPhase1() {
         clearScreen();
         System.out.println("--------------------------------------------");
@@ -959,6 +1034,9 @@ public class Cli implements EventReceiver {
         manager.notify("actionPhase1Send");
     }
 
+    /**
+     * Service method to show and manage the action phase 2 of each player
+     */
     private void actionPhase2() {
         clearScreen();
         System.out.println("--------------------------------------------");
@@ -973,6 +1051,9 @@ public class Cli implements EventReceiver {
         manager.notify("actionPhase2Send");
     }
 
+    /**
+     * Service method to show and manage the action phase 3 of each player
+     */
     private void actionPhase3() {
         witchCloudTile = -1;
         clearScreen();
@@ -1019,6 +1100,9 @@ public class Cli implements EventReceiver {
         manager.notify("actionPhase3Send");
     }
 
+    /**
+     * Service method to show and manage the conclusion of the game
+     */
     private void finish() {
         clearScreen();
         if(nickname.equals(winner)){
@@ -1039,10 +1123,18 @@ public class Cli implements EventReceiver {
         }
     }
 
+    /**
+     * Getter of id of expert card chosen
+     * @return id of expert card
+     */
     public int getExpertIDChosen() {
         return expertIDChosen;
     }
 
+    /**
+     * Getter of special card message
+     * @return string with content of message
+     */
     public String getSpecialCard() {
         return expertMessage;
     }

@@ -162,6 +162,7 @@ public abstract class SpecialCard {
 
     /**
      * Factory Constructor for CharacterCard Array random selected
+     * @param bag bag used in current game
      * @return array of character card casually created
      **/
     static public ArrayList<SpecialCard> getCharacter(Bag bag){

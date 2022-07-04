@@ -33,8 +33,8 @@ public class ClientEventManager implements EventManager {
 
     /**
      * Adding EventReceiver instance to the subscriber List
-     * @param eventType Event that the Client are interested in
-     * @param listener Client that are interested in a some particular Event
+     * @param eventType Event that the Clients are interested in
+     * @param listener Clients that are interested in some particular Events
      **/
     @Override
     public synchronized void subscribe(String eventType, EventReceiver listener) {
@@ -43,8 +43,8 @@ public class ClientEventManager implements EventManager {
     }
 
     /**
-     * Notify to some particular EventReceiver that something is happened
-     * @param eventType Client type to notify some event
+     * Notify to some particular EventReceivers that something is happened
+     * @param eventType Client type to notify some events
      **/
     @Override
     public void notify(String eventType) {

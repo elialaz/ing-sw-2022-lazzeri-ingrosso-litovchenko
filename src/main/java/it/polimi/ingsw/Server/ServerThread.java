@@ -56,6 +56,10 @@ class ServerThread extends Thread{
         }
     }
 
+    /**
+     * Service Method to receive data
+     * @throws IOException input operation is failed
+     **/
     public void receiveData() throws IOException{
         try {
             while(!Thread.currentThread().isInterrupted()) {
@@ -116,6 +120,9 @@ class ServerThread extends Thread{
         socket.close();
     }
 
+    /**
+     * Service Method to interrupt the connection
+     **/
     public void disconnect() {
         if(connected) {
             try {
@@ -136,12 +143,20 @@ class ServerThread extends Thread{
         }
     }
 
+    /**
+     * Service Method to send a message
+     * @param message content of the message
+     **/
     public void sendMessage(String message) {
         synchronized (outputLock) {
             out.println(message);
         }
     }
 
+    /**
+     * Service Method to get player nickname
+     * @return nickname of selected player
+     **/
     public String getNickname() {
         return nickname;
     }

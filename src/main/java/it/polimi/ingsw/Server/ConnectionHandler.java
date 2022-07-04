@@ -37,9 +37,12 @@ public class ConnectionHandler implements EventReceiver {
      * Constructor of the ConnectionHandler
      * @param eventManager Event Manager per il Server
      * @param nickname of the first player
+     * @param client new client
      * @param playerNum number of the player expected
      * @param idGame id of the game
      * @param expertMode boolean value of the expert mode
+     * @param chatEnable boolean value for the chat
+     * @param server this server
      **/
     public ConnectionHandler(ServerEventManager eventManager, String nickname, ServerThread client, int playerNum, int idGame, boolean expertMode, boolean chatEnable, Server server){
         this.client = new ArrayList<>();
@@ -128,6 +131,10 @@ public class ConnectionHandler implements EventReceiver {
         return controller;
     }
 
+    /**
+     * Service Method to update
+     * @param eventType string of event that is just happened
+     **/
     @Override
     public void update(String eventType) {
         switch (eventType){
@@ -219,7 +226,7 @@ public class ConnectionHandler implements EventReceiver {
 
     /**
      * Getter of the start variable that verify if the game can start
-     * @return Boolean
+     * @return boolean: true if game could start, false if not
      **/
     public boolean isStart() {
         return start;
@@ -234,6 +241,11 @@ public class ConnectionHandler implements EventReceiver {
         controlManager.notify("start");
     }
 
+    /**
+     * Service Method to set the character cards and their effects for the expert mode
+     * @param message content of the message
+     * @param nickname nickname of player
+     **/
     public synchronized void expertPlay(String message, String nickname){
         String[] parsed = message.split("/");
         int id = Integer.parseInt(parsed[1]);
@@ -317,6 +329,11 @@ public class ConnectionHandler implements EventReceiver {
         model.removeCoin(coin, nickname);
     }
 
+    /**
+     * Service Method to planning what to do after receive a message
+     * @param message content of the message
+     * @param nickname nicname of player
+     **/
     public synchronized void onMessageReceived(String message, String nickname){
         switch(actionType){
             case 0:
@@ -391,6 +408,10 @@ public class ConnectionHandler implements EventReceiver {
         }
     }
 
+    /**
+     * Service Method to get clients
+     * @return list of client
+     **/
     public ArrayList<Pair> getClient() {
         return client;
     }
