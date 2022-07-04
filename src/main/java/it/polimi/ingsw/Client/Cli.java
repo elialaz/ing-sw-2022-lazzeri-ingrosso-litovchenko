@@ -24,7 +24,7 @@ public class Cli implements EventReceiver {
     private int gameId;
     private boolean expert;
     private int chat;
-    private int cardPlayed;
+    private int cardPlayed = -1;
     private int moveMotherNature;
     private int witchCloudTile;
     private ArrayList<int[]> studentsToIsland;
@@ -879,71 +879,70 @@ public class Cli implements EventReceiver {
                     System.out.println("Which one will you play 0, 1 or 2: ");
                     System.out.println("Chose 3 for exit ");
                     int id = ReadIntInput(0,3);
-                    switch (ex.get(id)){
-                        case 1:
-                            if(model.getIslandNum() >12){
-                                System.out.println("You can't play this card: there are more than 12 islands");
-                                id=3;
-                            }
-                            break;
-                        case 2:
-                            break;
-                        case 3:
-                            int[] students_corridor = model.getSchoolboardCorridor(nickname);
-                            int tot = 0;
-                            for (int i=0; i<5; i++){
-                                if(students_corridor[i] != 0){
-                                    tot += 1;
-                                }
-                            }
-                            if (tot < 2){
-                                System.out.println("You don't have at least two students in the Dining Room, to play this card");
-                                id = 3;
-                            }
-                            break;
-                        case 4:
-                            int[][] AssistantCards = model.getDeck(nickname);
-                            if (AssistantCards[0].length >= 10){
-                                System.out.println("To activate this effect you have to play an Assistant Card");
-                                id = 3;
-                            }
-                            break;
-                        case 5:
-                            if(model.getIslandNum() >12){
-                                System.out.println("You can't play this card: there are more than 12 islands");
-                                id=3;
-                            }
-                            break;
-                        case 6:
-                            ArrayList<Integer> tower = model.getIslandTowerNum();
-                            if (tower.isEmpty()){
-                                System.out.println("To activate this effect you should have at least a tower on an island");
-                                id = 3;
-                            }
-                            break;
-                        case 7:
-                            if(model.getIslandNum() >12){
-                                System.out.println("You can't play this card: there are more than 12 islands");
-                                id=3;
-                            }
-                            break;
-                        case 8:
-                            ArrayList<Integer> towers = model.getIslandTowerNum();
-                            if (towers.isEmpty()){
-                                System.out.println("To activate this effect you should have at least some influence on an island");
-                                id = 3;
-                            }
-                            break;
-                        case 9:
-                            break;
-                        case 12:
-                            if(model.getIslandNum() >12){
-                                System.out.println("You can't play this card: there are more than 12 islands");
-                                id=3;
-                            }
-                            break;
-                    }
                     if(id!=3){
+                        switch (ex.get(id)){
+                            case 1:
+                                if(model.getIslandNum() >12){
+                                    System.out.println("You can't play this card: there are more than 12 islands");
+                                    id=3;
+                                }
+                                break;
+                            case 2:
+                                break;
+                            case 3:
+                                int[] students_corridor = model.getSchoolboardCorridor(nickname);
+                                int tot = 0;
+                                for (int i=0; i<5; i++){
+                                    if(students_corridor[i] != 0){
+                                        tot += 1;
+                                    }
+                                }
+                                if (tot < 2){
+                                    System.out.println("You don't have at least two students in the Dining Room, to play this card");
+                                    id = 3;
+                                }
+                                break;
+                            case 4:
+                                if (cardPlayed == -1){
+                                    System.out.println("To activate this effect you have to play an Assistant Card");
+                                    id = 3;
+                                }
+                                break;
+                            case 5:
+                                if(model.getIslandNum() >12){
+                                    System.out.println("You can't play this card: there are more than 12 islands");
+                                    id=3;
+                                }
+                                break;
+                            case 6:
+                                ArrayList<Integer> tower = model.getIslandTowerNum();
+                                if (tower.isEmpty()){
+                                    System.out.println("To activate this effect you should have at least a tower on an island");
+                                    id = 3;
+                                }
+                                break;
+                            case 7:
+                                if(model.getIslandNum() >12){
+                                    System.out.println("You can't play this card: there are more than 12 islands");
+                                    id=3;
+                                }
+                                break;
+                            case 8:
+                                ArrayList<Integer> towers = model.getIslandTowerNum();
+                                if (towers.isEmpty()){
+                                    System.out.println("To activate this effect you should have at least some influence on an island");
+                                    id = 3;
+                                }
+                                break;
+                            case 9:
+                                break;
+                            case 12:
+                                if(model.getIslandNum() >12){
+                                    System.out.println("You can't play this card: there are more than 12 islands");
+                                    id=3;
+                                }
+                                break;
+                        }
                         expertIDChosen = ex.get(id);
                         chooseCharacterCard(ex.get(id), id);
                     }
