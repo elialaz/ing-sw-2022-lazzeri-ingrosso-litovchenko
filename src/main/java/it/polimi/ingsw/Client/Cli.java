@@ -713,7 +713,6 @@ public class Cli implements EventReceiver {
                     model.addOneExpertCardUsed(id-1);
                     expertMessage = "playExpert/8/" + model.playerId(nickname);
                     notPlayed = false;
-
                 }
                 else{
                     System.out.print("You not have enough coin to play this card ");
@@ -882,6 +881,10 @@ public class Cli implements EventReceiver {
                     int id = ReadIntInput(0,3);
                     switch (ex.get(id)){
                         case 1:
+                            if(model.getIslandNum() >12){
+                                System.out.println("You can't play this card: there are more than 12 islands");
+                                id=3;
+                            }
                             break;
                         case 2:
                             break;
@@ -906,6 +909,10 @@ public class Cli implements EventReceiver {
                             }
                             break;
                         case 5:
+                            if(model.getIslandNum() >12){
+                                System.out.println("You can't play this card: there are more than 12 islands");
+                                id=3;
+                            }
                             break;
                         case 6:
                             ArrayList<Integer> tower = model.getIslandTowerNum();
@@ -915,6 +922,10 @@ public class Cli implements EventReceiver {
                             }
                             break;
                         case 7:
+                            if(model.getIslandNum() >12){
+                                System.out.println("You can't play this card: there are more than 12 islands");
+                                id=3;
+                            }
                             break;
                         case 8:
                             ArrayList<Integer> towers = model.getIslandTowerNum();
@@ -924,13 +935,12 @@ public class Cli implements EventReceiver {
                             }
                             break;
                         case 9:
-
-                            break;
-                        case 10:
-                            break;
-                        case 11:
                             break;
                         case 12:
+                            if(model.getIslandNum() >12){
+                                System.out.println("You can't play this card: there are more than 12 islands");
+                                id=3;
+                            }
                             break;
                     }
                     if(id!=3){
@@ -1105,11 +1115,7 @@ public class Cli implements EventReceiver {
         System.out.println("\nMother Nature ("+ CLIutils.MOTHER_NATURE +") is currently on island "+ model.getPositionMotherNature() +"");
         System.out.println("Because of the Assistant Card you previously played, you can move the "+ CLIutils.ANSI_BRIGHT_YELLOW + CLIutils.MOTHER_NATURE + CLIutils.ANSI_RESET +" up to a max of "+ model.getLastCardMotherNature(nickname) +" islands.");
         System.out.print("How many islands you want to move "+ CLIutils.ANSI_BRIGHT_YELLOW + CLIutils.MOTHER_NATURE + CLIutils.ANSI_RESET +" to: ");
-        if (motherPlusTwo_id4) {
-            moveMotherNature = ReadIntInput(1, model.getLastCardMotherNature(nickname)+2);
-        } else {
-            moveMotherNature = ReadIntInput(1, model.getLastCardMotherNature(nickname));
-        }
+        moveMotherNature = ReadIntInput(1, model.getLastCardMotherNature(nickname));
         manager.notify("actionPhase2Send");
     }
 
