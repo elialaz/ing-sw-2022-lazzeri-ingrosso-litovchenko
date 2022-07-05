@@ -23,7 +23,7 @@ public class ChosenIsland extends SpecialCard {
      * @param island island on where the influence need to be calculated
      **/
     public void GetEffect(Game game, Island island) {
-        game.checkInfluence(island);
+        game.checkControl(island);
         if(isNeverUse()){
             setNeverUse();
             setPrice();
