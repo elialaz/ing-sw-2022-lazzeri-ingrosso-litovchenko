@@ -31,12 +31,13 @@ public class StudentToDiningRoom extends SpecialCard {
 
     /**
      * Method that execute the effect
+     * @param game current game
      * @param b schoolBoard on the effect need to be applied
      * @param chosenStudent the students to move
      * @param bag bag where students are generated
      **/
     @Override
-    public void GetEffect(SchoolBoard b, int[] chosenStudent, Bag bag) {
+    public void GetEffect( Game game, SchoolBoard b, int[] chosenStudent, Bag bag) {
         b.addCorridor(chosenStudent);
         for(int i=0; i<5; i++){
             cardStudents[i]-=chosenStudent[i];
@@ -45,6 +46,7 @@ public class StudentToDiningRoom extends SpecialCard {
         for(int i=0; i<5; i++){
             cardStudents[i]+=newStudents[i];
         }
+        game.checkProfessorInfluence(b);
         if(isNeverUse()){
             setNeverUse();
             setPrice();

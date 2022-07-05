@@ -111,11 +111,12 @@ public abstract class SpecialCard {
 
     /**
      * Service method to get effect of eleventh card
+     * @param game current game
      * @param b schoolBoard on the effect need to be applied
      * @param chosenStudent the students to move
      * @param bag bag where students are generated
      **/
-    public void GetEffect(SchoolBoard b, int[] chosenStudent, Bag bag) {
+    public void GetEffect( Game game, SchoolBoard b, int[] chosenStudent, Bag bag) {
 
     }
 
