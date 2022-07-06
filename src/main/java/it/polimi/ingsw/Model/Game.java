@@ -670,6 +670,7 @@ public class Game {
                 else {
                     text = text + s.getId() + "!";
                 }
+                text = text + s.getPrice()+ "!";
             }
             text = text + "/";
         }
