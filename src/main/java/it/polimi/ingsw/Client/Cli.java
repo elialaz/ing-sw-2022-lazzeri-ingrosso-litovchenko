@@ -660,7 +660,13 @@ public class Cli implements EventReceiver {
                 if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[input]){
                     System.out.println("Which color student will you choose: 0) " + CLIutils.ANSI_GREEN + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 1) " + CLIutils.ANSI_RED + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 2) " + CLIutils.ANSI_YELLOW + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 3) " + CLIutils.ANSI_PINK + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 4) " + CLIutils.ANSI_BLUE + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
                     colorNoInfluence_id5 = ReadIntInput(0,4);
-                    expertMessage = "playExpert/5/" + colorNoInfluence_id5 + "/" + model.getPositionMotherNature();
+                    System.out.println("On which island are you going to move mother nature: (0 - " + model.getIslandNum() + ")");
+                    int chose = ReadIntInput(0, model.getIslandNum());
+                    while (chose < 0 || chose > model.getIslandNum()){
+                        System.out.println("What are you doing? There isn't this island. Select another one.");
+                        chose = ReadIntInput(0, model.getIslandNum());
+                    }
+                    expertMessage = "playExpert/5/" + colorNoInfluence_id5 + "/" + chose;
                     notPlayed = false;
                 }
                 else{
@@ -670,7 +676,7 @@ public class Cli implements EventReceiver {
             case 6:
                 //cost 3
                 if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[input]){
-                    System.out.println("Which island will you choose: (0 - " + model.getIslandNum() + ")");
+                    System.out.println("On which island are you going to move mother nature: (0 - " + model.getIslandNum() + ")");
                     int chose = ReadIntInput(0, model.getIslandNum());
                     while (chose < 0 || chose > model.getIslandNum()){
                         System.out.println("What are you doing? There isn't this island. Select another one.");
@@ -823,7 +829,7 @@ public class Cli implements EventReceiver {
                     break;
                 case 8:
                     //cost 2
-                    System.out.println("> During the influence calculation this turn, you count as having 2 more influence: ");
+                    System.out.println("> During the influence calculation this turn, your count as having 2 more influence: ");
                     System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
                     break;
                 case 9:
@@ -850,7 +856,6 @@ public class Cli implements EventReceiver {
         }
     }
 
-    //TODO manca verifica precondizioni
     /**
      * Service method to play a character card
      */
