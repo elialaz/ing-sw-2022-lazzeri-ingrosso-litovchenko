@@ -30,14 +30,10 @@ class StudentToDiningRoomTest {
     @Test
     void getEffect() {
         Game game = new Game(2, "jhon", 2, true);
-        Player player = new Player("phil", 1,0);
-        SchoolBoard schoolBoard = new SchoolBoard(new int[]{2,1,1,0,3});
-        schoolBoard.setPlayer(player);
-        schoolBoard.moveCorridor(new int[]{2,0,0,0,1});
         int [] studentsOnCard = studentToDiningRoom.getStudents();
         int [] studentChosed = new int[]{1,0,0,0,0};
-        studentToDiningRoom.GetEffect(game, schoolBoard, studentChosed, bag );
-        assertEquals(3, schoolBoard.getCorridor(0));
+        studentToDiningRoom.GetEffect(game, game.getSchoolBoards().get(0), studentChosed, bag );
+        assertEquals(1, game.getSchoolBoards().get(0).getCorridor(0));
         assertEquals(studentsOnCard.length, studentToDiningRoom.getStudents().length);
     }
 

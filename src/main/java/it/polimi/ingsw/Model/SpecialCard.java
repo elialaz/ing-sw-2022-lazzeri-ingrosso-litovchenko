@@ -93,7 +93,7 @@ public abstract class SpecialCard {
 
     /**
      * Service method to get effect of ninth card
-     * @param g game where apply the effect
+     * @param g game where the effect need to be applied
      **/
     public void GetEffect(Game g) {
 

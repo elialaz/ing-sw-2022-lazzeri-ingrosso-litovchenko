@@ -310,7 +310,7 @@ public class ConnectionHandler implements EventReceiver {
             case 10:
                 type = Integer.parseInt(parsed[2]);
                 students = new int[]{0, 0, 0, 0, 0};
-                students[type] = 2;
+                students[type] = 3;
                 chosed.GetEffect(model.getSchoolBoards(), students, model.getBag());
                 break;
             case 11:

@@ -328,13 +328,10 @@ public class Game {
                 }
             }
             for(int j=0; j<5; j++){
-                if((schoolBoards.get(i).isProfessor(j) || professorControl) && island.getColorNotCount()!=j){
+                if((schoolBoards.get(i).isProfessor(j)) && island.getColorNotCount()!=j){
                     if(studentsOnIsland[j]!=0){
                         temporaryInfluence += studentsOnIsland[j];
                     }
-                }
-                if(island.getColorNotCount()==j){
-                    island.setColorNotCount(-1);
                 }
             }
             if(plusTwoEffect && i==plusTwoEffectPlayer){
@@ -348,6 +345,9 @@ public class Game {
             else if(influence == temporaryInfluence && influence!=0){
                 id = -2;
             }
+        }
+        if(island.getColorNotCount() != -1){
+            island.setColorNotCount(-1);
         }
         island.setNoCountTower(false);
         return id;
