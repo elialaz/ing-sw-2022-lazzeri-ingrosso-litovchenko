@@ -660,7 +660,7 @@ public class Cli implements EventReceiver {
                 if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[input]){
                     System.out.println("Which color student will you choose: 0) " + CLIutils.ANSI_GREEN + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 1) " + CLIutils.ANSI_RED + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 2) " + CLIutils.ANSI_YELLOW + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 3) " + CLIutils.ANSI_PINK + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 4) " + CLIutils.ANSI_BLUE + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
                     colorNoInfluence_id5 = ReadIntInput(0,4);
-                    expertMessage = "playExpert/5/" + colorNoInfluence_id5 + "/" + model.playerId(nickname);
+                    expertMessage = "playExpert/5/" + colorNoInfluence_id5 + "/" + model.getPositionMotherNature();
                     notPlayed = false;
                 }
                 else{
