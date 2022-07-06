@@ -103,7 +103,7 @@ class ServerThread extends Thread{
                             master.expertPlay(message, nickname);
                         }
                         else if(input[0].equals("ping")){
-                            socket.setSoTimeout(30);
+                            socket.setSoTimeout(60);
                             System.out.println("Client " + nickname + " ping");
                         }
                         else {
