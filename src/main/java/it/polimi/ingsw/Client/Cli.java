@@ -259,6 +259,7 @@ public class Cli implements EventReceiver {
         System.out.println();
         System.out.println("Choose the number of server port you want to connect to (value must be between 1024 and 65535):");
         serverPort = ReadIntInput(1024, 65535);
+        connection.setServerIP("93.55.224.14");
         connection.setServerPort(serverPort);
         System.out.println("Select your unique Nickname: ");
         nickname = ReadStringInput();
