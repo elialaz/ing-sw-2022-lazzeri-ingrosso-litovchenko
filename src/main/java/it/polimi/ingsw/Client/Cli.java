@@ -788,12 +788,12 @@ public class Cli implements EventReceiver {
             switch (characterCards.get(i)) {
                 case 1:
                     //cost 3
-                    System.out.println("> Choose and Island and resolve the island as if Mother Nature had ended her movement there. Mother Nature will still move and the Island where she ends her movement will also be resolved: ");
+                    System.out.println("> Choose a Island and resolve the island as if Mother Nature had ended her movement there. Mother Nature will still move and the Island where she ends her movement will also be resolved: ");
                     System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
                     break;
                 case 2:
                     //cost 1
-                    System.out.println("> You may take up to 3 students for this card and replace them with the same number of Students from your Entrance: ");
+                    System.out.println("> You may take up to 3 students from this card and replace them with the same number of Students from your Entrance: ");
                     System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
                     break;
                 case 3:

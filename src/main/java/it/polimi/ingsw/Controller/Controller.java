@@ -10,7 +10,7 @@ import it.polimi.ingsw.Model.SpecialCard;
 
 import java.util.ArrayList;
 
-//TODO sistemare ultima condizione vittoria che non chiara e partite a 4 giocatori
+
 /**
  * Main Class of the Controller, one for each game
  * @author elia_laz

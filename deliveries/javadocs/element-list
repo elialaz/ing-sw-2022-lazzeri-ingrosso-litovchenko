@@ -1,0 +1,10 @@
+it.polimi.ingsw.Client
+it.polimi.ingsw.Client.View.cli
+it.polimi.ingsw.Client.View.gui
+it.polimi.ingsw.Client.View.gui.Scene
+it.polimi.ingsw.Controller
+it.polimi.ingsw.Event
+it.polimi.ingsw.Exception
+it.polimi.ingsw.Model
+it.polimi.ingsw.Model.CharacterCard
+it.polimi.ingsw.Server
