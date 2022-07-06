@@ -381,6 +381,7 @@ class GameTest {
                 else {
                     text = text + s.getId() + "!";
                 }
+                text = text + s.getPrice()+ "!";
             }
             text = text + "/";
         }
