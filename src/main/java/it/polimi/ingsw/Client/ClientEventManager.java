@@ -28,7 +28,7 @@ public class ClientEventManager implements EventManager {
      * @return new ClientEventManager instance
      **/
     static public ClientEventManager createClientEventManager(){
-        return new ClientEventManager( "updateData", "loginSend", "newGameSend", "loadGameSend", "loginReceived", "planningPhaseRecived", "actionPhase1Recived", "actionPhase2Recived", "actionPhase3Recived", "finish", "planningPhaseSend", "actionPhase1Send", "actionPhase2Send", "actionPhase3Send", "finishSend", "disconnection", "retryNickname", "waitAddPlayer", "expertPlayedSend", "errorLoading" );
+        return new ClientEventManager( "updateData", "loginSend", "newGameSend", "loadGameSend", "loginReceived", "planningPhaseRecived", "actionPhase1Recived", "actionPhase2Recived", "actionPhase3Recived", "finish", "planningPhaseSend", "actionPhase1Send", "actionPhase2Send", "actionPhase3Send", "finishSend", "disconnection", "retryNickname", "waitAddPlayer", "expertPlayedSend", "errorLoading", "ping" );
     }
 
     /**

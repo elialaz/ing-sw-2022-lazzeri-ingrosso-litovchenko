@@ -7,6 +7,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Main Class of the Client Connection
@@ -47,6 +49,7 @@ public class Client implements EventReceiver {
         manager.subscribe("actionPhase3Send", this);
         manager.subscribe("finishSend", this);
         manager.subscribe("expertPlayedSend", this);
+        manager.subscribe("ping", this);
         userInterface = new Cli(manager, this);
         game = true;
         userInterface.login();
@@ -247,6 +250,11 @@ public class Client implements EventReceiver {
                     out.println(userInterface.getSpecialCard());
                 }
                 break;
+            case "ping":
+                synchronized(outputLock){
+                    out.println("ping");
+                }
+                break;
         }
     }
 
@@ -267,6 +275,17 @@ public class Client implements EventReceiver {
     }
 
     /**
+     * Timer Thread
+     * @param time int second time of the timer
+     */
+    public void timerPing(long time) {
+        long delay = 1;
+        Timer timer = new Timer();
+        TimerTask task = new PingTimer(manager);
+        timer.schedule(task, delay, time);
+    }
+
+    /**
      * The Main Class of the Client.
      * @param args of type String[], the standard java main paramete
      * @throws InterruptedException
@@ -278,5 +297,6 @@ public class Client implements EventReceiver {
 
         ClientEventManager prova = ClientEventManager.createClientEventManager();
         Client client = new Client(serverPort, serverIP, prova);
+        client.timerPing(30);
     }
 }
