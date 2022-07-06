@@ -104,7 +104,6 @@ class ServerThread extends Thread{
                         }
                         else if(input[0].equals("ping")){
                             socket.setSoTimeout(60);
-                            System.out.println("Client " + nickname + " ping");
                         }
                         else {
                             master.onMessageReceived(message, nickname);
