@@ -31,7 +31,6 @@ public class VirtualModel {
     private boolean[] professorOnGameboard;
     private int coinPile;
     private int[] expertCardPrice;
-    private boolean[] expertCardPriceCheck;
     private ArrayList<int[]> expertCardStudents;
 
     /**
@@ -170,6 +169,7 @@ public class VirtualModel {
             expertCardId = new ArrayList<>();
             expertCardStudents = new ArrayList<>();
             int[] temp = new int[]{0, 0, 0, 0, 0};
+            expertCardPrice = new int[]{0, 0, 0};
             parsed2 = parsed[10].split("!");
             count = 0;
             expertCardId.add(Integer.parseInt(parsed2[count]));
@@ -181,9 +181,13 @@ public class VirtualModel {
                 }
                 expertCardStudents.add(temp);
                 count++;
+                expertCardPrice[0] = Integer.parseInt(parsed2[count]);
+                count++;
             } else{
                 count++;
                 expertCardStudents.add(new int[]{0, 0, 0, 0, 0});
+                expertCardPrice[0] = Integer.parseInt(parsed2[count]);
+                count++;
             }
             expertCardId.add(Integer.parseInt(parsed2[count]));
             if(Integer.parseInt(parsed2[count])==2 || Integer.parseInt(parsed2[count])==11 || Integer.parseInt(parsed2[count])==12){
@@ -194,9 +198,13 @@ public class VirtualModel {
                 }
                 expertCardStudents.add(temp);
                 count++;
+                expertCardPrice[1] = Integer.parseInt(parsed2[count]);
+                count++;
             } else{
                 count++;
                 expertCardStudents.add(new int[]{0, 0, 0, 0, 0});
+                expertCardPrice[1] = Integer.parseInt(parsed2[count]);
+                count++;
             }
             expertCardId.add(Integer.parseInt(parsed2[count]));
             if(Integer.parseInt(parsed2[count])==2 || Integer.parseInt(parsed2[count])==11 || Integer.parseInt(parsed2[count])==12){
@@ -207,8 +215,11 @@ public class VirtualModel {
                 }
                 expertCardStudents.add(temp);
                 count++;
+                expertCardPrice[2] = Integer.parseInt(parsed2[count]);
             } else{
+                count++;
                 expertCardStudents.add(new int[]{0, 0, 0, 0, 0});
+                expertCardPrice[2] = Integer.parseInt(parsed2[count]);
             }
             positionMotherNature = Integer.parseInt(parsed[11]);
             professorOnGameboard = new boolean[]{true, true, true, true, true};
@@ -237,8 +248,7 @@ public class VirtualModel {
                 assistantsPlayedInTurn[i] = Integer.parseInt(parsed2[i]);
             }
         }
-        expertCardPrice = new int[]{3, 1, 1, 1, 3, 3, 2, 2, 2, 3, 2, 1};
-        expertCardPriceCheck = new boolean[]{false, false, false, false, false, false, false, false, false, false, false, false};
+        //expertCardPrice = new int[]{3, 1, 1, 1, 3, 3, 2, 2, 2, 3, 2, 1};
     }
 
     /**
@@ -537,12 +547,13 @@ public class VirtualModel {
      * Service method to increase the price of a character card after the first activation
      * @param id id of expert card selected
      **/
+    /*
     public void addOneExpertCardUsed(int id){
         if(!expertCardPriceCheck[id]){
             expertCardPrice[id]++;
             expertCardPriceCheck[id]=true;
         }
-    }
+    }*/
 
     /**
      * Getter of students on expert cards

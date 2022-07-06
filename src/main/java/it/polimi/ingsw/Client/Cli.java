@@ -538,7 +538,7 @@ public class Cli implements EventReceiver {
         switch (id) {
             case 1:
                 //cost 3
-                if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[id-1]){
+                if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[input]){
                     System.out.print("Choose the Island that you want to influence: ");
                     System.out.println("Choose the Island that you want to influence: (0 - " + model.getIslandNum() + ")");
                     int chose = ReadIntInput(0, model.getIslandNum());
@@ -546,7 +546,6 @@ public class Cli implements EventReceiver {
                         System.out.println("What are you doing? There isn't this island. Select another one.");
                         chose = ReadIntInput(0, model.getIslandNum());
                     }
-                    model.addOneExpertCardUsed(id-1);
                     expertMessage = "playExpert/1/" + chose;
                     notPlayed = false;
                 }
@@ -556,7 +555,7 @@ public class Cli implements EventReceiver {
                 break;
             case 2:
                 //cost 1
-                if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[id-1]){
+                if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[input]){
                     switchFromCard_id2 = new int[]{0,0,0,0,0};
                     switchFromEntrance_id2 = new int[]{0,0,0,0,0};
                     int[] studentsCard = model.getStudentsExpertCard(input);
@@ -588,7 +587,6 @@ public class Cli implements EventReceiver {
                         students_entrance[chosenStudent]--;
                         switchFromEntrance_id2[chosenStudent]++;
                     }
-                    model.addOneExpertCardUsed(id-1);
                     expertMessage = "playExpert/2/" + model.playerId(nickname) + "/";
                     for(int i=0; i<5; i++){
                         expertMessage = expertMessage + switchFromCard_id2[i] + ":";
@@ -605,7 +603,7 @@ public class Cli implements EventReceiver {
                 break;
             case 3:
                 //cost 1
-                if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[id-1]){
+                if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[input]){
                     switchFromCorridor_id3 = new int[]{0,0,0,0,0};
                     switchFromEntrance_id3 = new int[]{0,0,0,0,0};
                     int chosenStudent;
@@ -632,7 +630,6 @@ public class Cli implements EventReceiver {
                         students_entrance[chosenStudent]--;
                         switchFromEntrance_id3[chosenStudent]++;
                     }
-                    model.addOneExpertCardUsed(id-1);
                     expertMessage = "playExpert/3/" + model.playerId(nickname) + "/";
                     for(int i=0; i<5; i++){
                         expertMessage = expertMessage + switchFromCorridor_id3[i] + ":";
@@ -649,8 +646,7 @@ public class Cli implements EventReceiver {
                 break;
             case 4:
                 //cost 1
-                if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[id-1]){
-                    model.addOneExpertCardUsed(id-1);
+                if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[input]){
                     expertMessage = "playExpert/4/" + model.playerId(nickname);
                     notPlayed = false;
                     motherPlusTwo_id4 = true;
@@ -661,10 +657,9 @@ public class Cli implements EventReceiver {
                 break;
             case 5:
                 //cost 3
-                if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[id-1]){
+                if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[input]){
                     System.out.println("Which color student will you choose: 0) " + CLIutils.ANSI_GREEN + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 1) " + CLIutils.ANSI_RED + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 2) " + CLIutils.ANSI_YELLOW + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 3) " + CLIutils.ANSI_PINK + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 4) " + CLIutils.ANSI_BLUE + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
                     colorNoInfluence_id5 = ReadIntInput(0,4);
-                    model.addOneExpertCardUsed(id-1);
                     expertMessage = "playExpert/5/" + colorNoInfluence_id5 + "/" + model.playerId(nickname);
                     notPlayed = false;
                 }
@@ -674,14 +669,13 @@ public class Cli implements EventReceiver {
                 break;
             case 6:
                 //cost 3
-                if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[id-1]){
+                if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[input]){
                     System.out.println("Which island will you choose: (0 - " + model.getIslandNum() + ")");
                     int chose = ReadIntInput(0, model.getIslandNum());
                     while (chose < 0 || chose > model.getIslandNum()){
                         System.out.println("What are you doing? There isn't this island. Select another one.");
                         chose = ReadIntInput(0, model.getIslandNum());
                     }
-                    model.addOneExpertCardUsed(id-1);
                     expertMessage = "playExpert/6/" + chose;
                     notPlayed = false;
                 }
@@ -691,26 +685,23 @@ public class Cli implements EventReceiver {
                 break;
             case 7:
                 //cost 2
-                if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[id-1]){
+                if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[input]){
                     System.out.println("Which island will you choose: (0 - " + model.getIslandNum() + ")");
                     int chose = ReadIntInput(0, model.getIslandNum());
                     while (chose < 0 || chose > model.getIslandNum()){
                         System.out.println("What are you doing? There isn't this island. Select another one.");
                         chose = ReadIntInput(0, model.getIslandNum());
                     }
-                    model.addOneExpertCardUsed(id-1);
                     expertMessage = "playExpert/7/" + chose;
                     notPlayed = false;
                 }
                 else{
                     System.out.print("You not have enough coin to play this card ");
                 }
-                model.addOneExpertCardUsed(id-1);
                 break;
             case 8:
                 //cost 2
-                if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[id-1]){
-                    model.addOneExpertCardUsed(id-1);
+                if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[input]){
                     expertMessage = "playExpert/8/" + model.playerId(nickname);
                     notPlayed = false;
                 }
@@ -720,8 +711,7 @@ public class Cli implements EventReceiver {
                 break;
             case 9:
                 //cost 2
-                if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[id-1]){
-                    model.addOneExpertCardUsed(id-1);
+                if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[input]){
                     expertMessage = "playExpert/9";
                     notPlayed = false;
                 }
@@ -731,10 +721,9 @@ public class Cli implements EventReceiver {
                 break;
             case 10:
                 //cost 3
-                if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[id-1]){
+                if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[input]){
                     System.out.println("Which color student will you choose: 0) " + CLIutils.ANSI_GREEN + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 1) " + CLIutils.ANSI_RED + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 2) " + CLIutils.ANSI_YELLOW + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 3) " + CLIutils.ANSI_PINK + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 4) " + CLIutils.ANSI_BLUE + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
                     int chose = ReadIntInput(0,4);
-                    model.addOneExpertCardUsed(id-1);
                     expertMessage = "playExpert/10/" + chose;
                     notPlayed = false;
                 }
@@ -744,7 +733,7 @@ public class Cli implements EventReceiver {
                 break;
             case 11:
                 //cost 2
-                if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[id-1]){
+                if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[input]){
                     System.out.print("This card has the following students: ");
                     displayStudents(model.getStudentsExpertCard(input));
                     System.out.println("Which student color will you move: 0) " + CLIutils.ANSI_GREEN + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 1) " + CLIutils.ANSI_RED + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 2) " + CLIutils.ANSI_YELLOW + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 3) " + CLIutils.ANSI_PINK + CLIutils.STUDENT + CLIutils.ANSI_RESET + " || 4) " + CLIutils.ANSI_BLUE + CLIutils.STUDENT + CLIutils.ANSI_RESET + "");
@@ -753,7 +742,6 @@ public class Cli implements EventReceiver {
                         System.out.println("What are you doing? There isn't this students on the card. Select another one.");
                         chose = ReadIntInput(0, 4);
                     }
-                    model.addOneExpertCardUsed(id-1);
                     expertMessage = "playExpert/11/" + model.playerId(nickname) + "/" + chose;
                     notPlayed = false;
                 }
@@ -763,7 +751,7 @@ public class Cli implements EventReceiver {
                 break;
             case 12:
                 //cost 1
-                if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[id-1]){
+                if(model.getCoinPlayer(nickname)>=model.getExpertCardPrice()[input]){
                     System.out.print("This card has the following students: ");
                     displayStudents(model.getStudentsExpertCard(input));
                     System.out.println("Which island will you choose: (0 - " + model.getIslandNum() + ")");
@@ -778,7 +766,6 @@ public class Cli implements EventReceiver {
                         System.out.println("What are you doing? There isn't this students on the card. Select another one.");
                         chose2 = ReadIntInput(0, 4);
                     }
-                    model.addOneExpertCardUsed(id-1);
                     expertMessage = "playExpert/12/" + chose + "/" + chose2;
                     notPlayed = false;
                 }
@@ -797,67 +784,67 @@ public class Cli implements EventReceiver {
     public void displayCharacterCard(ArrayList<Integer> characterCards, int[] characterCards_prices) {
         System.out.println("\nYou have " + model.getCoinPlayer(nickname) + " Coin");
         System.out.println("\nThe following character cards are on the table, choose which one you want to play:");
-        for (Integer i: characterCards){
-            switch (i) {
+        for (int i=0; i<3; i++){
+            switch (characterCards.get(i)) {
                 case 1:
                     //cost 3
                     System.out.println("> Choose and Island and resolve the island as if Mother Nature had ended her movement there. Mother Nature will still move and the Island where she ends her movement will also be resolved: ");
-                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i-1] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
                     break;
                 case 2:
                     //cost 1
                     System.out.println("> You may take up to 3 students for this card and replace them with the same number of Students from your Entrance: ");
-                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i-1] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
                     break;
                 case 3:
                     //cost 1
                     System.out.println("> You may exchange up to 2 Students between your Entrance and your Dining Room: ");
-                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i-1] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
                     break;
                 case 4:
                     //cost 1
                     System.out.println("> You may move Mother Nature up to 2 additional Islands than is indicated by the Assistant card you've played: ");
-                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i-1] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
                     break;
                 case 5:
                     //cost 3
                     System.out.println("> Choose a color of Student: during the influence calculation this turn, that color adds no influence: ");
-                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i-1] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
                     break;
                 case 6:
                     //cost 3
                     System.out.println("> When resolving a Conquering on an Island, towers do not count towards influence: ");
-                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i-1] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
                     break;
                 case 7:
                     //cost 2
                     System.out.println("> Place a No Entry tile on an Island of your choice. The first time Mother Nature ends her movement there, put the No Entry tile back onto this card DO NOT calculate influence on that Island, or place any Towers: ");
-                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i-1] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
                     break;
                 case 8:
                     //cost 2
                     System.out.println("> During the influence calculation this turn, you count as having 2 more influence: ");
-                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i-1] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
                     break;
                 case 9:
                     //cost 2
                     System.out.println("> During this turn, you take control of any number of Professors even if you have the same number of Students as the player who currently controls them: ");
-                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i-1] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
                     break;
                 case 10:
                     //cost 3
                     System.out.println("> Choose a type of Student: every player (including yourself) must return 3 Students of that type from their Dining Room to the bag. If any player has fewer than 3 Students of that type, return as many students as they have: ");
-                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i-1] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
                     break;
                 case 11:
                     //cost 2
                     System.out.println("> Take 1 Student from this card and place it in your Dining Room. Then, draw a new Student from the Bag and place it on this card: ");
-                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i-1] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
                     break;
                 case 12:
                     //cost 1
                     System.out.println("> Take 1 Student from this card and place it on an Island of your choice. Then, draw a new Student from the Bag and place it on this card: ");
-                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i-1] + CLIutils.COIN + CLIutils.ANSI_RESET );
+                    System.out.println("  Price = "+ CLIutils.ANSI_BRIGHT_YELLOW + characterCards_prices[i] + CLIutils.COIN + CLIutils.ANSI_RESET );
                     break;
             }
         }
@@ -968,7 +955,6 @@ public class Cli implements EventReceiver {
         System.out.println("-------------- PLANNING PHASE --------------");
         System.out.println("--------------------------------------------\n");
         System.out.println("1. The " + playerNumber + " clouds, have been filled.\n");
-        playCharacterCard();
         System.out.println("\n2. Play 1 assistant card of your choice, you currently have: ");
         int[][] AssistantCards = model.getDeck(nickname);
         int[] usable = new int[10];
