@@ -408,8 +408,6 @@ public class Cli implements EventReceiver {
         }
         if (model.isExpert()) {
             System.out.println();
-            System.out.print("\nCoins remaining on table: ");
-            System.out.println(model.getCoinPile());
             displayCharacterCard(model.getExpertCardId(), model.getExpertCardPrice());
         }
         System.out.println();
